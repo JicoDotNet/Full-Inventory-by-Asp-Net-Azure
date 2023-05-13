@@ -1,0 +1,195 @@
+﻿@using JicoDotNet.Inventory.UI.Models;
+@using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+@model ConfigModels
+
+@{
+    ViewBag.Title = "Details of " + Model._company.CompanyName;
+    Layout = "~/Views/Shared/_LayoutCompany.cshtml";
+}
+
+<section class="content-header">
+    <div class="container">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Configuration Details</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    <li class="breadcrumb-item active">Configuration</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card">
+                    <div class="card-header bg-success">
+                        <h3 class="card-title">
+                            Organization Configuration                            
+                        </h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="callout callout-info col-md-11">
+                                <img class="img-thumbnail" style="width:3.3rem;"
+                                     src="~/Content/images/CompanyLogo.jpg" alt="@Model._company.CompanyName Logo" />
+                                <span class="h5">
+                                    @Model._company.CompanyName
+                                </span>
+                                <p class="mt-2">
+                                    @if (Model._company.IsGSTRegistered)
+                                    {
+                                        <em><b>@Model._company.GSTNumber</b></em>
+                                    }
+                                    else
+                                    {
+                                        <span class="right badge badge-danger"> GST Unregistred</span>
+                                    }
+                                </p>
+                            </div>
+                            <div class="float-right col-md-1">
+                                <span class="float-right">
+                                    <a href="@Url.Action("Index", "Home", new { id = string.Empty })" class="btn btn-warning"> <i class="fas fa-arrow-left"></i> Back</a>
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="callout callout-success">
+                                    <h5>Perishable Product</h5>
+                                    <blockquote class="quote-warning">
+                                        <p>@Model._YesNo[Model._config.HasPerishableProduct]</p>
+                                    </blockquote>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="callout callout-success">
+                                    <h5>Expiration Date</h5>
+                                    <blockquote class="quote-warning">
+                                        <p>@Model._YesNo[Model._config.HasExpirationDate]</p>
+                                    </blockquote>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="callout callout-success">
+                                    <h5>Batch No</h5>
+                                    <blockquote class="quote-warning">
+                                        <p>@Model._YesNo[Model._config.HasBatchNo]</p>
+                                    </blockquote>
+                                </div>
+                            </div>
+                            <!--
+                            @*
+                            <div class="col-md-4">
+                                <div class="callout callout-success">
+                                    <h5>Sales Return</h5>
+                                    <p>This is a green callout.</p>
+                                    <blockquote class="quote-warning">
+                                        <p>@Model._YesNo[Model._config.AllowSalesReturn]</p>
+                                    </blockquote>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="callout callout-success">
+                                    <h5>Sales Mode</h5>
+                                    <p>This is a green callout.</p>
+                                    <blockquote class="quote-warning">
+                                        <p>
+                                            @if (Model._config.SalesMode == "Custom")
+                                            {<text> Any Time Any Thing </text>}
+                                            @if (Model._config.SalesMode == "LIFO")
+                                            {<text> Last In - First Out </text>}
+                                            @if (Model._config.SalesMode == "FIFO")
+                                            {<text> First In - First Out </text>}
+                                        </p>
+                                    </blockquote>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="callout callout-success">
+                                    <h5>Payment Released Mode</h5>
+                                    <p>This is a green callout.</p>
+                                    <blockquote class="quote-warning">
+                                        <p>
+                                            @if (Model._config.PaymentReleaseMode == "Custom")
+                                            {<text> Any Time Any Amount </text>}
+                                            @if (Model._config.PaymentReleaseMode == "Bill")
+                                            {<text> Particular Bill Wise </text>}
+                                        </p>
+                                    </blockquote>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="callout callout-success">
+                                    <h5>Purchases Return</h5>
+                                    <p>This is a green callout.</p>
+                                    <blockquote class="quote-warning">
+                                        <p>@Model._YesNo[Model._config.AllowPurchaseReturn]</p>
+                                    </blockquote>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="callout callout-success">
+                                    <h5>Payment Received Mode</h5>
+                                    <p>This is a green callout.</p>
+                                    <blockquote class="quote-warning">
+                                        <p>
+                                            @if (Model._config.PaymentReceiveMode == "Custom")
+                                            {<text> Any Time Any Amount </text>}
+                                            @if (Model._config.PaymentReceiveMode == "Invoice")
+                                            {<text> Particular Invoice Wise </text>}
+                                        </p>
+                                    </blockquote>
+                                </div>
+                            </div>
+                            *@
+                            -->
+                            <div class="col-md-4">
+                                <div class="callout callout-success">
+                                    <h5>Time Zone</h5>
+                                    <blockquote class="quote-warning">
+                                        <p>
+                                            @if (Model._config.TimeZone == 5.5)
+                                            {<text> India (GMT+05:30) - Mumbai, Kolkata, Delhi </text>}
+                                        </p>
+                                    </blockquote>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="callout callout-success">
+                                    <h5>Currency</h5>
+                                    <blockquote class="quote-warning">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <p>
+                                                    <label>Symbol</label>
+                                                    @Model._config.CurrencySymbol
+                                                </p>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <p>
+                                                    <label>Code</label>
+                                                    @Model._config.CurrencyCode
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="@Url.Action("Index", "Home", new { id = string.Empty })" class="btn btn-warning"> <i class="fas fa-arrow-left"></i> Back</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

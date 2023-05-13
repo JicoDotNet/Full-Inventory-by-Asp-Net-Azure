@@ -1,0 +1,62 @@
+﻿ 
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ITEM Blob | @ViewBag.Title</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#fff" @*content="#ffc107"*@ />
+    <!-- metas -->
+    <meta name="keywords" content="Bills, Invoices, Stocks, Payments, Warehouse, GST/Tax" />
+    <meta name="description" content="This is a subscription based SaaS product to cater your needs to manage your business details such as Bills, Invoices, Stocks, Payments, Warehouse, GST/Tax etc. " />
+    <meta name="author" content="Inspiron Edge" />
+    <!-- Fav Icon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="~/Content/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/Content/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/Content/images/favicon/favicon/favicon-16x16.png">
+    <!-- Font Awesome (all.min.css- v5.12.1) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.css" />
+    <!-- Data Tables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css" />
+    <link href="https://cdn.datatables.net/fixedheader/3.1.8/css/fixedHeader.bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/responsive/2.2.7/css/responsive.bootstrap.min.css" rel="stylesheet" />
+    <!-- AdminLTE App v3.0.2 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.0.2/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- ITEM Blob Custom Style -->
+    <link rel="stylesheet" href="~/Content/css/AdminLteCustom.css?v=1.5" />
+
+    <!-- jQuery v3.4.1 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
+    @RenderSection("HeadCss", false)
+</head>
+<body class="hold-transition layout-navbar-fixed layout-top-nav text-sm">
+    <div class="wrapper">
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand-md navbar-light navbar-white" style="max-height: 3rem;">
+            <div class="container">
+                <a href="@Url.Action("Index", "Home")" class="navbar-brand">
+                    <img src="~/Content/images/BrandLogo.png" alt="Brand Logo" class="d-inline-block align-top" style="height:30px;" />
+                </a>
+            </div>
+        </nav>
+        <!-- /.navbar -->
+        <div class="content-wrapper">
+            @RenderBody()
+        </div>
+        @Html.Partial("_PartialFooter")
+    </div>
+
+    @Html.Partial("_PartialScript")
+
+    @RenderSection("BodyScript", false)
+</body>
+</html>

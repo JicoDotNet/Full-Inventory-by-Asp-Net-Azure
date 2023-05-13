@@ -1,0 +1,223 @@
+﻿@using JicoDotNet.Inventory.UI.Models;
+@using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+@model ConfigModels
+
+@{
+    ViewBag.Title = "Default Setup";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Default Setup</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    <li class="breadcrumb-item active">Default Setup</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-warning">
+                    <div class="card-header">
+                        <h3 class="card-title">Default Setup</h3>
+                    </div>
+                    @using (Html.BeginForm("Default", "Configuration",
+                        FormMethod.Post, new { autocomplete = "off" }))
+                    {
+                        <div class="card-footer">
+                            <div class="float-right">
+                                <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save</button>
+                                <button type="reset" class="btn btn-info"><i class="fas fa-sync"></i> Reset</button>
+                                <a href="@Url.Action("Default", "Configuration", new { id = string.Empty })" class="btn btn-danger"> <i class="fas fa-times"></i> Cancel</a>
+                            </div>
+                        </div>
+                        <div class="d-none">
+                            <input type="hidden" value="@Model._config.HasPerishableProduct.ToString().ToLower()" name="HasPerishableProduct" />
+                            <input type="hidden" value="@Model._config.HasExpirationDate.ToString().ToLower()" name="HasExpirationDate" />
+                            <input type="hidden" value="@Model._config.HasBatchNo.ToString().ToLower()" name="HasBatchNo" />
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>
+                                            Purchase Order T&C
+                                            <small class="text-danger">Max: 500 chars</small>
+                                        </label>
+                                        <textarea name="POTnC" class="form-control form-control-sm"
+                                                  placeholder="Enter the default PO terms and conditions of your business."
+                                                  style="height: 180px !important;">@Model._config.POTnC</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>
+                                            Purchase Order Remarks
+                                            <small class="text-danger">Max: 500 chars</small>
+                                        </label>
+                                        <textarea name="PORemarks" class="form-control form-control-sm"
+                                                  placeholder="Enter the default PO remarks of your business."
+                                                  style="height: 180px !important;">@Model._config.PORemarks</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>
+                                            Goods Receive Remarks
+                                            <small class="text-danger">Max: 500 chars</small>
+                                        </label>
+                                        <input type="text" name="GRNRemarks" maxlength="500"
+                                               value="@Model._config.GRNRemarks"
+                                               class="form-control form-control-sm" placeholder="Goods Receive Remarks">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>
+                                            Bill Remarks
+                                            <small class="text-danger">Max: 500 chars</small>
+                                        </label>
+                                        <input type="text" name="BillRemarks" maxlength="500"
+                                               value="@Model._config.BillRemarks"
+                                               class="form-control form-control-sm" placeholder="Bill remarks">
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>
+                                            Sales Order T&C
+                                            <small class="text-danger">Max: 500 chars</small>
+                                        </label>
+                                        <textarea name="SOTnC" class="form-control form-control-sm"
+                                                  placeholder="Enter the default SO Terms & Conditions of your business."
+                                                  style="height: 180px !important;">@Model._config.SOTnC</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>
+                                            Sales Order Remarks
+                                            <small class="text-danger">Max: 500 chars</small>
+                                        </label>
+                                        <textarea name="SORemarks" class="form-control form-control-sm"
+                                                  placeholder="Enter the default SO Remarks of your business."
+                                                  style="height: 180px !important;">@Model._config.SORemarks</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>
+                                            Delivery Remarks
+                                            <small class="text-danger">Max: 500 chars</small>
+                                        </label>
+                                        <input type="text" name="DeliveryRemarks" maxlength="500"
+                                               value="@Model._config.DeliveryRemarks"
+                                               class="form-control form-control-sm" placeholder="Delivery remarks">
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>
+                                            Invoice T&C
+                                            <small class="text-danger">Max: 500 chars</small>
+                                        </label>
+                                        <textarea name="InvoiceTnC" class="form-control form-control-sm"
+                                                  placeholder="Enter the default Invoice Terms & Conditions of your business."
+                                                  style="height: 180px !important;">@Model._config.InvoiceTnC</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>
+                                            Invoice Remarks
+                                            <small class="text-danger">Max: 500 chars</small>
+                                        </label>
+                                        <textarea name="InvoiceRemarks" class="form-control form-control-sm"
+                                                  placeholder="Enter the default Invoice Remarks of your business."
+                                                  style="height: 180px !important;">@Model._config.InvoiceRemarks</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>
+                                            Retail Sales T&C
+                                            <small class="text-danger">Max: 500 chars</small>
+                                        </label>
+                                        <textarea name="RetailTnC" class="form-control form-control-sm"
+                                                  placeholder="Enter the default Retail Terms & Conditions of your business."
+                                                  style="height: 180px !important;">@Model._config.RetailTnC</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>
+                                            Retail Sales Remarks
+                                            <small class="text-danger">Max: 500 chars</small>
+                                        </label>
+                                        <textarea name="RetailRemarks" class="form-control form-control-sm"
+                                                  placeholder="Enter the default Retail Remarks of your business."
+                                                  style="height: 180px !important;">@Model._config.RetailRemarks</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>
+                                            Quotation Sending T&C
+                                        </label>
+                                        <small class="text-danger float-right">Max: 4000 chars</small>
+                                        <textarea name="QuotationSendingTnC" class="form-control form-control-sm"
+                                                  placeholder="Enter the default Quotation Sending Terms & Conditions of your business."
+                                                  style="height: 180px !important;">@Model._config.QuotationSendingTnC</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>
+                                            Quotation Sending Remarks
+                                            <small class="text-danger">Max: 500 chars</small>
+                                        </label>
+                                        <textarea name="QuotationSendingRemarks" class="form-control form-control-sm"
+                                                  placeholder="Enter the default Quotation Sending Remarks of your business."
+                                                  style="height: 180px !important;">@Model._config.QuotationSendingRemarks</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save</button>
+                            <button type="reset" class="btn btn-info"><i class="fas fa-sync"></i> Reset</button>
+                            <a href="@Url.Action("Default", "Configuration", new { id = string.Empty })" class="btn btn-danger"> <i class="fas fa-times"></i> Cancel</a>
+                        </div>
+                    }
+                </div>
+                    </div>
+        </div>
+    </div>
+</section>

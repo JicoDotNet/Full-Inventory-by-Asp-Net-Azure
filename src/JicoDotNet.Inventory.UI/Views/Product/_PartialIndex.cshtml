@@ -1,0 +1,212 @@
+﻿@using JicoDotNet.Inventory.UI.Models;
+@using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+@model ProductModels
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-body">
+            @if (Model._tenantQuota.Limit == null || Model._tenantQuota.Limit > Model._tenantQuota.Used)
+            {
+                <div class="row">
+                    <div class="col-md-3">
+                        <a href="@Url.Action("Add", "Product")" class="btn btn-block btn-success" style="/*margin-top: 35px;*/"><span data-lang-key="Button-Add">Add</span></a>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="row">
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-block btn-default disabled" style="margin-top: 35px;">Add</button>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="callout callout-warning">
+                            <h5><i class="icon fas fa-exclamation-triangle"></i> <span data-lang-key="Limitation-Title">Limitation!</span></h5>
+                            <p>
+                                <span data-lang-key="Limitation-Message1">You are allowed to add</span> @Model._tenantQuota.Limit <span data-lang-key="Limitation-Message2">active Product(s).</span>
+                                <br />
+                                <span data-lang-key="Limitation-Message3">
+                                    However, if you want to add more Products,
+                                    <a href="@Url.Action("Upgrade", "Subscription")" class="text-primary">Upgrade your plan</a>
+                                    or contact with sales team: <a href="mailto:sales@itemblob.in">sales@@itemblob.in</a>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="card card-danger">
+        <div class="card-header bg-cyan">
+            <h3 class="card-title" data-lang-key="Table-Title">Products</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped table-bordered dt-responsive nowrap w-100" data-table="normal">
+                <thead>
+                    <tr>
+                        <th data-lang-key="Table-Action" class="d-none d-sm-block">Edit/Deactivate</th>
+                        <th data-lang-key="Table-ProductName">Product Name/Code/Brand</th>
+                        <th data-lang-key="Table-type">Type</th>
+                        <th class="text-danger"><span data-lang-key="Table-Unit">Unit</span>*</th>
+                        <th data-lang-key="Table-Stock">Stock</th>
+                        <th data-lang-key="Table-Tax">HSN-SAC/ Tax</th>
+                        <th data-lang-key="Table-Category">Category</th>
+                        <th class="text-danger"><span data-lang-key="Table-Attribute">Attribute</span>*</th>
+                        <th data-lang-key="Table-Action" class="d-md-none">Edit/Deactivate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Product product in Model._products)
+                    {
+                        <tr @if (!product.IsActive) { <text> style="background-color:#e5bfc0;" </text> }>
+                            <td class="d-none d-sm-block">
+                                @if (product.IsActive)
+                                {
+                                    <a class="btn btn-outline-success btn-flat" href="@Url.Action("Edit", "Product", new { id = Html.UrlIdEncrypt(product.ProductId, false) })"
+                                       data-toggle="tooltip" data-placement="top" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <button onclick="DeactivateRecord(this)"
+                                            data-display="Product Name" data-value="@product.ProductName"
+                                            data-controller="Product" data-action="Deactivate"
+                                            data-id="@Html.UrlIdEncrypt(product.ProductId)"
+                                            data-toggle="tooltip" data-placement="top"
+                                            class="btn btn-outline-danger btn-flat" title="Deactivate">
+                                        <i class="fas fa-trash-alt pull-right"></i>
+                                    </button>
+                                }
+                                else
+                                {
+                                    <span class="text-danger"><i class="fas fa-times"></i> <span data-lang-key="Table-Status-Inactive">Inactive</span></span>
+                                }
+                            </td>
+                            <td class="products-list product-list-in-card">
+                                <div class="item" style="background: none;padding: 0;">
+                                    @if (!string.IsNullOrEmpty(product.ProductImageUrl))
+                                    {
+                                        <div class="product-img">
+                                            <img src="@product.ProductImageUrl" alt="@product.ProductName"
+                                                 class="img-fluid" style="height:30px;width:30px;">
+                                        </div>
+                                    }
+                                    <div class="product-info @if (string.IsNullOrEmpty(product.ProductImageUrl)) {<text>ml-0</text>}">
+                                        <span class="product-title">
+                                            @product.ProductName
+                                        </span>
+                                        <span class="product-description">
+                                            @product.ProductCode
+                                            @if (!string.IsNullOrEmpty(product.Brand))
+                                            {
+                                                <b>- @product.Brand</b>
+                                            }
+                                        </span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                @product.ProductTypeName
+                                <br />
+                                @if (product.IsGoods)
+                                {
+                                    <span class="right badge badge-success" data-lang-key="Table-Tag-Goods">Goods</span>
+                                }
+                                else
+                                {
+                                    <span class="right badge badge-danger" data-lang-key="Table-Tag-Service">Service</span>
+                                }
+                            </td>
+                            <td>@product.UnitOfMeasureName</td>
+                            <td>
+                                @if (product.IsActive && product.IsGoods)
+                                {
+                                    <div class="input-group">
+                                        <div class="input-group-prepend" data-toggle="tooltip" data-placement="top" title="Stock Details">
+                                            <button type="button" class="btn btn-outline-primary btn-flat dropdown-toggle" data-toggle="dropdown">
+                                                <i class="fas fa-layer-group"></i>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="@Url.Action("Index", "Stock", new { id = Html.UrlIdEncrypt(product.ProductId, false) })">
+                                                    <i class="fas fa-binoculars"></i>
+                                                    View Current Stock
+                                                </a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="@Url.Action("OpeningStock", "Product", new { id = Html.UrlIdEncrypt(product.ProductId, false) })">
+                                                    <i class="fas fa-plus"></i>
+                                                    Opening Stock Entry (Single)
+                                                </a>
+                                                <a class="dropdown-item" href="@Url.Action("BulkOpeningStock", "Product", new { id = Html.UrlIdEncrypt(product.ProductId, false) })">
+                                                    <i class="far fa-plus-square"></i>
+                                                    Opening Stock Entry (Bulk)
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </td>
+                            <td>
+                                @product.HSNSAC
+                                @if (product.TaxPercentage > 0)
+                                {
+                                    <strong>(@product.TaxPercentage.ToDisplayDecimal()%)</strong>
+                                }
+                            </td>
+                            <td>
+                                @if (product.ProductInOut == 0)
+                                {
+                                    <span class="right badge badge-warning" data-lang-key="Table-Tag-PurchaseSale">Purchase/Sale Both</span>
+                                }
+                                @if (product.ProductInOut == 1)
+                                {
+                                    <span class="right badge badge-primary" data-lang-key="Table-Tag-Purchase">Only Purchase</span>
+                                }
+                                @if (product.ProductInOut == 2)
+                                {
+                                    <span class="right badge badge-success" data-lang-key="Table-Tag-Sale">Only Sale</span>
+                                }
+                            </td>
+                            <td>
+                                @if (product.IsPerishableProduct)
+                                {
+                                    <span class="right badge badge-success" data-lang-key="Table-Tag-Perishable">Perishable</span>
+                                }
+                                @if (product.HasExpirationDate)
+                                {
+                                    <span class="right badge badge-danger" data-lang-key="Table-Tag-HasExpiryDate">Has Expiry Date</span>
+                                }
+                                @if (product.HasBatchNo)
+                                {
+                                    <span class="right badge badge-warning" data-lang-key="Table-Tag-HasBatchNo">Has Batch No</span>
+                                }
+                            </td>
+                            <td class="d-md-none">
+                                @if (product.IsActive)
+                                {
+                                    <a class="btn btn-outline-success btn-flat" href="@Url.Action("Edit", "Product", new { id = Html.UrlIdEncrypt(product.ProductId, false) })"
+                                       data-toggle="tooltip" data-placement="top" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <button onclick="DeactivateRecord(this)"
+                                            data-display="Product Name" data-value="@product.ProductName"
+                                            data-controller="Product" data-action="Deactivate"
+                                            data-id="@Html.UrlIdEncrypt(product.ProductId)"
+                                            data-toggle="tooltip" data-placement="top"
+                                            class="btn btn-outline-danger btn-flat" title="Deactivate">
+                                        <i class="fas fa-trash-alt pull-right"></i>
+                                    </button>
+                                }
+                                else
+                                {
+                                    <span class="text-danger"><i class="fas fa-times"></i> <span data-lang-key="Table-Status-Inactive">Inactive</span></span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <p class="text-danger">* <span data-lang-key="Table-Tag-NotEditable">Not Editable</span></p>
+        </div>
+    </div>
+</div>

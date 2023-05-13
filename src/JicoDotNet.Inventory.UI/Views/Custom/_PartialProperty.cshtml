@@ -1,0 +1,245 @@
+﻿@using JicoDotNet.Inventory.UI.Models;
+@using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+@using Microsoft.WindowsAzure.Storage.Table;
+@model CustomPropertyModels
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header bg-cyan">
+            <h3 class="card-title">
+                @if (Model._customProperty != null)
+                {
+                    <text> Update </text>
+                }
+                else
+                {
+                    <text> Add </text>
+                }
+                Custom Data for @Model._customPropertyFor
+            </h3>
+        </div>
+        @if (Model._customProperties.Count > 9)
+        {
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 offset-md-3">
+                        <div class="callout callout-warning mb-0">
+                            <h5><i class="icon fas fa-exclamation-triangle"></i> Limitation!</h5>
+                            <p>
+                                Maximum Limitation to add Custom Field for @Model._customPropertyFor.ToString() is 10 (Ten).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            using (Html.BeginForm("Property", "Custom",
+                new
+                {
+                    id = Html.UrlIdEncrypt(Model._customPropertyFor, false),
+                    id2 = ((Model._customProperty != null) ? Model._customProperty.RowKey : string.Empty)
+                }, FormMethod.Post, new { autocomplete = "off" }))
+            {
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8 offset-md-2">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="Property Name">Field Name</label>
+                                        <input required type="text" name="LabelName" class="form-control form-control-sm" maxlength="32"
+                                               @if (Model._customProperty != null) { <text> value="@Model._customProperty.LabelName" </text> }
+                                               placeholder="Enter Your Field" pattern=".{3,}"
+                                               title="Minimum 3 characters required" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="Value">Field Type</label>
+                                        <select class="form-control form-control-sm" name="DataType" required onchange="dataTypeChange(this)">
+                                            <option value="">--Select--</option>
+                                            @for (int i = 0; i < Model._dataType.Count; i++)
+                                            {
+                                                <option value="@Model._dataType.Keys.ElementAt(i).ToString()"
+                                                        @if (Model._customProperty != null) { if (Model._dataType.Keys.ElementAt(i).ToString() == Model._customProperty.DataType) { <text> selected </text> } }>
+                                                    @Model._dataType[Model._dataType.Keys.ElementAt(i)]
+                                                </option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8 offset-md-2">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="Value">Mandatory to Fill</label>
+                                        <select class="form-control form-control-sm" name="IsRequired" required>
+                                            <option value="">-- Select --</option>
+                                            @for (int i = 0; i < Model._YesNo.Count; i++)
+                                            {
+                                                <option value="@Model._YesNo.Keys.ElementAt(i).ToString().ToLower()"
+                                                        @if (Model._customProperty != null) { if (Model._YesNo.Keys.ElementAt(i) == Model._customProperty.IsRequired) { <text> selected </text> } }>
+                                                    @Model._YesNo[Model._YesNo.Keys.ElementAt(i)]
+                                                </option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="Value">Reflect on Print/PDF</label>
+                                        <select class="form-control form-control-sm" name="IsPrintable" required>
+                                            <option value="">--Select--</option>
+                                            @for (int i = 0; i < Model._YesNo.Count; i++)
+                                            {
+                                                <option value="@Model._YesNo.Keys.ElementAt(i).ToString().ToLower()"
+                                                        @if (Model._customProperty != null) { if (Model._YesNo.Keys.ElementAt(i) == Model._customProperty.IsPrintable) { <text> selected </text> } }>
+                                                    @Model._YesNo[Model._YesNo.Keys.ElementAt(i)]
+                                                </option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" data-Property="Default">
+                                    <div class="form-group">
+                                        <label for="Property Name">Default Value</label>
+                                        <input type="text" name="DefaultValue" class="form-control form-control-sm" maxlength="1024"
+                                               @if (Model._customProperty != null) { <text> value="@Model._customProperty.DefaultValue" </text> }
+                                               placeholder="Enter default value" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    @if (Model._customProperty != null)
+                    {
+                        <button type="submit" class="btn btn-warning"> <i class="fas fa-edit"></i> Update </button>
+                        <a href="@Url.Action("Property", "Custom", new { id = Model._customPropertyFor.ToString() })" class="btn btn-danger"> <i class="fas fa-times"></i> Cancel</a>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save</button>
+                    }
+                    <button type="reset" class="btn btn-info"><i class="fas fa-sync"></i> Reset</button>
+                </div>
+            }
+        }
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="card card-danger">
+        <div class="card-header bg-cyan">
+            <h3 class="card-title">Custom Fields of @Model._customPropertyFor</h3>
+        </div>
+        <div class="card-body" style="overflow-x:scroll;">
+            <table class="table table-striped table-bordered dt-responsive nowrap" data-table="normal">
+                <thead>
+                    <tr>
+                        <th>Edit/Deactivate</th>
+                        <th>Label/Field Name <br /> & Type</th>
+                        <th>Mandatory Field</th>
+                        <th>Printable</th>
+                        <th>Default Value</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model._customProperties != null)
+                    {
+                        foreach (CustomProperty customProperty in Model._customProperties)
+                        {
+                            <tr>
+                                <td>
+                                    @if (customProperty.IsActive)
+                                    {
+                                        <a class="btn btn-outline-success btn-flat" href="@Url.Action("Property", "Custom", new { id = Html.UrlIdEncrypt(customProperty.PropertyFor, false), id2 = customProperty.RowKey })"
+                                           data-toggle="tooltip" data-placement="top" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <button onclick="DeactivateRecord(this)"
+                                                data-display="Field Name/Type" data-value="@customProperty.LabelName/@customProperty.DataType"
+                                                data-controller="Custom" data-action="PropertyDeactivate"
+                                                data-id="@Html.UrlIdEncrypt(customProperty.PropertyFor)"
+                                                data-id2="@customProperty.RowKey"
+                                                data-toggle="tooltip" data-placement="top"
+                                                class="btn btn-outline-danger btn-flat" title="Deactivate">
+                                            <i class="fas fa-trash-alt pull-right"></i>
+                                        </button>
+                                    }
+                                </td>
+                                <td>
+                                    @customProperty.LabelName
+                                    <br />
+                                    @Model._dataType[((EdmType)Enum.Parse(typeof(EdmType), customProperty.DataType, true))]
+                                </td>
+                                <td>
+                                    @if (customProperty.IsRequired)
+                                    {
+                                        <span class="badge badge-success">Mandatory Field</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-danger">Not Mandatory Field</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (customProperty.IsPrintable)
+                                    {
+                                        <span class="badge badge-success">Printable Field</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-danger">Not Printable Field</span>
+                                    }
+                                </td>
+                                <td>
+                                    @customProperty.DefaultValue
+                                </td>
+                                <td>
+                                    @if (customProperty.IsActive)
+                                    {
+                                        <span class="right badge badge-success">
+                                            Active
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="right badge badge-danger">Inactive</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    SetInputRequired();
+    function dataTypeChange(e) {
+        if ($(e).val() == '@Microsoft.WindowsAzure.Storage.Table.EdmType.String.ToString()') {
+            $('[data-Property="Default"]').removeClass('d-none');
+        }
+        else {
+            $('[name="DefaultValue"]').val('');
+            $('[data-Property="Default"]').addClass('d-none');
+        }
+    }
+    @if (Model._customProperty != null)
+            {
+                if(Model._customProperty.DataType == Microsoft.WindowsAzure.Storage.Table.EdmType.String.ToString())
+                {
+    <text>
+    $('[name="DefaultValue"]').val('');
+    $('[data-Property="Default"]').addClass('d-none');
+    </text>
+                }
+            }
+</script>

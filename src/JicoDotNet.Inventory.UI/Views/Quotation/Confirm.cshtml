@@ -1,0 +1,303 @@
+﻿@using JicoDotNet.Inventory.UI.Models;
+@using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+@model QuotationModels
+
+@{
+    ViewBag.Title = "Quotation Confirmed for SO";
+    ViewBag.Page = "/Quotation/Index";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Quotation Confirmed</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Quotation")"> Quotation</a></li>
+                    <li class="breadcrumb-item active">Convert To SO</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-danger">
+                    <div class="card-header bg-cyan">
+                        <h3 class="card-title">
+                            Sales Order Generate
+                        </h3>
+                    </div>
+                    @using (Html.BeginForm("Confirm", "Quotation", 
+                        new { id = Html.UrlIdEncrypt(Model._quotation.QuotationId, false) },
+                        FormMethod.Post, new { autocomplete = "off" }))
+                    {
+                        <div class="card-footer">
+                            <div class="float-right">
+                                <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save</button>
+                                <button type="reset" onclick="resetClient()" class="btn btn-info"><i class="fas fa-sync"></i> Reset</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>SO Received Company</label>
+                                        <div>@Model._company.CompanyName</div>
+                                        @if (Model._company.IsGSTRegistered)
+                                        {
+                                            <div>GST Number : @Model._company.GSTNumber</div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Customer & GST Number</label>
+                                        <div>
+                                            @Model._customer.CompanyName @if (Model._customer.IsGSTRegistered)
+                                            {<div>GST No : @Model._customer.GSTNumber</div>}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Sales Order Date</label>
+                                        <small>Day/Month/Year</small>
+                                        <input type="text" name="SalesOrderDate" class="form-control form-control-sm"
+                                               placeholder="Sales Order Date" required data-mask readonly
+                                               value="@GenericLogic.IstNow.ToDateMaskString()" />
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Sales Type</label>
+                                        <select class="form-control form-control-sm" name="SalesTypeId" autofocus style="width:100%;" required>
+                                            <option value="">--Please Select--</option>
+                                            @for (int i = 0; i < Model._salesTypes.Count; i++)
+                                            {
+                                                <option value="@Model._salesTypes[i].SalesTypeId">
+                                                    @Model._salesTypes[i].SalesTypeName
+                                                </option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Branch</label>
+                                        <select class="form-control form-control-sm" name="BranchId" style="width:100%;" required>
+                                            <option value="">--Please Select--</option>
+                                            @for (int i = 0; i < Model._branches.Count; i++)
+                                            {
+                                                <option value="@Model._branches[i].BranchId">
+                                                    @Model._branches[i].BranchName
+                                                </option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Delivery Date</label>
+                                        <small>Day/Month/Year</small>
+                                        <input type="text" name="DeliveryDate" class="form-control form-control-sm"
+                                               placeholder="Delivery Date" data-mask readonly />
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Customer's PO Number</label>
+                                        <input type="text" name="CustomerPONumber" class="form-control form-control-sm"
+                                               placeholder="PO from Customer" title="Purchase Order Number" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>PO Date</label>
+                                        <small>Day/Month/Year</small>
+                                        <input type="text" name="CustomerPODate" class="form-control form-control-sm"
+                                               placeholder="PO Date" data-mask readonly title="Purchase Order Date" />
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>
+                                        Product Details
+                                    </label>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="card card-success">
+                                        <div class="card-header bg-teal">
+                                            <h3 class="card-title">Products Details</h3>
+                                        </div>
+                                        <div class="card-body table-responsive" style="overflow-x:scroll;">
+                                            <table class="table table-striped table-bordered dt-responsive nowrap">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Product Name/ Code</th>
+                                                        <th>HSN/SAC</th>
+                                                        <th>Amount</th>
+                                                        <th>Discount</th>
+                                                        <th>
+                                                            Price
+                                                            <span class="pull-right" data-toggle="tooltip" data-placement="top"
+                                                                  title="Entire calculation will be done based on this value">
+                                                                &nbsp;&nbsp;<i class="fas fa-info-circle text-success"></i>
+                                                            </span>
+                                                        </th>
+                                                        <th>Quantity</th>
+                                                        @if (Model._quotation.IsGstAllowed)
+                                                        {
+                                                            <th class="grn-status">Tax</th>
+                                                        }
+                                                        <th>
+                                                            Total
+                                                            <span class="pull-right" data-toggle="tooltip" data-placement="top"
+                                                                  title="Entire calculation will be done based on this value">
+                                                                &nbsp;&nbsp;<i class="fas fa-info-circle text-success"></i>
+                                                            </span>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (QuotationDetail qd in Model._quotation.QuotationDetails)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                @qd.ProductName
+                                                                @if (!string.IsNullOrEmpty(qd.ProductCode))
+                                                                {
+                                                                    <text> (@(qd.ProductCode)) </text>
+                                                                }
+                                                                <br />
+                                                                @qd.Description
+                                                            </td>
+                                                            <td>
+                                                                <span class="float-right">
+                                                                    @qd.HSNSAC
+                                                                </span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="float-right">
+                                                                    @(Model._config.CurrencySymbol + qd.Amount.ToDisplayDecimal())
+                                                                </span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="float-right">
+                                                                    @qd.DiscountPercentage.ToDisplayDecimal()%
+                                                                </span>
+                                                                <br />
+                                                                <span class="float-right">
+                                                                    @(Model._config.CurrencySymbol + qd.DiscountAmount.ToDisplayDecimal())
+                                                                </span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="float-right">
+                                                                    @(Model._config.CurrencySymbol + qd.Price.ToDisplayDecimal())
+                                                                </span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="float-right">
+                                                                    @qd.Quantity.ToDisplayDecimal()
+                                                                </span>
+                                                                <br />
+                                                                <span class="float-right">
+                                                                    @qd.UnitOfMeasureName
+                                                                </span>
+                                                            </td>
+                                                            @if (Model._quotation.IsGstAllowed)
+                                                            {
+                                                                <td>
+                                                                    <span class="float-right">
+                                                                        @qd.TaxPercentage.ToDisplayDecimal()%
+                                                                    </span>
+                                                                    <br />
+                                                                    <span class="float-right">
+                                                                        @(Model._config.CurrencySymbol + qd.TaxAmount.ToDisplayDecimal())
+                                                                    </span>
+                                                                </td>
+                                                            }
+                                                            <td>
+                                                                <span class="float-right">
+                                                                    @(Model._config.CurrencySymbol + qd.Total.ToDisplayDecimal())
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top:15px;">
+                                <div class="col-md-7"></div>
+                                <div class="col-md-5">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Order Amount</label>
+                                                <div>@Model._quotation.QuotationAmount</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            @if (Model._company.IsGSTRegistered)
+                                            {
+                                                <div class="form-group grn-status">
+                                                    <label>Order Tax Amount</label>
+                                                    <div>@Model._quotation.QuotationTaxAmount</div>
+                                                </div>
+                                            }
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Order Total Amount</label>
+                                                <div>@Model._quotation.QuotationTotalAmount</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Terms & Conditions</label>
+                                        <textarea name="TandC" class="form-control form-control-sm"
+                                                  placeholder="Terms & Conditions"
+                                                  style="height: 180px !important;">@Model._config.SOTnC</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Remarks</label>
+                                        <textarea name="Remarks" class="form-control form-control-sm"
+                                                  placeholder="Remarks" style="height: 180px !important;">@Model._config.SORemarks</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save</button>
+                            <button type="reset" class="btn btn-info"><i class="fas fa-sync"></i> Reset</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

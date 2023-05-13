@@ -1,0 +1,418 @@
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DC5E62E5-87F6-45A8-B3B7-AB57E571E680}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JicoDotNet.Inventory.UI</RootNamespace>
+    <AssemblyName>JicoDotNet.Inventory.UI</AssemblyName>
+    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DataAccess.AzureStorage, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DataAccess.AzureStorage.1.1.0\lib\net45\DataAccess.AzureStorage.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Data.Edm, Version=5.8.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Edm.5.8.2\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.8.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.OData.5.8.2\lib\net40\Microsoft.Data.OData.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.8.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Services.Client.5.8.2\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=8.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.8.7.0\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=106.11.4.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.106.11.4\lib\net452\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Spatial, Version=5.8.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Spatial.5.8.2\lib\net40\System.Spatial.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Web.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.9\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.9\lib\net45\System.Web.Webpages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Deployment">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.9\lib\net45\System.Web.Webpages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.9\lib\net45\System.Web.Webpages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.9\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.2.0.1\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.9\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\css\AdminLteCustom.css" />
+    <Content Include="Content\css\LoginStyle.css" />
+    <Content Include="Content\images\BrandLogo.png" />
+    <Content Include="Content\images\CompanyLogo.jpg" />
+    <Content Include="Content\images\favicon\favicon.ico" />
+    <Content Include="Content\images\icon.png" />
+    <Content Include="Content\images\IinvoiceIcon.png" />
+    <Content Include="Content\images\NoUser.png" />
+    <Content Include="Content\js\gridCalculation.js" />
+    <Content Include="Content\js\html2canvas.js" />
+    <Content Include="Content\js\lang.js" />
+    <Content Include="Content\pwa\main.js" />
+    <Content Include="Content\pwa\pwa-index.html" />
+    <Content Include="Content\pwa\sw.js" />
+    <Content Include="Content\tMail\Registration.html" />
+    <Content Include="Content\tMail\Support.html" />
+    <Content Include="Content\tPrint\invoice.html" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Views\web.config" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Report\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Report\Controllers\PurchaseController.cs" />
+    <Compile Include="Areas\Report\Controllers\SalesController.cs" />
+    <Compile Include="Areas\Report\Controllers\TaxController.cs" />
+    <Compile Include="Areas\Report\Models\PurchaseReportModels.cs" />
+    <Compile Include="Areas\Report\Models\ReportModels.cs" />
+    <Compile Include="Areas\Report\Models\SalesReportModels.cs" />
+    <Compile Include="Areas\Report\Models\TaxReportModels.cs" />
+    <Compile Include="Areas\Report\ReportAreaRegistration.cs" />
+    <Compile Include="Auth\BaseController.cs" />
+    <Compile Include="Auth\SessionAuthenticate.cs" />
+    <Compile Include="Common\ExtendedClass.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BillController.cs" />
+    <Compile Include="Controllers\BranchController.cs" />
+    <Compile Include="Controllers\CompanyController.cs" />
+    <Compile Include="Controllers\ConfigurationController.cs" />
+    <Compile Include="Controllers\CustomController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\GRNController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InvoiceController.cs" />
+    <Compile Include="Controllers\LogoutController.cs" />
+    <Compile Include="Controllers\MeasureController.cs" />
+    <Compile Include="Controllers\PartialController.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
+    <Compile Include="Controllers\PDFController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\PurchaseController.cs" />
+    <Compile Include="Controllers\QuotationController.cs" />
+    <Compile Include="Controllers\RetailController.cs" />
+    <Compile Include="Controllers\SalesController.cs" />
+    <Compile Include="Controllers\ShipmentController.cs" />
+    <Compile Include="Controllers\StockController.cs" />
+    <Compile Include="Controllers\TDSController.cs" />
+    <Compile Include="Controllers\VendorController.cs" />
+    <Compile Include="Controllers\WarehouseController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BillModels.cs" />
+    <Compile Include="Models\BranchModels.cs" />
+    <Compile Include="Models\CompanyModels.cs" />
+    <Compile Include="Models\ConfigModels.cs" />
+    <Compile Include="Models\CustomerModels.cs" />
+    <Compile Include="Models\CustomPropertyModels.cs" />
+    <Compile Include="Models\ErrorModels.cs" />
+    <Compile Include="Models\GoodsReceiveNoteModels.cs" />
+    <Compile Include="Models\HomeModels.cs" />
+    <Compile Include="Models\InvoiceModels.cs" />
+    <Compile Include="Models\JsonReturnModels.cs" />
+    <Compile Include="Models\PaymentModels.cs" />
+    <Compile Include="Models\PlanOrderModels.cs" />
+    <Compile Include="Models\ProductModels.cs" />
+    <Compile Include="Models\PurchaseModels.cs" />
+    <Compile Include="Models\PurchaseOrderModels.cs" />
+    <Compile Include="Models\QuotationModels.cs" />
+    <Compile Include="Models\RedirectModels.cs" />
+    <Compile Include="Models\RetailModels.cs" />
+    <Compile Include="Models\SalesOrderModels.cs" />
+    <Compile Include="Models\SearchModels.cs" />
+    <Compile Include="Models\SessionCredentialCompanyModels.cs" />
+    <Compile Include="Models\ShipmentModels.cs" />
+    <Compile Include="Models\StockModels.cs" />
+    <Compile Include="Models\SubscriptionRechargeModels.cs" />
+    <Compile Include="Models\TDSModels.cs" />
+    <Compile Include="Models\UnitOfMeasureModels.cs" />
+    <Compile Include="Models\UserModels.cs" />
+    <Compile Include="Models\VendorModels.cs" />
+    <Compile Include="Models\WareHouseModels.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Report\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Report\Views\Home\_PartialRpMaster.cshtml" />
+    <Content Include="Areas\Report\Views\Purchase\Product.cshtml" />
+    <Content Include="Areas\Report\Views\Purchase\Vendor.cshtml" />
+    <Content Include="Areas\Report\Views\Purchase\_PartialProductPurchase.cshtml" />
+    <Content Include="Areas\Report\Views\Purchase\_PartialVendorPurchase.cshtml" />
+    <Content Include="Areas\Report\Views\Sales\Customer.cshtml" />
+    <Content Include="Areas\Report\Views\Sales\Product.cshtml" />
+    <Content Include="Areas\Report\Views\Sales\_PartialCustomerSales.cshtml" />
+    <Content Include="Areas\Report\Views\Sales\_PartialProductSales.cshtml" />
+    <Content Include="Areas\Report\Views\Shared\_PartialDateRangeMismatch.cshtml" />
+    <Content Include="Areas\Report\Views\Tax\Input.cshtml" />
+    <Content Include="Areas\Report\Views\Tax\Output.cshtml" />
+    <Content Include="Areas\Report\Views\Tax\_PartialGstInput.cshtml" />
+    <Content Include="Areas\Report\Views\Tax\_PartialGstOutput.cshtml" />
+    <Content Include="Areas\Report\Views\Tax\_ViewNotApplicable.cshtml" />
+    <Content Include="Areas\Report\Views\web.config" />
+    <Content Include="Content\json\bn.json" />
+    <Content Include="Content\json\en.json" />
+    <Content Include="Content\pwa\manifest.json" />
+    <Content Include="Content\pwa\site.webmanifest" />
+    <None Include="packages.config" />
+    <Content Include="Views\Account\Auth.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Bill\Detail.cshtml" />
+    <Content Include="Views\Bill\Generate.cshtml" />
+    <Content Include="Views\Bill\Index.cshtml" />
+    <Content Include="Views\Bill\Type.cshtml" />
+    <Content Include="Views\Branch\Index.cshtml" />
+    <Content Include="Views\Company\Bank.cshtml" />
+    <Content Include="Views\Company\Detail.cshtml" />
+    <Content Include="Views\Configuration\Default.cshtml" />
+    <Content Include="Views\Configuration\Details.cshtml" />
+    <Content Include="Views\Configuration\Setup.cshtml" />
+    <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\Customer\Type.cshtml" />
+    <Content Include="Views\Custom\Index.cshtml" />
+    <Content Include="Views\Custom\Property.cshtml" />
+    <Content Include="Views\Custom\_PartialBind.cshtml" />
+    <Content Include="Views\Custom\_PartialProperty.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\GRN\Detail.cshtml" />
+    <Content Include="Views\GRN\Index.cshtml" />
+    <Content Include="Views\GRN\ReceiveByPO.cshtml" />
+    <Content Include="Views\GRN\ReceiveDirect.cshtml" />
+    <Content Include="Views\GRN\Return.cshtml" />
+    <Content Include="Views\GRN\_PartialReceiveDirectBlock.cshtml" />
+    <Content Include="Views\GRN\_PartialReceiveDirectDetails.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\_PartialHmMaster.cshtml" />
+    <Content Include="Views\Invoice\Detail.cshtml" />
+    <Content Include="Views\Invoice\Generate.cshtml" />
+    <Content Include="Views\Invoice\Index.cshtml" />
+    <Content Include="Views\Invoice\Type.cshtml" />
+    <Content Include="Views\Measure\Unit.cshtml" />
+    <Content Include="Views\Partial\_PartialAsideMain.cshtml" />
+    <Content Include="Views\Partial\_PartialAsideReport.cshtml" />
+    <Content Include="Views\Partial\_PartialAsideStore.cshtml" />
+    <Content Include="Views\Partial\_PartialNavbarCompany.cshtml" />
+    <Content Include="Views\Partial\_PartialNavbarSession.cshtml" />
+    <Content Include="Views\Payment\Bill.cshtml" />
+    <Content Include="Views\Payment\Invoice.cshtml" />
+    <Content Include="Views\Payment\Made.cshtml" />
+    <Content Include="Views\Payment\Make.cshtml" />
+    <Content Include="Views\Payment\Receive.cshtml" />
+    <Content Include="Views\Payment\Received.cshtml" />
+    <Content Include="Views\Payment\Type.cshtml" />
+    <Content Include="Views\Product\Add.cshtml" />
+    <Content Include="Views\Product\BulkOpeningStock.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Product\OpeningStock.cshtml" />
+    <Content Include="Views\Product\Type.cshtml" />
+    <Content Include="Views\Product\_PartialIndex.cshtml" />
+    <Content Include="Views\Product\_PartialOpeningStock.cshtml" />
+    <Content Include="Views\Product\_PartialOpeningStockNotAllowed.cshtml" />
+    <Content Include="Views\Purchase\Index.cshtml" />
+    <Content Include="Views\Purchase\Order.cshtml" />
+    <Content Include="Views\Purchase\OrderDetail.cshtml" />
+    <Content Include="Views\Purchase\Type.cshtml" />
+    <Content Include="Views\Purchase\_PartialIndex.cshtml" />
+    <Content Include="Views\Purchase\_PartialPOItemDetailsNonTax.cshtml" />
+    <Content Include="Views\Purchase\_PartialPOItemDetailsWithTax.cshtml" />
+    <Content Include="Views\Purchase\_PriceAmendment.cshtml" />
+    <Content Include="Views\Purchase\_QuantityAmendment.cshtml" />
+    <Content Include="Views\Quotation\Confirm.cshtml" />
+    <Content Include="Views\Quotation\Detail.cshtml" />
+    <Content Include="Views\Quotation\Generate.cshtml" />
+    <Content Include="Views\Quotation\Index.cshtml" />
+    <Content Include="Views\Quotation\_PartialIndex.cshtml" />
+    <Content Include="Views\Quotation\_PartialQuotaItemDetails.cshtml" />
+    <Content Include="Views\Retail\Index.cshtml" />
+    <Content Include="Views\Retail\Invoice.cshtml" />
+    <Content Include="Views\Retail\Payment.cshtml" />
+    <Content Include="Views\Retail\Sales.cshtml" />
+    <Content Include="Views\Retail\SMS.cshtml" />
+    <Content Include="Views\Retail\SmsSent.cshtml" />
+    <Content Include="Views\Retail\_PartialRetailDetails.cshtml" />
+    <Content Include="Views\Retail\_PartialStockDetailRetail.cshtml" />
+    <Content Include="Views\Sales\Index.cshtml" />
+    <Content Include="Views\Sales\Order.cshtml" />
+    <Content Include="Views\Sales\OrderDetail.cshtml" />
+    <Content Include="Views\Sales\Type.cshtml" />
+    <Content Include="Views\Sales\_PartialIndex.cshtml" />
+    <Content Include="Views\Sales\_PartialSOItemDetails.cshtml" />
+    <Content Include="Views\Sales\_PriceAmendment.cshtml" />
+    <Content Include="Views\Sales\_QuantityAmendment.cshtml" />
+    <Content Include="Views\Shared\_LayoutCompany.cshtml" />
+    <Content Include="Views\Shared\_LayoutLogin.cshtml" />
+    <Content Include="Views\Shared\_LayoutMaster.cshtml" />
+    <Content Include="Views\Shared\_LayoutBasic.cshtml" />
+    <Content Include="Views\Shared\_PartialBrandLogo.cshtml" />
+    <Content Include="Views\Shared\_PartialErrorBlock.cshtml" />
+    <Content Include="Views\Shared\_PartialFooter.cshtml" />
+    <Content Include="Views\Shared\_PartialNavbarMain.cshtml" />
+    <Content Include="Views\Shared\_PartialPrintSignature.cshtml" />
+    <Content Include="Views\Shared\_PartialScript.cshtml" />
+    <Content Include="Views\Shared\_PartialSidebar.cshtml" />
+    <Content Include="Views\Shared\_PartialSidebarUser.cshtml" />
+    <Content Include="Views\Shared\_ViewDoNotHaveAccess.cshtml" />
+    <Content Include="Views\Shipment\Detail.cshtml" />
+    <Content Include="Views\Shipment\Direct.cshtml" />
+    <Content Include="Views\Shipment\Index.cshtml" />
+    <Content Include="Views\Shipment\ShippedBySO.cshtml" />
+    <Content Include="Views\Shipment\Type.cshtml" />
+    <Content Include="Views\Shipment\_PartialDeliveryDirectDetails.cshtml" />
+    <Content Include="Views\Shipment\_PartialShippableStockDetail.cshtml" />
+    <Content Include="Views\Shipment\_PartialStockDetailDirect.cshtml" />
+    <Content Include="Views\Stock\Adjust.cshtml" />
+    <Content Include="Views\Stock\AdjustDetail.cshtml" />
+    <Content Include="Views\Stock\Index.cshtml" />
+    <Content Include="Views\Stock\Transfer.cshtml" />
+    <Content Include="Views\Stock\TransferDetail.cshtml" />
+    <Content Include="Views\Stock\_PartialCurrentStock.cshtml" />
+    <Content Include="Views\Stock\_PartialCurrentStockDetail.cshtml" />
+    <Content Include="Views\Stock\_PartialStockDecrease.cshtml" />
+    <Content Include="Views\Stock\_PartialStockIncrease.cshtml" />
+    <Content Include="Views\TDS\Pay.cshtml" />
+    <Content Include="Views\TDS\Receive.cshtml" />
+    <Content Include="Views\Vendor\Bank.cshtml" />
+    <Content Include="Views\Vendor\Index.cshtml" />
+    <Content Include="Views\Vendor\Type.cshtml" />
+    <Content Include="Views\Warehouse\Index.cshtml" />
+    <Content Include="Views\Account\Duplicate.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Views\Jio\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataAccess.Sql\DataAccess.Sql.csproj">
+      <Project>{6c964b6a-45a0-4402-abfe-8e4aff85800b}</Project>
+      <Name>DataAccess.Sql</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JicoDotNet.Inventory.BusinessLayer\JicoDotNet.Inventory.BusinessLayer.csproj">
+      <Project>{922d9388-95ea-428e-a175-08bbb655d626}</Project>
+      <Name>JicoDotNet.Inventory.BusinessLayer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>56074</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:56074/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,106 @@
+﻿@using JicoDotNet.Inventory.BusinessLayer.DTO.Class
+@model List<SessionCredential>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ITEM Blob | Duplicate Login</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Fav Icon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="~/Content/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/Content/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/Content/images/favicon/favicon/favicon-16x16.png">
+    <!-- Font Awesome (all.min.css- v5.12.1) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.css" />
+    <!-- Data Tables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css" />
+    <link href="https://cdn.datatables.net/fixedheader/3.1.8/css/fixedHeader.bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/responsive/2.2.7/css/responsive.bootstrap.min.css" rel="stylesheet" />
+    <!-- AdminLTE App v3.0.2 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.0.2/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- ITEM Blob Custom Style -->
+    <link rel="stylesheet" href="~/Content/css/AdminLteCustom.css?v=1.5" />
+
+    <!-- jQuery v3.4.1 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body class="hold-transition layout-navbar-fixed layout-top-nav text-sm">
+    <div class="wrapper">
+        <nav class="main-header navbar navbar-expand-md navbar-light navbar-white" style="max-height: 3rem;">
+            <div class="container">
+                <a href="@Url.Action("Index", "Home")" class="navbar-brand">
+                    <img src="https://itemblob.in/img/logo-dark.png" alt="ITEM Blob Logo" class="d-inline-block align-top" style="height:30px;" />
+                    <!--<span class="brand-text font-weight-light">ITEM Blob</span>-->
+                </a>
+            </div>
+        </nav>
+
+        <div class="content-wrapper">
+            <div class="content-header">
+                <div class="container">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h4 class="m-0 text-dark"></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="container">
+                    <div class="row">
+                        @foreach (SessionCredential sc in Model)
+                        {
+                            <div class="col-md-4 offset-md-4">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="m-0">
+                                            Duplicate Session/Login Found
+                                        </h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <h5>Previous Session Details</h5>
+                                        @using (Html.BeginForm("Delete", "Account", new { id = Html.UrlIdEncrypt(sc.UserEmail, false) }, FormMethod.Post))
+                                        {
+                                            <p class="card-success">Previous Login Time: @sc.TokenDate.ToDisplayDateString()</p>
+                                            <input type="hidden" name="UserEmail" value="@sc.UserEmail" />
+                                            <button type="submit" class="btn btn-danger">
+                                                <i class="fas fa-power-off"></i>
+                                                Logout Previous Session
+                                            </button>
+                                        }
+                                        <p class="card-text mt-3 text-danger">Your previous session is active and live.<br>You can not login twice. </p>
+                                    </div>
+                                </div>
+                            </div>
+                        }                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*@Html.Action("Footer", "Partial")*@
+        @Html.Partial("_PartialFooter")
+    </div>
+
+    <!-- Bootstrap v4.3.1 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <!-- Data Tables -->
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+    <!-- Data Tables Responsive -->
+    <script src="https://cdn.datatables.net/fixedheader/3.1.8/js/dataTables.fixedHeader.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.7/js/responsive.bootstrap.min.js"></script>
+    <!-- Toastr -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.js"></script>
+    <!-- AdminLTE App v3.0.2 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.0.2/js/adminlte.min.js"></script>
+</body>
+</html>

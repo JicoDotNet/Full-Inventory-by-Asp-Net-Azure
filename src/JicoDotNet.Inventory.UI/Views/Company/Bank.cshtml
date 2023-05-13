@@ -1,0 +1,234 @@
+﻿@using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+@using JicoDotNet.Inventory.UI.Models;
+@model CompanyModels
+@{
+    ViewBag.Title = Model._company.CompanyName + " Bank";
+    Layout = "~/Views/Shared/_LayoutCompany.cshtml";
+}
+
+<section class="content-header">
+    <div class="container">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h4 class="m-0 text-dark">@Model._company.CompanyName Bank</h4>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")">Home</a></li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index","Company", new { id = string.Empty })">Organization</a></li>
+                    <li class="breadcrumb-item active">Bank Details</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-danger">
+                    <div class="card-header bg-cyan">
+                        <h3 class="card-title">
+                            Update @Model._company.CompanyName Bank
+                        </h3>
+                    </div>
+                    @using (Html.BeginForm("Bank", "Company",
+                        FormMethod.Post, new { autocomplete = "off" }))
+                    {
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Company Name</label>
+                                        <br />
+                                        @if (Model._company != null)
+                                        {<text> @Model._company.CompanyName </text>}
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>GST & PAN</label>
+                                        <br />
+                                        @if (Model._company != null)
+                                        {
+                                            if (Model._company.IsGSTRegistered)
+                                            {
+                                                @Model._company.GSTNumber<i> - </i>
+                                                @Model._state[Model._company.GSTStateCode]
+                                            }
+                                            else
+                                            {
+                                                <span class="right badge badge-danger">GST Unregistered</span>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Account Name</label>
+                                        <input type="text" name="AccountName" class="form-control form-control-sm" maxlength="512"
+                                               @if (Model._companyBank != null) { <text> value="@(Model._companyBank.AccountName)" </text>  } else if (Model._company != null) { <text> value="@Model._company.CompanyName" </text> }
+                                               placeholder="Account Name" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Account Number</label>
+                                        <input type="text" name="AccountNumber" class="form-control form-control-sm" maxlength="60"
+                                               @if (Model._companyBank != null) { <text> value="@(Model._companyBank.AccountNumber)" </text> }
+                                               placeholder="Account Number" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>IFS Code</label>
+                                        <input type="text" name="IFSC" class="form-control form-control-sm" maxlength="15"
+                                               @if (Model._companyBank != null) { <text> value="@(Model._companyBank.IFSC)" </text> }
+                                               placeholder="IFS Code" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Bank Name</label>
+                                        <input type="text" name="BankName" maxlength="125"
+                                               @if (Model._companyBank != null) { <text> value="@Model._companyBank.BankName" </text> }
+                                               class="form-control form-control-sm" placeholder="Enter Bank Name">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Branch Name</label>
+                                        <input type="text" name="BranchName" maxlength="60"
+                                               @if (Model._companyBank != null) { <text> value="@Model._companyBank.BranchName" </text> }
+                                               class="form-control form-control-sm" placeholder="Branch Name">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>MICR Number</label>
+                                        <input type="text" name="MICR" maxlength="16"
+                                               @if (Model._companyBank != null) { <text> value="@Model._companyBank.MICR" </text> }
+                                               class="form-control form-control-sm" placeholder="Enter MICR Number">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Contact Person</label>
+                                        <input type="text" name="BranchAddress" maxlength="125"
+                                               @if (Model._companyBank != null) { <text> value="@Model._companyBank.BranchAddress" </text> }
+                                               class="form-control form-control-sm" placeholder="Branch Address">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            @if (Model._companyBank != null)
+                            {
+                                <button type="submit" class="btn btn-warning"> <i class="fas fa-edit"></i> Update </button>
+                                <a href="@Url.Action("Bank", "Company", new { id = string.Empty })" class="btn btn-danger"> <i class="fas fa-times"></i> Cancel</a>
+                            }
+                            else
+                            {
+                                <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save</button>
+                                <a href="@Url.Action("Index", "Company", new { id = string.Empty })" class="btn btn-danger"> <i class="fas fa-times"></i> Cancel</a>
+                            }
+                            <button type="reset" class="btn btn-info"><i class="fas fa-sync"></i> Reset</button>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card card-danger">
+                    <div class="card-header bg-cyan">
+                        <h3 class="card-title">
+                            @if (Model._company != null)
+                            {<text> @Model._company.CompanyName </text>}'s Banks
+                        </h3>
+                    </div>
+                    <div class="card-body table-responsiv">
+                        <table class="table table-striped table-bordered dt-responsive nowrap" data-table="normal">
+                            <thead>
+                                <tr>
+                                    <th>Edit/Deactivate/Printability</th>
+                                    <th>Account Name</th>
+                                    <th>Account Number</th>
+                                    <th>Bank Name/Branch</th>
+                                    <th>IFS Code/MICR</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model._companyBanks != null)
+                                {
+                                    foreach (CompanyBank companyBank in Model._companyBanks)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @if (companyBank.IsActive)
+                                                {
+                                                    <a class="btn btn-outline-success btn-flat" href="@Url.Action("Bank", "Company", new { id = Html.UrlIdEncrypt(companyBank.CompanyBankId, false) })"
+                                                       data-toggle="tooltip" data-placement="top" title="Edit">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <button onclick="DeactivateRecord(this)"
+                                                            data-display="Account Name/Number" data-value="@companyBank.AccountName/@companyBank.AccountNumber"
+                                                            data-controller="Company" data-action="BankDeactivate"
+                                                            data-id="@Html.UrlIdEncrypt(companyBank.CompanyBankId)"
+                                                            data-toggle="tooltip" data-placement="top"
+                                                            class="btn btn-outline-danger btn-flat" title="Deactivate">
+                                                        <i class="fas fa-trash-alt pull-right"></i>
+                                                    </button>
+                                                    if (companyBank.IsPrintable)
+                                                    {
+                                                        <a class="btn btn-danger btn-round" href="@Url.Action("BankUnPrint", "Company", new { id = Html.UrlIdEncrypt(companyBank.CompanyBankId, false) })"
+                                                           data-toggle="tooltip" data-placement="top" title="Set Printability">
+                                                            <i class="fas fa-print"></i> Remove Printable
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a class="btn btn-success btn-flat" href="@Url.Action("BankPrint", "Company", new { id = Html.UrlIdEncrypt(companyBank.CompanyBankId, false) })"
+                                                           data-toggle="tooltip" data-placement="top" title="Remove Printability">
+                                                            <i class="fas fa-print"></i> Set Printable
+                                                        </a>
+                                                    }
+                                                }
+                                            </td>
+                                            <td>
+                                                @companyBank.AccountName
+                                            </td>
+                                            <td>
+                                                @companyBank.AccountNumber
+                                            </td>
+                                            <td>
+                                                @companyBank.BankName<br />
+                                                @companyBank.BranchName
+                                            </td>
+                                            <td>
+                                                @companyBank.IFSC<br />
+                                                @companyBank.MICR
+                                            </td>
+                                            <td>
+                                                @if (companyBank.IsActive)
+                                                {
+                                                    <span class="right badge badge-success">Active</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="right badge badge-danger">Inactive</span>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

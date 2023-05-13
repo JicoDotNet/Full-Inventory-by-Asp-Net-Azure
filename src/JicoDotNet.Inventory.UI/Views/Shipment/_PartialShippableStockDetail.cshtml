@@ -1,0 +1,227 @@
+﻿@using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+@using JicoDotNet.Inventory.UI.Models;
+@model ShipmentModels
+
+@{ int k = 0; }
+@for (int i = 0; i < Model._salesOrder.SalesOrderDetails.Count; i++)
+{
+    if (Model._salesOrder.SalesOrderDetails[i].Quantity > 0)
+    {
+        decimal MaxValue = 0, MaxTotalShipableQty = 0;
+        Stock stock = Model._stocks.Where(a => a.ProductId == Model._salesOrder.SalesOrderDetails[i].ProductId).FirstOrDefault();
+        if (stock != null)
+        {
+            if (Model._salesOrder.SalesOrderDetails[i].Quantity <= stock.CurrentStock)
+            {
+                MaxTotalShipableQty = Model._salesOrder.SalesOrderDetails[i].Quantity;
+            }
+            else
+            {
+                MaxTotalShipableQty = stock.CurrentStock;
+            }
+        }
+        <div class="card bg-light" style="border: 1px solid #28a745;" data-table="SalesOrderDetailsRows">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-5">
+                        <h2 class="lead mb-0">
+                            <b>
+                                @Model._salesOrder.SalesOrderDetails[i].ProductName
+                                @if (!string.IsNullOrEmpty(Model._salesOrder.SalesOrderDetails[i].ProductCode))
+                                {<text> - @Model._salesOrder.SalesOrderDetails[i].ProductCode </text>}
+                            </b>
+                            @if (stock != null && stock.IsPerishableProduct)
+                            {
+                                <small class="ml-1" style="font-size:10pt;"><code>Parishable</code></small>
+                            }
+                        </h2>
+                        <p class="text-muted text-sm mb-0">
+                            <b>Details: </b>
+                            @Model._salesOrder.SalesOrderDetails[i].Description
+                        </p>
+                        <ul class="ml-4 mb-0 fa-ul text-muted">
+                            <li>
+                                <span class="fa-li"><i class="fas fa-layer-group"></i></span> Total Stock Available:
+                                @if (stock != null)
+                                {
+                                    <span style="font-weight:700; margin-left:5px;" class="text-success">
+                                        @stock.CurrentStock.ToDisplayDecimal()@Model._salesOrder.SalesOrderDetails[i].UnitOfMeasureName
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span style="font-weight:700; margin-left:5px;" class="text-danger">
+                                        0@(Model._salesOrder.SalesOrderDetails[i].UnitOfMeasureName)
+                                    </span>
+                                }
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        Order Quantity: @((Model._salesOrder.SalesOrderDetails[i].ShippedQuantity + Model._salesOrder.SalesOrderDetails[i].Quantity).ToDisplayDecimal())
+                        @Model._salesOrder.SalesOrderDetails[i].UnitOfMeasureName
+                        @if (Model._salesOrder.SalesOrderDetails[i].ShippedQuantity > 0)
+                        {
+                            <br />
+                            <span>Previous Shipped: </span>@Model._salesOrder.SalesOrderDetails[i].ShippedQuantity.ToDisplayDecimal()
+                            @Model._salesOrder.SalesOrderDetails[i].UnitOfMeasureName
+                            <br />
+                            <span>Delivery Due: </span>
+                            <b>
+                                @Model._salesOrder.SalesOrderDetails[i].Quantity.ToDisplayDecimal()
+                                @Model._salesOrder.SalesOrderDetails[i].UnitOfMeasureName
+                            </b>
+                        }
+                    </div>
+                    <div class="col-12 col-md-3">
+                        Order Price:
+                        @(Model._config.CurrencySymbol + Model._salesOrder.SalesOrderDetails[i].Price.ToDisplayDecimal())
+                        @if (Model._salesOrder.IsGstAllowed)
+                        {
+                            <br />
+                            <span>Tax: </span>
+                            @(Model._config.CurrencySymbol + Model._salesOrder.SalesOrderDetails[i].TaxAmount.ToDisplayDecimal())
+                            <b>(@Model._salesOrder.SalesOrderDetails[i].TaxPercentage.ToDisplayDecimal()%)</b>
+                            <br />
+                            <span>Sub Total: </span>
+                            @(Model._config.CurrencySymbol + Model._salesOrder.SalesOrderDetails[i].SubTotal.ToDisplayDecimal())
+                        }
+                    </div>
+                    @if (stock != null && !string.IsNullOrEmpty(stock.ProductImageUrl))
+                    {
+                        <!--
+                            <div class="col-md-3 d-none d-sm-block text-center">
+                            <img src="@stock.ProductImageUrl" alt="@stock.ProductName" class="img-fluid" style="max-width:5rem;">
+                        </div>
+                        -->
+                    }
+                    <div class="col-md-12 d-none" data-alert="stock">
+                        <div class="alert alert-danger mt-2 mb-0 p-1">
+                            <i class="icon fas fa-ban"></i>Alert!
+                            <em class="ml-3">
+                                Summation of shipped quantity should be equal or less then
+                                balanced order quantity. i.e.
+                                <code class="text-light">
+                                    @Model._salesOrder.SalesOrderDetails[i].Quantity.ToDisplayDecimal()
+                                    @Model._salesOrder.SalesOrderDetails[i].UnitOfMeasureName
+                                </code>
+                            </em>
+                        </div>
+                    </div>
+                    <div class="d-none" style="display:none !important;">
+                        <input type="hidden" value="@MaxTotalShipableQty" data-table="SalesOrderDetailsRows-MaxTotalShipableQty" />
+                        <input type="hidden" value="@Model._salesOrder.SalesOrderDetails[i].Quantity" data-table="SalesOrderDetailsRows-DueQty" />
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <ul class="products-list" data-table="StockDetails">
+                    @if (stock != null)
+                    {
+                        for (int j = 0; j < stock.StockDetails.Count; j++)
+                        {
+                            <li class="item" style="margin-bottom:0.5rem;" data-table="StockDetailsRows">
+                                <div class="product-info" style="margin:0px 12px;">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <span class="product-title">
+                                                Current Stock:
+                                                @stock.StockDetails[j].Stock.ToDisplayDecimal()@stock.UnitOfMeasureName
+                                            </span>
+                                            @if (!string.IsNullOrEmpty(stock.StockDetails[j].BatchNo))
+                                            {
+                                                <span class="product-description">
+                                                    Batch Number:
+                                                    @stock.StockDetails[j].BatchNo
+                                                </span>
+                                            }
+                                            @if (stock.StockDetails[j].ExpiryDate != null)
+                                            {
+                                                <span class="product-description">
+                                                    Expairy Date:
+                                                    @stock.StockDetails[j].ExpiryDate.Value.ToDisplayShortDateString()
+                                                </span>
+                                            }
+                                            @if (stock.StockDetails[j].IsPerishable)
+                                            {
+                                                <span class="product-description text-wrap">
+                                                    Goods Received Date:
+                                                    @stock.StockDetails[j].GRNDate.ToDisplayShortDateString()
+                                                </span>
+                                            }
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                @{
+                                                    MaxValue = 0;
+                                                    if (Model._salesOrder.SalesOrderDetails[i].Quantity <= stock.StockDetails[j].Stock)
+                                                    {
+                                                        MaxValue = Model._salesOrder.SalesOrderDetails[i].Quantity;
+                                                    }
+                                                    else
+                                                    {
+                                                        MaxValue = stock.StockDetails[j].Stock;
+                                                    }
+                                                }
+                                                <label>Shipped Quantity</label>
+                                                <div class="input-group" style="width:150px;">
+                                                    <input type="number" name="ShipmentDetails[@k].ShippedQuantity"
+                                                           data-shipped="Quantity"
+                                                           class="form-control form-control-sm"
+                                                           min="0" value="0"
+                                                           step="0.0000001" max="@MaxValue"
+                                                           placeholder="Qty" />
+                                                    <div class="input-group-append" style="height: 31px;">
+                                                        <span class="input-group-text">@stock.UnitOfMeasureName</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Remarks</label>
+                                                <input type="text" name="ShipmentDetails[@k].Description"
+                                                       class="form-control form-control-sm" placeholder="Shipping Remarks" />
+                                            </div>
+                                        </div>
+                                        <div class="d-none" style="display:none !important;">
+                                            <input type="hidden" name="ShipmentDetails[@k].SalesOrderDetailId" value="@Model._salesOrder.SalesOrderDetails[i].SalesOrderDetailId" />
+                                            <input type="hidden" name="ShipmentDetails[@k].ProductId" value="@Model._salesOrder.SalesOrderDetails[i].ProductId" />
+                                            <input type="hidden" name="ShipmentDetails[@k].StockDetailId" value="@stock.StockDetails[j].StockDetailId" />
+                                            <input type="hidden" name="ShipmentDetails[@k].IsPerishable" value="@stock.StockDetails[j].IsPerishable.ToString().ToLower()" />
+                                            <input type="hidden" name="ShipmentDetails[@k].ExpiryDate" value="@(stock.StockDetails[j].ExpiryDate != null? stock.StockDetails[j].ExpiryDate.Value.ToDateMaskString() : string.Empty)" />
+                                            <input type="hidden" name="ShipmentDetails[@k].BatchNo" value="@stock.StockDetails[j].BatchNo" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            k++;
+                        }
+                    }
+                    else
+                    {
+                        <li class="item" style="margin-bottom:0.5rem;" data-table="StockDetailsRows">
+                            <div class="product-info" style="margin:0px 12px;">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <span class="text-danger">Stock not available</span>
+                                        <input type="hidden" name="ShipmentDetails[@k].ShippedQuantity" data-shipped="Quantity" value="0" />
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        k++;
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+}
+@if (Model._salesOrder.SalesOrderDetails.Count == 0)
+{
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <div class="overlay text-center m-4">No Items or Goods is there for Delivery</div>
+        </div>
+    </div>
+}

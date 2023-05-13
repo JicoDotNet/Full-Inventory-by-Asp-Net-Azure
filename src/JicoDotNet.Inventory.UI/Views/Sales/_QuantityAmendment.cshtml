@@ -1,0 +1,394 @@
+﻿@using JicoDotNet.Inventory.UI.Models;
+@using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+@model SalesOrderModels
+
+@{
+    ViewBag.Title = "SO Quantity Amendment";
+    ViewBag.Page = "/Sales/Index";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>SO Quantity Amendment</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Sales")">Sales Order</a></li>
+                    <li class="breadcrumb-item active">Amendment</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-danger">
+                    <div class="card-header bg-cyan">
+                        <h3 class="card-title">
+                            Sales Order Amendment (Quantity)
+                        </h3>
+                    </div>
+                    @using (Html.BeginForm("Amendment", "Sales",
+                            new { id = Html.UrlIdEncrypt(Model._salesOrder.SalesOrderId, false) },
+                            FormMethod.Post, new { autocomplete = "off", id = "formSOAQ" }))
+                    {
+                        <div class="card-footer">
+                            <div class="float-right">
+                                <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save</button>
+                                <button type="reset" onclick="resetClient()" class="btn btn-info"><i class="fas fa-sync"></i> Reset</button>
+                                <a href="@Url.Action("Index", "Sales", new { id = string.Empty })" class="btn btn-danger"><i class="fas fa-times"></i> Cancel</a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>SO Number/Date</label>
+                                        <h4>@Model._salesOrder.SalesOrderNumber</h4>
+                                        @Model._salesOrder.SalesOrderDate.ToDisplayShortDateString()
+                                        <input type="hidden" value="@Model._salesOrder.SalesOrderId" />
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Amendment Date</label>
+                                        <small>Day/Month/Year</small>
+                                        <input type="text" name="AmendmentDate" class="form-control form-control-sm"
+                                               placeholder="SO Amendment Date" required data-mask readonly
+                                               value="@GenericLogic.IstNow.ToDateMaskString()" />
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>SO Received Company</label>
+                                        <span class="d-block">@Model._company.CompanyName</span>
+                                        @if (Model._company.IsGSTRegistered)
+                                        {
+                                            <strong>  @Model._company.GSTNumber</strong>
+                                        }
+                                        <input type="hidden" name="IsGstAllowed" value="@Model._company.IsGSTRegistered.ToString().ToLower()" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Branch</label>
+                                        <span class="d-block">@Model._salesOrder.BranchName</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Customer & GST Number</label>
+                                        <span class="d-block">@Model._customer.CompanyName</span>
+                                        GST NO: <strong>
+                                            @if (Model._salesOrder.IsGstAllowed)
+                                            {<text>@Model._customer.GSTNumber</text>}
+                                        </strong>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Delivery Date</label>
+                                        @Model._salesOrder.DeliveryDate.ToDisplayShortDateString()
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card card-success">
+                                        <div class="card-header bg-teal">
+                                            <h3 class="card-title">Products Details</h3>
+                                        </div>
+                                        <div class="card-body table-responsive" style="overflow-x:scroll;" data-tableSalesOrderDetails="items">
+                                            <table class="table table-striped table-bordered dt-responsive nowrap">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th>
+                                                            Product Name/ Code
+                                                            <br />
+                                                            HSN/SAC
+                                                        </th>
+                                                        <th>Sales Price</th>
+                                                        <th class="text-danger">Quantity</th>
+                                                        <th>Sub Total</th>
+                                                        @if (Model._salesOrder.IsGstAllowed)
+                                                        {
+                                                            <th>Tax</th>
+                                                        }
+                                                        <th>Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody data-tableSalesOrderDetails>
+                                                    @for (int i = 0; i < Model._salesOrder.SalesOrderDetails.Count; i++)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                <input name="SalesOrderDetailId" data-name="SalesOrderDetailId" type="hidden" value="@Model._salesOrder.SalesOrderDetails[i].SalesOrderDetailId" />
+                                                                <input name="ProductId" data-name="ProductId" type="hidden" value="@Model._salesOrder.SalesOrderDetails[i].ProductId" />
+                                                                <input name="ProductName" data-name="ProductName" type="hidden" value="@Model._salesOrder.SalesOrderDetails[i].ProductName" />
+                                                                <input name="UnitOfMeasureName" data-name="UnitOfMeasureName"
+                                                                       value="@Model._salesOrder.SalesOrderDetails[i].UnitOfMeasureName"
+                                                                       data-UnitOfMeasureName type="hidden" />
+                                                                @Model._salesOrder.SalesOrderDetails[i].ProductName
+                                                                @if (!string.IsNullOrEmpty(Model._salesOrder.SalesOrderDetails[i].ProductCode))
+                                                                {
+                                                                    <text> (@(Model._salesOrder.SalesOrderDetails[i].ProductCode)) </text>
+                                                                }
+                                                                <br />
+                                                                @Model._salesOrder.SalesOrderDetails[i].Description
+                                                                <input type="hidden" data-name="Description" data-Description
+                                                                       value="@Model._salesOrder.SalesOrderDetails[i].Description" />
+                                                                <span class="d-block">@Model._salesOrder.SalesOrderDetails[i].HSNSAC</span>
+                                                                <input type="hidden" data-name="HSNSAC"
+                                                                       value="@Model._salesOrder.SalesOrderDetails[i].HSNSAC" data-HSNSAC />
+                                                                <input type="hidden" data-name="Amount"
+                                                                       value="@Model._salesOrder.SalesOrderDetails[i].Amount" />
+                                                                <input type="hidden" name="DiscountPercentage"
+                                                                       data-name="DiscountPercentage"
+                                                                       value="@Model._salesOrder.SalesOrderDetails[i].DiscountPercentage" />
+                                                                <input type="hidden" name="DiscountAmount"
+                                                                       data-name="DiscountAmount"
+                                                                       value="@Model._salesOrder.SalesOrderDetails[i].DiscountAmount" />
+                                                            </td>
+                                                            <td>
+                                                                <span class="float-right">
+                                                                    @Model._config.CurrencySymbol@Model._salesOrder.SalesOrderDetails[i].Price.ToDisplayDecimal()
+                                                                </span>
+                                                                <input name="Price" data-name="Price"
+                                                                       type="hidden" value="@Model._salesOrder.SalesOrderDetails[i].Price" />
+                                                            </td>
+                                                            <td>
+                                                                <div class="input-group" style="width:120px;">
+                                                                    <input type="number" min="0" name="Quantity"
+                                                                           class="form-control form-control-sm"
+                                                                           onblur="AmountCalculate(this);" step="0.00001"
+                                                                           data-name="Quantity"
+                                                                           value="@Model._salesOrder.SalesOrderDetails[i].Quantity.ToDisplayDecimal()" />
+                                                                    <div class="input-group-append">
+                                                                        <span class="input-group-text" data-UnitOfMeasureName>
+                                                                            @Model._salesOrder.SalesOrderDetails[i].UnitOfMeasureName
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="input-group" style="width:150px;">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text" data-CurrencySymbol>
+                                                                            @Model._config.CurrencySymbol
+                                                                        </span>
+                                                                    </div>
+                                                                    <input type="number" name="SubTotal"
+                                                                           readonly
+                                                                           data-name="SubTotal"
+                                                                           step="0.00001"
+                                                                           class="form-control form-control-sm"
+                                                                           value="@Model._salesOrder.SalesOrderDetails[i].SubTotal" />
+                                                                </div>
+                                                            </td>
+                                                            @if (true)
+                                                            {
+                                                                <td class="grn-status">
+                                                                    <div class="input-group" style="width:150px;">
+                                                                        <input type="number" min="0" name="TaxPercentage"
+                                                                               class="form-control form-control-sm"
+                                                                               step="0.00001"
+                                                                               onblur="AmountCalculate(this);"
+                                                                               data-name="TaxPercentage"
+                                                                               readonly
+                                                                               value="@Model._salesOrder.SalesOrderDetails[i].TaxPercentage" />
+                                                                        <div class="input-group-append">
+                                                                            <span class="input-group-text">%</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="input-group" style="width:150px;">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text" data-CurrencySymbol>
+                                                                                @Model._config.CurrencySymbol
+                                                                            </span>
+                                                                        </div>
+                                                                        <input type="number" min="0" name="TaxAmount"
+                                                                               class="form-control form-control-sm"
+                                                                               step="0.00001"
+                                                                               data-name="TaxAmount"
+                                                                               onblur="AmountCalculate(this);"
+                                                                               value="@Model._salesOrder.SalesOrderDetails[i].TaxAmount"
+                                                                               readonly />
+                                                                    </div>
+                                                                </td>
+                                                            }
+                                                            <td>
+                                                                <div class="input-group" style="width:150px;">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text" data-CurrencySymbol>
+                                                                            @Model._config.CurrencySymbol
+                                                                        </span>
+                                                                    </div>
+                                                                    <input type="number" min="0" name="Total"
+                                                                           class="form-control form-control-sm"
+                                                                           data-name="Total"
+                                                                           step="0.00001" readonly
+                                                                           onblur="AmountCalculate(this);"
+                                                                           value="@Model._salesOrder.SalesOrderDetails[i].Total" />
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top:15px;">
+                                <div class="col-md-7"></div>
+                                <div class="col-md-5">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Order Amount</label>
+                                                <input type="text" name="SalesOrderAmount"
+                                                       class="form-control form-control-sm"
+                                                       value="@Model._salesOrder.SalesOrderAmount"
+                                                       placeholder="Order Amount" readonly />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            @if (Model._company.IsGSTRegistered)
+                                            {
+                                                <div class="form-group grn-status">
+                                                    <label>Order Tax Amount</label>
+                                                    <input type="text" name="SalesOrderTaxAmount"
+                                                           class="form-control form-control-sm"
+                                                           value="@Model._salesOrder.SalesOrderTaxAmount"
+                                                           placeholder="Order Tax Amount" readonly />
+                                                </div>
+                                            }
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Order Total Amount</label>
+                                                <input type="text" name="SalesOrderTotalAmount"
+                                                       class="form-control form-control-sm"
+                                                       value="@Model._salesOrder.SalesOrderTotalAmount"
+                                                       placeholder="Order Total Amount" readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Terms & Conditions</label>
+                                        <textarea name="TandC" class="form-control form-control-sm" placeholder="Terms & Conditions" style="height: 180px !important;">@Model._salesOrder.TandC</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Remarks</label>
+                                        <textarea name="Remarks" class="form-control form-control-sm" placeholder="Remarks" style="height: 180px !important;">@Model._salesOrder.Remarks</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save</button>
+                            <button type="reset" class="btn btn-info"><i class="fas fa-sync"></i> Reset</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section BodyScript{
+    <script src="~/Content/js/gridCalculation.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('input.form-control-sm, select.form-control-sm').parent('div.input-group').children('div.input-group-prepend, div.input-group-append').css("height", "31px");
+
+            //Form Submission
+            $('form#formSOAQ').submit(function () {
+                var TRs = $("tbody[data-tableSalesOrderDetails] tr");
+                for (var i = 0; i < TRs.length; i++) {
+                    var controls = $(TRs[i]).find('[data-name]');
+                    for (var j = 0; j < controls.length; j++) {
+                        $(controls[j]).attr('name', 'SalesOrderDetails[' + i + '].' + $(controls[j]).data('name'));
+                    }
+                }
+                return true;
+            });
+        });
+
+        function AmountCalculate(e) {
+            var thisName = $(e).data('name');
+            var PriceObj = {};
+            var isGSTRegistered = $('input[name="IsGstAllowed"]').val() == 'true';
+            PriceObj.TaxPercentage = 0;
+            PriceObj.TaxAmount = 0;
+
+            PriceObj.Amount = isNaN(parseFloat($(e).parents('tr').find('input[data-name="Amount"]').val())) ? 0.0 : parseFloat($(e).parents('tr').find('input[data-name="Amount"]').val());
+            PriceObj.DiscountPercentage = isNaN(parseFloat($(e).parents('tr').find('input[data-name="DiscountPercentage"]').val())) ? 0.0 : parseFloat($(e).parents('tr').find('input[data-name="DiscountPercentage"]').val());
+            PriceObj.DiscountAmount = isNaN(parseFloat($(e).parents('tr').find('input[data-name="DiscountAmount"]').val())) ? 0.0 : parseFloat($(e).parents('tr').find('input[data-name="DiscountAmount"]').val());
+            PriceObj.Price = isNaN(parseFloat($(e).parents('tr').find('input[data-name="Price"]').val())) ? 0.0 : parseFloat($(e).parents('tr').find('input[data-name="Price"]').val());
+            PriceObj.Quantity = isNaN(parseFloat($(e).parents('tr').find('input[data-name="Quantity"]').val())) ? 0.0 : parseFloat($(e).parents('tr').find('input[data-name="Quantity"]').val());
+            PriceObj.SubTotal = isNaN(parseFloat($(e).parents('tr').find('input[data-name="SubTotal"]').val())) ? 0.0 : parseFloat($(e).parents('tr').find('input[data-name="SubTotal"]').val());
+            if (isGSTRegistered) {
+                PriceObj.TaxPercentage = isNaN(parseFloat($(e).parents('tr').find('input[data-name="TaxPercentage"]').val())) ? 0.0 : parseFloat($(e).parents('tr').find('input[data-name="TaxPercentage"]').val());
+                PriceObj.TaxAmount = isNaN(parseFloat($(e).parents('tr').find('input[data-name="TaxAmount"]').val())) ? 0.0 : parseFloat($(e).parents('tr').find('input[data-name="TaxAmount"]').val());
+            }
+            PriceObj.Total = isNaN(parseFloat($(e).parents('tr').find('input[data-name="Total"]').val())) ? 0.0 : parseFloat($(e).parents('tr').find('input[data-name="Total"]').val());
+
+            PriceObj = Calculation(PriceObj, thisName);
+
+            $(e).parents('tr').find('input[data-name="Total"]').val(parseFloat(PriceObj.Total.toFixed(5)));
+            $(e).parents('tr').find('input[data-name="TaxAmount"]').val(parseFloat(PriceObj.TaxAmount.toFixed(5)));
+            $(e).parents('tr').find('input[data-name="TaxPercentage"]').val(PriceObj.TaxPercentage); // same
+            $(e).parents('tr').find('input[data-name="SubTotal"]').val(parseFloat(PriceObj.SubTotal.toFixed(5)));
+            $(e).parents('tr').find('input[data-name="Quantity"]').val(PriceObj.Quantity); // same
+            $(e).parents('tr').find('input[data-name="Price"]').val(parseFloat(PriceObj.Price.toFixed(5)));
+            $(e).parents('tr').find('input[data-name="DiscountPercentage"]').val(parseFloat(PriceObj.DiscountPercentage.toFixed(5)));
+            $(e).parents('tr').find('input[data-name="DiscountAmount"]').val(parseFloat(PriceObj.DiscountAmount.toFixed(5)));
+            $(e).parents('tr').find('input[data-name="Amount"]').val(PriceObj.Amount); // same
+
+            TotalCalculate();
+        }
+
+        function TotalCalculate() {
+            var trs = $('[data-tableSalesOrderDetails]').children('tr');
+            var SalesOrderAmount = 0.0;
+            var SalesOrderTaxAmount = 0.0;
+            var SalesOrderTotalAmount = 0.0;
+            for (var i = 0; i < trs.length; i++) {
+                SalesOrderAmount = SalesOrderAmount + parseFloat($(trs[i]).find('[name="SubTotal"]').val());
+                SalesOrderTaxAmount = SalesOrderTaxAmount + parseFloat($(trs[i]).find('[name="TaxAmount"]').val());
+                SalesOrderTotalAmount = SalesOrderTotalAmount + parseFloat($(trs[i]).find('[name="Total"]').val());
+            }
+            $('input[name="SalesOrderAmount"]').val(parseFloat(SalesOrderAmount.toFixed(5)));
+            $('input[name="SalesOrderTaxAmount"]').val(parseFloat(SalesOrderTaxAmount.toFixed(5)));
+            $('input[name="SalesOrderTotalAmount"]').val(parseFloat(SalesOrderTotalAmount.toFixed(5)));
+
+            // Tax Field Hide/Show
+            if ($('input[name="IsGstAllowed"]').val() == 'true')
+                $('input[name="SalesOrderTaxAmount"]').parent().parent().show();
+            else if ($('input[name="IsGstAllowed"]').val() == 'false')
+                $('input[name="SalesOrderTaxAmount"]').parent().parent().hide();
+            else {
+                $('input[name="SalesOrderTaxAmount"]').val('Something went Wrong');
+                $('input[name="SalesOrderTaxAmount"]').parent().parent().show();
+            }
+        }
+    </script>
+}

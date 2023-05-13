@@ -1,0 +1,190 @@
+﻿@using JicoDotNet.Inventory.UI.Models;
+@using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+@model PurchaseOrderModels
+
+<div class="card card-danger">
+    <div class="card-header bg-cyan">
+        <h3 class="card-title"> Purchase Order</h3>
+    </div>
+    <div class="card-body table-responsive" style="overflow-x:scroll;">
+        <table class="table table-striped table-bordered dt-responsive nowrap" data-table="normal">
+            <thead>
+                <tr>
+                    <th>Action</th>
+                    <th>PO No/Date</th>
+                    <th>Branch</th>
+                    <th>Vendor Name/GST No</th>
+                    <th>Order & TAX</th>
+                    <th>Total Amount</th>
+                    <th>Receive Status</th>
+                    <th>Bill Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model._purchaseOrders != null)
+                {
+                    for (int i = 0; i < Model._purchaseOrders.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                <div class="input-group">
+                                    <div class="input-group-prepend" data-toggle="tooltip" data-placement="top" title="Action Point">
+                                        <button type="button" class="btn btn-outline-primary btn-flat dropdown-toggle" data-toggle="dropdown">
+                                            <i class="fas fa-hand-pointer"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item text-primary"
+                                               href="@Url.Action("OrderDetail", "Purchase", new { id = Html.UrlIdEncrypt(Model._purchaseOrders[i].PurchaseOrderId, false) })">
+                                                <i class="fas fa-binoculars mr-1"></i> Detail View
+                                            </a>
+                                            @if (Model._purchaseOrders[i].GoodsReceivedStatus == null
+                                               || !Model._purchaseOrders[i].GoodsReceivedStatus.Value
+                                               || Model._purchaseOrders[i].BilledStatus == null
+                                               || !Model._purchaseOrders[i].BilledStatus.Value)
+                                            {
+                                                <div class="dropdown-divider"></div>
+                                            }
+                                            @if (Model._purchaseOrders[i].GoodsReceivedStatus == null
+                                                || !Model._purchaseOrders[i].GoodsReceivedStatus.Value)
+                                            {
+                                                <a class="dropdown-item"
+                                                   href="@Url.Action("ReceiveByPO", "GRN", new { id = Html.UrlIdEncrypt(Model._purchaseOrders[i].PurchaseOrderId, false) })">
+                                                    <i class="fas fa-angle-double-down mr-1"></i> Goods Receive
+                                                </a>
+                                            }
+                                            @if (Model._purchaseOrders[i].BilledStatus == null
+                                                || !Model._purchaseOrders[i].BilledStatus.Value)
+                                            {
+                                                <a class="dropdown-item"
+                                                   href="@Url.Action("Generate", "Bill", new { id = Html.UrlIdEncrypt(Model._purchaseOrders[i].PurchaseOrderId, false) })">
+                                                    <i class="fas fa-file-invoice-dollar mr-1"></i> Bill Generate
+                                                </a>
+                                            }
+                                            @if (Model._purchaseOrders[i].GoodsReceivedStatus == null
+                                                || Model._purchaseOrders[i].BilledStatus == null)
+                                            {
+                                                <div class="dropdown-divider"></div>
+                                            }
+                                            @if (Model._purchaseOrders[i].GoodsReceivedStatus == null)
+                                            {
+                                                <a class="dropdown-item"
+                                                   href="@Url.Action("Amendment", "Purchase", new { id = Html.UrlIdEncrypt(Model._purchaseOrders[i].PurchaseOrderId, false), id2 = "Quantity" })">
+                                                    <i class="fas fa-sort-numeric-down mr-1"></i> Quantity Amendment
+                                                </a>
+                                            }
+                                            @if (Model._purchaseOrders[i].BilledStatus == null)
+                                            {
+                                                <a class="dropdown-item"
+                                                   href="@Url.Action("Amendment", "Purchase", new { id = Html.UrlIdEncrypt(Model._purchaseOrders[i].PurchaseOrderId, false), id2 = "Price" })">
+                                                    <i class="fas fa-rupee-sign mr-1"></i> Price Amendment
+                                                </a>
+                                            }
+                                            @if (Model._purchaseOrders[i].GoodsReceivedStatus == null
+                                            && Model._purchaseOrders[i].BilledStatus == null)
+                                            {
+                                                <div class="dropdown-divider"></div>
+                                                <button onclick="DeactivateRecord(this)"
+                                                        data-display="PO Number/Date" data-value="@Model._purchaseOrders[i].PurchaseOrderNumber/@Model._purchaseOrders[i].PurchaseOrderDate.ToDisplayShortDateString()"
+                                                        data-controller="Purchase" data-action="Deactivate"
+                                                        data-id="@Html.UrlIdEncrypt(Model._purchaseOrders[i].PurchaseOrderId)"
+                                                        data-toggle="tooltip" data-placement="top"
+                                                        class="dropdown-item text-danger" title="Deactivate">
+                                                    <i class="fas fa-times mr-1"></i> Delete Permanently
+                                                </button>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <strong>
+                                    <a href="@Url.Action("OrderDetail", "Purchase", new { id = Html.UrlIdEncrypt(Model._purchaseOrders[i].PurchaseOrderId, false) })"
+                                       class="text-primary">
+                                        @Model._purchaseOrders[i].PurchaseOrderNumber@if (!string.IsNullOrEmpty(Model._purchaseOrders[i].AmendmentNumber))
+                                        {<span>-@Model._purchaseOrders[i].AmendmentNumber</span>}
+                                        </a>
+                                </strong>
+                                <br />
+                                @Model._purchaseOrders[i].PurchaseOrderDate.ToDisplayShortDateString()
+                            </td>
+                            <td>
+                                @Model._purchaseOrders[i].BranchName
+                                <br />
+                                @Model._purchaseOrders[i].BranchCode
+                            </td>
+                            <td>
+                                @Model._purchaseOrders[i].CompanyName
+                                <br />
+                                @if (Model._purchaseOrders[i].IsGstAllowed)
+                                {
+                                    <em>@Model._purchaseOrders[i].GSTNumber</em>
+                                }
+                                else
+                                {
+                                    <span class="right badge badge-danger">Unregistered</span>
+                                }
+                            </td>
+                            <td>
+                                @Model._config.CurrencySymbol@Model._purchaseOrders[i].PurchaseOrderAmount.ToDisplayDecimal()
+                                <br />
+                                @if (Model._purchaseOrders[i].IsGstAllowed)
+                                {
+                                    @Model._config.CurrencySymbol@Model._purchaseOrders[i].PurchaseOrderTaxAmount.ToDisplayDecimal()
+                                }
+                            </td>
+                            <td>
+                                @Model._config.CurrencySymbol@Model._purchaseOrders[i].PurchaseOrderTotalAmount.ToDisplayDecimal()
+                            </td>
+                            <td>
+                                @if (Model._purchaseOrders[i].GoodsReceivedStatus == null)
+                                {
+                                    <div class="progress-group">
+                                        <span class="progress-text">Not Received</span>
+                                        <div class="progress progress-sm active" data-toggle="tooltip" title="Not received" style="border: 1px solid #28a745;">
+                                            <div class="progress-bar bg-success progress-bar-striped" style="width: 1%"></div>
+                                        </div>
+                                    </div>
+                                }
+                                else if (!Model._purchaseOrders[i].GoodsReceivedStatus.Value)
+                                {
+                                    <div class="progress-group">
+                                        <span class="progress-text">Partially Received</span>
+                                        <div class="progress progress-sm active" data-toggle="tooltip" title="Partially received">
+                                            <div class="progress-bar bg-success progress-bar-striped" style="width: 50%"></div>
+                                        </div>
+                                    </div>
+                                }
+                                else if (Model._purchaseOrders[i].GoodsReceivedStatus.Value)
+                                {
+                                    <div class="progress-group">
+                                        <span class="progress-text">Full Received</span>
+                                        <div class="progress progress-sm active" data-toggle="tooltip" title="Full received">
+                                            <div class="progress-bar bg-success progress-bar-striped" style="width: 100%"></div>
+                                        </div>
+                                    </div>
+                                }
+                            </td>
+                            <td>
+                                @if (Model._purchaseOrders[i].BilledStatus == null)
+                                {
+                                    <i class="fas fa-lg fa-circle text-danger" data-toggle="tooltip" title="Not Billed"></i>
+                                    <div>Not Billed</div>
+                                }
+                                else if (!Model._purchaseOrders[i].BilledStatus.Value)
+                                {
+                                    <i class="fas fa-lg fa-adjust text-warning" data-toggle="tooltip" title="Partially Billed"></i>
+                                    <div>Partially Billed</div>
+                                }
+                                else if (Model._purchaseOrders[i].BilledStatus.Value)
+                                {
+                                    <i class="fas fa-lg fa-circle text-success" data-toggle="tooltip" title="Full Billed"></i>
+                                    <div>Full Billed</div>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

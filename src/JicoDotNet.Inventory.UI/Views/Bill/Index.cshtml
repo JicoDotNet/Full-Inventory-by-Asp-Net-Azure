@@ -1,0 +1,177 @@
+﻿@using JicoDotNet.Inventory.UI.Models;
+@using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+@model BillModels
+
+@{
+    ViewBag.Title = "Bills";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Purchase Bill</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    <li class="breadcrumb-item active"><a href="@Url.Action("Index", "Bill")"> Bill</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <a href="@Url.Action("Generate", "Bill")" class="btn btn-block btn-success"><i class="fas fa-plus"></i> Generate New Bill</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card card-danger">
+                    <div class="card-header bg-cyan">
+                        <h3 class="card-title"> Bills</h3>
+                    </div>
+                    <div class="card-body table-responsive" style="overflow-x:scroll;">
+                        <table class="table table-striped table-bordered dt-responsive nowrap" data-table="normal">
+                            <thead>
+                                <tr>
+                                    <th>Action</th>
+                                    <th>Bill No/Date</th>
+                                    <th>Vendor Name/GST No</th>
+                                    <th>PO/GRN No</th>
+                                    <th>Bill Amount/Total</th>
+                                    <th>Tax</th>
+                                    <th>Invoice No/Date</th>
+                                    <th>Payment</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model._bills != null)
+                                {
+                                    for (int i = 0; i < Model._bills.Count; i++)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @if (Model._bills[i].PaymentStatus == null
+                                                    || !Model._bills[i].PaymentStatus.Value)
+                                                {
+                                                    <a class="btn btn-outline-danger btn-flat"
+                                                       href="@Url.Action("Bill", "Payment", new { id = Html.UrlIdEncrypt(Model._bills[i].BillId, false) })"
+                                                       data-toggle="tooltip" data-placement="top" title="Make Payment">
+                                                        <i class="fas fa-money-bill"></i>
+                                                    </a>
+                                                }
+                                                <a class="btn btn-outline-primary btn-flat"
+                                                   href="@Url.Action("Detail", "Bill", new { id = Html.UrlIdEncrypt(Model._bills[i].BillId, false) })"
+                                                   data-toggle="tooltip" data-placement="top" title="Detail View">
+                                                    <i class="fas fa-binoculars"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <strong>@Model._bills[i].BillNumber</strong>
+                                                @if (Model._bills[i].IsFullBilled)
+                                                {
+                                                    <i class="fas fa-lg fa-check-square text-success" data-toggle="tooltip" title="Full billed"></i>
+                                                }
+                                                <br />
+                                                @Model._bills[i].BillDate.ToDisplayShortDateString()
+                                            </td>
+                                            <td>
+                                                @Model._bills[i].CompanyName
+                                                <br />
+                                                @if (Model._bills[i].IsGstApplicable)
+                                                {
+                                                    <em>@Model._bills[i].GSTNumber</em>
+                                                }
+                                                else
+                                                {
+                                                    <span class="right badge badge-danger">Unregistered</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (string.IsNullOrEmpty(Model._bills[i].PurchaseOrderNumber))
+                                                {
+                                                    @Model._bills[i].GRNNumber
+                                                }
+                                                else
+                                                {
+                                                    @Model._bills[i].PurchaseOrderNumber
+                                                }
+                                            </td>
+                                            <td>
+                                                @Model._config.CurrencySymbol@Model._bills[i].BilledAmount.ToDisplayDecimal()
+                                                <br />
+                                                @Model._config.CurrencySymbol@Model._bills[i].TotalAmount.ToDisplayDecimal()
+                                            </td>
+                                            <td>
+                                                @if (Model._bills[i].IsGstApplicable)
+                                                {
+                                                    @Model._config.CurrencySymbol@Model._bills[i].TaxAmount.ToDisplayDecimal()
+                                                    <br />
+                                                    if (Model._bills[i].GSTType == (short)EGSTType.IGST)
+                                                    {
+                                                        <i>IGST</i><br />
+                                                    }
+                                                    else if (Model._bills[i].GSTType == (short)EGSTType.CGSTSGST)
+                                                    {
+                                                        <i>CGST-U/SGST </i><br />
+                                                    }
+                                                    else
+                                                    {
+                                                        <strong class="text-danger">Something wrong!! </strong><br />
+                                                    }
+                                                }
+                                            </td>
+                                            <td>
+                                                @Model._bills[i].VendorInvoiceNumber<br />@(Model._bills[i].VendorInvoiceDate != null? Model._bills[i].VendorInvoiceDate.Value.ToDisplayableShortDateString() : string.Empty)
+                                            </td>
+                                            <td>
+                                                @if (Model._bills[i].PaymentStatus == null)
+                                                {
+                                                    <div class="progress-group">
+                                                        <span class="progress-text">Not Paid</span>
+                                                        <div class="progress progress-sm active" data-toggle="tooltip" title="Not received" style="border: 1px solid #28a745;">
+                                                            <div class="progress-bar bg-success progress-bar-striped" style="width: 1%"></div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else if (!Model._bills[i].PaymentStatus.Value)
+                                                {
+                                                    <div class="progress-group">
+                                                        <span class="progress-text">Partially Paid</span>
+                                                        <div class="progress progress-sm active" data-toggle="tooltip" title="Partially received">
+                                                            <div class="progress-bar bg-success progress-bar-striped" style="width: 50%"></div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else if (Model._bills[i].PaymentStatus.Value)
+                                                {
+                                                    <div class="progress-group">
+                                                        <span class="progress-text">Full Paid</span>
+                                                        <div class="progress progress-sm active" data-toggle="tooltip" title="Full received">
+                                                            <div class="progress-bar bg-success progress-bar-striped" style="width: 100%"></div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

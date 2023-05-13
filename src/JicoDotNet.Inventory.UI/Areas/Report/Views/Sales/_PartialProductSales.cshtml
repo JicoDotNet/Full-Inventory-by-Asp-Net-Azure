@@ -1,0 +1,61 @@
+﻿@using JicoDotNet.Inventory.UIReport.Models;
+@using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+@using JicoDotNet.Inventory.BusinessLayer.DTO.Class.Report;
+@model SalesReportModels
+
+<table class="table table-striped table-bordered dt-responsive nowrap" data-table="report">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Product Code</th>
+            <th>HSN/SAC</th>
+            <th>Sold Price</th>
+            <th>Quantity</th>
+            <th>SGST/UGST</th>
+            <th>CGST</th>
+            <th>IGST</th>
+            <th>Total Tax</th>
+            <th>Total Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model._rProductSales != null)
+        {
+            foreach (RProductSales rProductSales in Model._rProductSales)
+            {
+                <tr>
+                    <td>
+                        @rProductSales.ProductName
+                    </td>
+                    <td>
+                        @rProductSales.ProductCode
+                    </td>
+                    <td>
+                        @rProductSales.HSNSAC
+                    </td>
+                    <td>
+                        @rProductSales.TotalPrice.ToDisplayDecimal()
+                    </td>
+                    <td>
+                        @rProductSales.TotalQuantity.ToDisplayDecimal()
+                    </td>
+                    <td>
+                        @rProductSales.TotalSGST.ToDisplayDecimal()
+                    </td>
+                    <td>
+                        @rProductSales.TotalCGST.ToDisplayDecimal()
+                    </td>
+                    <td>
+                        @rProductSales.TotalIGST.ToDisplayDecimal()
+                    </td>
+                    <td>
+                        @rProductSales.TotalTax.ToDisplayDecimal()
+                    </td>
+                    <td>
+                        @rProductSales.TotalInvoicedAmount.ToDisplayDecimal()
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

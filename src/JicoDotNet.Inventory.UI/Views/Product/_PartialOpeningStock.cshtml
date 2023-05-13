@@ -1,0 +1,72 @@
+﻿@using JicoDotNet.Inventory.UI.Models;
+@using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+@model Product
+
+
+<li class="item" style="margin-bottom:0.5rem;">
+    <div class="product-info" style="margin:0px 12px;">
+        <div class="row">
+            <div class="d-none">
+                <input type="hidden" name="[@Model.ProductId].WareHouseId" value="@Model.ProductName" />
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Current Stock</label>
+                    <div class="input-group">
+                        <input type="number" name="[@Model.ProductId].Stock"
+                               class="form-control form-control-sm"
+                               min="0" value="0"
+                               step="0.0000001"
+                               placeholder="Qty" />
+                        <div class="input-group-append" style="height: 31px;">
+                            <span class="input-group-text">@Model.UnitOfMeasureName</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Approximate Receive Date</label>
+                    <input type="text" name="[@Model.ProductId].GRNDate"
+                           class="form-control form-control-sm" placeholder="Receive Date" data-mask readonly />
+                </div>
+            </div>
+            <div class="col-md-3">
+                @if (Model.HasBatchNo)
+                {
+                    <input type="text" name="[@Model.ProductId].BatchNo"
+                           class="form-control form-control-sm" placeholder="Batch Number" />
+                }
+                @if (Model.HasExpirationDate)
+                {
+                    <input type="text" name="[@Model.ProductId].ExpiryDate"
+                           class="form-control form-control-sm" placeholder="Expiery Date" data-mask readonly />
+                }
+                @if (Model.IsPerishableProduct)
+                {
+                    <input type="hidden" name="[@Model.ProductId].IsPerishable"
+                           value="@Model.IsPerishableProduct.ToString().ToLower()" readonly />
+                    <span class="text-danger">Perishable Product</span>
+                }
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Remarks</label>
+                    <input type="text" name="[@Model.ProductId].Remarks"
+                           class="form-control form-control-sm" placeholder="Remarks" />
+                </div>
+            </div>
+            <div class="col-md-1">
+                <button type="button" onclick="$(this).parents('li').find('input[name=\'Quantity\']').val('0'); $(this).parents('li').hide();"
+                        class="btn bg-danger btn-danger mt-3 text-center float-right">
+                    <i class="far fa-trash-alt"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</li>
+<script type="text/javascript">
+    try {
+        LoadInputDate();
+    } catch (e) { console.log(); }
+</script>

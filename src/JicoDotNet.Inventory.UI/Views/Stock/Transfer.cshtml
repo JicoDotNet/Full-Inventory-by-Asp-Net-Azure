@@ -1,0 +1,270 @@
+﻿@using JicoDotNet.Inventory.UI.Models;
+@using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+@model StockModels
+
+@{
+    ViewBag.Title = "Stock Transfer";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Stock Transfer</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("Current", "Stock")">Stock</a></li>
+                    <li class="breadcrumb-item active">Transfer</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-cyan">
+                        <h3 class="card-title">
+                            Details
+                        </h3>
+                    </div>
+                    @using (Model._stock == null ?
+                        Html.BeginForm("Search", "Stock",
+                        FormMethod.Get, new { autocomplete = "off" }) :
+                        Html.BeginForm("Transfer", "Stock",
+                        FormMethod.Post, new { autocomplete = "off" })
+                        )
+                    {
+                        if (Model._stock != null)
+                        {
+                            <div class="card-footer">
+                                <span class="float-right">
+                                    <button type="submit" class="btn btn-warning"> <i class="fas fa-exchange-alt"></i> Transfer </button>
+                                    <a href="@Url.Action("Transfer", "Stock", null)" class="btn btn-danger"> <i class="fas fa-times"></i> Cancel</a>
+                                    <button type="reset" class="btn btn-info"><i class="fas fa-sync"></i> Reset</button>
+                                </span>
+                            </div>
+                        }
+
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Transfer From (Warehouse)</label>
+                                        <select class="form-control"
+                                                @if (Model._stock != null) { <text> name="FromWareHouseId" </text>  } else { <text> name="WareHouseId" </text> }
+                                                required>
+                                            <option value="">-- Select --</option>
+                                            @if (Model != null && Model._wareHouses != null)
+                                            {
+                                                foreach (WareHouse wareHouse in Model._wareHouses)
+                                                {
+                                                    <option value="@wareHouse.WareHouseId"
+                                                            @if (Model._stock != null) { if (wareHouse.WareHouseId == Model._stock.WareHouseId) { <text> selected </text>  } else { <text> disabled </text> } }>
+                                                        @wareHouse.WareHouseName
+                                                    </option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Product Name/Code</label>
+                                        <select class="form-control select2" name="ProductId">
+                                            <option value="">-- Select --</option>
+                                            @if (Model != null && Model._products != null)
+                                            {
+                                                foreach (Product product in Model._products)
+                                                {
+                                                    <option value="@product.ProductId"
+                                                            @if (Model._stock != null) { if (product.ProductId == Model._stock.ProductId) { <text> selected </text> } }>
+                                                        @product.ProductName @if (!string.IsNullOrEmpty(product.ProductCode))
+                                                        {<text> - @product.ProductCode </text>}
+                                                    </option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            @if (Model._stock != null)
+                            {
+                                <hr />
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Transfer To</label>
+                                            <select class="form-control" name="ToWareHouseId" required>
+                                                <option value="">-- Select --</option>
+                                                @if (Model != null && Model._wareHouses != null)
+                                                {
+                                                    foreach (WareHouse wareHouse in Model._wareHouses)
+                                                    {
+                                                        <option value="@wareHouse.WareHouseId"
+                                                                @if (Model._stock != null) { if (wareHouse.WareHouseId == Model._stock.WareHouseId) { <text> disabled </text> } }>
+                                                            @wareHouse.WareHouseName
+                                                        </option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Remarks</label>
+                                            <input type="text" name="Remarks" class="form-control"
+                                                   placeholder="Remarks" value="" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Transfer Date</label>
+                                            <small>Day/Month/Year</small>
+                                            <input type="text" name="StockTransferDate" class="form-control"
+                                                   placeholder="Stock Transfer Date" data-mask readonly
+                                                   value="@GenericLogic.IstNow.ToDateMaskString()" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        @{ int k = 0; }
+                                        @if (Model != null && Model._stocks != null)
+                                        {
+                                            for (int i = 0; i < Model._stocks.Count; i++)
+                                            {
+                                                if (Model._stocks[i].CurrentStock > 0)
+                                                {
+                                                    <div class="card bg-light">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col-7">
+                                                                    <h2 class="lead">
+                                                                        <b>
+                                                                            @Model._stocks[i].ProductName @if (!string.IsNullOrEmpty(Model._stocks[i].ProductCode))
+                                                                            {<text> - @Model._stocks[i].ProductCode </text>}
+                                                                        </b>
+                                                                    </h2>
+                                                                    <p class="text-muted text-sm">
+                                                                        <b>Details: </b>
+                                                                        @Model._stocks[i].Description
+                                                                    </p>
+                                                                    <ul class="ml-4 mb-0 fa-ul text-muted">
+                                                                        <li class="">
+                                                                            <span class="fa-li"><i class="fas fa-layer-group"></i></span> Total Stock:
+                                                                            <span style="font-weight:700; margin-left:5px;" class="text-success">
+                                                                                @Model._stocks[i].CurrentStock.ToDisplayDecimal()@Model._stocks[i].UnitOfMeasureName
+                                                                            </span>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                                @if (!string.IsNullOrEmpty(Model._stocks[i].ProductImageUrl))
+                                                                {
+                                                                    <div class="col-5 text-center">
+                                                                        <img src="@Model._stocks[i].ProductImageUrl" alt="@Model._stocks[i].ProductName" class="img-fluid" style="max-width:5rem;">
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-footer">
+                                                            <ul class="products-list">
+                                                                @for (int j = 0; j < Model._stocks[i].StockDetails.Count; j++)
+                                                                {
+                                                                    <li class="item" style="margin-bottom:0.5rem;">
+                                                                        <div class="product-info" style="margin:0px 12px;">
+                                                                            <div class="row">
+                                                                                <div class="col-md-5">
+                                                                                    <span class="product-title">
+                                                                                        Current Stock:
+                                                                                        @Model._stocks[i].StockDetails[j].Stock.ToDisplayDecimal()@Model._stocks[i].UnitOfMeasureName
+                                                                                    </span>
+                                                                                    @if (!string.IsNullOrEmpty(Model._stocks[i].StockDetails[j].BatchNo))
+                                                                                    {
+                                                                                        <span class="product-description">
+                                                                                            Batch Number:
+                                                                                            @Model._stocks[i].StockDetails[j].BatchNo
+                                                                                        </span>
+                                                                                    }
+                                                                                    @if (Model._stocks[i].StockDetails[j].ExpiryDate != null)
+                                                                                    {
+                                                                                        <span class="product-description">
+                                                                                            Expairy Date:
+                                                                                            @Model._stocks[i].StockDetails[j].ExpiryDate.Value.ToDisplayShortDateString()
+                                                                                        </span>
+                                                                                    }
+                                                                                    @if (Model._stocks[i].StockDetails[j].IsPerishable)
+                                                                                    {
+                                                                                        <span class="product-description">
+                                                                                            Goods Received Date:
+                                                                                            @Model._stocks[i].StockDetails[j].GRNDate.ToDisplayShortDateString()
+                                                                                        </span>
+                                                                                    }
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <div class="form-group">
+                                                                                        <label>Transfer Stock</label>
+                                                                                        <div class="input-group" style="width:150px;">
+                                                                                            <input type="number" name="StockTransferDetails[@k].TransferQuantity"
+                                                                                                   class="form-control form-control-sm"
+                                                                                                   min="0" value="0" required
+                                                                                                   step="0.0000001" max="@Model._stocks[i].StockDetails[j].Stock.ToDisplayDecimal()"
+                                                                                                   placeholder="Qty" />
+                                                                                            <div class="input-group-append" style="height: 31px;">
+                                                                                                <span class="input-group-text">@Model._stocks[i].UnitOfMeasureName</span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-4">
+                                                                                    <div class="form-group">
+                                                                                        <label>Remarks</label>
+                                                                                        <input type="text" name="StockTransferDetails[@k].Description"
+                                                                                               class="form-control form-control-sm" placeholder="Transfer Remarks" />
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="d-none" style="display:none !important;">
+                                                                                    <input type="hidden" name="StockTransferDetails[@k].ProductId" value="@Model._stocks[i].ProductId" />
+                                                                                    <input type="hidden" name="StockTransferDetails[@k].AvailableQuantity" value="@Model._stocks[i].CurrentStock" />
+                                                                                    <input type="hidden" name="StockTransferDetails[@k].StockDetailId" value="@Model._stocks[i].StockDetails[j].StockDetailId" />
+                                                                                    <input type="hidden" name="StockTransferDetails[@k].IsPerishable" value="@Model._stocks[i].StockDetails[j].IsPerishable.ToString().ToLower()" />
+                                                                                    <input type="hidden" name="StockTransferDetails[@k].ExpiryDate" value="@(Model._stocks[i].StockDetails[j].ExpiryDate != null? Model._stocks[i].StockDetails[j].ExpiryDate.Value.ToDateMaskString() : string.Empty)" />
+                                                                                    <input type="hidden" name="StockTransferDetails[@k].BatchNo" value="@Model._stocks[i].StockDetails[j].BatchNo" />
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                    k++;
+                                                                }
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <div class="card-footer">
+                            @if (Model._stock == null)
+                            {
+                                <button type="submit" class="btn btn-primary"> <i class="fas fa-search"></i> Search </button>
+                            }
+                            else
+                            {
+                                <button type="submit" class="btn btn-warning"> <i class="fas fa-exchange-alt"></i> Transfer </button>
+                                <a href="@Url.Action("Transfer", "Stock", null)" class="btn btn-danger"> <i class="fas fa-times"></i> Cancel</a>
+                            }
+                            <button type="reset" class="btn btn-info"><i class="fas fa-sync"></i> Reset</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

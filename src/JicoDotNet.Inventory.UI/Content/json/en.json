@@ -1,0 +1,168 @@
+﻿{
+  "Section-Header": {
+    "Branch-Header": "Branch",
+    "MeasureUnit-Header": "Measurement Unit",
+    "Warehouse-Header": "Warehouse",
+    "Product-header": "Product"
+  },
+  "Document-Branch": {
+    "Title-Update": "Update",
+    "Title-Add": "Add",
+    "Title": "Branch",
+
+    "Label-BranchName": "Branch Name",
+    "Label-BranchCode": "Branch Code",
+    "Label-Address": "Branch Address",
+    "Label-City": "Branch City",
+    "Label-State": "Branch State",
+    "Label-PostalCode": "Zip/Pin Code",
+    "Label-ContactPerson": "Contact Person Name",
+    "Label-Email": "Email",
+    "Label-Phone": "Phone",
+    "Label-Description": "Details",
+
+    "Form-Action-Update": "Update",
+    "Form-Action-Cancel": "Cancel",
+    "Form-Action-Save": "Save",
+    "Form-Action-Reset": "Reset",
+
+    "Table-Title": "Branches",
+
+    "Table-Action": "Edit/Deactivate",
+    "Table-BranchName": "Branch Name/Code",
+    "Table-Address": "Address",
+    "Table-PostalCode": "City/Zip Code",
+    "Table-State": "State",
+    "Table-ContactPerson": "Contact Persone",
+    "Table-Email": "Email/Phone",
+    "Table-Details": "Details",
+    "Table-Status": "Status",
+
+    "Table-Status-Active": "Active",
+    "Table-Status-Inactive": "Inactive"
+  },
+  "Document-MeasureUnit": {
+    "Title-Update": "Update",
+    "Title-Add": "Add",
+    "Title": "Measurement Unit",
+
+    "Label-UnitOfMeasureName": "Unit Name (short: like Kg, Lt)",
+    "Label-Description": "Details",
+
+    "Form-Action-Update": "Update",
+    "Form-Action-Cancel": "Cancel",
+    "Form-Action-Save": "Save",
+    "Form-Action-Reset": "Reset",
+
+    "Table-Title": "Measurement Units",
+
+    "Table-Action": "Edit/Deactivate",
+    "Table-MeasureUnit": "Measurement Unit",
+    "Table-Details": "Measurement Unit Details",
+    "Table-Status": "Status",
+
+    "Table-Status-Active": "Active",
+    "Table-Status-Inactive": "Inactive"
+  },
+  "Document-Warehouse": {
+    "Title-Update": "Update",
+    "Title-Add": "Add",
+    "Title": "Warehouse",
+
+    "Label-Branch": "Branch",
+    "Label-WarehouseName": "Warehouse Name",
+    "Label-Description": "Details",
+
+    "Form-Action-Update": "Update",
+    "Form-Action-Cancel": "Cancel",
+    "Form-Action-Save": "Save",
+    "Form-Action-Reset": "Reset",
+
+    "Table-Title": "Warehouses",
+    "Table-Action": "Edit/Deactivate",
+    "Table-WarehouseName": "Warehouse Name",
+    "Table-Branch": "Branch Name",
+    "Table-Details": "Details",
+    "Table-Status": "Status",
+
+    "Table-Status-Active": "Active",
+    "Table-Status-Inactive": "Inactive",
+
+    "Limitation-Title": "Limitation!",
+    "Limitation-Message1": "You are allowed to add ",
+    "Limitation-Message2": "Warehouse(s).",
+    "Limitation-Message3": "However, if you want to add more Warehouses, upgrade your plan or contact sales"
+  },
+  "Document-SidebarSetings": {
+    "Support": "Support/Help"
+  },
+  "Document-System-State": {
+    "1": "Jammu and kashmir",
+    "2": "Himachal pradesh",
+    "3": "Punjab",
+    "4": "Chandigarh",
+    "5": "Uttarakhand",
+    "6": "Haryana",
+    "7": "Delhi",
+    "8": "Rajasthan",
+    "9": "Uttar pradesh",
+    "10": "Bihar",
+    "11": "Sikkim",
+    "12": "Arunachal pradesh",
+    "13": "Nagaland",
+    "14": "Manipur",
+    "15": "Mizoram",
+    "16": "Tripura",
+    "17": "Meghlaya",
+    "18": "Assam",
+    "19": "West bengal",
+    "20": "Jharkhand",
+    "21": "Odisha",
+    "22": "Chattisgarh",
+    "23": "Madhya pradesh",
+    "24": "Gujarat",
+    "25": "Daman & diu",
+    "26": "Dadra & nagar haveli",
+    "27": "Maharashtra",
+    "28": "Andhra pradesh(before division)",
+    "29": "Karnataka",
+    "30": "Goa",
+    "31": "Lakshwadeep",
+    "32": "Kerala",
+    "33": "Tamil nadu",
+    "34": "Puducherry",
+    "35": "Andaman and Nicobar Islands",
+    "36": "Telangana",
+    "37": "Andhra pradesh (new)"
+  },
+  "Document-Product": {
+    "Title": "Product",
+    "Button-Add": "Add",
+
+    "Table-Action": "Edit/Deactivate",
+    "Table-ProductName": "Product Name/Code",
+    "Table-type": "Type",
+    "Table-Unit": "Unit",
+    "Table-Stock": "Stock",
+    "Table-Tax": "HSN-SAC/Tax",
+    "Table-Category": "Category",
+    "Table-Attribute": "Attribute",
+    "Table-Status-Inactive": "Inactive",
+
+    "Table-Tag-Goods": "Goods",
+    "Table-Tag-Service": "Service",
+    "Table-Tag-PurchaseSale": "Purchase/Sale Both",
+    "Table-Tag-Purchase": "Only Purchase",
+    "Table-Tag-Sale": "Only Sale",
+
+    "Table-Tag-Perishable": "Perishable",
+    "Table-Tag-HasExpiryDate": "Has Expiry Date",
+    "Table-Tag-HasBatchNo": "Has Batch No",
+    "Table-Tag-NotEditable": "Not Editable",
+
+    "Limitation-Title": "Limitation!",
+    "Limitation-Message1": "You are allowed to add ",
+    "Limitation-Message2": "Product(s).",
+    "Limitation-Message3": "However, if you want to add more Products, upgrade your plan or contact sales."
+  }
+}

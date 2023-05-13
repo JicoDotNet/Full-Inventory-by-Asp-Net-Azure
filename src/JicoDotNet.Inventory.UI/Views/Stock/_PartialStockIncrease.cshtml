@@ -1,0 +1,89 @@
+﻿@using JicoDotNet.Inventory.UI.Models;
+@using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+@model StockModels
+
+<div class="card card-success">
+    <div class="card-header bg-teal">
+        <h3 class="card-title">Product adjustmnt for stock increment</h3>
+    </div>
+    <div class="card-body" style="overflow-x:scroll;">
+        <table class="table table-striped table-bordered dt-responsive nowrap">
+            <thead>
+                <tr>
+                    @if (Model._selectedProduct != null)
+                    {
+                        if (Model._selectedProduct.HasBatchNo || Model._selectedProduct.HasExpirationDate || Model._selectedProduct.IsPerishableProduct)
+                        {
+                            <th>
+                                <span>Batch Number /Expiery Date</span>
+                            </th>
+                        }
+                    }
+                    <th>
+                        Adjust Quantity
+                        <span class="pull-right" data-toggle="tooltip" data-placement="top" title="requried">&nbsp;&nbsp;<i class="fas fa-asterisk text-danger"></i></span>
+                    </th>
+                    <th>Approximate Receive Date</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    @if (Model._selectedProduct != null)
+                    {
+                        if (Model._selectedProduct.HasBatchNo || Model._selectedProduct.HasExpirationDate || Model._selectedProduct.IsPerishableProduct)
+                        {
+                            <td>
+                                @if (Model._selectedProduct.HasBatchNo)
+                                {
+                                    <input type="text" name="StockAdjustDetails[0].BatchNo"
+                                           class="form-control form-control-sm" placeholder="Batch Number" />
+                                }
+                                @if (Model._selectedProduct.HasExpirationDate)
+                                {
+                                    <input type="text" name="StockAdjustDetails[0].ExpiryDate"
+                                           class="form-control form-control-sm" placeholder="Expiery Date" data-mask readonly />
+                                }
+                                @if (Model._selectedProduct.IsPerishableProduct)
+                                {
+                                    <input type="hidden" name="StockAdjustDetails[0].IsPerishable"
+                                           value="@Model._selectedProduct.IsPerishableProduct.ToString().ToLower()" readonly />
+                                    <span class="text-danger">Perishable Product</span>
+                                }
+                            </td>
+                        }
+                    }
+                    <td>
+                        <div class="input-group" style="width:150px;">
+                            <input type="number" name="StockAdjustDetails[0].AdjustQuantity"
+                                   class="form-control form-control-sm"
+                                   min="0" value="0" step="0.00001"
+                                   placeholder="Qty" required />
+                            <div class="input-group-append" style="height: 31px;">
+                                <span class="input-group-text">@Model._selectedProduct.UnitOfMeasureName</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="text" name="StockAdjustDetails[0].GRNDate"
+                               class="form-control form-control-sm" placeholder="Approximate Receive Date"
+                               value="@GenericLogic.IstNow.ToDateMaskString()"
+                               data-mask readonly />
+                    </td>
+                    <td>
+                        <input type="hidden" value="@(Model._selectedProduct.ProductId)" name="StockAdjustDetails[0].ProductId" />
+                        <input type="text" name="StockAdjustDetails[0].Description"
+                               class="form-control form-control-sm" placeholder="Adjust Remarks" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript">
+    try {
+        $('input.form-control-sm, select.form-control-sm').parent('div.input-group').children('div.input-group-prepend, div.input-group-append').css("height", "31px");
+        LoadInputDate();
+    } catch (e) { console.log(e); }
+</script>
