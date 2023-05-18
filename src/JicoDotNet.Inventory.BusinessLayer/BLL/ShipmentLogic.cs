@@ -219,8 +219,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
                 nameValuePairs nvp = new nameValuePairs()
                 {
-                     
-                     
+                    new nameValuePair("@ComapnyIsGSTRegistered", GenericLogic.IsValidGSTNumber(WebConfigAccess.GSTNumber)),                     
 
                     //SO
                     new nameValuePair("@SalesTypeId", shipmentDirect.SalesTypeId),
