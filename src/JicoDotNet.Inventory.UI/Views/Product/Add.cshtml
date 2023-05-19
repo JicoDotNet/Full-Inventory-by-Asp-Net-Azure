@@ -217,7 +217,7 @@
                                     <label>Product Attribute</label>
                                     <span class="ml-3 text-primary">
                                         You can modify configuration of your company for product attributes.
-                                        <a href="@Url.Action("Setup", "Configuration", new { id = Html.UrlIdEncrypt( Model._config.CompanyId, false) })">Here. <i class="fas fa-cogs"></i></a>
+                                        <a href="@Url.Action("Setup", "Configuration", new { id = string.Empty })">Here. <i class="fas fa-cogs"></i></a>
                                     </span>
                                     @if (Model._config.HasPerishableProduct
                                         || Model._config.HasExpirationDate
