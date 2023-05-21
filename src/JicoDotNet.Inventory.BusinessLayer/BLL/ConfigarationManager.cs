@@ -35,7 +35,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 config = new Config
                 {
                     TimeZone = 5.5,
-                    CurrencySymbol = "Rs.",
+                    CurrencySymbol = "₹",
                     CurrencyCode = "INR",
                     MaxDetailsCount = 10,
                     IsActive = true

@@ -8,16 +8,16 @@
 
 <div class="row">
     <div class="col-lg-3 col-6">
-        <div class="small-box bg-warning">
+        <div class="small-box bg-pink">
             <div class="inner">
-                <h3>@Model._homeMasterCount.Company</h3>
-                <p>Company</p>
+                <h3>@Model._homeMasterCount.Product</h3>
+                <p>Product</p>
             </div>
             <div class="icon">
-                <i class="fas fa-industry"></i>
+                <i class="fas fa-apple-alt"></i>
             </div>
             <span class="small-box-footer">
-                Out of 1
+                Out of Unlimited
             </span>
         </div>
     </div>
@@ -38,13 +38,13 @@
     </div>
 
     <div class="col-lg-3 col-6">
-        <div class="small-box bg-pink">
+        <div class="small-box bg-danger">
             <div class="inner">
-                <h3>@Model._homeMasterCount.Product</h3>
-                <p>Product</p>
+                <h3>@Model._homeMasterCount.Warehouse</h3>
+                <p>Warehouse</p>
             </div>
             <div class="icon">
-                <i class="fas fa-apple-alt"></i>
+                <i class="fas fa-warehouse"></i>
             </div>
             <span class="small-box-footer">
                 Out of Unlimited
@@ -53,13 +53,13 @@
     </div>
 
     <div class="col-lg-3 col-6">
-        <div class="small-box bg-danger">
+        <div class="small-box bg-warning">
             <div class="inner">
-                <h3>@Model._homeMasterCount.Warehouse</h3>
-                <p>Warehouse</p>
+                <h3>@Model._homeMasterCount.Branch</h3>
+                <p>Branch</p>
             </div>
             <div class="icon">
-                <i class="fas fa-warehouse"></i>
+                <i class="fas fa-laptop-house"></i>
             </div>
             <span class="small-box-footer">
                 Out of Unlimited
@@ -142,11 +142,11 @@
 <div class="row">
     <div class="col-sm-6 col-md-3 col-6">
         <div class="info-box">
-            <span class="info-box-icon bg-indigo elevation-1"><i class="fas fa-laptop-house"></i></span>
+            <span class="info-box-icon bg-pink elevation-1"><i class="fas fa-user-shield"></i></span>
             <div class="info-box-content">
-                <span class="info-box-text text-wrap">Branch</span>
+                <span class="info-box-text text-wrap">Customer Type</span>
                 <span class="info-box-number">
-                    @Model._homeMasterCount.Branch
+                    @Model._homeMasterCount.CustomerType
                 </span>
             </div>
         </div>
@@ -154,20 +154,20 @@
     <div class="clearfix hidden-md-up"></div>
     <div class="col-sm-6 col-md-3 col-6">
         <div class="info-box mb-3">
-            <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-sitemap"></i></span>
-            <div class="info-box-content">
-                <span class="info-box-text text-wrap">Product Type</span>
-                <span class="info-box-number">@Model._homeMasterCount.ProductType</span>
-            </div>
-        </div>
-    </div>
-    <div class="clearfix hidden-md-up"></div>    
-    <div class="col-sm-6 col-md-3 col-6">
-        <div class="info-box mb-3">
             <span class="info-box-icon bg-blue elevation-1"><i class="fas fa-user-shield"></i></span>
             <div class="info-box-content">
                 <span class="info-box-text text-wrap">Customer</span>
                 <span class="info-box-number">@Model._homeMasterCount.Customer</span>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix hidden-md-up"></div>
+    <div class="col-sm-6 col-md-3 col-6">
+        <div class="info-box mb-3">
+            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-user-tag"></i></span>
+            <div class="info-box-content">
+                <span class="info-box-text text-wrap">Vendor Type</span>
+                <span class="info-box-number">@Model._homeMasterCount.VendorType</span>
             </div>
         </div>
     </div>
@@ -193,6 +193,7 @@
             </div>
         </div>
     </div>
+    <div class="clearfix hidden-md-up"></div>
     <div class="col-sm-6 col-md-3 col-6">
         <div class="info-box mb-3">
             <span class="info-box-icon bg-teal elevation-1"><i class="fas fa-border-none"></i></span>
@@ -212,7 +213,7 @@
             </div>
         </div>
     </div>
-
+    <div class="clearfix hidden-md-up"></div>
     <div class="col-sm-6 col-md-3 col-6">
         <div class="info-box mb-3">
             <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-receipt nav-icon"></i></span>

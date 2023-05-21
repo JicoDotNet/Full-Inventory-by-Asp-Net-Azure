@@ -81,7 +81,7 @@
                                 <div class="row" style="border-top: 2px solid #e9ecef;padding-top:20px;">
                                     <div class="col-md-4">
                                         <div class="callout callout-success">
-                                            <h5>Deals Perishable Product?</h5>
+                                            <h5>Deals with Perishable Product?</h5>
                                             <select class="form-control" name="HasPerishableProduct" required>
                                                 <option value="">--Select--</option>
                                                 @for (int i = 0; i < Model._YesNo.Count; i++)
@@ -102,7 +102,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="callout callout-success">
-                                            <h5>Has Expiry Date?</h5>
+                                            <h5>Has product with Expiry Date?</h5>
                                             <select class="form-control" name="HasExpirationDate" required>
                                                 <option value="">--Select--</option>
                                                 @for (int i = 0; i < Model._YesNo.Count; i++)
@@ -123,7 +123,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="callout callout-success">
-                                            <h5>Has Batch No</h5>
+                                            <h5>Has product with Batch No/</h5>
                                             <select class="form-control" name="HasBatchNo" required>
                                                 <option value="">--Select--</option>
                                                 @for (int i = 0; i < Model._YesNo.Count; i++)
@@ -141,187 +141,8 @@
                                                 Example: medicine, electronics, other items.
                                             </p>
                                         </div>
-                                    </div>
-                                    <!--
-                                    @*
-                                    <div class="col-md-4">
-                                        <div class="callout callout-success">
-                                            <h5>Sales Return</h5>
-                                            <p>This is a green callout.</p>
-                                            <select class="form-control" name="AllowSalesReturn" required>
-                                                <option value="">--Select--</option>
-                                                @for (int i = 0; i < Model._YesNo.Count; i++)
-                                                {
-                                                    <option value="@Model._YesNo.Keys.ElementAt(i).ToString().ToLower()"
-                                                            @if (Model._config != null) { if (Model._YesNo.Keys.ElementAt(i) == Model._config.AllowSalesReturn) { <text> selected </text> } }>
-                                                        @Model._YesNo[Model._YesNo.Keys.ElementAt(i)]
-                                                    </option>
-                                                }
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="callout callout-success">
-                                            <h5>Sales Mode</h5>
-                                            <p>This is a green callout.</p>
-                                            <select class="form-control" name="SalesMode" required>
-                                                <option value="Custom"
-                                                        @if (Model._config != null) { if (Model._config.SalesMode == "Custom") { <text> selected </text> } }>
-                                                    Any Time Any Thing
-                                                </option>
-                                                <option value="LIFO"
-                                                        @if (Model._config != null) { if (Model._config.SalesMode == "LIFO") { <text> selected </text> } }>
-                                                    Last In - First Out
-                                                </option>
-                                                <option value="FIFO"
-                                                        @if (Model._config != null) { if (Model._config.SalesMode == "FIFO") { <text> selected </text> } }>
-                                                    First In - First Out
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="callout callout-success">
-                                            <h5>Payment Released Mode</h5>
-                                            <p>This is a green callout.</p>
-                                            <select class="form-control" name="PaymentReleaseMode" required>
-                                                <option value="Custom"
-                                                        @if (Model._config != null) { if (Model._config.PaymentReleaseMode == "Custom") { <text> selected </text> } }>
-                                                    Any Time Any Amount
-                                                </option>
-                                                <option value="Bill"
-                                                        @if (Model._config != null) { if (Model._config.PaymentReleaseMode == "Bill") { <text> selected </text> } }>
-                                                    Particular Bill Wise
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="callout callout-success">
-                                            <h5>Purchases Return</h5>
-                                            <p>This is a green callout.</p>
-                                            <select class="form-control" name="AllowPurchaseReturn" required>
-                                                <option value="">--Select--</option>
-                                                @for (int i = 0; i < Model._YesNo.Count; i++)
-                                                {
-                                                    <option value="@Model._YesNo.Keys.ElementAt(i).ToString().ToLower()"
-                                                            @if (Model._config != null) { if (Model._YesNo.Keys.ElementAt(i) == Model._config.AllowPurchaseReturn) { <text> selected </text> } }>
-                                                        @Model._YesNo[Model._YesNo.Keys.ElementAt(i)]
-                                                    </option>
-                                                }
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="callout callout-success">
-                                            <h5>Payment Received Mode</h5>
-                                            <p>This is a green callout.</p>
-                                            <select class="form-control" name="PaymentReceiveMode" required>
-                                                <option value="Custom"
-                                                        @if (Model._config != null) { if (Model._config.PaymentReceiveMode == "Custom") { <text> selected </text> } }>
-                                                    Any Time Any Amount
-                                                </option>
-                                                <option value="Invoice"
-                                                        @if (Model._config != null) { if (Model._config.PaymentReceiveMode == "Invoice") { <text> selected </text> } }>
-                                                    Particular Invoice Wise
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                                                            <b></b>
-                                                                            <br />
-                                                                        </p>
-                                                                    </div>
-                                                            </div>
-                                                            <!--
-                                                            @*
-                                                            <div class="col-md-4">
-                                                                <div class="callout callout-success">
-                                                                    <h5>Sales Return</h5>
-                                                                    <p>This is a green callout.</p>
-                                                                    <select class="form-control" name="AllowSalesReturn" required>
-                                                                        <option value="">--Select--</option>
-                                                                        @for (int i = 0; i < Model._YesNo.Count; i++)
-                                                                        {
-                                                                            <option value="@Model._YesNo.Keys.ElementAt(i).ToString().ToLower()"
-                                                                                    @if (Model._config != null) { if (Model._YesNo.Keys.ElementAt(i) == Model._config.AllowSalesReturn) { <text> selected </text> } }>
-                                                                                @Model._YesNo[Model._YesNo.Keys.ElementAt(i)]
-                                                                            </option>
-                                                                        }
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <div class="callout callout-success">
-                                                                    <h5>Sales Mode</h5>
-                                                                    <p>This is a green callout.</p>
-                                                                    <select class="form-control" name="SalesMode" required>
-                                                                        <option value="Custom"
-                                                                                @if (Model._config != null) { if (Model._config.SalesMode == "Custom") { <text> selected </text> } }>
-                                                                            Any Time Any Thing
-                                                                        </option>
-                                                                        <option value="LIFO"
-                                                                                @if (Model._config != null) { if (Model._config.SalesMode == "LIFO") { <text> selected </text> } }>
-                                                                            Last In - First Out
-                                                                        </option>
-                                                                        <option value="FIFO"
-                                                                                @if (Model._config != null) { if (Model._config.SalesMode == "FIFO") { <text> selected </text> } }>
-                                                                            First In - First Out
-                                                                        </option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <div class="callout callout-success">
-                                                                    <h5>Payment Released Mode</h5>
-                                                                    <p>This is a green callout.</p>
-                                                                    <select class="form-control" name="PaymentReleaseMode" required>
-                                                                        <option value="Custom"
-                                                                                @if (Model._config != null) { if (Model._config.PaymentReleaseMode == "Custom") { <text> selected </text> } }>
-                                                                            Any Time Any Amount
-                                                                        </option>
-                                                                        <option value="Bill"
-                                                                                @if (Model._config != null) { if (Model._config.PaymentReleaseMode == "Bill") { <text> selected </text> } }>
-                                                                            Particular Bill Wise
-                                                                        </option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <div class="callout callout-success">
-                                                                    <h5>Purchases Return</h5>
-                                                                    <p>This is a green callout.</p>
-                                                                    <select class="form-control" name="AllowPurchaseReturn" required>
-                                                                        <option value="">--Select--</option>
-                                                                        @for (int i = 0; i < Model._YesNo.Count; i++)
-                                                                        {
-                                                                            <option value="@Model._YesNo.Keys.ElementAt(i).ToString().ToLower()"
-                                                                                    @if (Model._config != null) { if (Model._YesNo.Keys.ElementAt(i) == Model._config.AllowPurchaseReturn) { <text> selected </text> } }>
-                                                                                @Model._YesNo[Model._YesNo.Keys.ElementAt(i)]
-                                                                            </option>
-                                                                        }
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <div class="callout callout-success">
-                                                                    <h5>Payment Received Mode</h5>
-                                                                    <p>This is a green callout.</p>
-                                                                    <select class="form-control" name="PaymentReceiveMode" required>
-                                                                        <option value="Custom"
-                                                                                @if (Model._config != null) { if (Model._config.PaymentReceiveMode == "Custom") { <text> selected </text> } }>
-                                                                            Any Time Any Amount
-                                                                        </option>
-                                                                        <option value="Invoice"
-                                                                                @if (Model._config != null) { if (Model._config.PaymentReceiveMode == "Invoice") { <text> selected </text> } }>
-                                                                            Particular Invoice Wise
-                                                                        </option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            *@
-                                                                -->
-                                    <div class="col-md-4">
+                                    </div>                                    
+                                    <div class="col-md-5">
                                         <div class="callout callout-success">
                                             <h5>Time Zone</h5>
                                             <p>You are using Indian Time Zone.</p>
@@ -329,12 +150,12 @@
                                                 <option value="">--Select--</option>
                                                 <option value="5.5"
                                                         @if (Model._config != null) { if (Model._config.TimeZone == 5.5) { <text> selected </text> } }>
-                                                    India (GMT+05:30) - Mumbai, Kolkata, Delhi
+                                                    India (GMT+05:30) - Mumbai, Kolkata, Delhi, Bangalore
                                                 </option>
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-5">
                                         <div class="callout callout-success">
                                             <h5>Your Business Currency</h5>
                                             <div class="row">
