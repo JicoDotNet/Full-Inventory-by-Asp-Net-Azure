@@ -48,7 +48,6 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Quotation Generated Company</label>
-                                        <input type="text" name="CompanyId" hidden value="@Model._company.CompanyId" />
                                         <input type="hidden" name="IsGstAllowed" value="@Model._company.IsGSTRegistered.ToString().ToLower()" />
                                         <div>@Model._company.CompanyName</div>
                                         @if (Model._company.IsGSTRegistered)

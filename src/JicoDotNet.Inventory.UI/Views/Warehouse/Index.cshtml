@@ -40,130 +40,95 @@
                             <span data-lang-key="Title">Warehouse</span>
                         </h3>
                     </div>
-                    @if (Model._tenantQuota.Limit == null
-                        || Model._tenantQuota.Limit > Model._tenantQuota.Used
-                        || Model._wareHouse != null)
-                    {
-                        using (Html.BeginForm("Index", "Warehouse",
+                    @using (Html.BeginForm("Index", "Warehouse",
                         new
                         {
                             id = ((Model._wareHouse != null) ?
                             Html.UrlIdEncrypt(Model._wareHouse.WareHouseId.ToString(), false) : string.Empty)
                         },
                         FormMethod.Post, new { autocomplete = "off" }))
-                        {
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>
-                                                <span data-lang-key="Label-Branch">Branch</span>
-                                            </label>
-                                            <select class="form-control" name="branchId" style="width:100%;" required>
-                                                <option value="">--Please Select--</option>
-                                                @foreach (Branch branch in @Model._branches)
-                                                {
-                                                    <option value="@branch.BranchId"
-                                                            @if (Model._wareHouse != null) { if (@branch.BranchId == Model._wareHouse.BranchId) { <text> selected </text> } }>
-                                                        @branch.BranchName @if (!string.IsNullOrEmpty(branch.BranchCode))
-                                                        {<text> (Code - @branch.BranchCode) </Text>}
-                                                    </option>
-                                                }
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>
-                                                <span data-lang-key="Label-WarehouseName">Warehouse Name</span>
-                                            </label>
-                                            <input type="text" name="WareHouseName" class="form-control"
-                                                   @if (Model._wareHouse != null) { <text> value="@(Model._wareHouse.WareHouseName)" </text> }
-                                                   placeholder="Enter WarehouseName Name" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>
-                                                <span data-lang-key="Label-Description">Details</span>
-                                            </label>
-                                            <textarea name="Description" class="form-control" placeholder="Enter Warehouse Details" style="height:38px;">@if (Model._wareHouse != null) { <text> @Model._wareHouse.Description </text>  }</textarea>
-                                        </div>
-                                    </div>
-                                    @if (Model._isRetailEligible)
-                                    {
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Make it Retail Counter</label><br />
-                                                <input type="checkbox" onchange="$('[name=\'IsRetailCounter\']').val($(this).is(':checked'));"
-                                                       @if (Model._wareHouse != null) { if (Model._wareHouse.IsRetailCounter) { <text> checked </text>  } }
-                                                       data-bootstrap-switch
-                                                       data-on-text="Yes"
-                                                       data-off-text="No"
-                                                       data-off-color="danger"
-                                                       data-on-color="success">
-                                                <input type="hidden" name="IsRetailCounter" value="false" />
-                                            </div>
-                                        </div>
-                                    }
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                @if (Model._wareHouse != null)
-                                {
-                                    <button type="submit" class="btn btn-warning">
-                                        <i class="fas fa-edit"></i>
-                                        <span data-lang-key="Form-Action-Update"> Update </span>
-                                    </button>
-                                    <a href="@Url.Action("Index", "Warehouse", new { id = string.Empty })" class="btn btn-danger">
-                                        <i class="fas fa-times"></i>
-                                        <span data-lang-key="Form-Action-Cancel">Cancel </span>
-                                    </a>
-                                }
-                                else
-                                {
-                                    <button type="submit" class="btn btn-success">
-                                        <i class="fas fa-save"></i>
-                                        <span data-lang-key="Form-Action-Save"> Save </span>
-                                    </button>
-                                }
-                                <button type="reset" class="btn btn-info">
-                                    <i class="fas fa-sync"></i>
-                                    <span data-lang-key="Form-Action-Reset"> Reset</span>
-                                </button>
-                            </div>
-                        }
-                    }
-                    else
                     {
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-6 offset-md-3">
-                                    <div class="callout callout-warning">
-                                        <h5>
-                                            <i class="icon fas fa-exclamation-triangle"></i>
-                                            <span data-lang-key="Limitation-Title">Limitation!</span>
-                                        </h5>
-                                        <p>
-                                            <span data-lang-key="Limitation-Message1">
-                                                You are allowed to add
-                                            </span>
-                                            @Model._tenantQuota.Limit
-                                            <span data-lang-key="Limitation-Message2">
-                                                Warehouse(s).
-                                            </span>
-                                            <br />
-                                            <span data-lang-key="Limitation-Message3">
-                                                However, if you want to add more Warehouses,
-                                                <a href="@Url.Action("Upgrade", "Subscription")" class="text-primary">Upgrade your plan</a>
-                                                or contact with sales team: <a href="mailto:sales@itemblob.in">sales@@itemblob.in</a>
-                                            </span>
-                                        </p>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>
+                                            <span data-lang-key="Label-Branch">Branch</span>
+                                        </label>
+                                        <select class="form-control" name="branchId" style="width:100%;" required>
+                                            <option value="">--Please Select--</option>
+                                            @foreach (Branch branch in @Model._branches)
+                                            {
+                                                <option value="@branch.BranchId"
+                                                        @if (Model._wareHouse != null) { if (@branch.BranchId == Model._wareHouse.BranchId) { <text> selected </text> } }>
+                                                    @branch.BranchName @if (!string.IsNullOrEmpty(branch.BranchCode))
+                                                    {<text> (Code - @branch.BranchCode) </Text>}
+                                                </option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>
+                                            <span data-lang-key="Label-WarehouseName">Warehouse Name</span>
+                                        </label>
+                                        <input type="text" name="WareHouseName" class="form-control"
+                                               @if (Model._wareHouse != null) { <text> value="@(Model._wareHouse.WareHouseName)" </text> }
+                                               placeholder="Enter WarehouseName Name" required>
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>
+                                            <span data-lang-key="Label-Description">Details</span>
+                                        </label>
+                                        <textarea name="Description" class="form-control" placeholder="Enter Warehouse Details" style="height:38px;">@if (Model._wareHouse != null) { <text> @Model._wareHouse.Description </text>  }</textarea>
+                                    </div>
+                                </div>
+                                @if (Model._isRetailEligible)
+                                {
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Make it Retail Counter</label><br />
+                                            <input type="checkbox" onchange="$('[name=\'IsRetailCounter\']').val($(this).is(':checked'));"
+                                                   @if (Model._wareHouse != null) { if (Model._wareHouse.IsRetailCounter) { <text> checked </text> } }
+                                                   data-bootstrap-switch
+                                                   data-on-text="Yes"
+                                                   data-off-text="No"
+                                                   data-off-color="danger"
+                                                   data-on-color="success">
+                                            <input type="hidden" name="IsRetailCounter" value="false" />
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            @if (Model._wareHouse != null)
+                            {
+                                <button type="submit" class="btn btn-warning">
+                                    <i class="fas fa-edit"></i>
+                                    <span data-lang-key="Form-Action-Update"> Update </span>
+                                </button>
+                                <a href="@Url.Action("Index", "Warehouse", new { id = string.Empty })" class="btn btn-danger">
+                                    <i class="fas fa-times"></i>
+                                    <span data-lang-key="Form-Action-Cancel">Cancel </span>
+                                </a>
+                            }
+                            else
+                            {
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fas fa-save"></i>
+                                    <span data-lang-key="Form-Action-Save"> Save </span>
+                                </button>
+                            }
+                            <button type="reset" class="btn btn-info">
+                                <i class="fas fa-sync"></i>
+                                <span data-lang-key="Form-Action-Reset"> Reset</span>
+                            </button>
                         </div>
                     }
                 </div>
