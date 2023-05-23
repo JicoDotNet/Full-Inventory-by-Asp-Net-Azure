@@ -1,0 +1,211 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>JicoDotNet.SQLServer</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{ec2b8a86-97aa-4043-ad38-4e8c5c8ecf9a}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql160DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>JicoDotNet.SQLServer</RootNamespace>
+    <AssemblyName>JicoDotNet.SQLServer</AssemblyName>
+    <ModelCollation>1033, CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="dbo\Functions\" />
+    <Folder Include="dbo\Stored Procedures\" />
+    <Folder Include="dbo\User Defined Types\" />
+    <Folder Include="DefaultData" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\tTDSReceive.sql" />
+    <Build Include="dbo\Tables\tTDSPay.sql" />
+    <Build Include="dbo\Tables\tStockTransferHeader.sql" />
+    <Build Include="dbo\Tables\tStockTransferDetail.sql" />
+    <Build Include="dbo\Tables\tStockDetail.sql" />
+    <Build Include="dbo\Tables\tStockAdjustHeader.sql" />
+    <Build Include="dbo\Tables\tStockAdjustDetail.sql" />
+    <Build Include="dbo\Tables\tStock.sql" />
+    <Build Include="dbo\Tables\tSmsTrack.sql" />
+    <Build Include="dbo\Tables\tPassword.sql" />
+    <Build Include="dbo\Tables\tAmendmentTrack.sql" />
+    <Build Include="dbo\Tables\sStockAdjustReason.sql" />
+    <Build Include="dbo\Tables\mWareHouse.sql" />
+    <Build Include="dbo\Tables\mVendorType.sql" />
+    <Build Include="dbo\Tables\mVendorBank.sql" />
+    <Build Include="dbo\Tables\mVendor.sql" />
+    <Build Include="dbo\Tables\mUnitOfMeasure.sql" />
+    <Build Include="dbo\Tables\mShipmentType.sql" />
+    <Build Include="dbo\Tables\mShipmentHeader.sql" />
+    <Build Include="dbo\Tables\mShipmentDetail.sql" />
+    <Build Include="dbo\Tables\mSalesType.sql" />
+    <Build Include="dbo\Tables\mSalesOrderHeader.sql" />
+    <Build Include="dbo\Tables\mSalesOrderDetail.sql" />
+    <Build Include="dbo\Tables\mQuotationHeader.sql" />
+    <Build Include="dbo\Tables\mQuotationDetail.sql" />
+    <Build Include="dbo\Tables\mPurchaseType.sql" />
+    <Build Include="dbo\Tables\mPurchaseOrderHeader.sql" />
+    <Build Include="dbo\Tables\mPurchaseOrderDetail.sql" />
+    <Build Include="dbo\Tables\mProductType.sql" />
+    <Build Include="dbo\Tables\mProduct.sql" />
+    <Build Include="dbo\Tables\mPaymentType.sql" />
+    <Build Include="dbo\Tables\mPaymentOutHeader.sql" />
+    <Build Include="dbo\Tables\mPaymentOutDetail.sql" />
+    <Build Include="dbo\Tables\mPaymentInHeader.sql" />
+    <Build Include="dbo\Tables\mPaymentInDetail.sql" />
+    <Build Include="dbo\Tables\mInvoiceType.sql" />
+    <Build Include="dbo\Tables\mInvoiceHeader.sql" />
+    <Build Include="dbo\Tables\mInvoiceDetail.sql" />
+    <Build Include="dbo\Tables\mGRNHeader.sql" />
+    <Build Include="dbo\Tables\mGRNDetail.sql" />
+    <Build Include="dbo\Tables\mCustomerType.sql" />
+    <Build Include="dbo\Tables\mCustomer.sql" />
+    <Build Include="dbo\Tables\mCompanyBank.sql" />
+    <Build Include="dbo\Tables\mBranch.sql" />
+    <Build Include="dbo\Tables\mBillType.sql" />
+    <Build Include="dbo\Tables\mBillHeader.sql" />
+    <Build Include="dbo\Tables\mBillDetail.sql" />
+    <Build Include="dbo\Functions\ISTNow.sql" />
+    <Build Include="dbo\Functions\IsFullShipped.sql" />
+    <Build Include="dbo\Functions\IsFullReceived.sql" />
+    <Build Include="dbo\Functions\IsFullInvoiced.sql" />
+    <Build Include="dbo\Functions\IsFullBilled.sql" />
+    <Build Include="dbo\Stored Procedures\spSetWareHouse.sql" />
+    <Build Include="dbo\Stored Procedures\spSetVendorType.sql" />
+    <Build Include="dbo\Stored Procedures\spSetVendorBank.sql" />
+    <Build Include="dbo\Stored Procedures\spSetVendor.sql" />
+    <Build Include="dbo\Stored Procedures\spSetUnitOfMeasure.sql" />
+    <Build Include="dbo\Stored Procedures\spSetTDSReceive.sql" />
+    <Build Include="dbo\Stored Procedures\spSetTDSPay.sql" />
+    <Build Include="dbo\Stored Procedures\spSetStockTransfer.sql" />
+    <Build Include="dbo\Stored Procedures\spSetStockDetail.sql" />
+    <Build Include="dbo\Stored Procedures\spSetStockAdjustReason.sql" />
+    <Build Include="dbo\Stored Procedures\spSetStockAdjust.sql" />
+    <Build Include="dbo\Stored Procedures\spSetStock.sql" />
+    <Build Include="dbo\Stored Procedures\spSetSmsTrack.sql" />
+    <Build Include="dbo\Stored Procedures\spSetShipmentType.sql" />
+    <Build Include="dbo\Stored Procedures\spSetShipmentDirect.sql" />
+    <Build Include="dbo\Stored Procedures\spSetShipment.sql" />
+    <Build Include="dbo\Stored Procedures\spSetSalesType.sql" />
+    <Build Include="dbo\Stored Procedures\spSetSalesOrder.sql" />
+    <Build Include="dbo\Stored Procedures\spSetRetailSales.sql" />
+    <Build Include="dbo\Stored Procedures\spSetQuotation.sql" />
+    <Build Include="dbo\Stored Procedures\spSetPurchaseType.sql" />
+    <Build Include="dbo\Stored Procedures\spSetPurchaseOrder.sql" />
+    <Build Include="dbo\Stored Procedures\spSetProductType.sql" />
+    <Build Include="dbo\Stored Procedures\spSetProduct.sql" />
+    <Build Include="dbo\Stored Procedures\spSetPaymentType.sql" />
+    <Build Include="dbo\Stored Procedures\spSetPaymentOut.sql" />
+    <Build Include="dbo\Stored Procedures\spSetPaymentIn.sql" />
+    <Build Include="dbo\Stored Procedures\spSetOpeningStock.sql" />
+    <Build Include="dbo\Stored Procedures\spSetInvoiceType.sql" />
+    <Build Include="dbo\Stored Procedures\spSetInvoice.sql" />
+    <Build Include="dbo\Stored Procedures\spSetGRNDirect.sql" />
+    <Build Include="dbo\Stored Procedures\spSetGRN.sql" />
+    <Build Include="dbo\Stored Procedures\spSetCustomerType.sql" />
+    <Build Include="dbo\Stored Procedures\spSetCustomer.sql" />
+    <Build Include="dbo\Stored Procedures\spSetCompanyBank.sql" />
+    <Build Include="dbo\Stored Procedures\spSetBranch.sql" />
+    <Build Include="dbo\Stored Procedures\spSetBillType.sql" />
+    <Build Include="dbo\Stored Procedures\spSetBill.sql" />
+    <Build Include="dbo\Stored Procedures\spRpSales.sql" />
+    <Build Include="dbo\Stored Procedures\spRpPurchase.sql" />
+    <Build Include="dbo\Stored Procedures\spRpGST.sql" />
+    <Build Include="dbo\Stored Procedures\spGetWareHouse.sql" />
+    <Build Include="dbo\Stored Procedures\spGetVendorType.sql" />
+    <Build Include="dbo\Stored Procedures\spGetVendorBank.sql" />
+    <Build Include="dbo\Stored Procedures\spGetVendor.sql" />
+    <Build Include="dbo\Stored Procedures\spGetUnitOfMeasure.sql" />
+    <Build Include="dbo\Stored Procedures\spGetTDSReceive.sql" />
+    <Build Include="dbo\Stored Procedures\spGetTDSPay.sql" />
+    <Build Include="dbo\Stored Procedures\spGetStockAdjustReason.sql" />
+    <Build Include="dbo\Stored Procedures\spGetStock.sql" />
+    <Build Include="dbo\Stored Procedures\spGetSmsTrack.sql" />
+    <Build Include="dbo\Stored Procedures\spGetShipmentType.sql" />
+    <Build Include="dbo\Stored Procedures\spGetShipment.sql" />
+    <Build Include="dbo\Stored Procedures\spGetSalesType.sql" />
+    <Build Include="dbo\Stored Procedures\spGetSalesOrder.sql" />
+    <Build Include="dbo\Stored Procedures\spGetQuotation.sql" />
+    <Build Include="dbo\Stored Procedures\spGetPurchaseType.sql" />
+    <Build Include="dbo\Stored Procedures\spGetPurchaseOrder.sql" />
+    <Build Include="dbo\Stored Procedures\spGetProductType.sql" />
+    <Build Include="dbo\Stored Procedures\spGetProduct.sql" />
+    <Build Include="dbo\Stored Procedures\spGetPaymentType.sql" />
+    <Build Include="dbo\Stored Procedures\spGetPaymentOut.sql" />
+    <Build Include="dbo\Stored Procedures\spGetPaymentIn.sql" />
+    <Build Include="dbo\Stored Procedures\spGetInvoiceType.sql" />
+    <Build Include="dbo\Stored Procedures\spGetInvoice.sql" />
+    <Build Include="dbo\Stored Procedures\spGetGRN.sql" />
+    <Build Include="dbo\Stored Procedures\spGetCustomerType.sql" />
+    <Build Include="dbo\Stored Procedures\spGetCustomer.sql" />
+    <Build Include="dbo\Stored Procedures\spGetCompanyBank.sql" />
+    <Build Include="dbo\Stored Procedures\spGetBranch.sql" />
+    <Build Include="dbo\Stored Procedures\spGetBillType.sql" />
+    <Build Include="dbo\Stored Procedures\spGetBill.sql" />
+    <Build Include="dbo\Stored Procedures\spDsMaster.sql" />
+    <Build Include="dbo\Stored Procedures\_FindByKeyWord.sql" />
+    <Build Include="dbo\User Defined Types\UserMenuType.sql" />
+    <Build Include="dbo\User Defined Types\StockTransferDetailType.sql" />
+    <Build Include="dbo\User Defined Types\StockAdjustDetailType.sql" />
+    <Build Include="dbo\User Defined Types\ShipmentDetailType.sql" />
+    <Build Include="dbo\User Defined Types\SearchType.sql" />
+    <Build Include="dbo\User Defined Types\SalesOrderDetailType.sql" />
+    <Build Include="dbo\User Defined Types\QuotationDetailType.sql" />
+    <Build Include="dbo\User Defined Types\PurchaseOrderDetailType.sql" />
+    <Build Include="dbo\User Defined Types\PaymentOutDetailType.sql" />
+    <Build Include="dbo\User Defined Types\PaymentInDetailType.sql" />
+    <Build Include="dbo\User Defined Types\OpeningStockDetailType.sql" />
+    <Build Include="dbo\User Defined Types\InvoiceDetailType.sql" />
+    <Build Include="dbo\User Defined Types\GRNDetailType.sql" />
+    <Build Include="dbo\User Defined Types\BillDetailType.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DefaultData\Data.sql" />
+  </ItemGroup>
+</Project>
