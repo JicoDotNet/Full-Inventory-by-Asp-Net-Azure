@@ -150,12 +150,12 @@ namespace JicoDotNet.Inventory.UIControllers
                         IsGSTRegistered = SessionCompany.IsGSTRegistered,
                         StateCode = SessionCompany.StateCode,
 
-                        Address = WebConfigAccess.CompanyAddress,
-                        City = WebConfigAccess.CompanyCity,
-                        Email = WebConfigAccess.CompanyEmail,
-                        PINCode = WebConfigAccess.CompanyPINCode,
-                        Mobile = WebConfigAccess.CompanyMobile,
-                        WebsiteUrl = WebConfigAccess.CompanyWebsite,
+                        Address = WebConfigAppSettingsAccess.CompanyAddress,
+                        City = WebConfigAppSettingsAccess.CompanyCity,
+                        Email = WebConfigAppSettingsAccess.CompanyEmail,
+                        PINCode = WebConfigAppSettingsAccess.CompanyPINCode,
+                        Mobile = WebConfigAppSettingsAccess.CompanyMobile,
+                        WebsiteUrl = WebConfigAppSettingsAccess.CompanyWebsite,
                     };
                     goodsReceiveNoteModels._branch = new BranchLogic(BllCommonLogic).Get().FirstOrDefault(a => a.BranchId == goodsReceiveNoteModels._goodsReceiveNote.BranchId);
                     goodsReceiveNoteModels._purchaseOrder = new PurchaseOrderLogic(BllCommonLogic).GetForDetail(goodsReceiveNoteModels._goodsReceiveNote.PurchaseOrderId);

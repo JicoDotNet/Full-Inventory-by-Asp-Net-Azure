@@ -136,12 +136,12 @@ namespace JicoDotNet.Inventory.UIControllers
                         IsGSTRegistered = SessionCompany.IsGSTRegistered,
                         StateCode = SessionCompany.StateCode,
 
-                        Address = WebConfigAccess.CompanyAddress,
-                        City = WebConfigAccess.CompanyCity,
-                        Email = WebConfigAccess.CompanyEmail,
-                        PINCode = WebConfigAccess.CompanyPINCode,
-                        Mobile = WebConfigAccess.CompanyMobile,
-                        WebsiteUrl = WebConfigAccess.CompanyWebsite,
+                        Address = WebConfigAppSettingsAccess.CompanyAddress,
+                        City = WebConfigAppSettingsAccess.CompanyCity,
+                        Email = WebConfigAppSettingsAccess.CompanyEmail,
+                        PINCode = WebConfigAppSettingsAccess.CompanyPINCode,
+                        Mobile = WebConfigAppSettingsAccess.CompanyMobile,
+                        WebsiteUrl = WebConfigAppSettingsAccess.CompanyWebsite,
                     };
                     salesOrderModels._customer = new CustomerLogic(BllCommonLogic).Get(salesOrderModels._quotation.CustomerId);
                     salesOrderModels._companyBank = companyLogic.BankPrintable();

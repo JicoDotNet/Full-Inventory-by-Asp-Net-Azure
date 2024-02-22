@@ -51,7 +51,7 @@ namespace System.Web.Mvc
                 else
                     _SessionKey = new TokenManagement(new sCommonDto
                     {
-                        NoSqlConnectionString = DBConnection.AzureStorage
+                        NoSqlConnectionString = WebConfigDBConnection.AzureStorage
                     }).GetCredential(Token);
 
                 // If session exists

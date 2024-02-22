@@ -51,7 +51,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
                     nameValuePairs nvp = new nameValuePairs
                     {
-                        new nameValuePair("@ComapnyIsGSTRegistered", GenericLogic.IsValidGSTNumber(WebConfigAccess.GSTNumber)),
+                        new nameValuePair("@ComapnyIsGSTRegistered", GenericLogic.IsValidGSTNumber(WebConfigAppSettingsAccess.GSTNumber)),
 
                         new nameValuePair("@CustomerId", quotation.CustomerId),
                         new nameValuePair("@QuotationDate", quotation.QuotationDate),

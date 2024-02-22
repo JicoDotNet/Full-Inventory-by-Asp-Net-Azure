@@ -22,8 +22,8 @@ namespace System.Web.Mvc
         {
             this.BllCommonLogic = new sCommonDto
             {
-                SqlConnectionString = DBConnection.SqlServer,
-                NoSqlConnectionString = DBConnection.AzureStorage,
+                SqlConnectionString = WebConfigDBConnection.SqlServer,
+                NoSqlConnectionString = WebConfigDBConnection.AzureStorage,
                 RequestId = Guid.NewGuid().ToString().Replace("-", "").ToUpper(),
             };
         }

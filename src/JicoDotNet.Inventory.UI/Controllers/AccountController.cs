@@ -68,8 +68,8 @@ namespace JicoDotNet.Inventory.UIControllers
                         // Get Company Details
                         CompanyBasic companyBasic = new CompanyBasic()
                         {
-                            CompanyName = WebConfigAccess.CompanyName,
-                            GSTNumber = GenericLogic.IsValidGSTNumber(WebConfigAccess.GSTNumber) ? WebConfigAccess.GSTNumber : null
+                            CompanyName = WebConfigAppSettingsAccess.CompanyName,
+                            GSTNumber = GenericLogic.IsValidGSTNumber(WebConfigAppSettingsAccess.GSTNumber) ? WebConfigAppSettingsAccess.GSTNumber : null
                         };
                         companyBasic.IsGSTRegistered = !string.IsNullOrEmpty(companyBasic.GSTNumber);
                         companyBasic.GSTStateCode = companyBasic.IsGSTRegistered ? GenericLogic.GstStateCode(companyBasic.GSTNumber) : null;
