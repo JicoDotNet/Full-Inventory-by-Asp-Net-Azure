@@ -12,7 +12,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.DTO.Class
 {
     public class LoginLog : Logger, ILoginLog
     {
-        public LoginLog() {ActivityDate = GenericLogic.IstNow; }
+        public LoginLog() { ActivityDate = GenericLogic.IstNow; }
         public DateTime? ActivityDate { get; set; }
     }
 }

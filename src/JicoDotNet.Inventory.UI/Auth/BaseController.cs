@@ -171,7 +171,7 @@ namespace System.Web.Mvc
                 if (string.IsNullOrEmpty(ip))
                     ip = null;
             }
-            if (ip == "::1")
+            if (ip == "::1" || ip.Contains("localhost"))
                 ip = "127.0.0.1";
             return ip;
         }

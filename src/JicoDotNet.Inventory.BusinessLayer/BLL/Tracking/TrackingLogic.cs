@@ -39,56 +39,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 #pragma warning restore CS4014
         }
 
-        public static async Task LinkLog(Logger log, sCommonDto CommonObj)
-        {
-#pragma warning disable CS4014
-            Task.Run(() =>
-            {
-                try
-                {
-                    log.PartitionKey = "LinkLog";
-                    log.RowKey = (CommonObj?.RequestId == null) ? Guid.NewGuid().ToString() : CommonObj.RequestId;
-
-                    log.RequestId = CommonObj?.RequestId;
-                    log.TransactionDate = GenericLogic.IstNow;
-
-                    ExecuteTableManager _tableManager = new ExecuteTableManager("Log", CommonObj.NoSqlConnectionString);
-                    _tableManager.InsertEntityAsync(log);
-                    return;
-                }
-                catch
-                {
-                    return;
-                }
-            });
-#pragma warning restore CS4014
-        }
-
-        public static async Task StoreLog(Logger log, sCommonDto CommonObj)
-        {
-#pragma warning disable CS4014
-            Task.Run(() =>
-            {
-                try
-                {
-                    log.PartitionKey = "StoreLog";
-                    log.RowKey = (CommonObj?.RequestId == null) ? Guid.NewGuid().ToString() : CommonObj.RequestId;
-
-                    log.RequestId = CommonObj?.RequestId;
-                    log.TransactionDate = GenericLogic.IstNow;
-
-                    ExecuteTableManager _tableManager = new ExecuteTableManager("Log", CommonObj.NoSqlConnectionString);
-                    _tableManager.InsertEntityAsync(log);
-                    return;
-                }
-                catch
-                {
-                    return;
-                }
-            });
-#pragma warning restore CS4014
-        }
-
         public async Task LoginLog(LoginLog loginLog)
         {
 #pragma warning disable CS4014

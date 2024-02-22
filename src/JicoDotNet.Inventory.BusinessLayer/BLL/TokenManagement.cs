@@ -119,7 +119,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
 
         /// <summary>
-        /// For Previous Session - Dublicate Session
+        /// For Previous Session - Duplicate Session
         /// </summary>
         /// <param name="UserId"></param>
         /// <returns></returns>

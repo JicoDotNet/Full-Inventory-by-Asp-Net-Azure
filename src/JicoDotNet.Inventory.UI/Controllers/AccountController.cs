@@ -56,7 +56,7 @@ namespace JicoDotNet.Inventory.UIControllers
                     #endregion
 
                     #region Login Track
-                    new TrackingLogic(BllCommonLogic).LoginLog(new LoginLog());
+                    _ = new TrackingLogic(BllCommonLogic).LoginLog(new LoginLog());
                     #endregion
 
                     #region Set Session Cookie & redirect if Login Success
@@ -89,11 +89,11 @@ namespace JicoDotNet.Inventory.UIControllers
                 string ErrMsg = string.Empty;
                 if (accountAuthenticate.eLoginStatus == ELoginStatus.Error)
                 {
-                    ErrMsg = "Got an Error. Please Contact with Administrator!!";
+                    ErrMsg = "Got an Error. Please Contact Administrator!!";
                 }
                 if (accountAuthenticate.eLoginStatus == ELoginStatus.IPAddressFormatError)
                 {
-                    ErrMsg = "Got an Error. Please Contact Your Administrator!!";
+                    ErrMsg = "Got an Error in IP. Please Contact Administrator!!";
                 }
                 if (accountAuthenticate.eLoginStatus == ELoginStatus.UserNameOrPasswordInvalid)
                 {
