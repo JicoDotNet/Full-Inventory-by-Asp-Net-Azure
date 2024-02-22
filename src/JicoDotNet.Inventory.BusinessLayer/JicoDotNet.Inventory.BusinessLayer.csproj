@@ -113,7 +113,7 @@
     <Compile Include="Common\IPAddressRange.cs" />
     <Compile Include="Common\MailSmSLogic.cs" />
     <Compile Include="Common\MemoryFile.cs" />
-    <Compile Include="Common\WebConfigAccess.cs" />
+    <Compile Include="Common\WebConfigAppSettingsAccess.cs" />
     <Compile Include="DTO\Class\AccountAuthenticate.cs" />
     <Compile Include="DTO\Class\AllowIPs.cs" />
     <Compile Include="DTO\Class\Bill.cs" />

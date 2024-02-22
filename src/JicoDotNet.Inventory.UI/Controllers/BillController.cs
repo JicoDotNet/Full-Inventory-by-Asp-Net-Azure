@@ -247,12 +247,12 @@ namespace JicoDotNet.Inventory.UIControllers
                         IsGSTRegistered = SessionCompany.IsGSTRegistered,
                         StateCode = SessionCompany.StateCode,
 
-                        Address = WebConfigAccess.CompanyAddress,
-                        City = WebConfigAccess.CompanyCity,
-                        Email = WebConfigAccess.CompanyEmail,
-                        PINCode = WebConfigAccess.CompanyPINCode,
-                        Mobile = WebConfigAccess.CompanyMobile,
-                        WebsiteUrl = WebConfigAccess.CompanyWebsite,
+                        Address = WebConfigAppSettingsAccess.CompanyAddress,
+                        City = WebConfigAppSettingsAccess.CompanyCity,
+                        Email = WebConfigAppSettingsAccess.CompanyEmail,
+                        PINCode = WebConfigAppSettingsAccess.CompanyPINCode,
+                        Mobile = WebConfigAppSettingsAccess.CompanyMobile,
+                        WebsiteUrl = WebConfigAppSettingsAccess.CompanyWebsite,
                     };
                     billModels._vendor = new VendorLogic(BllCommonLogic).Get().FirstOrDefault(a => a.VendorId == billModels._bill.VendorId);
                     billModels._purchaseOrder = new PurchaseOrderLogic(BllCommonLogic).GetForDetail(billModels._bill.PurchaseOrderId);

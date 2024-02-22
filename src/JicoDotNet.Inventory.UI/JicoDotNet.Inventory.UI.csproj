@@ -146,7 +146,8 @@
     <Compile Include="Areas\Report\ReportAreaRegistration.cs" />
     <Compile Include="Auth\BaseController.cs" />
     <Compile Include="Auth\SessionAuthenticate.cs" />
-    <Compile Include="Common\ExtendedClass.cs" />
+    <Compile Include="Common\WebConfigDBConnection.cs" />
+    <Compile Include="Common\Extension.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BillController.cs" />
     <Compile Include="Controllers\BranchController.cs" />

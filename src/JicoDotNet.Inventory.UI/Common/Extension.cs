@@ -58,10 +58,4 @@
             return string.Empty;
         }
     }
-
-    public class DBConnection
-    {
-        public static object SqlServer { get { return (object)WebConfigurationManager.AppSettings["SqlServerConnection"]?.ToString(); } }
-        public static object AzureStorage { get { return (object)WebConfigurationManager.AppSettings["AzureStorageConnection"]?.ToString(); } }
-    }
 }

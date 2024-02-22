@@ -7,10 +7,8 @@ using System.Web.Configuration;
 
 namespace JicoDotNet.Inventory.BusinessLayer.Common
 {
-    public sealed class WebConfigAccess
+    public sealed class WebConfigAppSettingsAccess
     {
-        public static string AzureStorageConnection { get { if (WebConfigurationManager.AppSettings["AzureStorageConnection"] != null && !string.IsNullOrEmpty(WebConfigurationManager.AppSettings["AzureStorageConnection"]?.ToString())) { return WebConfigurationManager.AppSettings["AzureStorageConnection"]?.ToString(); } return null; } }
-        public static string SqlServerConnection { get { if (WebConfigurationManager.AppSettings["SqlServerConnection"] != null && !string.IsNullOrEmpty(WebConfigurationManager.AppSettings["SqlServerConnection"]?.ToString())) { return WebConfigurationManager.AppSettings["SqlServerConnection"]?.ToString(); } return null; } }
         public static string UserFullName { get { if (WebConfigurationManager.AppSettings["UserFullName"] != null && !string.IsNullOrEmpty(WebConfigurationManager.AppSettings["UserFullName"]?.ToString())) { return WebConfigurationManager.AppSettings["UserFullName"]?.ToString(); } return null; } }
         public static string UserEmail { get { if (WebConfigurationManager.AppSettings["UserEmail"] != null && !string.IsNullOrEmpty(WebConfigurationManager.AppSettings["UserEmail"]?.ToString())) { return WebConfigurationManager.AppSettings["UserEmail"]?.ToString(); } return null; } }
         public static string Password { get { if (WebConfigurationManager.AppSettings["Password"] != null && !string.IsNullOrEmpty(WebConfigurationManager.AppSettings["Password"]?.ToString())) { return WebConfigurationManager.AppSettings["Password"]?.ToString(); } return null; } }
