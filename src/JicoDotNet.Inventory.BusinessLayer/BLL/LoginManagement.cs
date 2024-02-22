@@ -75,7 +75,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 bool IsTokenCreated = new TokenManagement(CommonObj).SetToken(accountAuthenticate.credential);
                 #endregion
 
-                // dublicate Login check
+                // Duplicate Login check
                 if (!IsTokenCreated)
                 {
                     accountAuthenticate.eLoginStatus = ELoginStatus.DuplicateLogin;
