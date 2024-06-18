@@ -79,7 +79,6 @@
     <Compile Include="BLL\DS\MasterDS.cs" />
     <Compile Include="BLL\GoodsReceiveNoteLogic.cs" />
     <Compile Include="BLL\InvoiceLogic.cs" />
-    <Compile Include="BLL\IPsManagment.cs" />
     <Compile Include="BLL\LoginManagement.cs" />
     <Compile Include="BLL\PaymentLogic.cs" />
     <Compile Include="BLL\ProductLogic.cs" />
@@ -92,7 +91,6 @@
     <Compile Include="BLL\SalesOrderLogic.cs" />
     <Compile Include="BLL\ShipmentLogic.cs" />
     <Compile Include="BLL\SMSBankLogic.cs" />
-    <Compile Include="BLL\SMSManageLogic.cs" />
     <Compile Include="BLL\StockAdjustLogic.cs" />
     <Compile Include="BLL\StockLogic.cs" />
     <Compile Include="BLL\StockTransferLogic.cs" />
@@ -115,7 +113,6 @@
     <Compile Include="Common\MemoryFile.cs" />
     <Compile Include="Common\WebConfigAppSettingsAccess.cs" />
     <Compile Include="DTO\Class\AccountAuthenticate.cs" />
-    <Compile Include="DTO\Class\AllowIPs.cs" />
     <Compile Include="DTO\Class\Bill.cs" />
     <Compile Include="DTO\Class\BillDetail.cs" />
     <Compile Include="DTO\Class\BillType.cs" />
@@ -144,7 +141,6 @@
     <Compile Include="DTO\Class\Custom\UserMenuType.cs" />
     <Compile Include="DTO\Class\DataTracking.cs" />
     <Compile Include="DTO\Class\Draft.cs" />
-    <Compile Include="DTO\Class\ForgetPassword.cs" />
     <Compile Include="DTO\Class\GoodsReceiveNote.cs" />
     <Compile Include="DTO\Class\GoodsReceiveNoteDetail.cs" />
     <Compile Include="DTO\Class\GoodsReceiveNoteDirect.cs" />
@@ -157,7 +153,6 @@
     <Compile Include="DTO\Class\Logger.cs" />
     <Compile Include="DTO\Class\LoginCredentials.cs" />
     <Compile Include="DTO\Class\LoginLog.cs" />
-    <Compile Include="DTO\Class\Password.cs" />
     <Compile Include="DTO\Class\PaymentIn.cs" />
     <Compile Include="DTO\Class\PaymentInDetail.cs" />
     <Compile Include="DTO\Class\PaymentOut.cs" />
@@ -204,18 +199,12 @@
     <Compile Include="DTO\Class\StockDetail.cs" />
     <Compile Include="DTO\Class\StockTransfer.cs" />
     <Compile Include="DTO\Class\StockTransferDetail.cs" />
-    <Compile Include="DTO\Class\StoreCredential.cs" />
     <Compile Include="DTO\Class\StoreSessionCredential.cs" />
     <Compile Include="DTO\Class\Support.cs" />
     <Compile Include="DTO\Class\TDSPay.cs" />
     <Compile Include="DTO\Class\TDSReceive.cs" />
-    <Compile Include="DTO\Class\TenantQuota.cs" />
     <Compile Include="DTO\Class\UnitOfMeasure.cs" />
     <Compile Include="DTO\Class\User.cs" />
-    <Compile Include="DTO\Class\UserCompany.cs" />
-    <Compile Include="DTO\Class\UserMenu.cs" />
-    <Compile Include="DTO\Class\UserRecharge.cs" />
-    <Compile Include="DTO\Class\UserType.cs" />
     <Compile Include="DTO\Class\Vendor.cs" />
     <Compile Include="DTO\Class\VendorBank.cs" />
     <Compile Include="DTO\Class\VendorType.cs" />
@@ -223,7 +212,6 @@
     <Compile Include="DTO\DS\HomeMasterCount.cs" />
     <Compile Include="DTO\DS\ReportMasterCount.cs" />
     <Compile Include="DTO\Interface\IActivity.cs" />
-    <Compile Include="DTO\Interface\IAllowIPs.cs" />
     <Compile Include="DTO\Interface\IBank.cs" />
     <Compile Include="DTO\Interface\IBill.cs" />
     <Compile Include="DTO\Interface\IBillDetail.cs" />
@@ -232,7 +220,6 @@
     <Compile Include="DTO\Interface\ICompany.cs" />
     <Compile Include="DTO\Interface\ICompanyBank.cs" />
     <Compile Include="DTO\Interface\ICompanyBasic.cs" />
-    <Compile Include="DTO\Interface\ICompanyIdentity.cs" />
     <Compile Include="DTO\Interface\IConfig.cs" />
     <Compile Include="DTO\Interface\ICustomer.cs" />
     <Compile Include="DTO\Interface\ICustomerType.cs" />
@@ -251,11 +238,7 @@
     <Compile Include="DTO\Interface\IInvoiceType.cs" />
     <Compile Include="DTO\Interface\ILogger.cs" />
     <Compile Include="DTO\Interface\ILoginLog.cs" />
-    <Compile Include="DTO\Interface\IMenu.cs" />
-    <Compile Include="DTO\Interface\IMenuGroup.cs" />
-    <Compile Include="DTO\Interface\IMenuList.cs" />
     <Compile Include="DTO\Interface\IOrderDetails.cs" />
-    <Compile Include="DTO\Interface\IPassword.cs" />
     <Compile Include="DTO\Interface\IPaymentIn.cs" />
     <Compile Include="DTO\Interface\IPaymentInDetail.cs" />
     <Compile Include="DTO\Interface\IPaymentOut.cs" />
@@ -294,16 +277,8 @@
     <Compile Include="DTO\Interface\ISupport.cs" />
     <Compile Include="DTO\Interface\ITDSPay.cs" />
     <Compile Include="DTO\Interface\ITDSReceive.cs" />
-    <Compile Include="DTO\Interface\ITenantIdentity.cs" />
-    <Compile Include="DTO\Interface\ITenantQuota.cs" />
-    <Compile Include="DTO\Interface\ITenantQuotaUsage.cs" />
     <Compile Include="DTO\Interface\IUnitOfMeasure.cs" />
     <Compile Include="DTO\Interface\IUser.cs" />
-    <Compile Include="DTO\Interface\IUserAddress.cs" />
-    <Compile Include="DTO\Interface\IUserIdentity.cs" />
-    <Compile Include="DTO\Interface\IUserMenu.cs" />
-    <Compile Include="DTO\Interface\IUserPrivilege.cs" />
-    <Compile Include="DTO\Interface\IUserType.cs" />
     <Compile Include="DTO\Interface\IVendor.cs" />
     <Compile Include="DTO\Interface\IVendorBank.cs" />
     <Compile Include="DTO\Interface\IVendorType.cs" />
