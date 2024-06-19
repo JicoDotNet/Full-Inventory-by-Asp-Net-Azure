@@ -44,18 +44,18 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             if (stDetailTypes.Count > 0)
             {
                 return new SqlDBAccess(CommonObj.SqlConnectionString)
-                    .InsertUpdateDeleteReturnObject("[dbo].[spSetStockTransfer]", new nameValuePairs
+                    .InsertUpdateDeleteReturnObject("[dbo].[spSetStockTransfer]", new NameValuePairs
                     {
                          
                          
-                        new nameValuePair("@FromWareHouseId", stockTransfer.FromWareHouseId),
-                        new nameValuePair("@ToWareHouseId", stockTransfer.ToWareHouseId),
-                        new nameValuePair("@StockTransferNumber", "SKT-"),
-                        new nameValuePair("@StockTransferDate", stockTransfer.StockTransferDate),
-                        new nameValuePair("@Remarks", stockTransfer.Remarks),
-                        new nameValuePair("@RequestId", CommonObj.RequestId),
-                        new nameValuePair("@STDetail", stDetailTypes.ToDataTable()),
-                        new nameValuePair("@QueryType", "INSERT")
+                        new NameValuePair("@FromWareHouseId", stockTransfer.FromWareHouseId),
+                        new NameValuePair("@ToWareHouseId", stockTransfer.ToWareHouseId),
+                        new NameValuePair("@StockTransferNumber", "SKT-"),
+                        new NameValuePair("@StockTransferDate", stockTransfer.StockTransferDate),
+                        new NameValuePair("@Remarks", stockTransfer.Remarks),
+                        new NameValuePair("@RequestId", CommonObj.RequestId),
+                        new NameValuePair("@STDetail", stDetailTypes.ToDataTable()),
+                        new NameValuePair("@QueryType", "INSERT")
                     }, "@OutParam"
                 ).ToString();
             }

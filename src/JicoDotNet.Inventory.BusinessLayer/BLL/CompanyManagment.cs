@@ -25,20 +25,20 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             else
                 qt = "INSERT";
 
-            nameValuePairs nvp = new nameValuePairs
+            NameValuePairs nvp = new NameValuePairs
             {
-                new nameValuePair("@CompanyBankId", companyBank.CompanyBankId),
+                new NameValuePair("@CompanyBankId", companyBank.CompanyBankId),
 
-                new nameValuePair("@AccountName", companyBank.AccountName),
-                new nameValuePair("@AccountNumber", companyBank.AccountNumber?.ToUpper()),
-                new nameValuePair("@BankName", companyBank.BankName),
-                new nameValuePair("@IFSC", companyBank.IFSC?.ToUpper()),
-                new nameValuePair("@MICR", companyBank.MICR?.ToUpper()),
-                new nameValuePair("@BranchName ", companyBank.BranchName),
-                new nameValuePair("@BranchAddress", companyBank.BranchAddress),
+                new NameValuePair("@AccountName", companyBank.AccountName),
+                new NameValuePair("@AccountNumber", companyBank.AccountNumber?.ToUpper()),
+                new NameValuePair("@BankName", companyBank.BankName),
+                new NameValuePair("@IFSC", companyBank.IFSC?.ToUpper()),
+                new NameValuePair("@MICR", companyBank.MICR?.ToUpper()),
+                new NameValuePair("@BranchName ", companyBank.BranchName),
+                new NameValuePair("@BranchAddress", companyBank.BranchAddress),
 
-                new nameValuePair("@RequestId", CommonObj.RequestId),
-                new nameValuePair("@QueryType", qt)
+                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@QueryType", qt)
             };
 
             string ReturnDS = _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetCompanyBank]", nvp, "@OutParam").ToString();
@@ -49,11 +49,11 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             string qt = "INACTIVE";
 
-            nameValuePairs nvp = new nameValuePairs
+            NameValuePairs nvp = new NameValuePairs
             {
-                new nameValuePair("@CompanyBankId", CompanyBankId),
-                new nameValuePair("@RequestId", CommonObj.RequestId),
-                new nameValuePair("@QueryType", qt)
+                new NameValuePair("@CompanyBankId", CompanyBankId),
+                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@QueryType", qt)
             };
 
             string ReturnDS = _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetCompanyBank]", nvp, "@OutParam").ToString();
@@ -63,9 +63,9 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             List<CompanyBank> companyBanks = _sqlDBAccess.GetData("[dbo].[spGetCompanyBank]",
-                new nameValuePairs
+                new NameValuePairs
                 {
-                    new nameValuePair("@QueryType", "ALL")
+                    new NameValuePair("@QueryType", "ALL")
                 }).ToList<CompanyBank>();
             if (IsActive != null)
             {
@@ -79,14 +79,14 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public string BankPrintability(CompanyBank companyBank, bool IsPrintable)
         {
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-            nameValuePairs nvp = new nameValuePairs
+            NameValuePairs nvp = new NameValuePairs
             {
-                new nameValuePair("@CompanyBankId", companyBank.CompanyBankId),
+                new NameValuePair("@CompanyBankId", companyBank.CompanyBankId),
 
-                new nameValuePair("@IsPrintable", IsPrintable),
+                new NameValuePair("@IsPrintable", IsPrintable),
 
-                new nameValuePair("@RequestId", CommonObj.RequestId),
-                new nameValuePair("@QueryType", "PRINTABILITY")
+                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@QueryType", "PRINTABILITY")
             };
             string v = _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetCompanyBank]", nvp, "@OutParam").ToString();
             return v;
@@ -95,9 +95,9 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             CompanyBank companyBank = _sqlDBAccess.GetFirstOrDefaultRow("[dbo].[spGetCompanyBank]",
-                new nameValuePairs
+                new NameValuePairs
                 {
-                    new nameValuePair("@QueryType", "PRINTABLE")
+                    new NameValuePair("@QueryType", "PRINTABLE")
                 }).FirstOrDefault<CompanyBank>();
             return companyBank;
         }

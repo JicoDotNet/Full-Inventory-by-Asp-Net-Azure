@@ -18,18 +18,18 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public HomeMasterCount CountHome()
         {
             return new SqlDBAccess(CommonObj.SqlConnectionString).GetFirstOrDefaultRow("[dbo].[spDsMaster]",
-                new nameValuePairs
+                new NameValuePairs
                 {
-                    new nameValuePair("@QueryType", "HOMECOUNT")
+                    new NameValuePair("@QueryType", "HOMECOUNT")
                 }).FirstOrDefault<HomeMasterCount>();
         }
 
         public ReportMasterCount CountReport()
         {
             return new SqlDBAccess(CommonObj.SqlConnectionString).GetFirstOrDefaultRow("[dbo].[spDsMaster]",
-                new nameValuePairs
+                new NameValuePairs
                 {
-                    new nameValuePair("@QueryType", "REPORTCOUNT")
+                    new NameValuePair("@QueryType", "REPORTCOUNT")
                 }).FirstOrDefault<ReportMasterCount>();
         }
     }

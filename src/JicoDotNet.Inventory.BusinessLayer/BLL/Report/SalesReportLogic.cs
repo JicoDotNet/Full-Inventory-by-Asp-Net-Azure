@@ -18,16 +18,16 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
         public List<RCustomerSales> CustomerWise(PCustomerSales customerSales)
         {
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-            nameValuePairs nvp = new nameValuePairs
+            NameValuePairs nvp = new NameValuePairs
             {
                  
                  
-                new nameValuePair("@CustomerTypeId", customerSales.CustomerTypeId),
-                new nameValuePair("@CustomerId", customerSales.CustomerId),
-                new nameValuePair("@StartDate", customerSales.SearchDate.StartDate),
-                new nameValuePair("@EndDate", customerSales.SearchDate.EndDate),
-                new nameValuePair("@ForRetail", customerSales.ForRetail),
-                new nameValuePair("@QueryType", "BYCUSTOMER")
+                new NameValuePair("@CustomerTypeId", customerSales.CustomerTypeId),
+                new NameValuePair("@CustomerId", customerSales.CustomerId),
+                new NameValuePair("@StartDate", customerSales.SearchDate.StartDate),
+                new NameValuePair("@EndDate", customerSales.SearchDate.EndDate),
+                new NameValuePair("@ForRetail", customerSales.ForRetail),
+                new NameValuePair("@QueryType", "BYCUSTOMER")
             };
             return _sqlDBAccess.GetData("[dbo].[spRpSales]", nvp).ToList<RCustomerSales>();
         }
@@ -35,16 +35,16 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
         public List<RProductSales> ProductWise(PProductSales productSales)
         {
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-            nameValuePairs nvp = new nameValuePairs
+            NameValuePairs nvp = new NameValuePairs
             {
                  
                  
-                new nameValuePair("@ProductTypeId", productSales.ProductTypeId),
-                new nameValuePair("@ProductId", productSales.ProductId),
-                new nameValuePair("@StartDate", productSales.SearchDate.StartDate),
-                new nameValuePair("@EndDate", productSales.SearchDate.EndDate),
-                new nameValuePair("@ForRetail", productSales.ForRetail),
-                new nameValuePair("@QueryType", "BYPRODUCT")
+                new NameValuePair("@ProductTypeId", productSales.ProductTypeId),
+                new NameValuePair("@ProductId", productSales.ProductId),
+                new NameValuePair("@StartDate", productSales.SearchDate.StartDate),
+                new NameValuePair("@EndDate", productSales.SearchDate.EndDate),
+                new NameValuePair("@ForRetail", productSales.ForRetail),
+                new NameValuePair("@QueryType", "BYPRODUCT")
             };
             return _sqlDBAccess.GetData("[dbo].[spRpSales]", nvp).ToList<RProductSales>();
         }
