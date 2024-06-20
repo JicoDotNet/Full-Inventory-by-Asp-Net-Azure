@@ -50,8 +50,8 @@ namespace JicoDotNet.Inventory.UIControllers
                                 WebsiteUrl = WebConfigAppSettingsAccess.CompanyWebsite,
                             },
 
-                    _config = new ConfigarationManager(BllCommonLogic).GetConfig(),
-                    _companyBanks = new CompanyManagment(BllCommonLogic).BankGet(true),
+                    _config = new ConfigarationManager(LogicHelper).GetConfig(),
+                    _companyBanks = new CompanyManagment(LogicHelper).BankGet(true),
                     _sessionCredential = SessionPerson
                 };
                 if (companyModels._company != null)
@@ -71,7 +71,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                CompanyManagment companyManagment = new CompanyManagment(BllCommonLogic);
+                CompanyManagment companyManagment = new CompanyManagment(LogicHelper);
                 CompanyModels companyModels = new CompanyModels()
                 {
                     _company = new Company()
@@ -120,7 +120,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 DataTrackingLogicSet(companyBank);
                 #endregion
 
-                CompanyManagment companyManagment = new CompanyManagment(BllCommonLogic);
+                CompanyManagment companyManagment = new CompanyManagment(LogicHelper);
                 if (Convert.ToInt64(companyManagment.BankSet(companyBank)) > 0)
                 {
                     ReturnMessage = new ReturnObject()
@@ -151,9 +151,9 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (new LoginManagement(BllCommonLogic).Authenticate(SessionPerson.UserEmail, Context))
+                if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                 {
-                    CompanyManagment companyManagment = new CompanyManagment(BllCommonLogic);
+                    CompanyManagment companyManagment = new CompanyManagment(LogicHelper);
                     long deactivateId = Convert.ToInt64(companyManagment.BankDeactive(Convert.ToInt32(id)));
                     return Json(new JsonReturnModels
                     {
@@ -186,7 +186,7 @@ namespace JicoDotNet.Inventory.UIControllers
             DataTrackingLogicSet(companyBank);
             #endregion
 
-            CompanyManagment companyManagment = new CompanyManagment(BllCommonLogic);
+            CompanyManagment companyManagment = new CompanyManagment(LogicHelper);
             if (Convert.ToInt64(companyManagment.BankPrintability(companyBank, true)) > 0)
             {
                 ReturnMessage = new ReturnObject()
@@ -218,7 +218,7 @@ namespace JicoDotNet.Inventory.UIControllers
             DataTrackingLogicSet(companyBank);
             #endregion
 
-            CompanyManagment companyManagment = new CompanyManagment(BllCommonLogic);
+            CompanyManagment companyManagment = new CompanyManagment(LogicHelper);
             if (Convert.ToInt64(companyManagment.BankPrintability(companyBank, false)) > 0)
             {
                 ReturnMessage = new ReturnObject()

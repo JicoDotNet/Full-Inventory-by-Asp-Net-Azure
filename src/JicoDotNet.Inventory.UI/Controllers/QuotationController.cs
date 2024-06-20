@@ -26,8 +26,8 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 QuotationModels purchaseOrderModels = new QuotationModels()
                 {
-                    _quotations = new QuotationLogic(BllCommonLogic).GetQuotations(),
-                    _config = new ConfigarationManager(BllCommonLogic).GetConfig(),
+                    _quotations = new QuotationLogic(LogicHelper).GetQuotations(),
+                    _config = new ConfigarationManager(LogicHelper).GetConfig(),
                     _company = SessionCompany
                 };
                 return PartialView("_PartialIndex", purchaseOrderModels);
@@ -45,9 +45,9 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 QuotationModels salesOrderModels = new QuotationModels()
                 {
-                    _customers = new CustomerLogic(BllCommonLogic).GetNonRetail(true),
+                    _customers = new CustomerLogic(LogicHelper).GetNonRetail(true),
                     _company = SessionCompany,
-                    _config = new ConfigarationManager(BllCommonLogic).GetConfig()
+                    _config = new ConfigarationManager(LogicHelper).GetConfig()
                 };
                 return View(salesOrderModels);
             }
@@ -64,7 +64,7 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 QuotationModels models = new QuotationModels()
                 {
-                    _config = new ConfigarationManager(BllCommonLogic).GetConfig(),
+                    _config = new ConfigarationManager(LogicHelper).GetConfig(),
                     _isGstEnabled = Gst == 1
                 };
                 return PartialView("_PartialQuotaItemDetails", models);
@@ -84,7 +84,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 DataTrackingLogicSet(quotation);
                 #endregion
 
-                string obj = new QuotationLogic(BllCommonLogic).SetForEntry(quotation);
+                string obj = new QuotationLogic(LogicHelper).SetForEntry(quotation);
                 Quotation QoObj = JsonConvert.DeserializeObject<Quotation>(obj);
 
                 if (QoObj != null && QoObj.QuotationId > 0)
@@ -122,12 +122,12 @@ namespace JicoDotNet.Inventory.UIControllers
 
                 QuotationModels salesOrderModels = new QuotationModels()
                 {
-                    _quotation = new QuotationLogic(BllCommonLogic).GetForDetail(Convert.ToInt64(id))
+                    _quotation = new QuotationLogic(LogicHelper).GetForDetail(Convert.ToInt64(id))
                 };
                 if (salesOrderModels._quotation != null)
                 {
-                    CompanyManagment companyLogic = new CompanyManagment(BllCommonLogic);
-                    salesOrderModels._config = new ConfigarationManager(BllCommonLogic).GetConfig();
+                    CompanyManagment companyLogic = new CompanyManagment(LogicHelper);
+                    salesOrderModels._config = new ConfigarationManager(LogicHelper).GetConfig();
                     salesOrderModels._companyAddress = new Company()
                     {
                         CompanyName = SessionCompany.CompanyName,
@@ -143,7 +143,7 @@ namespace JicoDotNet.Inventory.UIControllers
                         Mobile = WebConfigAppSettingsAccess.CompanyMobile,
                         WebsiteUrl = WebConfigAppSettingsAccess.CompanyWebsite,
                     };
-                    salesOrderModels._customer = new CustomerLogic(BllCommonLogic).Get(salesOrderModels._quotation.CustomerId);
+                    salesOrderModels._customer = new CustomerLogic(LogicHelper).Get(salesOrderModels._quotation.CustomerId);
                     salesOrderModels._companyBank = companyLogic.BankPrintable();
                     return View(salesOrderModels);
                 }
@@ -165,15 +165,15 @@ namespace JicoDotNet.Inventory.UIControllers
 
                 QuotationModels salesOrderModels = new QuotationModels()
                 {
-                    _quotation = new QuotationLogic(BllCommonLogic).GetForDetail(Convert.ToInt64(id))
+                    _quotation = new QuotationLogic(LogicHelper).GetForDetail(Convert.ToInt64(id))
                 };
                 if (salesOrderModels._quotation != null)
                 {
-                    salesOrderModels._config = new ConfigarationManager(BllCommonLogic).GetConfig();
+                    salesOrderModels._config = new ConfigarationManager(LogicHelper).GetConfig();
                     salesOrderModels._company = SessionCompany;
-                    salesOrderModels._salesTypes = new SalesOrderLogic(BllCommonLogic).TypeGet(true);
-                    salesOrderModels._branches = new BranchLogic(BllCommonLogic).Get(true);
-                    salesOrderModels._customer = new CustomerLogic(BllCommonLogic).Get(salesOrderModels._quotation.CustomerId);
+                    salesOrderModels._salesTypes = new SalesOrderLogic(LogicHelper).TypeGet(true);
+                    salesOrderModels._branches = new BranchLogic(LogicHelper).Get(true);
+                    salesOrderModels._customer = new CustomerLogic(LogicHelper).Get(salesOrderModels._quotation.CustomerId);
                     return View(salesOrderModels);
                 }
                 ReturnMessage = new ReturnObject()
@@ -201,7 +201,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 DataTrackingLogicSet(salesOrder);
                 #endregion
 
-                Quotation quotation = new QuotationLogic(BllCommonLogic).GetForDetail(Convert.ToInt64(id));
+                Quotation quotation = new QuotationLogic(LogicHelper).GetForDetail(Convert.ToInt64(id));
                 salesOrder.QuotationId = quotation.QuotationId;
                 salesOrder.IsGstAllowed = quotation.IsGstAllowed;
                 salesOrder.CustomerId = quotation.CustomerId;
@@ -229,7 +229,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 }
 
 
-                string obj = new SalesOrderLogic(BllCommonLogic).SetForEntry(salesOrder);
+                string obj = new SalesOrderLogic(LogicHelper).SetForEntry(salesOrder);
                 SalesOrder SoObj = JsonConvert.DeserializeObject<SalesOrder>(obj);
 
                 if (SoObj != null && SoObj.SalesOrderId > 0)
@@ -262,9 +262,9 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (new LoginManagement(BllCommonLogic).Authenticate(SessionPerson.UserEmail, Context))
+                if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                 {
-                    QuotationLogic quotationLogic = new QuotationLogic(BllCommonLogic);
+                    QuotationLogic quotationLogic = new QuotationLogic(LogicHelper);
                     long deactivateId = Convert.ToInt64(quotationLogic.Deactive(Convert.ToInt64(id)));
                     return Json(new JsonReturnModels
                     {

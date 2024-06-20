@@ -1,17 +1,20 @@
 ﻿using DataAccess.AzureStorage;
 using DataAccess.Sql;
-using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Core;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
 
 namespace JicoDotNet.Inventory.BusinessLayer.Common
 {
-    public class ConnectionString
+    public class ConnectionString : IConnectionString
     {
-        public ConnectionString(sCommonDto sCommonDtoObj)
+        public ConnectionString(ICommonRequestDto sCommonDtoObj)
         {
             CommonObj = sCommonDtoObj;
+            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
         }
-        protected sCommonDto CommonObj { get; private set; }
-        protected SqlDBAccess _sqlDBAccess;
+        public ICommonRequestDto CommonObj { get; private set; }
+        public ISqlDBAccess _sqlDBAccess { get; set; }
+
         protected ExecuteTableManager _tableManager;
         protected ExecuteBlobManager _blobManager;
     }

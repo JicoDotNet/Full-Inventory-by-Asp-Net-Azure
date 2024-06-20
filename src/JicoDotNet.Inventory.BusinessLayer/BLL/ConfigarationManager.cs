@@ -2,18 +2,19 @@
 using Newtonsoft.Json;
 using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class ConfigarationManager : ConnectionString
     {
-        public ConfigarationManager(sCommonDto CommonObj) : base(CommonObj) { }
+        public ConfigarationManager(ICommonRequestDto CommonObj) : base(CommonObj) { }
 
         public void SetConfig(Config config)
         {

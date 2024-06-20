@@ -2,19 +2,20 @@
 using Newtonsoft.Json;
 using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class DataTrackingLogic
     {
         #pragma warning disable CS1998
-        public static async Task Set(object _Object, sCommonDto CommonObj)
+        public static async Task Set(object _Object, ICommonRequestDto CommonObj)
         {
             #pragma warning disable CS4014
             Task.Run(() =>

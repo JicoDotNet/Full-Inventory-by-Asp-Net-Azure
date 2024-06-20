@@ -1,7 +1,8 @@
 ﻿using DataAccess.Sql;
 using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Core;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,16 +14,16 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class WareHouseLogic: ConnectionString
     {
-        public WareHouseLogic(sCommonDto CommonObj) : base(CommonObj) { }
+        public WareHouseLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
 
         public List<WareHouse> Get(bool? IsActive = null)
         {
             List<WareHouse> wareHouses = new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetWareHouse]",
-                new nameValuePairs
+                new NameValuePairs
                 {
                      
                      
-                    new nameValuePair("@QueryType", "ALL")
+                    new NameValuePair("@QueryType", "ALL")
                 }).ToList<WareHouse>();
             if (IsActive != null)
             {
@@ -43,17 +44,17 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             else
                 qt = "INSERT";
 
-            nameValuePairs nvp = new nameValuePairs
+            NameValuePairs nvp = new NameValuePairs
             {
-                new nameValuePair("@WareHouseId", wareHouse.WareHouseId),
+                new NameValuePair("@WareHouseId", wareHouse.WareHouseId),
                  
                  
-                new nameValuePair("@BranchId", wareHouse.BranchId),
-                new nameValuePair("@WareHouseName", wareHouse.WareHouseName),
-                new nameValuePair("@IsRetailCounter", wareHouse.IsRetailCounter),
-                new nameValuePair("@Description", wareHouse.Description),
-                new nameValuePair("@RequestId", CommonObj.RequestId),
-                new nameValuePair("@QueryType", qt)
+                new NameValuePair("@BranchId", wareHouse.BranchId),
+                new NameValuePair("@WareHouseName", wareHouse.WareHouseName),
+                new NameValuePair("@IsRetailCounter", wareHouse.IsRetailCounter),
+                new NameValuePair("@Description", wareHouse.Description),
+                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@QueryType", qt)
             };
 
             string ReturnDS = _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetWareHouse]", nvp, "@OutParam").ToString();
@@ -63,12 +64,12 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public string Deactive(string wareHouseId)
         {
             return new SqlDBAccess(CommonObj.SqlConnectionString)
-                .InsertUpdateDeleteReturnObject("[dbo].[spSetWareHouse]", new nameValuePairs
+                .InsertUpdateDeleteReturnObject("[dbo].[spSetWareHouse]", new NameValuePairs
                 {
-                    new nameValuePair("@WareHouseId", wareHouseId),
+                    new NameValuePair("@WareHouseId", wareHouseId),
                      
-                    new nameValuePair("@RequestId", CommonObj.RequestId),
-                    new nameValuePair("@QueryType", "INACTIVE")
+                    new NameValuePair("@RequestId", CommonObj.RequestId),
+                    new NameValuePair("@QueryType", "INACTIVE")
                 }, "@OutParam").ToString();
         }
     }

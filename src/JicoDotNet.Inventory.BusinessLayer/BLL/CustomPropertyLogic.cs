@@ -3,7 +3,7 @@ using DataAccess.Sql;
 using Microsoft.WindowsAzure.Storage.Table;
 using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Core;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,12 +11,13 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class CustomPropertyLogic : ConnectionString
     {
-        public CustomPropertyLogic(sCommonDto CommonObj) : base(CommonObj) { }
+        public CustomPropertyLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
 
         public string SetMaster(CustomProperty customProperty, ECustomPropertyFor propertyFor)
         {

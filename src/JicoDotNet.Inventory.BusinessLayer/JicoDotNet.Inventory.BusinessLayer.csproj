@@ -217,6 +217,7 @@
     <Compile Include="DTO\Interface\IBillDetail.cs" />
     <Compile Include="DTO\Interface\IBillType.cs" />
     <Compile Include="DTO\Interface\IBranch.cs" />
+    <Compile Include="DTO\Interface\ICommonRequestDto.cs" />
     <Compile Include="DTO\Interface\ICompany.cs" />
     <Compile Include="DTO\Interface\ICompanyBank.cs" />
     <Compile Include="DTO\Interface\ICompanyBasic.cs" />
@@ -283,7 +284,7 @@
     <Compile Include="DTO\Interface\IVendorBank.cs" />
     <Compile Include="DTO\Interface\IVendorType.cs" />
     <Compile Include="DTO\Interface\IWareHouse.cs" />
-    <Compile Include="DTO\SP\sCommonDto.cs" />
+    <Compile Include="DTO\Core\CommonRequestDto.cs" />
     <Compile Include="Enumeration\ECustomPropertyFor.cs" />
     <Compile Include="Enumeration\ECustomPropertyType.cs" />
     <Compile Include="Enumeration\EDraft.cs" />
@@ -294,6 +295,7 @@
     <Compile Include="Enumeration\ESMSFor.cs" />
     <Compile Include="Enumeration\EStockType.cs" />
     <Compile Include="Enumeration\ETokenChangePurpose.cs" />
+    <Compile Include="DTO\Interface\IConnectionString.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -304,6 +306,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Inversion\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

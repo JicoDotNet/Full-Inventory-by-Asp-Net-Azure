@@ -19,7 +19,7 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 VendorModels vendorModels = new VendorModels()
                 {
-                    _vendorTypes = new VendorLogic(BllCommonLogic).TypeGet()
+                    _vendorTypes = new VendorLogic(LogicHelper).TypeGet()
                 };
                 if (!string.IsNullOrEmpty(id))
                 {
@@ -44,7 +44,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 DataTrackingLogicSet(vendorType);
                 #endregion
 
-                VendorLogic vendorLogic = new VendorLogic(BllCommonLogic);
+                VendorLogic vendorLogic = new VendorLogic(LogicHelper);
                 if (Convert.ToInt64(vendorLogic.TypeSet(vendorType)) > 0)
                 {
                     ReturnMessage = new ReturnObject()
@@ -75,9 +75,9 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (new LoginManagement(BllCommonLogic).Authenticate(SessionPerson.UserEmail, Context))
+                if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                 {
-                    VendorLogic vendorTypeLogic = new VendorLogic(BllCommonLogic);
+                    VendorLogic vendorTypeLogic = new VendorLogic(LogicHelper);
                     long deactivateId = Convert.ToInt64(vendorTypeLogic.TypeDeactive(id));
                     return Json(new JsonReturnModels
                     {
@@ -105,7 +105,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                VendorLogic vendorLogic = new VendorLogic(BllCommonLogic);
+                VendorLogic vendorLogic = new VendorLogic(LogicHelper);
                 VendorModels vendorModels = new VendorModels()
                 {
                     _vendors = vendorLogic.Get(),
@@ -137,7 +137,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 DataTrackingLogicSet(vendor);
                 #endregion
 
-                VendorLogic vendorLogic = new VendorLogic(BllCommonLogic);
+                VendorLogic vendorLogic = new VendorLogic(LogicHelper);
                 if (Convert.ToInt64(vendorLogic.Set(vendor)) > 0)
                 {
                     ReturnMessage = new ReturnObject()
@@ -168,9 +168,9 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (new LoginManagement(BllCommonLogic).Authenticate(SessionPerson.UserEmail, Context))
+                if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                 {
-                    VendorLogic vendorLogic = new VendorLogic(BllCommonLogic);
+                    VendorLogic vendorLogic = new VendorLogic(LogicHelper);
                     long deactivateId = Convert.ToInt64(vendorLogic.Deactive(id));
                     return Json(new JsonReturnModels
                     {
@@ -202,7 +202,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 {
                     return RedirectToAction("Index", "Vendor", new { id = string.Empty });
                 }
-                VendorLogic vendorLogic = new VendorLogic(BllCommonLogic);
+                VendorLogic vendorLogic = new VendorLogic(LogicHelper);
                 VendorModels vendorModels = new VendorModels()
                 {
                     _vendor = vendorLogic.Get().FirstOrDefault(a => a.VendorId == Convert.ToInt64(id)),
@@ -236,7 +236,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 DataTrackingLogicSet(vendorBank);
                 #endregion
 
-                VendorLogic vendorLogic = new VendorLogic(BllCommonLogic);
+                VendorLogic vendorLogic = new VendorLogic(LogicHelper);
                 if (Convert.ToInt64(vendorLogic.BankSet(vendorBank)) > 0)
                 {
                     ReturnMessage = new ReturnObject()
@@ -267,9 +267,9 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (new LoginManagement(BllCommonLogic).Authenticate(SessionPerson.UserEmail, Context))
+                if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                 {
-                    VendorLogic vendorLogic = new VendorLogic(BllCommonLogic);
+                    VendorLogic vendorLogic = new VendorLogic(LogicHelper);
                     long deactivateId = Convert.ToInt64(vendorLogic.BankDeactive(id, id2));
                     return Json(new JsonReturnModels
                     {

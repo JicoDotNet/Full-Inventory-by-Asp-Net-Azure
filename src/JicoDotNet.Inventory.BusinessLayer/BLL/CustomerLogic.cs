@@ -1,7 +1,8 @@
 ﻿using DataAccess.Sql;
 using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Core;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,7 +14,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class CustomerLogic : ConnectionString
     {
-        public CustomerLogic(sCommonDto CommonObj) : base(CommonObj) { }
+        public CustomerLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
 
         #region Customer Type
         public string TypeSet(CustomerType customerType)
@@ -25,15 +26,15 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             else
                 qt = "INSERT";
 
-            nameValuePairs nvp = new nameValuePairs
+            NameValuePairs nvp = new NameValuePairs
             {
                  
                  
-                new nameValuePair("@CustomerTypeId", customerType.CustomerTypeId),
-                new nameValuePair("@CustomerTypeName", customerType.CustomerTypeName),
-                new nameValuePair("@Description", customerType.Description),
-                new nameValuePair("@RequestId", CommonObj.RequestId),
-                new nameValuePair("@QueryType", qt)
+                new NameValuePair("@CustomerTypeId", customerType.CustomerTypeId),
+                new NameValuePair("@CustomerTypeName", customerType.CustomerTypeName),
+                new NameValuePair("@Description", customerType.Description),
+                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@QueryType", qt)
             };
 
             string ReturnDS = _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetCustomerType]", nvp, "@OutParam").ToString();
@@ -45,12 +46,12 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             string qt = "INACTIVE";
 
-            nameValuePairs nvp = new nameValuePairs
+            NameValuePairs nvp = new NameValuePairs
             {
-                new nameValuePair("@CustomerTypeId", customerTypeId),
+                new NameValuePair("@CustomerTypeId", customerTypeId),
                  
-                new nameValuePair("@RequestId", CommonObj.RequestId),
-                new nameValuePair("@QueryType", qt)
+                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@QueryType", qt)
             };
 
             string ReturnDS = _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetCustomerType]", nvp, "@OutParam").ToString();
@@ -60,11 +61,11 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public List<CustomerType> TypeGet(bool? IsActive = null)
         {
             List<CustomerType> customerTypes = new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetCustomerType]",
-                new nameValuePairs
+                new NameValuePairs
                 {
                      
                      
-                    new nameValuePair("@QueryType", "ALL")
+                    new NameValuePair("@QueryType", "ALL")
                 }).ToList<CustomerType>();
             if (IsActive != null)
             {
@@ -87,26 +88,26 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             else
                 qt = "INSERT";
 
-            nameValuePairs nvp = new nameValuePairs
+            NameValuePairs nvp = new NameValuePairs
             {
                  
                  
-                new nameValuePair("@CustomerId", customer.CustomerId),
-                new nameValuePair("@CustomerTypeId", customer.CustomerTypeId),
-                new nameValuePair("@CompanyName", customer.CompanyName),
-                new nameValuePair("@CompanyType", customer.CompanyType),
-                new nameValuePair("@StateCode", customer.StateCode),
-                new nameValuePair("@IsGSTRegistered", customer.IsGSTRegistered),
-                new nameValuePair("@GSTStateCode", customer.IsGSTRegistered ? (object)GenericLogic.GstStateCode(customer.GSTNumber) : DBNull.Value),
-                new nameValuePair("@GSTNumber", customer.IsGSTRegistered ? (object)customer.GSTNumber?.ToUpper() : DBNull.Value),
-                new nameValuePair("@PANNumber", customer.PANNumber?.ToUpper()),
-                new nameValuePair("@ContactPerson", customer.ContactPerson),
-                new nameValuePair("@Email", customer.Email),
-                new nameValuePair("@Mobile", customer.Mobile),
-                new nameValuePair("@IsRetailCustomer", customer.IsRetailCustomer),
+                new NameValuePair("@CustomerId", customer.CustomerId),
+                new NameValuePair("@CustomerTypeId", customer.CustomerTypeId),
+                new NameValuePair("@CompanyName", customer.CompanyName),
+                new NameValuePair("@CompanyType", customer.CompanyType),
+                new NameValuePair("@StateCode", customer.StateCode),
+                new NameValuePair("@IsGSTRegistered", customer.IsGSTRegistered),
+                new NameValuePair("@GSTStateCode", customer.IsGSTRegistered ? (object)GenericLogic.GstStateCode(customer.GSTNumber) : DBNull.Value),
+                new NameValuePair("@GSTNumber", customer.IsGSTRegistered ? (object)customer.GSTNumber?.ToUpper() : DBNull.Value),
+                new NameValuePair("@PANNumber", customer.PANNumber?.ToUpper()),
+                new NameValuePair("@ContactPerson", customer.ContactPerson),
+                new NameValuePair("@Email", customer.Email),
+                new NameValuePair("@Mobile", customer.Mobile),
+                new NameValuePair("@IsRetailCustomer", customer.IsRetailCustomer),
 
-                new nameValuePair("@RequestId", CommonObj.RequestId),
-                new nameValuePair("@QueryType", qt)
+                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@QueryType", qt)
             };
 
             string ReturnDS = _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetCustomer]", nvp, "@OutParam").ToString();
@@ -117,13 +118,13 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
 
-            nameValuePairs nvp = new nameValuePairs
+            NameValuePairs nvp = new NameValuePairs
             {
-                new nameValuePair("@CustomerId", customerId),
+                new NameValuePair("@CustomerId", customerId),
                  
                  
-                new nameValuePair("@RequestId", CommonObj.RequestId),
-                new nameValuePair("@QueryType", "INACTIVE")
+                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@QueryType", "INACTIVE")
             };
 
             string ReturnDS = _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetCustomer]", nvp, "@OutParam").ToString();
@@ -133,11 +134,11 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public List<Customer> Get(bool? IsActive = null)
         {
             List<Customer> customers = new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetCustomer]",
-                new nameValuePairs
+                new NameValuePairs
                 {
                      
                      
-                    new nameValuePair("@QueryType", "ALL")
+                    new NameValuePair("@QueryType", "ALL")
                 }).ToList<Customer>();
             if (IsActive != null)
             {
@@ -151,12 +152,12 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public Customer Get(long CustomerId, bool? IsActive = null)
         {
             Customer customer = new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetCustomer]",
-                new nameValuePairs
+                new NameValuePairs
                 {
                      
                      
-                    new nameValuePair("@CustomerId", CustomerId),
-                    new nameValuePair("@QueryType", "SINGLE")
+                    new NameValuePair("@CustomerId", CustomerId),
+                    new NameValuePair("@QueryType", "SINGLE")
                 }).FirstOrDefault<Customer>();
             if (IsActive != null)
             {
@@ -167,11 +168,11 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public List<Customer> GetNonRetail(bool? IsActive = null)
         {
             List<Customer> customers = new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetCustomer]",
-                new nameValuePairs
+                new NameValuePairs
                 {
                      
                      
-                    new nameValuePair("@QueryType", "NONRETAILALL")
+                    new NameValuePair("@QueryType", "NONRETAILALL")
                 }).ToList<Customer>();
             if (IsActive != null)
             {
@@ -185,11 +186,11 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public List<Customer> GetRetail(bool? IsActive = null)
         {
             List<Customer> customers = new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetCustomer]",
-                new nameValuePairs
+                new NameValuePairs
                 {
                      
                      
-                    new nameValuePair("@QueryType", "RETAILALL")
+                    new NameValuePair("@QueryType", "RETAILALL")
                 }).ToList<Customer>();
             if (IsActive != null)
             {

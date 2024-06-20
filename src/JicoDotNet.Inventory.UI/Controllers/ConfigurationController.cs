@@ -18,7 +18,7 @@ namespace JicoDotNet.Inventory.UIControllers
             try
             {
 
-                ConfigarationManager configarationManager = new ConfigarationManager(BllCommonLogic);
+                ConfigarationManager configarationManager = new ConfigarationManager(LogicHelper);
                 ConfigModels configModels = new ConfigModels
                 {
                     _YesNo = GenericLogic.YesNo(),
@@ -56,7 +56,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 DataTrackingLogicSet(config);
                 #endregion
 
-                ConfigarationManager configarationManager = new ConfigarationManager(BllCommonLogic);                
+                ConfigarationManager configarationManager = new ConfigarationManager(LogicHelper);                
                 configarationManager.SetConfig(config);
                 ReturnMessage = new ReturnObject()
                 {
@@ -79,7 +79,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 ConfigModels configModels = new ConfigModels
                 {
                     _company = SessionCompany,
-                    _config = new ConfigarationManager(BllCommonLogic).GetConfig(),
+                    _config = new ConfigarationManager(LogicHelper).GetConfig(),
                     _YesNo = GenericLogic.YesNo()
                 };
                 return View(configModels);
@@ -95,7 +95,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             ConfigModels configModels = new ConfigModels
             {
-                _config = new ConfigarationManager(BllCommonLogic).GetConfig(),
+                _config = new ConfigarationManager(LogicHelper).GetConfig(),
             };
             return View(configModels);
         }
@@ -109,7 +109,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 DataTrackingLogicSet(config);
                 #endregion
 
-                ConfigarationManager configarationManager = new ConfigarationManager(BllCommonLogic);
+                ConfigarationManager configarationManager = new ConfigarationManager(LogicHelper);
                 configarationManager.SetConfig(config);
                 ReturnMessage = new ReturnObject()
                 {

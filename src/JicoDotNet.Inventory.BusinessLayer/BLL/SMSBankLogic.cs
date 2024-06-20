@@ -1,7 +1,8 @@
 ﻿using DataAccess.AzureStorage;
 using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Core;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class SMSBankLogic : ConnectionString
     {
-        public SMSBankLogic(sCommonDto CommonObj) : base(CommonObj) { }
+        public SMSBankLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
 
         public bool Deduction()
         {

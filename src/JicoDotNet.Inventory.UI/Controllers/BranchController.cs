@@ -18,7 +18,7 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 BranchModels branchModels = new BranchModels()
                 {
-                    _branches = new BranchLogic(BllCommonLogic).Get(),
+                    _branches = new BranchLogic(LogicHelper).Get(),
                     _State = GenericLogic.State()
                 };
                 if (!string.IsNullOrEmpty(id))
@@ -44,7 +44,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 DataTrackingLogicSet(branch);
                 #endregion
 
-                BranchLogic branchLogic = new BranchLogic(BllCommonLogic);
+                BranchLogic branchLogic = new BranchLogic(LogicHelper);
                 ReturnMessage = Convert.ToInt64(branchLogic.Set(branch)) > 0
                     ? new ReturnObject()
                     {
@@ -70,9 +70,9 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (new LoginManagement(BllCommonLogic).Authenticate(SessionPerson.UserEmail, Context))
+                if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                 {
-                    BranchLogic branchLogic = new BranchLogic(BllCommonLogic);
+                    BranchLogic branchLogic = new BranchLogic(LogicHelper);
                     long deactivateId = Convert.ToInt64(branchLogic.Deactive(id));
                     return Json(new JsonReturnModels
                     {

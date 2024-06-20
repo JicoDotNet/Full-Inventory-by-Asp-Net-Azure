@@ -19,7 +19,7 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 BillModels billModels = new BillModels()
                 {
-                    _billTypes = new BillLogic(BllCommonLogic).TypeGet()
+                    _billTypes = new BillLogic(LogicHelper).TypeGet()
                 };
                 if (!string.IsNullOrEmpty(id))
                 {
@@ -44,7 +44,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 DataTrackingLogicSet(billType);
                 #endregion
 
-                BillLogic billLogic = new BillLogic(BllCommonLogic);
+                BillLogic billLogic = new BillLogic(LogicHelper);
                 if (Convert.ToInt64(billLogic.TypeSet(billType)) > 0)
                 {
                     ReturnMessage = new ReturnObject()
@@ -74,9 +74,9 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (new LoginManagement(BllCommonLogic).Authenticate(SessionPerson.UserEmail, Context))
+                if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                 {
-                    BillLogic billLogic = new BillLogic(BllCommonLogic);
+                    BillLogic billLogic = new BillLogic(LogicHelper);
                     long deactivateId = Convert.ToInt64(billLogic.TypeDeactive(id));
                     return Json(new JsonReturnModels
                     {
@@ -106,8 +106,8 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 BillModels billModels = new BillModels()
                 {
-                    _bills = new BillLogic(BllCommonLogic).GetBills(),
-                    _config = (new ConfigarationManager(BllCommonLogic)).GetConfig()
+                    _bills = new BillLogic(LogicHelper).GetBills(),
+                    _config = (new ConfigarationManager(LogicHelper)).GetConfig()
                 };
                 return View(billModels);
             }
@@ -123,7 +123,7 @@ namespace JicoDotNet.Inventory.UIControllers
             try
             {
                 BillModels billModels = new BillModels();
-                BillLogic billLogic = new BillLogic(BllCommonLogic);
+                BillLogic billLogic = new BillLogic(LogicHelper);
                 if (string.IsNullOrEmpty(id))
                 {
                     billModels._purchaseOrders = billLogic.GetForEntry();
@@ -131,7 +131,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 else
                 {                    
                     // Retrive PO
-                    PurchaseOrderLogic orderLogic = new PurchaseOrderLogic(BllCommonLogic);
+                    PurchaseOrderLogic orderLogic = new PurchaseOrderLogic(LogicHelper);
                     if (billLogic.GetForEntry(Convert.ToInt64(id)) != null)
                         billModels._purchaseOrder = orderLogic.GetForDetail(Convert.ToInt64(id));
 
@@ -147,7 +147,7 @@ namespace JicoDotNet.Inventory.UIControllers
                     }
 
                     billModels._billTypes = billLogic.TypeGet(true);
-                    billModels._config = new ConfigarationManager(BllCommonLogic).GetConfig();
+                    billModels._config = new ConfigarationManager(LogicHelper).GetConfig();
 
                     // Checking Vendor is GST registred or not.
                     billModels.GSTType = EGSTType.None;
@@ -196,7 +196,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                BillLogic billLogic = new BillLogic(BllCommonLogic);
+                BillLogic billLogic = new BillLogic(LogicHelper);
                 Bill rerurnBill = JsonConvert.DeserializeObject<Bill>(billLogic.Set(bill));
                 if (rerurnBill == null || rerurnBill.BillId < 1)
                 {
@@ -234,11 +234,11 @@ namespace JicoDotNet.Inventory.UIControllers
                 }
                 BillModels billModels = new BillModels
                 {
-                    _bill = new BillLogic(BllCommonLogic).GetForDetail(Convert.ToInt64(id))
+                    _bill = new BillLogic(LogicHelper).GetForDetail(Convert.ToInt64(id))
                 };
                 if (billModels._bill != null)
                 {
-                    billModels._config = new ConfigarationManager(BllCommonLogic).GetConfig();
+                    billModels._config = new ConfigarationManager(LogicHelper).GetConfig();
                     billModels._companyAddress = new Company()
                     {
                         CompanyName = SessionCompany.CompanyName,
@@ -254,8 +254,8 @@ namespace JicoDotNet.Inventory.UIControllers
                         Mobile = WebConfigAppSettingsAccess.CompanyMobile,
                         WebsiteUrl = WebConfigAppSettingsAccess.CompanyWebsite,
                     };
-                    billModels._vendor = new VendorLogic(BllCommonLogic).Get().FirstOrDefault(a => a.VendorId == billModels._bill.VendorId);
-                    billModels._purchaseOrder = new PurchaseOrderLogic(BllCommonLogic).GetForDetail(billModels._bill.PurchaseOrderId);
+                    billModels._vendor = new VendorLogic(LogicHelper).Get().FirstOrDefault(a => a.VendorId == billModels._bill.VendorId);
+                    billModels._purchaseOrder = new PurchaseOrderLogic(LogicHelper).GetForDetail(billModels._bill.PurchaseOrderId);
                     return View(billModels);
                 }
                 return RedirectToAction("Index");

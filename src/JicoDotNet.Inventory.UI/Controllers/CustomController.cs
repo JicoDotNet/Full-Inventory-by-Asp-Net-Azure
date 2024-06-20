@@ -16,7 +16,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                CustomPropertyLogic propertyLogic = new CustomPropertyLogic(BllCommonLogic);
+                CustomPropertyLogic propertyLogic = new CustomPropertyLogic(LogicHelper);
                 List<CustomProperty> customProperties = propertyLogic.GetMasters();
                 Dictionary<ECustomPropertyFor, int> pairs = new Dictionary<ECustomPropertyFor, int>();
                 foreach (ECustomPropertyFor customPropertyFor in Enum.GetValues(typeof(ECustomPropertyFor)))
@@ -74,7 +74,7 @@ namespace JicoDotNet.Inventory.UIControllers
                     Enum.TryParse(id, true, out ECustomPropertyFor customPropertyFor);
                     if (customPropertyFor != ECustomPropertyFor.None)
                     {
-                        CustomPropertyLogic propertyLogic = new CustomPropertyLogic(BllCommonLogic);
+                        CustomPropertyLogic propertyLogic = new CustomPropertyLogic(LogicHelper);
                         CustomPropertyModels models = new CustomPropertyModels
                         {
                             _YesNo = GenericLogic.YesNo(),
@@ -104,7 +104,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 {
                     Enum.TryParse(id, true, out ECustomPropertyFor customPropertyFor);
                     
-                    CustomPropertyLogic propertyLogic = new CustomPropertyLogic(BllCommonLogic);
+                    CustomPropertyLogic propertyLogic = new CustomPropertyLogic(LogicHelper);
                     if (!string.IsNullOrEmpty(id2))
                         customProperty.RowKey = id2;
                     propertyLogic.SetMaster(customProperty, customPropertyFor);
@@ -126,9 +126,9 @@ namespace JicoDotNet.Inventory.UIControllers
                 if (!string.IsNullOrEmpty(id))
                 {
                     Enum.TryParse(id, true, out ECustomPropertyFor customPropertyFor);
-                    if (new LoginManagement(BllCommonLogic).Authenticate(SessionPerson.UserEmail, Context))
+                    if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                     {
-                        CustomPropertyLogic propertyLogic = new CustomPropertyLogic(BllCommonLogic);
+                        CustomPropertyLogic propertyLogic = new CustomPropertyLogic(LogicHelper);
                         bool deactivated = propertyLogic.DeactiveMaster(customPropertyFor, id2);
                         return Json(new JsonReturnModels
                         {
@@ -159,7 +159,7 @@ namespace JicoDotNet.Inventory.UIControllers
                     Enum.TryParse(id, true, out ECustomPropertyFor customPropertyFor);
                     if (customPropertyFor != ECustomPropertyFor.None)
                     {
-                        CustomPropertyLogic propertyLogic = new CustomPropertyLogic(BllCommonLogic);
+                        CustomPropertyLogic propertyLogic = new CustomPropertyLogic(LogicHelper);
                         CustomPropertyModels models = new CustomPropertyModels
                         {
                             _YesNo = GenericLogic.YesNo(),

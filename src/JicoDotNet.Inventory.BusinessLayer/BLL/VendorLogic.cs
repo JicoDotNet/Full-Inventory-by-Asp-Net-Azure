@@ -1,7 +1,8 @@
 ﻿using DataAccess.Sql;
 using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Core;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,7 +14,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class VendorLogic : ConnectionString
     {
-        public VendorLogic(sCommonDto CommonObj) : base(CommonObj) { }
+        public VendorLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
 
         #region Vendor Type
         public string TypeSet(VendorType vendorType)
@@ -25,15 +26,15 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             else
                 qt = "INSERT";
 
-            nameValuePairs nvp = new nameValuePairs
+            NameValuePairs nvp = new NameValuePairs
             {
                  
                  
-                new nameValuePair("@VendorTypeId", vendorType.VendorTypeId),
-                new nameValuePair("@VendorTypeName", vendorType.VendorTypeName),
-                new nameValuePair("@Description", vendorType.Description),
-                new nameValuePair("@RequestId", CommonObj.RequestId),
-                new nameValuePair("@QueryType", qt)
+                new NameValuePair("@VendorTypeId", vendorType.VendorTypeId),
+                new NameValuePair("@VendorTypeName", vendorType.VendorTypeName),
+                new NameValuePair("@Description", vendorType.Description),
+                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@QueryType", qt)
             };
 
             string ReturnDS = _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetVendorType]", nvp, "@OutParam").ToString();
@@ -45,12 +46,12 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             string qt = "INACTIVE";
 
-            nameValuePairs nvp = new nameValuePairs
+            NameValuePairs nvp = new NameValuePairs
             {
-                new nameValuePair("@VendorTypeId", VendorTypeId),
+                new NameValuePair("@VendorTypeId", VendorTypeId),
                  
-                new nameValuePair("@RequestId", CommonObj.RequestId),
-                new nameValuePair("@QueryType", qt)
+                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@QueryType", qt)
             };
 
             string ReturnDS = _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetVendorType]", nvp, "@OutParam").ToString();
@@ -60,11 +61,11 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public List<VendorType> TypeGet()
         {
             return new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetVendorType]",
-                new nameValuePairs
+                new NameValuePairs
                 {
                      
                      
-                    new nameValuePair("@QueryType", "ALL")
+                    new NameValuePair("@QueryType", "ALL")
                 }).ToList<VendorType>();
         }
         #endregion
@@ -79,25 +80,25 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             else
                 qt = "INSERT";
 
-            nameValuePairs nvp = new nameValuePairs
+            NameValuePairs nvp = new NameValuePairs
             {
                  
                  
-                new nameValuePair("@VendorId", vendor.VendorId),
-                new nameValuePair("@VendorTypeId", vendor.VendorTypeId),                
-                new nameValuePair("@CompanyName", vendor.CompanyName),
-                new nameValuePair("@CompanyType", vendor.CompanyType),
-                new nameValuePair("@StateCode", vendor.StateCode),
-                new nameValuePair("@IsGSTRegistered", vendor.IsGSTRegistered),
-                new nameValuePair("@GSTStateCode", vendor.IsGSTRegistered? (object)GenericLogic.GstStateCode(vendor.GSTNumber) : DBNull.Value),
-                new nameValuePair("@GSTNumber", vendor.IsGSTRegistered? (object)vendor.GSTNumber?.ToUpper() : DBNull.Value),
-                new nameValuePair("@PANNumber", vendor.PANNumber?.ToUpper()),
-                new nameValuePair("@ContactPerson", vendor.ContactPerson),
-                new nameValuePair("@Email", vendor.Email),
-                new nameValuePair("@Mobile", vendor.Mobile),
+                new NameValuePair("@VendorId", vendor.VendorId),
+                new NameValuePair("@VendorTypeId", vendor.VendorTypeId),                
+                new NameValuePair("@CompanyName", vendor.CompanyName),
+                new NameValuePair("@CompanyType", vendor.CompanyType),
+                new NameValuePair("@StateCode", vendor.StateCode),
+                new NameValuePair("@IsGSTRegistered", vendor.IsGSTRegistered),
+                new NameValuePair("@GSTStateCode", vendor.IsGSTRegistered? (object)GenericLogic.GstStateCode(vendor.GSTNumber) : DBNull.Value),
+                new NameValuePair("@GSTNumber", vendor.IsGSTRegistered? (object)vendor.GSTNumber?.ToUpper() : DBNull.Value),
+                new NameValuePair("@PANNumber", vendor.PANNumber?.ToUpper()),
+                new NameValuePair("@ContactPerson", vendor.ContactPerson),
+                new NameValuePair("@Email", vendor.Email),
+                new NameValuePair("@Mobile", vendor.Mobile),
 
-                new nameValuePair("@RequestId", CommonObj.RequestId),
-                new nameValuePair("@QueryType", qt)
+                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@QueryType", qt)
             };
 
             string ReturnDS = _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetVendor]", nvp, "@OutParam").ToString();
@@ -109,12 +110,12 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             string qt = "INACTIVE";
 
-            nameValuePairs nvp = new nameValuePairs
+            NameValuePairs nvp = new NameValuePairs
             {
-                new nameValuePair("@VendorId", VendorId),
+                new NameValuePair("@VendorId", VendorId),
                  
-                new nameValuePair("@RequestId", CommonObj.RequestId),
-                new nameValuePair("@QueryType", qt)
+                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@QueryType", qt)
             };
 
             string ReturnDS = _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetVendor]", nvp, "@OutParam").ToString();
@@ -124,11 +125,11 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public List<Vendor> Get(bool? IsActive = null)
         {
             List<Vendor> vendors = new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetVendor]",
-                new nameValuePairs
+                new NameValuePairs
                 {
                      
                      
-                    new nameValuePair("@QueryType", "ALL")
+                    new NameValuePair("@QueryType", "ALL")
                 }).ToList<Vendor>();
             if (IsActive != null)
             {
@@ -151,23 +152,23 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             else
                 qt = "INSERT";
 
-            nameValuePairs nvp = new nameValuePairs
+            NameValuePairs nvp = new NameValuePairs
             {
                  
                  
-                new nameValuePair("@VendorId", vendorBank.VendorId),
-                new nameValuePair("@VendorBankId", vendorBank.VendorBankId),
+                new NameValuePair("@VendorId", vendorBank.VendorId),
+                new NameValuePair("@VendorBankId", vendorBank.VendorBankId),
 
-                new nameValuePair("@AccountName", vendorBank.AccountName),
-                new nameValuePair("@AccountNumber", vendorBank.AccountNumber?.ToUpper()),
-                new nameValuePair("@BankName", vendorBank.BankName),
-                new nameValuePair("@IFSC", vendorBank.IFSC?.ToUpper()),
-                new nameValuePair("@MICR", vendorBank.MICR?.ToUpper()),
-                new nameValuePair("@BranchName ", vendorBank.BranchName),
-                new nameValuePair("@BranchAddress", vendorBank.BranchAddress),
+                new NameValuePair("@AccountName", vendorBank.AccountName),
+                new NameValuePair("@AccountNumber", vendorBank.AccountNumber?.ToUpper()),
+                new NameValuePair("@BankName", vendorBank.BankName),
+                new NameValuePair("@IFSC", vendorBank.IFSC?.ToUpper()),
+                new NameValuePair("@MICR", vendorBank.MICR?.ToUpper()),
+                new NameValuePair("@BranchName ", vendorBank.BranchName),
+                new NameValuePair("@BranchAddress", vendorBank.BranchAddress),
 
-                new nameValuePair("@RequestId", CommonObj.RequestId),
-                new nameValuePair("@QueryType", qt)
+                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@QueryType", qt)
             };
 
             string ReturnDS = _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetVendorBank]", nvp, "@OutParam").ToString();
@@ -179,14 +180,14 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             string qt = "INACTIVE";
 
-            nameValuePairs nvp = new nameValuePairs
+            NameValuePairs nvp = new NameValuePairs
             {
-                new nameValuePair("@VendorId", VendorId),
-                new nameValuePair("@VendorBankId", VendorBankId),
+                new NameValuePair("@VendorId", VendorId),
+                new NameValuePair("@VendorBankId", VendorBankId),
                  
                  
-                new nameValuePair("@RequestId", CommonObj.RequestId),
-                new nameValuePair("@QueryType", qt)
+                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@QueryType", qt)
             };
 
             string ReturnDS = _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetVendorBank]", nvp, "@OutParam").ToString();
@@ -196,12 +197,12 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public List<VendorBank> BankGet(long VendorId, bool? IsActive = null)
         {
             List<VendorBank> vendorBanks = new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetVendorBank]",
-                new nameValuePairs
+                new NameValuePairs
                 {
                      
                      
-                    new nameValuePair("@VendorId", VendorId),
-                    new nameValuePair("@QueryType", "ALL")
+                    new NameValuePair("@VendorId", VendorId),
+                    new NameValuePair("@QueryType", "ALL")
                 }).ToList<VendorBank>();
             if (IsActive != null)
             {

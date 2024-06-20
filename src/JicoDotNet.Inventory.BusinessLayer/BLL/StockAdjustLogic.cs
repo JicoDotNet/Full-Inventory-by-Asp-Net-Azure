@@ -1,7 +1,7 @@
 ﻿using DataAccess.Sql;
 using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,21 +9,22 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class.Custom;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class StockAdjustLogic : ConnectionString
     {
-        public StockAdjustLogic(sCommonDto CommonObj) : base(CommonObj) { }
+        public StockAdjustLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
 
         public List<StockAdjustReason> GetReasons()
         {
             return new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetStockAdjustReason]",
-                new nameValuePairs
+                new NameValuePairs
                 {
                      
                      
-                    new nameValuePair("@QueryType", "ALL")
+                    new NameValuePair("@QueryType", "ALL")
                 }).ToList<StockAdjustReason>();
         }
 
@@ -53,21 +54,21 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             if (stockAdjustDetailTypes.Count > 0)
             {
                 _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-                string returnString = _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetStockAdjust]", new nameValuePairs
+                string returnString = _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetStockAdjust]", new NameValuePairs
                     {
-                        new nameValuePair("@StockAdjustNumber", "SKA-"),
+                        new NameValuePair("@StockAdjustNumber", "SKA-"),
                          
                          
-                        new nameValuePair("@IsStockIncrease", stockAdjust.IsStockIncrease),
-                        new nameValuePair("@AdjustReasonId", stockAdjust.AdjustReasonId),
-                        new nameValuePair("@AdjustReason", stockAdjust.AdjustReason),
-                        new nameValuePair("@StockAdjustDate", stockAdjust.StockAdjustDate > new DateTime(2001, 1, 1)?
+                        new NameValuePair("@IsStockIncrease", stockAdjust.IsStockIncrease),
+                        new NameValuePair("@AdjustReasonId", stockAdjust.AdjustReasonId),
+                        new NameValuePair("@AdjustReason", stockAdjust.AdjustReason),
+                        new NameValuePair("@StockAdjustDate", stockAdjust.StockAdjustDate > new DateTime(2001, 1, 1)?
                                                                 (object)stockAdjust.StockAdjustDate : DBNull.Value),
-                        new nameValuePair("@WareHouseId", stockAdjust.WareHouseId),
-                        new nameValuePair("@Remarks", stockAdjust.Remarks),
-                        new nameValuePair("@RequestId", CommonObj.RequestId),
-                        new nameValuePair("@STDetail", stockAdjustDetailTypes.ToDataTable()),
-                        new nameValuePair("@QueryType", "INSERT")
+                        new NameValuePair("@WareHouseId", stockAdjust.WareHouseId),
+                        new NameValuePair("@Remarks", stockAdjust.Remarks),
+                        new NameValuePair("@RequestId", CommonObj.RequestId),
+                        new NameValuePair("@STDetail", stockAdjustDetailTypes.ToDataTable()),
+                        new NameValuePair("@QueryType", "INSERT")
                     },
                     "@OutParam"
                 ).ToString();

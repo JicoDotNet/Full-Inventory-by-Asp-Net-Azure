@@ -19,7 +19,7 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 InvoiceModels invoiceModels = new InvoiceModels()
                 {
-                    _invoiceTypes = new InvoiceLogic(BllCommonLogic).TypeGet()
+                    _invoiceTypes = new InvoiceLogic(LogicHelper).TypeGet()
                 };
                 if (!string.IsNullOrEmpty(id))
                 {
@@ -44,7 +44,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 DataTrackingLogicSet(invoiceType);
                 #endregion
 
-                InvoiceLogic invoiceLogic = new InvoiceLogic(BllCommonLogic);
+                InvoiceLogic invoiceLogic = new InvoiceLogic(LogicHelper);
                 if (Convert.ToInt64(invoiceLogic.TypeSet(invoiceType)) > 0)
                 {
                     ReturnMessage = new ReturnObject()
@@ -75,9 +75,9 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (new LoginManagement(BllCommonLogic).Authenticate(SessionPerson.UserEmail, Context))
+                if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                 {
-                    InvoiceLogic invoiceLogic = new InvoiceLogic(BllCommonLogic);
+                    InvoiceLogic invoiceLogic = new InvoiceLogic(LogicHelper);
                     long deactivateId = Convert.ToInt64(invoiceLogic.TypeDeactive(id));
                     return Json(new JsonReturnModels
                     {
@@ -107,8 +107,8 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 InvoiceModels invoiceModels = new InvoiceModels()
                 {
-                    _invoices = new InvoiceLogic(BllCommonLogic).GetInvoices(),
-                    _config = (new ConfigarationManager(BllCommonLogic)).GetConfig(),
+                    _invoices = new InvoiceLogic(LogicHelper).GetInvoices(),
+                    _config = (new ConfigarationManager(LogicHelper)).GetConfig(),
                     _company = SessionCompany
                 };
                 return View(invoiceModels);
@@ -125,7 +125,7 @@ namespace JicoDotNet.Inventory.UIControllers
             try
             {
                 InvoiceModels invoiceModels = new InvoiceModels();
-                InvoiceLogic invoiceLogic = new InvoiceLogic(BllCommonLogic);
+                InvoiceLogic invoiceLogic = new InvoiceLogic(LogicHelper);
                 if (string.IsNullOrEmpty(id))
                 {
                     invoiceModels._salesOrders = invoiceLogic.GetForEntry();
@@ -133,7 +133,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 else
                 {
                     // Retrive SO
-                    SalesOrderLogic orderLogic = new SalesOrderLogic(BllCommonLogic);
+                    SalesOrderLogic orderLogic = new SalesOrderLogic(LogicHelper);
                     if (invoiceLogic.GetForEntry().Where(a => a.SalesOrderId == Convert.ToInt64(id)).FirstOrDefault() != null)
                         invoiceModels._salesOrder = orderLogic.GetForDetail(Convert.ToInt64(id));
 
@@ -149,7 +149,7 @@ namespace JicoDotNet.Inventory.UIControllers
                     }
 
                     invoiceModels._invoiceTypes = invoiceLogic.TypeGet(true);
-                    invoiceModels._config = new ConfigarationManager(BllCommonLogic).GetConfig();
+                    invoiceModels._config = new ConfigarationManager(LogicHelper).GetConfig();
                     invoiceModels._company = SessionCompany;
 
                     // Checking Company is GST registred or not.
@@ -205,8 +205,8 @@ namespace JicoDotNet.Inventory.UIControllers
             try
             {
                 // Retrive SO
-                InvoiceLogic invoiceLogic = new InvoiceLogic(BllCommonLogic);
-                SalesOrderLogic orderLogic = new SalesOrderLogic(BllCommonLogic);
+                InvoiceLogic invoiceLogic = new InvoiceLogic(LogicHelper);
+                SalesOrderLogic orderLogic = new SalesOrderLogic(LogicHelper);
                 if (invoiceLogic.GetForEntry().FirstOrDefault(a => a.SalesOrderId == invoice.SalesOrderId) == null)
                 {
                     ReturnMessage = new ReturnObject()
@@ -253,12 +253,12 @@ namespace JicoDotNet.Inventory.UIControllers
 
                 InvoiceModels invoiceModels = new InvoiceModels
                 {
-                    _invoice = new InvoiceLogic(BllCommonLogic).GetForDetail(Convert.ToInt64(id))
+                    _invoice = new InvoiceLogic(LogicHelper).GetForDetail(Convert.ToInt64(id))
                 };
                 if (invoiceModels._invoice != null)
                 {
-                    CompanyManagment companyManagment = new CompanyManagment(BllCommonLogic);
-                    invoiceModels._config = new ConfigarationManager(BllCommonLogic).GetConfig();
+                    CompanyManagment companyManagment = new CompanyManagment(LogicHelper);
+                    invoiceModels._config = new ConfigarationManager(LogicHelper).GetConfig();
                     invoiceModels._companyAddress = new Company()
                     {
                         CompanyName = SessionCompany.CompanyName,
@@ -274,10 +274,10 @@ namespace JicoDotNet.Inventory.UIControllers
                         Mobile = WebConfigAppSettingsAccess.CompanyMobile,
                         WebsiteUrl = WebConfigAppSettingsAccess.CompanyWebsite,
                     };
-                    invoiceModels._customer = new CustomerLogic(BllCommonLogic).Get(invoiceModels._invoice.CustomerId);
-                    invoiceModels._salesOrder = new SalesOrderLogic(BllCommonLogic).GetForDetail(invoiceModels._invoice.SalesOrderId);
+                    invoiceModels._customer = new CustomerLogic(LogicHelper).Get(invoiceModels._invoice.CustomerId);
+                    invoiceModels._salesOrder = new SalesOrderLogic(LogicHelper).GetForDetail(invoiceModels._invoice.SalesOrderId);
                     invoiceModels._companyBank = companyManagment.BankPrintable();
-                    invoiceModels._customPropertyValue = new CustomPropertyLogic(BllCommonLogic).GetValue(ECustomPropertyFor.SalesInvoice, invoiceModels._invoice.InvoiceId);                    
+                    invoiceModels._customPropertyValue = new CustomPropertyLogic(LogicHelper).GetValue(ECustomPropertyFor.SalesInvoice, invoiceModels._invoice.InvoiceId);                    
                     return View(invoiceModels);
                 }
                 return RedirectToAction("Index");

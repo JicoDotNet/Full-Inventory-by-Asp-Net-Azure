@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using JicoDotNet.Inventory.BusinessLayer.BLL;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Core;
 using System.Web.Configuration;
 using System.Web.Routing;
 
@@ -49,9 +49,10 @@ namespace System.Web.Mvc
                     return;
                 }
                 else
-                    _SessionKey = new TokenManagement(new sCommonDto
+                    _SessionKey = new TokenManagement(new CommonRequestDto
                     {
-                        NoSqlConnectionString = WebConfigDBConnection.AzureStorage
+                        NoSqlConnectionString = WebConfigDBConnection.AzureStorage,
+                        SqlConnectionString = WebConfigDBConnection.SqlServer
                     }).GetCredential(Token);
 
                 // If session exists

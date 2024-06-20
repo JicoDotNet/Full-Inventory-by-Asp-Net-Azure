@@ -18,7 +18,7 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 UnitOfMeasureModels unitOfMeasureModels = new UnitOfMeasureModels()
                 {
-                    _unitOfMeasures = new UnitOfMeasureLogic(BllCommonLogic).Get(),
+                    _unitOfMeasures = new UnitOfMeasureLogic(LogicHelper).Get(),
                 };
                 if (!string.IsNullOrEmpty(id))
                 {
@@ -44,7 +44,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 DataTrackingLogicSet(unitOfMeasure);
                 #endregion
 
-                UnitOfMeasureLogic unitOfMeasureLogic = new UnitOfMeasureLogic(BllCommonLogic);
+                UnitOfMeasureLogic unitOfMeasureLogic = new UnitOfMeasureLogic(LogicHelper);
                 if (Convert.ToInt64(unitOfMeasureLogic.Set(unitOfMeasure)) > 0)
                 {
                     ReturnMessage = new ReturnObject()
@@ -75,9 +75,9 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (new LoginManagement(BllCommonLogic).Authenticate(SessionPerson.UserEmail, Context))
+                if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                 {
-                    UnitOfMeasureLogic measureLogic = new UnitOfMeasureLogic(BllCommonLogic);
+                    UnitOfMeasureLogic measureLogic = new UnitOfMeasureLogic(LogicHelper);
                     long deactivateId = Convert.ToInt64(measureLogic.Deactive(id));
                     return Json(new JsonReturnModels
                     {

@@ -18,8 +18,8 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 WareHouseModels wareHouseModels = new WareHouseModels()
                 {
-                    _wareHouses = new WareHouseLogic(BllCommonLogic).Get(),
-                    _branches = new BranchLogic(BllCommonLogic).Get().Where(a => a.IsActive).ToList(),
+                    _wareHouses = new WareHouseLogic(LogicHelper).Get(),
+                    _branches = new BranchLogic(LogicHelper).Get().Where(a => a.IsActive).ToList(),
                     
                 };
                 wareHouseModels._isRetailEligible = true;
@@ -47,7 +47,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 DataTrackingLogicSet(wareHouse);
                 #endregion
 
-                WareHouseLogic wareHouseLogic = new WareHouseLogic(BllCommonLogic);
+                WareHouseLogic wareHouseLogic = new WareHouseLogic(LogicHelper);
                 ReturnMessage = Convert.ToInt64(wareHouseLogic.Set(wareHouse)) > 0
                     ? new ReturnObject()
                     {
@@ -73,9 +73,9 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (new LoginManagement(BllCommonLogic).Authenticate(SessionPerson.UserEmail, Context))
+                if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                 {
-                    WareHouseLogic wareHouseLogic = new WareHouseLogic(BllCommonLogic);
+                    WareHouseLogic wareHouseLogic = new WareHouseLogic(LogicHelper);
                     long deactivateId = Convert.ToInt64(wareHouseLogic.Deactive(id));
                     return Json(new JsonReturnModels
                     {

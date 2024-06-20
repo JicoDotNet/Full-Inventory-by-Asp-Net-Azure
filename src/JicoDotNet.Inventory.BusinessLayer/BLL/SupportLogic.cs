@@ -1,7 +1,8 @@
 ﻿using DataAccess.AzureStorage;
 using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Core;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class SupportLogic : ConnectionString
     {
-        public SupportLogic(sCommonDto CommonObj) : base(CommonObj) { }
+        public SupportLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
 
         public Support Set(Support support, MemoryFile memory)
         {

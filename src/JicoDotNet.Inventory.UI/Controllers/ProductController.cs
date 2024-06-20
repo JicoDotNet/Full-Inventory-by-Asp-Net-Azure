@@ -24,7 +24,7 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 ProductModels productModels = new ProductModels()
                 {
-                    _products = new ProductLogic(BllCommonLogic).Get()
+                    _products = new ProductLogic(LogicHelper).Get()
                 };
                 return PartialView("_PartialIndex", productModels);
             }
@@ -44,11 +44,11 @@ namespace JicoDotNet.Inventory.UIControllers
                     // Limit Quota Checking
                     ProductModels productModels = new ProductModels()
                     {
-                        _productTypes = new ProductLogic(BllCommonLogic).TypeGet().Where(a => a.IsActive).ToList(),
-                        _unitOfMeasures = new UnitOfMeasureLogic(BllCommonLogic).Get().Where(a => a.IsActive).ToList(),
+                        _productTypes = new ProductLogic(LogicHelper).TypeGet().Where(a => a.IsActive).ToList(),
+                        _unitOfMeasures = new UnitOfMeasureLogic(LogicHelper).Get().Where(a => a.IsActive).ToList(),
                         _YesNo = GenericLogic.YesNo(),
                         _ProductCategory = GenericLogic.ProductCategory(),
-                        _config = new ConfigarationManager(BllCommonLogic).GetConfig()
+                        _config = new ConfigarationManager(LogicHelper).GetConfig()
                     };
                     return View(productModels);
                 }
@@ -69,12 +69,12 @@ namespace JicoDotNet.Inventory.UIControllers
                 {
                     ProductModels productModels = new ProductModels()
                     {
-                        _productTypes = new ProductLogic(BllCommonLogic).TypeGet().Where(a => a.IsActive).ToList(),
-                        _unitOfMeasures = new UnitOfMeasureLogic(BllCommonLogic).Get().Where(a => a.IsActive).ToList(),
+                        _productTypes = new ProductLogic(LogicHelper).TypeGet().Where(a => a.IsActive).ToList(),
+                        _unitOfMeasures = new UnitOfMeasureLogic(LogicHelper).Get().Where(a => a.IsActive).ToList(),
                         _YesNo = GenericLogic.YesNo(),
                         _ProductCategory = GenericLogic.ProductCategory(),
-                        _config = new ConfigarationManager(BllCommonLogic).GetConfig(),
-                        _product = new ProductLogic(BllCommonLogic).Get().FirstOrDefault(a => a.ProductId == Convert.ToInt64(id))
+                        _config = new ConfigarationManager(LogicHelper).GetConfig(),
+                        _product = new ProductLogic(LogicHelper).Get().FirstOrDefault(a => a.ProductId == Convert.ToInt64(id))
                     };
                     return View("Add", productModels);
                 }
@@ -97,7 +97,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 DataTrackingLogicSet(product);
                 #endregion
 
-                ProductLogic productLogic = new ProductLogic(BllCommonLogic);
+                ProductLogic productLogic = new ProductLogic(LogicHelper);
 
                 #region Image Upload
                 if (Request.Files.Count > 0)
@@ -136,9 +136,9 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (new LoginManagement(BllCommonLogic).Authenticate(SessionPerson.UserEmail, Context))
+                if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                 {
-                    ProductLogic productLogic = new ProductLogic(BllCommonLogic);
+                    ProductLogic productLogic = new ProductLogic(LogicHelper);
                     long deactivateId = Convert.ToInt64(productLogic.Deactive(id));
                     return Json(new JsonReturnModels
                     {
@@ -168,11 +168,11 @@ namespace JicoDotNet.Inventory.UIControllers
                     return RedirectToAction("Index");
 
                 ProductModels productModels = new ProductModels();
-                if (new StockLogic(BllCommonLogic).TotalNonOpeningStockQuantity(Convert.ToInt64(id)) == 0)
+                if (new StockLogic(LogicHelper).TotalNonOpeningStockQuantity(Convert.ToInt64(id)) == 0)
                 {
-                    productModels._product = new ProductLogic(BllCommonLogic).Get(true)
+                    productModels._product = new ProductLogic(LogicHelper).Get(true)
                         .FirstOrDefault(a => a.ProductId == Convert.ToInt64(id) && a.IsGoods);
-                    productModels._wareHouses = new WareHouseLogic(BllCommonLogic).Get(true);
+                    productModels._wareHouses = new WareHouseLogic(LogicHelper).Get(true);
                 }
                 return View(productModels);
             }
@@ -187,7 +187,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (Convert.ToInt64(new StockLogic(BllCommonLogic).AddOpeningStock(stockDetails, Convert.ToInt64(id))) > 0)
+                if (Convert.ToInt64(new StockLogic(LogicHelper).AddOpeningStock(stockDetails, Convert.ToInt64(id))) > 0)
                 {
                     ReturnMessage = new ReturnObject()
                     {
@@ -245,11 +245,11 @@ namespace JicoDotNet.Inventory.UIControllers
                     return RedirectToAction("Index");
 
                 ProductModels productModels = new ProductModels();
-                if (new StockLogic(BllCommonLogic).TotalNonOpeningStockQuantity(Convert.ToInt64(id)) == 0)
+                if (new StockLogic(LogicHelper).TotalNonOpeningStockQuantity(Convert.ToInt64(id)) == 0)
                 {
-                    productModels._product = new ProductLogic(BllCommonLogic).Get(true)
+                    productModels._product = new ProductLogic(LogicHelper).Get(true)
                         .FirstOrDefault(a => a.ProductId == Convert.ToInt64(id) && a.IsGoods);
-                    productModels._wareHouses = new WareHouseLogic(BllCommonLogic).Get(true);
+                    productModels._wareHouses = new WareHouseLogic(LogicHelper).Get(true);
                 }
                 return View(productModels);
             }
@@ -267,7 +267,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 if (string.IsNullOrEmpty(id))
                     return;
 
-                Product product = new ProductLogic(BllCommonLogic).Get(true)
+                Product product = new ProductLogic(LogicHelper).Get(true)
                             .FirstOrDefault(a => a.ProductId == Convert.ToInt64(id) && a.IsGoods);
                 if (product == null)
                     return;
@@ -321,7 +321,7 @@ namespace JicoDotNet.Inventory.UIControllers
             try
             {
                 List<StockDetail> stockDetails = new List<StockDetail>();
-                StockLogic stockLogic = new StockLogic(BllCommonLogic);
+                StockLogic stockLogic = new StockLogic(LogicHelper);
 
                 #region CSV Upload
                 try
@@ -439,7 +439,7 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 ProductModels productModels = new ProductModels()
                 {
-                    _productTypes = new ProductLogic(BllCommonLogic).TypeGet()
+                    _productTypes = new ProductLogic(LogicHelper).TypeGet()
                 };
                 if (!string.IsNullOrEmpty(id))
                 {
@@ -464,7 +464,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 DataTrackingLogicSet(productType);
                 #endregion
 
-                ProductLogic productTypeLogic = new ProductLogic(BllCommonLogic);
+                ProductLogic productTypeLogic = new ProductLogic(LogicHelper);
                 if (Convert.ToInt64(productTypeLogic.TypeSet(productType)) > 0)
                 {
                     ReturnMessage = new ReturnObject()
@@ -495,9 +495,9 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (new LoginManagement(BllCommonLogic).Authenticate(SessionPerson.UserEmail, Context))
+                if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                 {
-                    ProductLogic productTypeLogic = new ProductLogic(BllCommonLogic);
+                    ProductLogic productTypeLogic = new ProductLogic(LogicHelper);
                     long deactivateId = Convert.ToInt64(productTypeLogic.TypeDeactive(id));
                     return Json(new JsonReturnModels
                     {
@@ -525,7 +525,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                return Json(new ProductLogic(BllCommonLogic)
+                return Json(new ProductLogic(LogicHelper)
                     .GetIn()
                     .Select(p => new ProductFiltered()
                     {
@@ -554,7 +554,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                return Json(new ProductLogic(BllCommonLogic)
+                return Json(new ProductLogic(LogicHelper)
                     .GetOut()
                     .Select(p => new ProductFiltered()
                     {
@@ -588,7 +588,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                return Json(new ProductLogic(BllCommonLogic)
+                return Json(new ProductLogic(LogicHelper)
                     .GetOut().Where(a => a.IsGoods)
                     .Select(p => new ProductFiltered()
                     {

@@ -7,7 +7,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using JicoDotNet.Inventory.BusinessLayer.BLL;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Core;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
 using JicoDotNet.Inventory.UI.Models;
 
@@ -20,7 +20,7 @@ namespace System.Web.Mvc
         /// </summary>
         public BaseController()
         {
-            this.BllCommonLogic = new sCommonDto
+            this.LogicHelper = new CommonRequestDto
             {
                 SqlConnectionString = WebConfigDBConnection.SqlServer,
                 NoSqlConnectionString = WebConfigDBConnection.AzureStorage,
@@ -87,7 +87,7 @@ namespace System.Web.Mvc
                 #endregion
 
                 #region Set Global value into CommonDto
-                BllCommonLogic.Token = Token;
+                LogicHelper.Token = Token;
                 #endregion
                 
                 #region TempData Manage
@@ -179,13 +179,13 @@ namespace System.Web.Mvc
         public void DataTrackingLogicSet(object _object)
         {
             #pragma warning disable CS4014
-            DataTrackingLogic.Set(_object, BllCommonLogic);
+            DataTrackingLogic.Set(_object, LogicHelper);
             #pragma warning restore CS4014
         }
 
         private void LogSet(Logger LogObject)
         {
-            TrackingLogic.Log(LogObject, BllCommonLogic);
+            TrackingLogic.Log(LogObject, LogicHelper);
         }
 
         protected string UrlIdDecrypt(string id)
@@ -234,11 +234,11 @@ namespace System.Web.Mvc
             TempData["Error"] = new JicoDotNet.Inventory.UI.Models.ErrorModels
             {
                 ErrorStatus = 500,
-                ErrorCode = BllCommonLogic?.RequestId,
-                RequestId = BllCommonLogic?.RequestId,
+                ErrorCode = LogicHelper?.RequestId,
+                RequestId = LogicHelper?.RequestId,
                 Message = ex.Message
             };
-            return RedirectToAction("Index", "Error", new { Area = string.Empty, id = BllCommonLogic?.RequestId });
+            return RedirectToAction("Index", "Error", new { Area = string.Empty, id = LogicHelper?.RequestId });
         }
 
         protected PartialViewResult ErrorLoggingToPartial(Exception ex)
@@ -247,8 +247,8 @@ namespace System.Web.Mvc
             return PartialView("_PartialErrorBlock", new JicoDotNet.Inventory.UI.Models.ErrorModels
             {
                 ErrorStatus = 500,
-                ErrorCode = BllCommonLogic?.RequestId,
-                RequestId = BllCommonLogic?.RequestId,
+                ErrorCode = LogicHelper?.RequestId,
+                RequestId = LogicHelper?.RequestId,
                 Message = ex.Message
             });
         }
@@ -262,10 +262,10 @@ namespace System.Web.Mvc
                 _returnObject = new JicoDotNet.Inventory.UI.Models.ErrorModels
                 {
                     ErrorStatus = 500,
-                    ErrorCode = BllCommonLogic?.RequestId,
-                    RequestId = BllCommonLogic?.RequestId
+                    ErrorCode = LogicHelper?.RequestId,
+                    RequestId = LogicHelper?.RequestId
                 },
-                _redirectURL = Url.Action("Index", "Error", new { Area = string.Empty, id = BllCommonLogic?.RequestId })
+                _redirectURL = Url.Action("Index", "Error", new { Area = string.Empty, id = LogicHelper?.RequestId })
             };
             return Json(model, JsonRequestBehavior.AllowGet);
         }
@@ -284,7 +284,7 @@ namespace System.Web.Mvc
                 message += "-------------------------------------------------\n";
                 message += string.Format("Time: {0}", GenericLogic.IstNow.ToString("dd/MMM/yyyy hh:mm:ss tt"));
                 message += Environment.NewLine;
-                message += string.Format("RequestId: {0}", BllCommonLogic?.RequestId);
+                message += string.Format("RequestId: {0}", LogicHelper?.RequestId);
                 message += Environment.NewLine;
                 message += "-------------------------------------------------";
                 message += Environment.NewLine;
@@ -340,7 +340,7 @@ namespace System.Web.Mvc
                     SessionPerson = JsonConvert.DeserializeObject<SessionCredential>(cookie.Value ?? "");
                     Token = SessionPerson?.Token;
                     //SessionPerson.Token = null;
-                    BllCommonLogic.Token = SessionPerson.Token;
+                    LogicHelper.Token = SessionPerson.Token;
                     return true;
                 }
             }
@@ -369,7 +369,7 @@ namespace System.Web.Mvc
 
         protected ReturnObject ReturnMessage { get; set; }
         protected InvalidModel InvalidModelObject { get; set; }
-        protected sCommonDto BllCommonLogic { get; private set; }
+        protected ICommonRequestDto LogicHelper { get; private set; }
         #endregion
 
         #region Cookie Details

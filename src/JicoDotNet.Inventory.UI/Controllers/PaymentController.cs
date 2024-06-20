@@ -19,7 +19,7 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 PaymentModels paymentModels = new PaymentModels()
                 {
-                    _paymentTypes = new PaymentLogic(BllCommonLogic).TypeGet()
+                    _paymentTypes = new PaymentLogic(LogicHelper).TypeGet()
                 };
                 if (!string.IsNullOrEmpty(id))
                 {
@@ -44,7 +44,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 DataTrackingLogicSet(paymentType);
                 #endregion
 
-                PaymentLogic PaymentLogic = new PaymentLogic(BllCommonLogic);
+                PaymentLogic PaymentLogic = new PaymentLogic(LogicHelper);
                 if (Convert.ToInt64(PaymentLogic.TypeSet(paymentType)) > 0)
                 {
                     ReturnMessage = new ReturnObject()
@@ -75,9 +75,9 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (new LoginManagement(BllCommonLogic).Authenticate(SessionPerson.UserEmail, Context))
+                if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                 {
-                    PaymentLogic paymentLogic = new PaymentLogic(BllCommonLogic);
+                    PaymentLogic paymentLogic = new PaymentLogic(LogicHelper);
                     long deactivateId = Convert.ToInt64(paymentLogic.TypeDeactive(id));
                     return Json(new JsonReturnModels
                     {
@@ -107,9 +107,9 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 PaymentModels paymentModels = new PaymentModels
                 {
-                    _paymentOuts = new PaymentLogic(BllCommonLogic).GetPaymentOuts(),
+                    _paymentOuts = new PaymentLogic(LogicHelper).GetPaymentOuts(),
                     _paymentMode = GenericLogic.PaymentMode(),
-                    _config = new ConfigarationManager(BllCommonLogic).GetConfig()
+                    _config = new ConfigarationManager(LogicHelper).GetConfig()
                 };
                 return View(paymentModels);
             }
@@ -125,22 +125,22 @@ namespace JicoDotNet.Inventory.UIControllers
             try
             {
                 PaymentModels paymentModels = new PaymentModels();
-                paymentModels._config = new ConfigarationManager(BllCommonLogic).GetConfig();
+                paymentModels._config = new ConfigarationManager(LogicHelper).GetConfig();
                 if (string.IsNullOrEmpty(id))
                 {
-                    paymentModels._vendors = new VendorLogic(BllCommonLogic).Get(true);
+                    paymentModels._vendors = new VendorLogic(LogicHelper).Get(true);
                 }
                 else
                 {
                     paymentModels._paymentMode = GenericLogic.PaymentMode();
-                    paymentModels._vendor = new VendorLogic(BllCommonLogic).Get().Where(a => a.VendorId == Convert.ToInt64(id)).FirstOrDefault();
-                    paymentModels._vendorBanks = new VendorLogic(BllCommonLogic).BankGet(Convert.ToInt64(id), true);
-                    paymentModels._bills = new BillLogic(BllCommonLogic).GetBillsForPayment(Convert.ToInt64(id));
+                    paymentModels._vendor = new VendorLogic(LogicHelper).Get().Where(a => a.VendorId == Convert.ToInt64(id)).FirstOrDefault();
+                    paymentModels._vendorBanks = new VendorLogic(LogicHelper).BankGet(Convert.ToInt64(id), true);
+                    paymentModels._bills = new BillLogic(LogicHelper).GetBillsForPayment(Convert.ToInt64(id));
 
                     paymentModels._paymentOutDetails = new List<PaymentOutDetail>();
                     if (paymentModels._bills.Count > 0)
                     {
-                        paymentModels._paymentOutDetails = new PaymentLogic(BllCommonLogic).GetPaymentOutDetails(Convert.ToInt64(id));
+                        paymentModels._paymentOutDetails = new PaymentLogic(LogicHelper).GetPaymentOutDetails(Convert.ToInt64(id));
                     }
 
                     // if previously Paid
@@ -185,7 +185,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 DataTrackingLogicSet(paymentOut);
                 #endregion
 
-                PaymentLogic paymentLogic = new PaymentLogic(BllCommonLogic);
+                PaymentLogic paymentLogic = new PaymentLogic(LogicHelper);
                 if(Convert.ToInt64(paymentLogic.SetOut(paymentOut))> 0)
                 {
                     ReturnMessage = new ReturnObject()
@@ -220,15 +220,15 @@ namespace JicoDotNet.Inventory.UIControllers
 
                 PaymentModels paymentModels = new PaymentModels
                 {
-                    _config = new ConfigarationManager(BllCommonLogic).GetConfig()
+                    _config = new ConfigarationManager(LogicHelper).GetConfig()
                 };
-                paymentModels._bill = new BillLogic(BllCommonLogic).GetBill(Convert.ToInt64(id));
-                paymentModels._vendor = new VendorLogic(BllCommonLogic).Get(true).FirstOrDefault(a => a.VendorId == paymentModels._bill.VendorId);
-                paymentModels._vendorBanks = new VendorLogic(BllCommonLogic).BankGet(paymentModels._bill.VendorId, true);
+                paymentModels._bill = new BillLogic(LogicHelper).GetBill(Convert.ToInt64(id));
+                paymentModels._vendor = new VendorLogic(LogicHelper).Get(true).FirstOrDefault(a => a.VendorId == paymentModels._bill.VendorId);
+                paymentModels._vendorBanks = new VendorLogic(LogicHelper).BankGet(paymentModels._bill.VendorId, true);
                 paymentModels._paymentMode = GenericLogic.PaymentMode();
                 if (paymentModels._bill != null)
                 {
-                    paymentModels._paymentOutDetail = new PaymentLogic(BllCommonLogic)
+                    paymentModels._paymentOutDetail = new PaymentLogic(LogicHelper)
                         .GetPaymentOutDetails(paymentModels._bill.VendorId)
                         .FirstOrDefault(a => a.BillId == paymentModels._bill.BillId);
                 }
@@ -275,7 +275,7 @@ namespace JicoDotNet.Inventory.UIControllers
                     DataTrackingLogicSet(paymentOut);
                     #endregion
 
-                    PaymentLogic paymentLogic = new PaymentLogic(BllCommonLogic);
+                    PaymentLogic paymentLogic = new PaymentLogic(LogicHelper);
                     if (Convert.ToInt64(paymentLogic.SetOut(paymentOut)) > 0)
                     {
                         ReturnMessage = new ReturnObject()
@@ -315,9 +315,9 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 PaymentModels paymentModels = new PaymentModels
                 {
-                    _paymentIns = new PaymentLogic(BllCommonLogic).GetPaymentIns(),
+                    _paymentIns = new PaymentLogic(LogicHelper).GetPaymentIns(),
                     _paymentMode = GenericLogic.PaymentMode(),
-                    _config = new ConfigarationManager(BllCommonLogic).GetConfig()
+                    _config = new ConfigarationManager(LogicHelper).GetConfig()
                 };
                 return View(paymentModels);
             }
@@ -334,23 +334,23 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 PaymentModels paymentModels = new PaymentModels
                 {
-                    _config = new ConfigarationManager(BllCommonLogic).GetConfig()
+                    _config = new ConfigarationManager(LogicHelper).GetConfig()
                 };
                 if (string.IsNullOrEmpty(id))
                 {
-                    paymentModels._customers = new CustomerLogic(BllCommonLogic).GetNonRetail(true);
+                    paymentModels._customers = new CustomerLogic(LogicHelper).GetNonRetail(true);
                 }
                 else
                 {
                     paymentModels._paymentMode = GenericLogic.PaymentMode();
-                    paymentModels._customer = new CustomerLogic(BllCommonLogic).Get(Convert.ToInt64(id), true);
-                    paymentModels._companyBanks = new CompanyManagment(BllCommonLogic).BankGet(true);
-                    paymentModels._invoices = new InvoiceLogic(BllCommonLogic).GetInvoicesForPayment(Convert.ToInt64(id));
+                    paymentModels._customer = new CustomerLogic(LogicHelper).Get(Convert.ToInt64(id), true);
+                    paymentModels._companyBanks = new CompanyManagment(LogicHelper).BankGet(true);
+                    paymentModels._invoices = new InvoiceLogic(LogicHelper).GetInvoicesForPayment(Convert.ToInt64(id));
 
                     paymentModels._paymentInDetails = new List<PaymentInDetail>();
                     if (paymentModels._invoices.Count > 0)
                     {
-                        paymentModels._paymentInDetails = new PaymentLogic(BllCommonLogic).GetPaymentInDetails(Convert.ToInt64(id));
+                        paymentModels._paymentInDetails = new PaymentLogic(LogicHelper).GetPaymentInDetails(Convert.ToInt64(id));
                     }
 
                     // if previously Received
@@ -395,7 +395,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 DataTrackingLogicSet(paymentIn);
                 #endregion
 
-                PaymentLogic paymentLogic = new PaymentLogic(BllCommonLogic);
+                PaymentLogic paymentLogic = new PaymentLogic(LogicHelper);
                 if (Convert.ToInt64(paymentLogic.SetIn(paymentIn)) > 0)
                 {
                     ReturnMessage = new ReturnObject()
@@ -430,15 +430,15 @@ namespace JicoDotNet.Inventory.UIControllers
 
                 PaymentModels paymentModels = new PaymentModels
                 {
-                    _config = new ConfigarationManager(BllCommonLogic).GetConfig()
+                    _config = new ConfigarationManager(LogicHelper).GetConfig()
                 };
-                paymentModels._invoice = new InvoiceLogic(BllCommonLogic).GetInvoices().FirstOrDefault(a => a.InvoiceId == Convert.ToInt64(id));
-                paymentModels._customer = new CustomerLogic(BllCommonLogic).Get(paymentModels._invoice.CustomerId, true);
-                paymentModels._companyBanks = new CompanyManagment(BllCommonLogic).BankGet(true);
+                paymentModels._invoice = new InvoiceLogic(LogicHelper).GetInvoices().FirstOrDefault(a => a.InvoiceId == Convert.ToInt64(id));
+                paymentModels._customer = new CustomerLogic(LogicHelper).Get(paymentModels._invoice.CustomerId, true);
+                paymentModels._companyBanks = new CompanyManagment(LogicHelper).BankGet(true);
                 paymentModels._paymentMode = GenericLogic.PaymentMode();
                 if (paymentModels._invoice != null)
                 {
-                    paymentModels._paymentInDetail = new PaymentLogic(BllCommonLogic)
+                    paymentModels._paymentInDetail = new PaymentLogic(LogicHelper)
                         .GetPaymentInDetails(paymentModels._invoice.CustomerId)
                         .FirstOrDefault(a => a.InvoiceId == paymentModels._invoice.InvoiceId);
                 }
@@ -484,7 +484,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 DataTrackingLogicSet(paymentIn);
                 #endregion
 
-                PaymentLogic paymentLogic = new PaymentLogic(BllCommonLogic);
+                PaymentLogic paymentLogic = new PaymentLogic(LogicHelper);
                 if (Convert.ToInt64(paymentLogic.SetIn(paymentIn)) > 0)
                 {
                     ReturnMessage = new ReturnObject()

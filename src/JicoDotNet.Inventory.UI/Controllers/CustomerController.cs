@@ -19,7 +19,7 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 CustomerModels customerModels = new CustomerModels()
                 {
-                    _customerTypes = new CustomerLogic(BllCommonLogic).TypeGet()
+                    _customerTypes = new CustomerLogic(LogicHelper).TypeGet()
                 };
                 if (!string.IsNullOrEmpty(id))
                 {
@@ -44,7 +44,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 DataTrackingLogicSet(customerType);
                 #endregion
 
-                CustomerLogic customerLogic = new CustomerLogic(BllCommonLogic);
+                CustomerLogic customerLogic = new CustomerLogic(LogicHelper);
                 if (Convert.ToInt64(customerLogic.TypeSet(customerType)) > 0)
                 {
                     ReturnMessage = new ReturnObject()
@@ -75,9 +75,9 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (new LoginManagement(BllCommonLogic).Authenticate(SessionPerson.UserEmail, Context))
+                if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                 {
-                    CustomerLogic customerTypeLogic = new CustomerLogic(BllCommonLogic);
+                    CustomerLogic customerTypeLogic = new CustomerLogic(LogicHelper);
                     if (Convert.ToInt64(customerTypeLogic.TypeDeactive(id)) > 0)
                         return Json(id, JsonRequestBehavior.AllowGet);
                     else
@@ -99,7 +99,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                CustomerLogic customerLogic = new CustomerLogic(BllCommonLogic);
+                CustomerLogic customerLogic = new CustomerLogic(LogicHelper);
                 CustomerModels customerModels = new CustomerModels()
                 {
                     _customers = customerLogic.GetNonRetail(),
@@ -134,7 +134,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 DataTrackingLogicSet(customer);
                 #endregion
 
-                CustomerLogic customerLogic = new CustomerLogic(BllCommonLogic);
+                CustomerLogic customerLogic = new CustomerLogic(LogicHelper);
                 if (Convert.ToInt64(customerLogic.Set(customer)) > 0)
                 {
                     ReturnMessage = new ReturnObject()
@@ -166,9 +166,9 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (new LoginManagement(BllCommonLogic).Authenticate(SessionPerson.UserEmail, Context))
+                if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                 {
-                    CustomerLogic customerLogic = new CustomerLogic(BllCommonLogic);
+                    CustomerLogic customerLogic = new CustomerLogic(LogicHelper);
                     long deactivateId = Convert.ToInt64(customerLogic.Deactive(id));
                     return Json(new JsonReturnModels
                     {
@@ -195,7 +195,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                CustomerLogic customerLogic = new CustomerLogic(BllCommonLogic);
+                CustomerLogic customerLogic = new CustomerLogic(LogicHelper);
                 CustomerModels customerModels = new CustomerModels()
                 {
                     _customers = customerLogic.GetRetail(),
@@ -230,7 +230,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 DataTrackingLogicSet(customer);
                 #endregion
 
-                CustomerLogic customerLogic = new CustomerLogic(BllCommonLogic);
+                CustomerLogic customerLogic = new CustomerLogic(LogicHelper);
                 if (Convert.ToInt64(customerLogic.Set(customer)) > 0)
                 {
                     ReturnMessage = new ReturnObject()

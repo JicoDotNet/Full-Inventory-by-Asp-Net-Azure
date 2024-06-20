@@ -38,7 +38,7 @@ namespace JicoDotNet.Inventory.UIControllers
                     UserEmail = formCollection["UserEmail"],
                     Password = formCollection["Password"],
                 };
-                AccountAuthentication accountAuthenticate = new LoginManagement(BllCommonLogic)
+                AccountAuthentication accountAuthenticate = new LoginManagement(LogicHelper)
                                         .Authenticate(loginCredentials, GetRequestedIp());
                
                 if (accountAuthenticate.credential != null)
@@ -52,7 +52,7 @@ namespace JicoDotNet.Inventory.UIControllers
                     #endregion
 
                     #region Login Track
-                    _ = new TrackingLogic(BllCommonLogic).LoginLog(new LoginLog());
+                    _ = new TrackingLogic(LogicHelper).LoginLog(new LoginLog());
                     #endregion
 
                     #region Set Session Cookie & redirect if Login Success
@@ -124,7 +124,7 @@ namespace JicoDotNet.Inventory.UIControllers
             }
             else
                 return RedirectToAction("Index", "Logout");
-            TokenManagement token = new TokenManagement(BllCommonLogic);
+            TokenManagement token = new TokenManagement(LogicHelper);
             return View(token.GetUser(UserEmail));
         }
 
@@ -133,7 +133,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             if (sessionCredential.UserEmail == id)
             {
-                TokenManagement token = new TokenManagement(BllCommonLogic);
+                TokenManagement token = new TokenManagement(LogicHelper);
                 token.Delete(id);
             }
             return RedirectToAction("Index", "Logout");

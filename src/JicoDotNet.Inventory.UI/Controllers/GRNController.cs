@@ -21,7 +21,7 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 GoodsReceiveNoteModels goodsReceiveNoteModels = new GoodsReceiveNoteModels()
                 {
-                    _goodsReceiveNotes = new GoodsReceiveNoteLogic(BllCommonLogic).GetGRNs()
+                    _goodsReceiveNotes = new GoodsReceiveNoteLogic(LogicHelper).GetGRNs()
                 };
                 return View(goodsReceiveNoteModels);
             }
@@ -37,8 +37,8 @@ namespace JicoDotNet.Inventory.UIControllers
             try
             {
                 GoodsReceiveNoteModels goodsReceiveNoteModels = new GoodsReceiveNoteModels();
-                GoodsReceiveNoteLogic goodsReceiveNoteLogic = new GoodsReceiveNoteLogic(BllCommonLogic);
-                PurchaseOrderLogic orderLogic = new PurchaseOrderLogic(BllCommonLogic);
+                GoodsReceiveNoteLogic goodsReceiveNoteLogic = new GoodsReceiveNoteLogic(LogicHelper);
+                PurchaseOrderLogic orderLogic = new PurchaseOrderLogic(LogicHelper);
 
                 if (string.IsNullOrEmpty(id))
                 {
@@ -59,10 +59,10 @@ namespace JicoDotNet.Inventory.UIControllers
                         return RedirectToAction("ReceiveByPO", new { id = string.Empty });
                     }
 
-                    goodsReceiveNoteModels._config = new ConfigarationManager(BllCommonLogic).GetConfig();
-                    goodsReceiveNoteModels._wareHouses = new WareHouseLogic(BllCommonLogic).Get().Where(a => a.IsActive && a.BranchId == goodsReceiveNoteModels._purchaseOrder.BranchId).ToList();
-                    goodsReceiveNoteModels._goodsReceiveNoteDetails = new GoodsReceiveNoteLogic(BllCommonLogic).GetGRNDetails(Convert.ToInt64(id));
-                    goodsReceiveNoteModels._products = new ProductLogic(BllCommonLogic).GetIn();
+                    goodsReceiveNoteModels._config = new ConfigarationManager(LogicHelper).GetConfig();
+                    goodsReceiveNoteModels._wareHouses = new WareHouseLogic(LogicHelper).Get().Where(a => a.IsActive && a.BranchId == goodsReceiveNoteModels._purchaseOrder.BranchId).ToList();
+                    goodsReceiveNoteModels._goodsReceiveNoteDetails = new GoodsReceiveNoteLogic(LogicHelper).GetGRNDetails(Convert.ToInt64(id));
+                    goodsReceiveNoteModels._products = new ProductLogic(LogicHelper).GetIn();
 
                     // if previous goods received Partially/full in previous
                     if (goodsReceiveNoteModels._goodsReceiveNoteDetails.Count > 0)
@@ -107,7 +107,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 DataTrackingLogicSet(goodsReceiveNote);
                 #endregion
 
-                GoodsReceiveNoteLogic goodsReceiveNoteLogic = new GoodsReceiveNoteLogic(BllCommonLogic);
+                GoodsReceiveNoteLogic goodsReceiveNoteLogic = new GoodsReceiveNoteLogic(LogicHelper);
                 GoodsReceiveNote GRNobj = JsonConvert.DeserializeObject<GoodsReceiveNote>(goodsReceiveNoteLogic.Receive(goodsReceiveNote));
                 if(GRNobj == null || GRNobj.GRNId < 1)
                 {
@@ -137,11 +137,11 @@ namespace JicoDotNet.Inventory.UIControllers
                 }
                 GoodsReceiveNoteModels goodsReceiveNoteModels = new GoodsReceiveNoteModels()
                 {
-                    _goodsReceiveNote = new GoodsReceiveNoteLogic(BllCommonLogic).GetForDetail(Convert.ToInt64(id))
+                    _goodsReceiveNote = new GoodsReceiveNoteLogic(LogicHelper).GetForDetail(Convert.ToInt64(id))
                 };
                 if (goodsReceiveNoteModels._goodsReceiveNote != null)
                 {
-                    goodsReceiveNoteModels._config = new ConfigarationManager(BllCommonLogic).GetConfig();
+                    goodsReceiveNoteModels._config = new ConfigarationManager(LogicHelper).GetConfig();
                     goodsReceiveNoteModels._companyAddress = new Company()
                     {
                         CompanyName = SessionCompany.CompanyName,
@@ -157,8 +157,8 @@ namespace JicoDotNet.Inventory.UIControllers
                         Mobile = WebConfigAppSettingsAccess.CompanyMobile,
                         WebsiteUrl = WebConfigAppSettingsAccess.CompanyWebsite,
                     };
-                    goodsReceiveNoteModels._branch = new BranchLogic(BllCommonLogic).Get().FirstOrDefault(a => a.BranchId == goodsReceiveNoteModels._goodsReceiveNote.BranchId);
-                    goodsReceiveNoteModels._purchaseOrder = new PurchaseOrderLogic(BllCommonLogic).GetForDetail(goodsReceiveNoteModels._goodsReceiveNote.PurchaseOrderId);
+                    goodsReceiveNoteModels._branch = new BranchLogic(LogicHelper).Get().FirstOrDefault(a => a.BranchId == goodsReceiveNoteModels._goodsReceiveNote.BranchId);
+                    goodsReceiveNoteModels._purchaseOrder = new PurchaseOrderLogic(LogicHelper).GetForDetail(goodsReceiveNoteModels._goodsReceiveNote.PurchaseOrderId);
                     return View(goodsReceiveNoteModels);
                 }
                 return RedirectToAction("Index");
@@ -176,12 +176,12 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 GoodsReceiveNoteModels goodsReceiveNoteModels = new GoodsReceiveNoteModels
                 {
-                    _wareHouses = new WareHouseLogic(BllCommonLogic).Get(true),
-                    _vendors = new VendorLogic(BllCommonLogic).Get(true),
-                    _purchaseTypes = new PurchaseOrderLogic(BllCommonLogic).TypeGet(true),
+                    _wareHouses = new WareHouseLogic(LogicHelper).Get(true),
+                    _vendors = new VendorLogic(LogicHelper).Get(true),
+                    _purchaseTypes = new PurchaseOrderLogic(LogicHelper).TypeGet(true),
                     _company = SessionCompany,
                     _YesNo = GenericLogic.YesNo(),
-                    _config = new ConfigarationManager(BllCommonLogic).GetConfig()
+                    _config = new ConfigarationManager(LogicHelper).GetConfig()
                 };
                 return View(goodsReceiveNoteModels);
             }
@@ -196,7 +196,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                return Json(new ProductLogic(BllCommonLogic).GetIn().ToList(), JsonRequestBehavior.AllowGet);
+                return Json(new ProductLogic(LogicHelper).GetIn().ToList(), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -257,7 +257,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 DataTrackingLogicSet(goodsReceiveNoteDirect);
                 #endregion
 
-                GoodsReceiveNote GRNobj = JsonConvert.DeserializeObject<GoodsReceiveNote>(new GoodsReceiveNoteLogic(BllCommonLogic).SetDirect(goodsReceiveNoteDirect));
+                GoodsReceiveNote GRNobj = JsonConvert.DeserializeObject<GoodsReceiveNote>(new GoodsReceiveNoteLogic(LogicHelper).SetDirect(goodsReceiveNoteDirect));
                 if (GRNobj == null || GRNobj.GRNId < 1)
                 {
                     ReturnMessage = new ReturnObject()
@@ -283,15 +283,15 @@ namespace JicoDotNet.Inventory.UIControllers
                 GoodsReceiveNoteModels goodsReceiveNoteModels = new GoodsReceiveNoteModels();
                 if (string.IsNullOrEmpty(id))
                 {
-                    goodsReceiveNoteModels._goodsReceiveNotes = new GoodsReceiveNoteLogic(BllCommonLogic).GetForReturn();
+                    goodsReceiveNoteModels._goodsReceiveNotes = new GoodsReceiveNoteLogic(LogicHelper).GetForReturn();
                     return View(goodsReceiveNoteModels);
                 }
                 else
                 {
-                    goodsReceiveNoteModels._wareHouses = new WareHouseLogic(BllCommonLogic).Get(true);
-                    goodsReceiveNoteModels._goodsReceiveNote = new GoodsReceiveNoteLogic(BllCommonLogic).GetForDetail(Convert.ToInt64(id));
-                    goodsReceiveNoteModels._config = new ConfigarationManager(BllCommonLogic).GetConfig();
-                    goodsReceiveNoteModels._purchaseOrder = new PurchaseOrderLogic(BllCommonLogic).GetForDetail(goodsReceiveNoteModels._goodsReceiveNote.PurchaseOrderId);
+                    goodsReceiveNoteModels._wareHouses = new WareHouseLogic(LogicHelper).Get(true);
+                    goodsReceiveNoteModels._goodsReceiveNote = new GoodsReceiveNoteLogic(LogicHelper).GetForDetail(Convert.ToInt64(id));
+                    goodsReceiveNoteModels._config = new ConfigarationManager(LogicHelper).GetConfig();
+                    goodsReceiveNoteModels._purchaseOrder = new PurchaseOrderLogic(LogicHelper).GetForDetail(goodsReceiveNoteModels._goodsReceiveNote.PurchaseOrderId);
                     return View(goodsReceiveNoteModels);
                 }                
             }
@@ -307,7 +307,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                PurchaseOrderLogic purchaseOrder = new PurchaseOrderLogic(BllCommonLogic);
+                PurchaseOrderLogic purchaseOrder = new PurchaseOrderLogic(LogicHelper);
                 purchaseOrder.Return(purchaseReturn);
                 return RedirectToAction("Index");
             }
