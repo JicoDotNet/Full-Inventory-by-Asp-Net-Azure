@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using DataAccess.Sql.Entity;
 
 namespace DataAccess.Sql
 {
