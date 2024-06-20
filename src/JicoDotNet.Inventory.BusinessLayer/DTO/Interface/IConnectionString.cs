@@ -1,4 +1,5 @@
 ﻿using DataAccess.Sql;
+using DataAccess.Sql.Entity;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Core;
 using System;
 using System.Collections.Generic;

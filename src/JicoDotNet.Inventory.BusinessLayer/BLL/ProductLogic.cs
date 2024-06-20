@@ -3,11 +3,7 @@ using DataAccess.Sql;
 using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
-<<<<<<< HEAD
 using JicoDotNet.Inventory.BusinessLayer.DTO.Core;
-=======
-using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
->>>>>>> bb6919d0bdfc49e63abbcea8a0e4b0ea0f54f996
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -15,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using DataAccess.Sql.Entity;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
@@ -82,26 +79,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
             INameValuePairs nvp = new NameValuePairs
             {
-                new NameValuePair("@ProductId", product.ProductId),
-<<<<<<< HEAD
-
-
-                new NameValuePair("@ProductTypeId", product.ProductTypeId),
-                new NameValuePair("@ProductInOut", product.ProductInOut),
-                new NameValuePair("@Brand", product.Brand),
-                new NameValuePair("@ProductName", product.ProductName),
-                new NameValuePair("@ProductCode", product.ProductCode),
-
-                new NameValuePair("@IsGoods", product.IsGoods),
-                new NameValuePair("@SKU", product.SKU),
-                new NameValuePair("@PurchasePrice", product.PurchasePrice),
-                new NameValuePair("@SalePrice", product.SalePrice),
-
-                new NameValuePair("@HSNSAC", product.HSNSAC),
-                new NameValuePair("@TaxPercentage", product.TaxPercentage),
-
-=======
-                 
+                new NameValuePair("@ProductId", product.ProductId),                 
                  
                 new NameValuePair("@ProductTypeId", product.ProductTypeId),
                 new NameValuePair("@ProductInOut", product.ProductInOut),
@@ -117,7 +95,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@HSNSAC", product.HSNSAC),
                 new NameValuePair("@TaxPercentage", product.TaxPercentage),
 
->>>>>>> bb6919d0bdfc49e63abbcea8a0e4b0ea0f54f996
                 new NameValuePair("@Description", product.Description?.Trim()),
                 new NameValuePair("@IsPerishableProduct", product.IsPerishableProduct),
                 new NameValuePair("@HasExpirationDate", product.HasExpirationDate),

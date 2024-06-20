@@ -1,5 +1,6 @@
 ﻿using DataAccess.AzureStorage;
 using DataAccess.Sql;
+using DataAccess.Sql.Entity;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Core;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
 
