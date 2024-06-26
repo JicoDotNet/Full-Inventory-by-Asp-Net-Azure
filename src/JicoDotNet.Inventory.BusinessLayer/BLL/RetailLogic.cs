@@ -18,7 +18,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
     {
         public RetailLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
 
-        public long Set(RetailSales retailSales, CompanyBasic currentCompany, 
+        public long Set(RetailSales retailSales, ICompanyBasic currentCompany, 
             Dictionary<string, object> dynamicFormValue, out short ReturnType)
         {
             long SalesOrderId = 0;

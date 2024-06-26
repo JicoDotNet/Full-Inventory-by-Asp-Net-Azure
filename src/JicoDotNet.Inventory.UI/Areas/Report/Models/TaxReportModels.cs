@@ -4,12 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
 
 namespace JicoDotNet.Inventory.UI.Report.Models
 {
     public class TaxReportModels
     {
-        public CompanyBasic _companyBasic { get; set; }
+        public ICompanyBasic _companyBasic { get; set; }
         public List<RGSTOutput> _rGSTOut { get; set; }
         public List<RGSTInput> _rGSTIn { get; set; }
     }

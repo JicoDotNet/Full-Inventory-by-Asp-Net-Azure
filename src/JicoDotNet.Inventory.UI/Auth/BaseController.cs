@@ -245,7 +245,7 @@ namespace System.Web.Mvc
         protected PartialViewResult ErrorLoggingToPartial(Exception ex)
         {
             TrackErrorLogging(ex);
-            return PartialView("_PartialErrorBlock", new JicoDotNet.Inventory.UI.Models.ErrorModels
+            return PartialView("_PartialErrorBlock", new ErrorModels
             {
                 ErrorStatus = 500,
                 ErrorCode = LogicHelper?.RequestId,
@@ -260,7 +260,7 @@ namespace System.Web.Mvc
             JsonReturnModels model = new JsonReturnModels
             {
                 _isSuccess = false,
-                _returnObject = new JicoDotNet.Inventory.UI.Models.ErrorModels
+                _returnObject = new ErrorModels
                 {
                     ErrorStatus = 500,
                     ErrorCode = LogicHelper?.RequestId,
