@@ -23,9 +23,9 @@ namespace JicoDotNet.Inventory.UIControllers
                 {
                     _shipmentTypes = new ShipmentLogic(LogicHelper).TypeGet()
                 };
-                if (!string.IsNullOrEmpty(id))
+                if (!string.IsNullOrEmpty(UrlParameterId))
                 {
-                    shipmentModels._shipmentType = shipmentModels._shipmentTypes.Where(a => a.ShipmentTypeId == Convert.ToInt64(id)).FirstOrDefault();
+                    shipmentModels._shipmentType = shipmentModels._shipmentTypes.Where(a => a.ShipmentTypeId == Convert.ToInt64(UrlParameterId)).FirstOrDefault();
                 }
                 return View(shipmentModels);
             }
@@ -40,7 +40,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                shipmentType.ShipmentTypeId = id == null ? 0 : Convert.ToInt64(id);
+                shipmentType.ShipmentTypeId = UrlParameterId == null ? 0 : Convert.ToInt64(UrlParameterId);
 
                 #region Data Tracking...
                 DataTrackingLogicSet(shipmentType);
@@ -80,11 +80,11 @@ namespace JicoDotNet.Inventory.UIControllers
                 if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                 {
                     ShipmentLogic shipmentLogic = new ShipmentLogic(LogicHelper);
-                    long deactivateId = Convert.ToInt64(shipmentLogic.TypeDeactive(id));
+                    long deactivateId = Convert.ToInt64(shipmentLogic.TypeDeactive(UrlParameterId));
                     return Json(new JsonReturnModels
                     {
                         _isSuccess = true,
-                        _returnObject = deactivateId > 0 ? id : "0"
+                        _returnObject = deactivateId > 0 ? UrlParameterId : "0"
                     }, JsonRequestBehavior.AllowGet);
                 }
                 else
@@ -124,16 +124,16 @@ namespace JicoDotNet.Inventory.UIControllers
             try
             {
                 ShipmentModels shipmentModels = new ShipmentModels();
-                if (string.IsNullOrEmpty(id))
+                if (string.IsNullOrEmpty(UrlParameterId))
                 {
                     shipmentModels._salesOrders = new SalesOrderLogic(LogicHelper).GetForShipment();
                     return View(shipmentModels);
                 }
 
                 SalesOrderLogic salesOrderLogic = new SalesOrderLogic(LogicHelper);
-                if(salesOrderLogic.GetForShipment().FirstOrDefault(so => so.SalesOrderId == Convert.ToInt64(id)) != null)
+                if(salesOrderLogic.GetForShipment().FirstOrDefault(so => so.SalesOrderId == Convert.ToInt64(UrlParameterId)) != null)
                 {
-                    shipmentModels._salesOrder = salesOrderLogic.GetForDetail(Convert.ToInt64(id));
+                    shipmentModels._salesOrder = salesOrderLogic.GetForDetail(Convert.ToInt64(UrlParameterId));
                 }
 
                 if (shipmentModels._salesOrder == null)
@@ -174,9 +174,9 @@ namespace JicoDotNet.Inventory.UIControllers
             try
             {
                 ShipmentModels shipmentModels = new ShipmentModels();
-                if (!string.IsNullOrEmpty(id))
+                if (!string.IsNullOrEmpty(UrlParameterId))
                 {
-                    shipmentModels._salesOrder = new SalesOrderLogic(LogicHelper).GetForDetail(Convert.ToInt64(id));
+                    shipmentModels._salesOrder = new SalesOrderLogic(LogicHelper).GetForDetail(Convert.ToInt64(UrlParameterId));
                     shipmentModels._salesOrder.SalesOrderDetails =
                         shipmentModels._salesOrder.SalesOrderDetails.Where(a => a.IsGoods).ToList();
                     
@@ -184,10 +184,10 @@ namespace JicoDotNet.Inventory.UIControllers
                     {
                         shipmentModels._products = new ProductLogic(LogicHelper).GetOut();
                         shipmentModels._company = SessionCompany;
-                        shipmentModels._shipmentDetails = new ShipmentLogic(LogicHelper).GetShipmentDetails(Convert.ToInt64(id));
+                        shipmentModels._shipmentDetails = new ShipmentLogic(LogicHelper).GetShipmentDetails(Convert.ToInt64(UrlParameterId));
                         shipmentModels._config = new ConfigarationManager(LogicHelper).GetConfig();
 
-                        List<Stock> stocks = new StockLogic(LogicHelper).GetDetail(new Stock { WareHouseId = Convert.ToInt64(id2) });
+                        List<Stock> stocks = new StockLogic(LogicHelper).GetDetail(new Stock { WareHouseId = Convert.ToInt64(UrlParameterId2) });
                         shipmentModels._stocks = new List<Stock>();
                         foreach (SalesOrderDetail salesOrderDetail in shipmentModels._salesOrder?.SalesOrderDetails)
                         {
@@ -309,10 +309,10 @@ namespace JicoDotNet.Inventory.UIControllers
             try
             {
                 ShipmentModels shipmentModels = new ShipmentModels();
-                if (!string.IsNullOrEmpty(id) && !string.IsNullOrEmpty(id2))
+                if (!string.IsNullOrEmpty(UrlParameterId) && !string.IsNullOrEmpty(UrlParameterId2))
                 {
                     shipmentModels._config = new ConfigarationManager(LogicHelper).GetConfig();
-                    shipmentModels._stocks = new StockLogic(LogicHelper).GetDetail(new Stock { WareHouseId = Convert.ToInt64(id), ProductId = Convert.ToInt64(id2) });
+                    shipmentModels._stocks = new StockLogic(LogicHelper).GetDetail(new Stock { WareHouseId = Convert.ToInt64(UrlParameterId), ProductId = Convert.ToInt64(UrlParameterId2) });
                 }
                 return PartialView("_PartialStockDetailDirect", shipmentModels);
             }
@@ -354,13 +354,13 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (string.IsNullOrEmpty(id))
+                if (string.IsNullOrEmpty(UrlParameterId))
                 {
                     return RedirectToAction("Index");
                 }
                 ShipmentModels shipmentModels = new ShipmentModels()
                 {
-                    _shipment = new ShipmentLogic(LogicHelper).GetForDetail(Convert.ToInt64(id))
+                    _shipment = new ShipmentLogic(LogicHelper).GetForDetail(Convert.ToInt64(UrlParameterId))
                 };
                 if (shipmentModels._shipment != null)
                 {

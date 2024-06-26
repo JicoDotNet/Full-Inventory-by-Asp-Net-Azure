@@ -21,9 +21,9 @@ namespace JicoDotNet.Inventory.UIControllers
                 {
                     _billTypes = new BillLogic(LogicHelper).TypeGet()
                 };
-                if (!string.IsNullOrEmpty(id))
+                if (!string.IsNullOrEmpty(UrlParameterId))
                 {
-                    billModels._billType = billModels._billTypes.Where(a => a.BillTypeId == Convert.ToInt64(id)).FirstOrDefault();
+                    billModels._billType = billModels._billTypes.Where(a => a.BillTypeId == Convert.ToInt64(UrlParameterId)).FirstOrDefault();
                 }
                 return View(billModels);
             }
@@ -38,7 +38,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                billType.BillTypeId = id == null ? 0 : Convert.ToInt64(id);
+                billType.BillTypeId = UrlParameterId == null ? 0 : Convert.ToInt64(UrlParameterId);
 
                 #region Data Tracking...
                 DataTrackingLogicSet(billType);
@@ -77,11 +77,11 @@ namespace JicoDotNet.Inventory.UIControllers
                 if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                 {
                     BillLogic billLogic = new BillLogic(LogicHelper);
-                    long deactivateId = Convert.ToInt64(billLogic.TypeDeactive(id));
+                    long deactivateId = Convert.ToInt64(billLogic.TypeDeactive(UrlParameterId));
                     return Json(new JsonReturnModels
                     {
                         _isSuccess = true,
-                        _returnObject = deactivateId > 0 ? id : "0"
+                        _returnObject = deactivateId > 0 ? UrlParameterId : "0"
                     }, JsonRequestBehavior.AllowGet);
                 }
                 else
@@ -124,7 +124,7 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 BillModels billModels = new BillModels();
                 BillLogic billLogic = new BillLogic(LogicHelper);
-                if (string.IsNullOrEmpty(id))
+                if (string.IsNullOrEmpty(UrlParameterId))
                 {
                     billModels._purchaseOrders = billLogic.GetForEntry();
                 }
@@ -132,8 +132,8 @@ namespace JicoDotNet.Inventory.UIControllers
                 {                    
                     // Retrive PO
                     PurchaseOrderLogic orderLogic = new PurchaseOrderLogic(LogicHelper);
-                    if (billLogic.GetForEntry(Convert.ToInt64(id)) != null)
-                        billModels._purchaseOrder = orderLogic.GetForDetail(Convert.ToInt64(id));
+                    if (billLogic.GetForEntry(Convert.ToInt64(UrlParameterId)) != null)
+                        billModels._purchaseOrder = orderLogic.GetForDetail(Convert.ToInt64(UrlParameterId));
 
                     // -- _purchaseOrder Check
                     if (billModels._purchaseOrder == null)
@@ -157,7 +157,7 @@ namespace JicoDotNet.Inventory.UIControllers
                     }
 
                     // Previous Bill details- if partially billed
-                    billModels._billDetails = billLogic.GetBillDetails(Convert.ToInt64(id));
+                    billModels._billDetails = billLogic.GetBillDetails(Convert.ToInt64(UrlParameterId));
                     // Check previous Bill
                     if (billModels._billDetails.Count > 0)
                     {
@@ -228,13 +228,13 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (string.IsNullOrEmpty(id))
+                if (string.IsNullOrEmpty(UrlParameterId))
                 {
                     return RedirectToAction("Index");
                 }
                 BillModels billModels = new BillModels
                 {
-                    _bill = new BillLogic(LogicHelper).GetForDetail(Convert.ToInt64(id))
+                    _bill = new BillLogic(LogicHelper).GetForDetail(Convert.ToInt64(UrlParameterId))
                 };
                 if (billModels._bill != null)
                 {

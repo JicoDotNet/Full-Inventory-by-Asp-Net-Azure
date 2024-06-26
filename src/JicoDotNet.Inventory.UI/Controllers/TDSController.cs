@@ -35,7 +35,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (tDSPay.TDSPayId == Convert.ToInt64(id))
+                if (tDSPay.TDSPayId == Convert.ToInt64(UrlParameterId))
                 {
                     if (!string.IsNullOrEmpty(new TaxingLogic(LogicHelper).SetTDSOut(tDSPay)))
                     {
@@ -84,7 +84,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (tDSReceive.TDSReceiveId == Convert.ToInt64(id))
+                if (tDSReceive.TDSReceiveId == Convert.ToInt64(UrlParameterId))
                 {
                     if (!string.IsNullOrEmpty(new TaxingLogic(LogicHelper).SetTDSIn(tDSReceive)))
                     {

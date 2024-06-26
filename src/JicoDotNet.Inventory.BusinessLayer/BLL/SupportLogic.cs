@@ -29,8 +29,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             support.RequestId = CommonObj.RequestId;
             if (memory != null)
                 support.ScreenshotImageUrl = new ExecuteBlobManager("MyCompany", CommonObj.NoSqlConnectionString).UploadFile(memory, new string[] { "Support", "Screenshot", support.UserId.ToString() }, CommonObj.RequestId);
-            _tableManager = new ExecuteTableManager("Support", CommonObj.NoSqlConnectionString);
-            _tableManager.InsertEntity(support);
+            TableManager = new ExecuteTableManager("Support", CommonObj.NoSqlConnectionString);
+            TableManager.InsertEntity(support);
             return support;
         }
     }

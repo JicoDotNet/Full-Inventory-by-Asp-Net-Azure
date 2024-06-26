@@ -23,14 +23,14 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             config.TransactionDate = GenericLogic.IstNow;
             config.IsActive = true;
 
-            _tableManager = new ExecuteTableManager("Config", CommonObj.NoSqlConnectionString);
-            _tableManager.UpdateEntity(config);
+            TableManager = new ExecuteTableManager("Config", CommonObj.NoSqlConnectionString);
+            TableManager.UpdateEntity(config);
         }
 
         public Config GetConfig()
         {
-            _tableManager = new ExecuteTableManager("Config", CommonObj.NoSqlConnectionString);
-            Config config = _tableManager.RetrieveEntity<Config>("").FirstOrDefault();
+            TableManager = new ExecuteTableManager("Config", CommonObj.NoSqlConnectionString);
+            Config config = TableManager.RetrieveEntity<Config>("").FirstOrDefault();
             if (config == null)
             {
                 config = new Config

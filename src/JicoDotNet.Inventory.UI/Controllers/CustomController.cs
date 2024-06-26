@@ -41,18 +41,18 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (!string.IsNullOrEmpty(id))
+                if (!string.IsNullOrEmpty(UrlParameterId))
                 {
-                    Enum.TryParse(id, true, out ECustomPropertyFor customPropertyFor);
+                    Enum.TryParse(UrlParameterId, true, out ECustomPropertyFor customPropertyFor);
                     if (customPropertyFor != ECustomPropertyFor.None)
                     {
                         CustomPropertyModels models = new CustomPropertyModels
                         {
                             _customPropertyFor = customPropertyFor
                         };
-                        if (!string.IsNullOrEmpty(id2))
+                        if (!string.IsNullOrEmpty(UrlParameterId2))
                         {
-                            models._rowKey = id2;
+                            models._rowKey = UrlParameterId2;
                         }
                         return View(models);
                     }
@@ -69,9 +69,9 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (!string.IsNullOrEmpty(id))
+                if (!string.IsNullOrEmpty(UrlParameterId))
                 {
-                    Enum.TryParse(id, true, out ECustomPropertyFor customPropertyFor);
+                    Enum.TryParse(UrlParameterId, true, out ECustomPropertyFor customPropertyFor);
                     if (customPropertyFor != ECustomPropertyFor.None)
                     {
                         CustomPropertyLogic propertyLogic = new CustomPropertyLogic(LogicHelper);
@@ -82,8 +82,8 @@ namespace JicoDotNet.Inventory.UIControllers
                             _customPropertyFor = customPropertyFor,
                             _customProperties = propertyLogic.GetMaster(customPropertyFor)
                         };
-                        if (!string.IsNullOrEmpty(id2))
-                            models._customProperty = propertyLogic.GetMaster(customPropertyFor, id2);
+                        if (!string.IsNullOrEmpty(UrlParameterId2))
+                            models._customProperty = propertyLogic.GetMaster(customPropertyFor, UrlParameterId2);
                         return PartialView("_PartialProperty", models);
                     }
                 }
@@ -100,13 +100,13 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (!string.IsNullOrEmpty(id))
+                if (!string.IsNullOrEmpty(UrlParameterId))
                 {
-                    Enum.TryParse(id, true, out ECustomPropertyFor customPropertyFor);
+                    Enum.TryParse(UrlParameterId, true, out ECustomPropertyFor customPropertyFor);
                     
                     CustomPropertyLogic propertyLogic = new CustomPropertyLogic(LogicHelper);
-                    if (!string.IsNullOrEmpty(id2))
-                        customProperty.RowKey = id2;
+                    if (!string.IsNullOrEmpty(UrlParameterId2))
+                        customProperty.RowKey = UrlParameterId2;
                     propertyLogic.SetMaster(customProperty, customPropertyFor);
                     return RedirectToAction("Property", new { id = UrlIdEncrypt(customPropertyFor, false), id2 = string.Empty });
                 }
@@ -123,17 +123,17 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (!string.IsNullOrEmpty(id))
+                if (!string.IsNullOrEmpty(UrlParameterId))
                 {
-                    Enum.TryParse(id, true, out ECustomPropertyFor customPropertyFor);
+                    Enum.TryParse(UrlParameterId, true, out ECustomPropertyFor customPropertyFor);
                     if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                     {
                         CustomPropertyLogic propertyLogic = new CustomPropertyLogic(LogicHelper);
-                        bool deactivated = propertyLogic.DeactiveMaster(customPropertyFor, id2);
+                        bool deactivated = propertyLogic.DeactiveMaster(customPropertyFor, UrlParameterId2);
                         return Json(new JsonReturnModels
                         {
                             _isSuccess = true,
-                            _returnObject = deactivated ? id : "0"
+                            _returnObject = deactivated ? UrlParameterId : "0"
                         }, JsonRequestBehavior.AllowGet);
                     }                        
                 }
@@ -154,9 +154,9 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (!string.IsNullOrEmpty(id))
+                if (!string.IsNullOrEmpty(UrlParameterId))
                 {
-                    Enum.TryParse(id, true, out ECustomPropertyFor customPropertyFor);
+                    Enum.TryParse(UrlParameterId, true, out ECustomPropertyFor customPropertyFor);
                     if (customPropertyFor != ECustomPropertyFor.None)
                     {
                         CustomPropertyLogic propertyLogic = new CustomPropertyLogic(LogicHelper);

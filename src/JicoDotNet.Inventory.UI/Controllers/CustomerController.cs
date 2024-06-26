@@ -21,9 +21,9 @@ namespace JicoDotNet.Inventory.UIControllers
                 {
                     _customerTypes = new CustomerLogic(LogicHelper).TypeGet()
                 };
-                if (!string.IsNullOrEmpty(id))
+                if (!string.IsNullOrEmpty(UrlParameterId))
                 {
-                    customerModels._customerType = customerModels._customerTypes.Where(a => a.CustomerTypeId == Convert.ToInt64(id)).FirstOrDefault();
+                    customerModels._customerType = customerModels._customerTypes.Where(a => a.CustomerTypeId == Convert.ToInt64(UrlParameterId)).FirstOrDefault();
                 }
                 return View(customerModels);
             }
@@ -38,7 +38,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                customerType.CustomerTypeId = id == null ? 0 : Convert.ToInt64(id);
+                customerType.CustomerTypeId = UrlParameterId == null ? 0 : Convert.ToInt64(UrlParameterId);
 
                 #region Data Tracking...
                 DataTrackingLogicSet(customerType);
@@ -78,8 +78,8 @@ namespace JicoDotNet.Inventory.UIControllers
                 if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                 {
                     CustomerLogic customerTypeLogic = new CustomerLogic(LogicHelper);
-                    if (Convert.ToInt64(customerTypeLogic.TypeDeactive(id)) > 0)
-                        return Json(id, JsonRequestBehavior.AllowGet);
+                    if (Convert.ToInt64(customerTypeLogic.TypeDeactive(UrlParameterId)) > 0)
+                        return Json(UrlParameterId, JsonRequestBehavior.AllowGet);
                     else
                         return Json(0, JsonRequestBehavior.AllowGet);
                 }
@@ -109,9 +109,9 @@ namespace JicoDotNet.Inventory.UIControllers
                     _YesNo = GenericLogic.YesNo(),
                     IsRetail = false
                 };
-                if (!string.IsNullOrEmpty(id))
+                if (!string.IsNullOrEmpty(UrlParameterId))
                 {
-                    customerModels._customer = customerModels._customers.Where(a => a.CustomerId == Convert.ToInt64(id)).FirstOrDefault();
+                    customerModels._customer = customerModels._customers.Where(a => a.CustomerId == Convert.ToInt64(UrlParameterId)).FirstOrDefault();
                 }
                 return View(customerModels);
             }
@@ -128,7 +128,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                customer.CustomerId = id == null ? 0 : Convert.ToInt64(id);
+                customer.CustomerId = UrlParameterId == null ? 0 : Convert.ToInt64(UrlParameterId);
 
                 #region Data Tracking...
                 DataTrackingLogicSet(customer);
@@ -169,11 +169,11 @@ namespace JicoDotNet.Inventory.UIControllers
                 if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                 {
                     CustomerLogic customerLogic = new CustomerLogic(LogicHelper);
-                    long deactivateId = Convert.ToInt64(customerLogic.Deactive(id));
+                    long deactivateId = Convert.ToInt64(customerLogic.Deactive(UrlParameterId));
                     return Json(new JsonReturnModels
                     {
                         _isSuccess = true,
-                        _returnObject = deactivateId > 0 ? id : "0"
+                        _returnObject = deactivateId > 0 ? UrlParameterId : "0"
                     }, JsonRequestBehavior.AllowGet);
                 }
                 else
@@ -205,9 +205,9 @@ namespace JicoDotNet.Inventory.UIControllers
                     _YesNo = GenericLogic.YesNo(),
                     IsRetail = true
                 };
-                if (!string.IsNullOrEmpty(id))
+                if (!string.IsNullOrEmpty(UrlParameterId))
                 {
-                    customerModels._customer = customerModels._customers.Where(a => a.CustomerId == Convert.ToInt64(id)).FirstOrDefault();
+                    customerModels._customer = customerModels._customers.Where(a => a.CustomerId == Convert.ToInt64(UrlParameterId)).FirstOrDefault();
                 }
                 return View("Index", customerModels);
             }
@@ -224,7 +224,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                customer.CustomerId = id == null ? 0 : Convert.ToInt64(id);
+                customer.CustomerId = UrlParameterId == null ? 0 : Convert.ToInt64(UrlParameterId);
 
                 #region Data Tracking...
                 DataTrackingLogicSet(customer);

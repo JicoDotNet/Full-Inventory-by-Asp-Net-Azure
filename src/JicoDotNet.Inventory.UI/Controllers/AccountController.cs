@@ -11,8 +11,6 @@ namespace JicoDotNet.Inventory.UIControllers
 {
     public class AccountController : BaseController
     {
-        readonly int TaxPercentage = 0;
-
         #region Login
         public ActionResult Index(string returnUrl)
         {
@@ -43,7 +41,7 @@ namespace JicoDotNet.Inventory.UIControllers
                
                 if (accountAuthenticate.credential != null)
                 {
-                    #region Set Token Data & Duplicate finding                    
+                    #region Set Token Data & Duplicate finding
                     if (accountAuthenticate.eLoginStatus == ELoginStatus.DuplicateLogin)
                     {
                         TempData["UserEmail"] = accountAuthenticate.credential.UserEmail;
@@ -117,7 +115,6 @@ namespace JicoDotNet.Inventory.UIControllers
         public ActionResult Duplicate()
         {
             string UserEmail;
-            string TenantCode;
             if (TempData["UserEmail"] != null)
             {
                 UserEmail = TempData["UserEmail"].ToString();
@@ -131,10 +128,10 @@ namespace JicoDotNet.Inventory.UIControllers
         [HttpPost]
         public ActionResult Delete(SessionCredential sessionCredential)
         {
-            if (sessionCredential.UserEmail == id)
+            if (sessionCredential.UserEmail == UrlParameterId)
             {
                 TokenManagement token = new TokenManagement(LogicHelper);
-                token.Delete(id);
+                token.Delete(UrlParameterId);
             }
             return RedirectToAction("Index", "Logout");
         }

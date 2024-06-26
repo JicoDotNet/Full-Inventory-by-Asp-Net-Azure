@@ -104,7 +104,7 @@ namespace JicoDotNet.Inventory.UIControllers
                         Message = "Something went wrong!!"
                     };
                 }
-                return RedirectToAction("Detail", "Quotation", new { id = UrlIdEncrypt(id, false), id2 = "Draft" });
+                return RedirectToAction("Detail", "Quotation", new { id = UrlIdEncrypt(UrlParameterId, false), id2 = "Draft" });
             }
             catch (Exception ex)
             {
@@ -117,12 +117,12 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (string.IsNullOrEmpty(id))
+                if (string.IsNullOrEmpty(UrlParameterId))
                     return RedirectToAction("Index");
 
                 QuotationModels salesOrderModels = new QuotationModels()
                 {
-                    _quotation = new QuotationLogic(LogicHelper).GetForDetail(Convert.ToInt64(id))
+                    _quotation = new QuotationLogic(LogicHelper).GetForDetail(Convert.ToInt64(UrlParameterId))
                 };
                 if (salesOrderModels._quotation != null)
                 {
@@ -160,12 +160,12 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (string.IsNullOrEmpty(id))
+                if (string.IsNullOrEmpty(UrlParameterId))
                     return RedirectToAction("Index");
 
                 QuotationModels salesOrderModels = new QuotationModels()
                 {
-                    _quotation = new QuotationLogic(LogicHelper).GetForDetail(Convert.ToInt64(id))
+                    _quotation = new QuotationLogic(LogicHelper).GetForDetail(Convert.ToInt64(UrlParameterId))
                 };
                 if (salesOrderModels._quotation != null)
                 {
@@ -194,14 +194,14 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (string.IsNullOrEmpty(id))
+                if (string.IsNullOrEmpty(UrlParameterId))
                     return RedirectToAction("Index");
 
                 #region Data Tracking...
                 DataTrackingLogicSet(salesOrder);
                 #endregion
 
-                Quotation quotation = new QuotationLogic(LogicHelper).GetForDetail(Convert.ToInt64(id));
+                Quotation quotation = new QuotationLogic(LogicHelper).GetForDetail(Convert.ToInt64(UrlParameterId));
                 salesOrder.QuotationId = quotation.QuotationId;
                 salesOrder.IsGstAllowed = quotation.IsGstAllowed;
                 salesOrder.CustomerId = quotation.CustomerId;
@@ -249,7 +249,7 @@ namespace JicoDotNet.Inventory.UIControllers
                         Message = "Something went wrong!!"
                     };
                 }
-                return RedirectToAction("Confirm", "Quotation", new { id = UrlIdEncrypt(id, false) });
+                return RedirectToAction("Confirm", "Quotation", new { id = UrlIdEncrypt(UrlParameterId, false) });
             }
             catch (Exception ex)
             {
@@ -265,11 +265,11 @@ namespace JicoDotNet.Inventory.UIControllers
                 if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                 {
                     QuotationLogic quotationLogic = new QuotationLogic(LogicHelper);
-                    long deactivateId = Convert.ToInt64(quotationLogic.Deactive(Convert.ToInt64(id)));
+                    long deactivateId = Convert.ToInt64(quotationLogic.Deactive(Convert.ToInt64(UrlParameterId)));
                     return Json(new JsonReturnModels
                     {
                         _isSuccess = true,
-                        _returnObject = deactivateId > 0 ? id : "0"
+                        _returnObject = deactivateId > 0 ? UrlParameterId : "0"
                     }, JsonRequestBehavior.AllowGet);
                 }
                 else

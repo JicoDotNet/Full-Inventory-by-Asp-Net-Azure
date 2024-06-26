@@ -92,9 +92,9 @@ namespace JicoDotNet.Inventory.UIControllers
                     _companyBanks = companyManagment.BankGet(),
                     _state = GenericLogic.State()
                 };
-                if (!string.IsNullOrEmpty(id))
+                if (!string.IsNullOrEmpty(UrlParameterId))
                 {
-                    companyModels._companyBank = companyModels._companyBanks.FirstOrDefault(a => a.CompanyBankId == Convert.ToInt64(id));
+                    companyModels._companyBank = companyModels._companyBanks.FirstOrDefault(a => a.CompanyBankId == Convert.ToInt64(UrlParameterId));
                 }
                 return View(companyModels);
             }
@@ -110,11 +110,11 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (string.IsNullOrEmpty(id))
+                if (string.IsNullOrEmpty(UrlParameterId))
                 {
                     return RedirectToAction("Index", "Company", new { id = string.Empty });
                 }
-                companyBank.CompanyBankId = id == null ? 0 : Convert.ToInt64(id);
+                companyBank.CompanyBankId = UrlParameterId == null ? 0 : Convert.ToInt64(UrlParameterId);
 
                 #region Data Tracking...
                 DataTrackingLogicSet(companyBank);
@@ -154,11 +154,11 @@ namespace JicoDotNet.Inventory.UIControllers
                 if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                 {
                     CompanyManagment companyManagment = new CompanyManagment(LogicHelper);
-                    long deactivateId = Convert.ToInt64(companyManagment.BankDeactive(Convert.ToInt32(id)));
+                    long deactivateId = Convert.ToInt64(companyManagment.BankDeactive(Convert.ToInt32(UrlParameterId)));
                     return Json(new JsonReturnModels
                     {
                         _isSuccess = true,
-                        _returnObject = deactivateId > 0 ? id : "0"
+                        _returnObject = deactivateId > 0 ? UrlParameterId : "0"
                     }, JsonRequestBehavior.AllowGet);
                 }
                 else
@@ -177,11 +177,11 @@ namespace JicoDotNet.Inventory.UIControllers
         [SessionAuthenticate]
         public ActionResult BankPrint(CompanyBank companyBank)
         {
-            if (string.IsNullOrEmpty(id))
+            if (string.IsNullOrEmpty(UrlParameterId))
             {
                 return RedirectToAction("Index", "Company", new { id = string.Empty });
             }
-            companyBank.CompanyBankId = Convert.ToInt64(id);
+            companyBank.CompanyBankId = Convert.ToInt64(UrlParameterId);
             #region Data Tracking...
             DataTrackingLogicSet(companyBank);
             #endregion
@@ -209,11 +209,11 @@ namespace JicoDotNet.Inventory.UIControllers
         [SessionAuthenticate]
         public ActionResult BankUnPrint(CompanyBank companyBank)
         {
-            if (string.IsNullOrEmpty(id))
+            if (string.IsNullOrEmpty(UrlParameterId))
             {
                 return RedirectToAction("Index", "Company", new { id = string.Empty });
             }
-            companyBank.CompanyBankId = Convert.ToInt64(id);
+            companyBank.CompanyBankId = Convert.ToInt64(UrlParameterId);
             #region Data Tracking...
             DataTrackingLogicSet(companyBank);
             #endregion

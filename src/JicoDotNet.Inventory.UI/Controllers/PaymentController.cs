@@ -21,9 +21,9 @@ namespace JicoDotNet.Inventory.UIControllers
                 {
                     _paymentTypes = new PaymentLogic(LogicHelper).TypeGet()
                 };
-                if (!string.IsNullOrEmpty(id))
+                if (!string.IsNullOrEmpty(UrlParameterId))
                 {
-                    paymentModels._paymentType = paymentModels._paymentTypes.Where(a => a.PaymentTypeId == Convert.ToInt64(id)).FirstOrDefault();
+                    paymentModels._paymentType = paymentModels._paymentTypes.Where(a => a.PaymentTypeId == Convert.ToInt64(UrlParameterId)).FirstOrDefault();
                 }
                 return View(paymentModels);
             }
@@ -38,7 +38,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                paymentType.PaymentTypeId = id == null ? 0 : Convert.ToInt64(id);
+                paymentType.PaymentTypeId = UrlParameterId == null ? 0 : Convert.ToInt64(UrlParameterId);
 
                 #region Data Tracking...
                 DataTrackingLogicSet(paymentType);
@@ -78,11 +78,11 @@ namespace JicoDotNet.Inventory.UIControllers
                 if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                 {
                     PaymentLogic paymentLogic = new PaymentLogic(LogicHelper);
-                    long deactivateId = Convert.ToInt64(paymentLogic.TypeDeactive(id));
+                    long deactivateId = Convert.ToInt64(paymentLogic.TypeDeactive(UrlParameterId));
                     return Json(new JsonReturnModels
                     {
                         _isSuccess = true,
-                        _returnObject = deactivateId > 0 ? id : "0"
+                        _returnObject = deactivateId > 0 ? UrlParameterId : "0"
                     }, JsonRequestBehavior.AllowGet);
                 }
                 else
@@ -126,21 +126,21 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 PaymentModels paymentModels = new PaymentModels();
                 paymentModels._config = new ConfigarationManager(LogicHelper).GetConfig();
-                if (string.IsNullOrEmpty(id))
+                if (string.IsNullOrEmpty(UrlParameterId))
                 {
                     paymentModels._vendors = new VendorLogic(LogicHelper).Get(true);
                 }
                 else
                 {
                     paymentModels._paymentMode = GenericLogic.PaymentMode();
-                    paymentModels._vendor = new VendorLogic(LogicHelper).Get().Where(a => a.VendorId == Convert.ToInt64(id)).FirstOrDefault();
-                    paymentModels._vendorBanks = new VendorLogic(LogicHelper).BankGet(Convert.ToInt64(id), true);
-                    paymentModels._bills = new BillLogic(LogicHelper).GetBillsForPayment(Convert.ToInt64(id));
+                    paymentModels._vendor = new VendorLogic(LogicHelper).Get().Where(a => a.VendorId == Convert.ToInt64(UrlParameterId)).FirstOrDefault();
+                    paymentModels._vendorBanks = new VendorLogic(LogicHelper).BankGet(Convert.ToInt64(UrlParameterId), true);
+                    paymentModels._bills = new BillLogic(LogicHelper).GetBillsForPayment(Convert.ToInt64(UrlParameterId));
 
                     paymentModels._paymentOutDetails = new List<PaymentOutDetail>();
                     if (paymentModels._bills.Count > 0)
                     {
-                        paymentModels._paymentOutDetails = new PaymentLogic(LogicHelper).GetPaymentOutDetails(Convert.ToInt64(id));
+                        paymentModels._paymentOutDetails = new PaymentLogic(LogicHelper).GetPaymentOutDetails(Convert.ToInt64(UrlParameterId));
                     }
 
                     // if previously Paid
@@ -215,14 +215,14 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (string.IsNullOrEmpty(id))
+                if (string.IsNullOrEmpty(UrlParameterId))
                     return RedirectToAction("Make");
 
                 PaymentModels paymentModels = new PaymentModels
                 {
                     _config = new ConfigarationManager(LogicHelper).GetConfig()
                 };
-                paymentModels._bill = new BillLogic(LogicHelper).GetBill(Convert.ToInt64(id));
+                paymentModels._bill = new BillLogic(LogicHelper).GetBill(Convert.ToInt64(UrlParameterId));
                 paymentModels._vendor = new VendorLogic(LogicHelper).Get(true).FirstOrDefault(a => a.VendorId == paymentModels._bill.VendorId);
                 paymentModels._vendorBanks = new VendorLogic(LogicHelper).BankGet(paymentModels._bill.VendorId, true);
                 paymentModels._paymentMode = GenericLogic.PaymentMode();
@@ -262,7 +262,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (string.IsNullOrEmpty(id))
+                if (string.IsNullOrEmpty(UrlParameterId))
                     return RedirectToAction("Make");
                 foreach (PaymentOutDetail outDetail in paymentOut.PaymentOutDetails)
                 {
@@ -336,21 +336,21 @@ namespace JicoDotNet.Inventory.UIControllers
                 {
                     _config = new ConfigarationManager(LogicHelper).GetConfig()
                 };
-                if (string.IsNullOrEmpty(id))
+                if (string.IsNullOrEmpty(UrlParameterId))
                 {
                     paymentModels._customers = new CustomerLogic(LogicHelper).GetNonRetail(true);
                 }
                 else
                 {
                     paymentModels._paymentMode = GenericLogic.PaymentMode();
-                    paymentModels._customer = new CustomerLogic(LogicHelper).Get(Convert.ToInt64(id), true);
+                    paymentModels._customer = new CustomerLogic(LogicHelper).Get(Convert.ToInt64(UrlParameterId), true);
                     paymentModels._companyBanks = new CompanyManagment(LogicHelper).BankGet(true);
-                    paymentModels._invoices = new InvoiceLogic(LogicHelper).GetInvoicesForPayment(Convert.ToInt64(id));
+                    paymentModels._invoices = new InvoiceLogic(LogicHelper).GetInvoicesForPayment(Convert.ToInt64(UrlParameterId));
 
                     paymentModels._paymentInDetails = new List<PaymentInDetail>();
                     if (paymentModels._invoices.Count > 0)
                     {
-                        paymentModels._paymentInDetails = new PaymentLogic(LogicHelper).GetPaymentInDetails(Convert.ToInt64(id));
+                        paymentModels._paymentInDetails = new PaymentLogic(LogicHelper).GetPaymentInDetails(Convert.ToInt64(UrlParameterId));
                     }
 
                     // if previously Received
@@ -425,14 +425,14 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (string.IsNullOrEmpty(id))
+                if (string.IsNullOrEmpty(UrlParameterId))
                     return RedirectToAction("Receive");
 
                 PaymentModels paymentModels = new PaymentModels
                 {
                     _config = new ConfigarationManager(LogicHelper).GetConfig()
                 };
-                paymentModels._invoice = new InvoiceLogic(LogicHelper).GetInvoices().FirstOrDefault(a => a.InvoiceId == Convert.ToInt64(id));
+                paymentModels._invoice = new InvoiceLogic(LogicHelper).GetInvoices().FirstOrDefault(a => a.InvoiceId == Convert.ToInt64(UrlParameterId));
                 paymentModels._customer = new CustomerLogic(LogicHelper).Get(paymentModels._invoice.CustomerId, true);
                 paymentModels._companyBanks = new CompanyManagment(LogicHelper).BankGet(true);
                 paymentModels._paymentMode = GenericLogic.PaymentMode();
@@ -472,7 +472,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (string.IsNullOrEmpty(id))
+                if (string.IsNullOrEmpty(UrlParameterId))
                     return RedirectToAction("Receive", new { id = string.Empty });
                 foreach (PaymentInDetail inDetail in paymentIn.PaymentInDetails)
                 {

@@ -21,9 +21,9 @@ namespace JicoDotNet.Inventory.UIControllers
                 {
                     _invoiceTypes = new InvoiceLogic(LogicHelper).TypeGet()
                 };
-                if (!string.IsNullOrEmpty(id))
+                if (!string.IsNullOrEmpty(UrlParameterId))
                 {
-                    invoiceModels._invoiceType = invoiceModels._invoiceTypes.Where(a => a.InvoiceTypeId == Convert.ToInt64(id)).FirstOrDefault();
+                    invoiceModels._invoiceType = invoiceModels._invoiceTypes.Where(a => a.InvoiceTypeId == Convert.ToInt64(UrlParameterId)).FirstOrDefault();
                 }
                 return View(invoiceModels);
             }
@@ -38,7 +38,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                invoiceType.InvoiceTypeId = id == null ? 0 : Convert.ToInt64(id);
+                invoiceType.InvoiceTypeId = UrlParameterId == null ? 0 : Convert.ToInt64(UrlParameterId);
 
                 #region Data Tracking...
                 DataTrackingLogicSet(invoiceType);
@@ -78,11 +78,11 @@ namespace JicoDotNet.Inventory.UIControllers
                 if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                 {
                     InvoiceLogic invoiceLogic = new InvoiceLogic(LogicHelper);
-                    long deactivateId = Convert.ToInt64(invoiceLogic.TypeDeactive(id));
+                    long deactivateId = Convert.ToInt64(invoiceLogic.TypeDeactive(UrlParameterId));
                     return Json(new JsonReturnModels
                     {
                         _isSuccess = true,
-                        _returnObject = deactivateId > 0 ? id : "0"
+                        _returnObject = deactivateId > 0 ? UrlParameterId : "0"
                     }, JsonRequestBehavior.AllowGet);
                 }
                 else
@@ -126,7 +126,7 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 InvoiceModels invoiceModels = new InvoiceModels();
                 InvoiceLogic invoiceLogic = new InvoiceLogic(LogicHelper);
-                if (string.IsNullOrEmpty(id))
+                if (string.IsNullOrEmpty(UrlParameterId))
                 {
                     invoiceModels._salesOrders = invoiceLogic.GetForEntry();
                 }
@@ -134,8 +134,8 @@ namespace JicoDotNet.Inventory.UIControllers
                 {
                     // Retrive SO
                     SalesOrderLogic orderLogic = new SalesOrderLogic(LogicHelper);
-                    if (invoiceLogic.GetForEntry().Where(a => a.SalesOrderId == Convert.ToInt64(id)).FirstOrDefault() != null)
-                        invoiceModels._salesOrder = orderLogic.GetForDetail(Convert.ToInt64(id));
+                    if (invoiceLogic.GetForEntry().Where(a => a.SalesOrderId == Convert.ToInt64(UrlParameterId)).FirstOrDefault() != null)
+                        invoiceModels._salesOrder = orderLogic.GetForDetail(Convert.ToInt64(UrlParameterId));
 
                     // -- _salesOrder Check
                     if (invoiceModels._salesOrder == null)
@@ -165,7 +165,7 @@ namespace JicoDotNet.Inventory.UIControllers
                     }
 
                     // Previous Invoice details- if partially invoiced
-                    invoiceModels._invoiceDetails = invoiceLogic.GetInvoiceDetails(Convert.ToInt64(id));
+                    invoiceModels._invoiceDetails = invoiceLogic.GetInvoiceDetails(Convert.ToInt64(UrlParameterId));
                     // Check previous Invoice
                     if (invoiceModels._invoiceDetails.Count > 0)
                     {
@@ -248,12 +248,12 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (string.IsNullOrEmpty(id))
+                if (string.IsNullOrEmpty(UrlParameterId))
                     return RedirectToAction("Index");
 
                 InvoiceModels invoiceModels = new InvoiceModels
                 {
-                    _invoice = new InvoiceLogic(LogicHelper).GetForDetail(Convert.ToInt64(id))
+                    _invoice = new InvoiceLogic(LogicHelper).GetForDetail(Convert.ToInt64(UrlParameterId))
                 };
                 if (invoiceModels._invoice != null)
                 {

@@ -40,14 +40,14 @@ namespace JicoDotNet.Inventory.UIControllers
                 GoodsReceiveNoteLogic goodsReceiveNoteLogic = new GoodsReceiveNoteLogic(LogicHelper);
                 PurchaseOrderLogic orderLogic = new PurchaseOrderLogic(LogicHelper);
 
-                if (string.IsNullOrEmpty(id))
+                if (string.IsNullOrEmpty(UrlParameterId))
                 {
                     goodsReceiveNoteModels._purchaseOrders = goodsReceiveNoteLogic.GetForGRN();
                 }
                 else
                 {
-                    if (goodsReceiveNoteLogic.GetForGRN(Convert.ToInt64(id)) != null)
-                        goodsReceiveNoteModels._purchaseOrder = orderLogic.GetForDetail(Convert.ToInt64(id));
+                    if (goodsReceiveNoteLogic.GetForGRN(Convert.ToInt64(UrlParameterId)) != null)
+                        goodsReceiveNoteModels._purchaseOrder = orderLogic.GetForDetail(Convert.ToInt64(UrlParameterId));
 
                     if (goodsReceiveNoteModels._purchaseOrder == null)
                     {
@@ -61,7 +61,7 @@ namespace JicoDotNet.Inventory.UIControllers
 
                     goodsReceiveNoteModels._config = new ConfigarationManager(LogicHelper).GetConfig();
                     goodsReceiveNoteModels._wareHouses = new WareHouseLogic(LogicHelper).Get().Where(a => a.IsActive && a.BranchId == goodsReceiveNoteModels._purchaseOrder.BranchId).ToList();
-                    goodsReceiveNoteModels._goodsReceiveNoteDetails = new GoodsReceiveNoteLogic(LogicHelper).GetGRNDetails(Convert.ToInt64(id));
+                    goodsReceiveNoteModels._goodsReceiveNoteDetails = new GoodsReceiveNoteLogic(LogicHelper).GetGRNDetails(Convert.ToInt64(UrlParameterId));
                     goodsReceiveNoteModels._products = new ProductLogic(LogicHelper).GetIn();
 
                     // if previous goods received Partially/full in previous
@@ -131,13 +131,13 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (string.IsNullOrEmpty(id))
+                if (string.IsNullOrEmpty(UrlParameterId))
                 {
                     return RedirectToAction("Index");
                 }
                 GoodsReceiveNoteModels goodsReceiveNoteModels = new GoodsReceiveNoteModels()
                 {
-                    _goodsReceiveNote = new GoodsReceiveNoteLogic(LogicHelper).GetForDetail(Convert.ToInt64(id))
+                    _goodsReceiveNote = new GoodsReceiveNoteLogic(LogicHelper).GetForDetail(Convert.ToInt64(UrlParameterId))
                 };
                 if (goodsReceiveNoteModels._goodsReceiveNote != null)
                 {
@@ -214,7 +214,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 GoodsReceiveNoteModels goodsReceiveNoteModels = new GoodsReceiveNoteModels
                 {
                     _products = products,
-                    _len = Convert.ToInt32(id)
+                    _len = Convert.ToInt32(UrlParameterId)
                 };
                 return PartialView("_PartialReceiveDirectBlock", goodsReceiveNoteModels);
             }
@@ -235,8 +235,8 @@ namespace JicoDotNet.Inventory.UIControllers
                     products = new List<Product>();
                 GoodsReceiveNoteModels goodsReceiveNoteModels = new GoodsReceiveNoteModels
                 {
-                    _product = products.Where(a => a.ProductId == Convert.ToInt64(id)).FirstOrDefault(),
-                    _len = Convert.ToInt32(id2)
+                    _product = products.Where(a => a.ProductId == Convert.ToInt64(UrlParameterId)).FirstOrDefault(),
+                    _len = Convert.ToInt32(UrlParameterId2)
                 };
                 // Here "ProductInOut" Prop treat as GST applicable or not, to avoid declare extra property & extra memory allocation
                 goodsReceiveNoteModels._product.ProductInOut = Gst;
@@ -281,7 +281,7 @@ namespace JicoDotNet.Inventory.UIControllers
             try
             {
                 GoodsReceiveNoteModels goodsReceiveNoteModels = new GoodsReceiveNoteModels();
-                if (string.IsNullOrEmpty(id))
+                if (string.IsNullOrEmpty(UrlParameterId))
                 {
                     goodsReceiveNoteModels._goodsReceiveNotes = new GoodsReceiveNoteLogic(LogicHelper).GetForReturn();
                     return View(goodsReceiveNoteModels);
@@ -289,7 +289,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 else
                 {
                     goodsReceiveNoteModels._wareHouses = new WareHouseLogic(LogicHelper).Get(true);
-                    goodsReceiveNoteModels._goodsReceiveNote = new GoodsReceiveNoteLogic(LogicHelper).GetForDetail(Convert.ToInt64(id));
+                    goodsReceiveNoteModels._goodsReceiveNote = new GoodsReceiveNoteLogic(LogicHelper).GetForDetail(Convert.ToInt64(UrlParameterId));
                     goodsReceiveNoteModels._config = new ConfigarationManager(LogicHelper).GetConfig();
                     goodsReceiveNoteModels._purchaseOrder = new PurchaseOrderLogic(LogicHelper).GetForDetail(goodsReceiveNoteModels._goodsReceiveNote.PurchaseOrderId);
                     return View(goodsReceiveNoteModels);

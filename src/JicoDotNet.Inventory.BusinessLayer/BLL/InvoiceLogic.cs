@@ -327,8 +327,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public string GetHTMLDesign()
         {
-            _tableManager = new ExecuteTableManager("Design", CommonObj.NoSqlConnectionString);
-            HtmlDesign htmlDesign = _tableManager.RetrieveEntity<HtmlDesign>("").FirstOrDefault();
+            TableManager = new ExecuteTableManager("Design", CommonObj.NoSqlConnectionString);
+            HtmlDesign htmlDesign = TableManager.RetrieveEntity<HtmlDesign>("").FirstOrDefault();
             return htmlDesign.InvoiceHtml;
         }
 

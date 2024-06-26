@@ -8,7 +8,7 @@ using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
 
 namespace JicoDotNet.Inventory.BusinessLayer.DTO.Class
 {
-    public class Logger : TableEntity, ILogger
+    public class Logger : TableEntity, ILogger, IHRequest, IActivity
     {
         public string IPAddress { get; set; }
         public string DNS { get; set; }
@@ -18,7 +18,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.DTO.Class
         public string BrowserVersion { get; set; }
         public string AbsoluteUri { get; set; }
         public string MacAddress { get; set; }
-        public bool IsMobile { get; set; }
+        public bool IsMobileDevice { get; set; }
         public string OSType { get; set; }
 
         public string Subdomain { get; set; }

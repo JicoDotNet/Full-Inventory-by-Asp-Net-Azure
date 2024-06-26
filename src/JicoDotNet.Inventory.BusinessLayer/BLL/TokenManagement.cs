@@ -78,8 +78,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public SessionCredential GetCredential(string Token)
         {
-            _tableManager = new ExecuteTableManager("SessionToken", CommonObj.NoSqlConnectionString);
-            List<SessionCredential> credentials = _tableManager.RetrieveEntity<SessionCredential>("Token eq '" + Token + "'");
+            TableManager = new ExecuteTableManager("SessionToken", CommonObj.NoSqlConnectionString);
+            List<SessionCredential> credentials = TableManager.RetrieveEntity<SessionCredential>("Token eq '" + Token + "'");
             if (credentials.Count == 1)
                 return credentials[0];
             return null;
@@ -141,11 +141,11 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 #pragma warning disable CS4014
             Task.Run(() =>
             {
-                _tableManager = new ExecuteTableManager("SessionToken", CommonObj.NoSqlConnectionString);
-                List<SessionCredential> credentials = _tableManager.RetrieveEntity<SessionCredential>("UserEmail eq '" + UserEmail + "'");
+                TableManager = new ExecuteTableManager("SessionToken", CommonObj.NoSqlConnectionString);
+                List<SessionCredential> credentials = TableManager.RetrieveEntity<SessionCredential>("UserEmail eq '" + UserEmail + "'");
                 foreach (SessionCredential sc in credentials)
                 {
-                    _tableManager.DeleteEntity(sc);
+                    TableManager.DeleteEntity(sc);
                 }
             });
 #pragma warning restore CS4014

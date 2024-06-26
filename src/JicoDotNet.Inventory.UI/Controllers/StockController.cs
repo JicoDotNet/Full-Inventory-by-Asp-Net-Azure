@@ -25,8 +25,8 @@ namespace JicoDotNet.Inventory.UIControllers
 
                 // If it's redirect from product page to view product's current stock. 
                 // then id is ProductId, id can't be null
-                if (!string.IsNullOrEmpty(id))
-                    stockModels._productId = Convert.ToInt64(id);
+                if (!string.IsNullOrEmpty(UrlParameterId))
+                    stockModels._productId = Convert.ToInt64(UrlParameterId);
 
                 return View(stockModels);
             }
@@ -143,7 +143,7 @@ namespace JicoDotNet.Inventory.UIControllers
         [SessionAuthenticate]
         public ActionResult TransferDetail()
         {
-            if (!string.IsNullOrEmpty(id))
+            if (!string.IsNullOrEmpty(UrlParameterId))
                 return View();
             else
                 return RedirectToAction("Transfer");
@@ -163,8 +163,8 @@ namespace JicoDotNet.Inventory.UIControllers
 
                 // If it's redirect from product page to view product's Adjust stock. 
                 // then id is ProductId, id can't be null
-                if (!string.IsNullOrEmpty(id))
-                    stockModels._productId = Convert.ToInt64(id);
+                if (!string.IsNullOrEmpty(UrlParameterId))
+                    stockModels._productId = Convert.ToInt64(UrlParameterId);
 
                 return View(stockModels);
             }
@@ -231,7 +231,7 @@ namespace JicoDotNet.Inventory.UIControllers
         [SessionAuthenticate]
         public ActionResult AdjustDetail()
         {
-            if (!string.IsNullOrEmpty(id))
+            if (!string.IsNullOrEmpty(UrlParameterId))
                 return View();
             else
                 return RedirectToAction("Adjust");

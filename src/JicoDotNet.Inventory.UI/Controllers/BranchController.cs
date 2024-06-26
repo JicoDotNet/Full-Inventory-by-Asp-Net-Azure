@@ -21,9 +21,9 @@ namespace JicoDotNet.Inventory.UIControllers
                     _branches = new BranchLogic(LogicHelper).Get(),
                     _State = GenericLogic.State()
                 };
-                if (!string.IsNullOrEmpty(id))
+                if (!string.IsNullOrEmpty(UrlParameterId))
                 {
-                    branchModels._branch = branchModels._branches.Where(a => a.BranchId == Convert.ToInt64(id)).FirstOrDefault();
+                    branchModels._branch = branchModels._branches.Where(a => a.BranchId == Convert.ToInt64(UrlParameterId)).FirstOrDefault();
                 }
                 return View(branchModels);
             }
@@ -38,7 +38,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                branch.BranchId = id == null ? 0 : Convert.ToInt64(id);
+                branch.BranchId = UrlParameterId == null ? 0 : Convert.ToInt64(UrlParameterId);
 
                 #region Data Tracking...
                 DataTrackingLogicSet(branch);
@@ -73,11 +73,11 @@ namespace JicoDotNet.Inventory.UIControllers
                 if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                 {
                     BranchLogic branchLogic = new BranchLogic(LogicHelper);
-                    long deactivateId = Convert.ToInt64(branchLogic.Deactive(id));
+                    long deactivateId = Convert.ToInt64(branchLogic.Deactive(UrlParameterId));
                     return Json(new JsonReturnModels
                     {
                         _isSuccess = true,
-                        _returnObject = deactivateId > 0 ? id : "0"
+                        _returnObject = deactivateId > 0 ? UrlParameterId : "0"
                     }, JsonRequestBehavior.AllowGet);
                 }
                 else

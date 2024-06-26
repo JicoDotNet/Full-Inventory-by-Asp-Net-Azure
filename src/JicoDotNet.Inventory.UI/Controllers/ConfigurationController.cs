@@ -63,7 +63,7 @@ namespace JicoDotNet.Inventory.UIControllers
                     Message = "Success",
                     Status = true
                 };
-                return RedirectToAction("Detail", "Company", new { id = UrlIdEncrypt(id, false) });
+                return RedirectToAction("Detail", "Company", new { id = UrlIdEncrypt(UrlParameterId, false) });
             }
             catch (Exception ex)
             {

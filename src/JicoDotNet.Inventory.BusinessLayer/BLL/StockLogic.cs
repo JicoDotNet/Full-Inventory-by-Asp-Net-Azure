@@ -135,9 +135,9 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             if (httpFileBase != null)
             {
-                _blobManager = new ExecuteBlobManager("MyCompany", CommonObj.NoSqlConnectionString);
+                BlobManager = new ExecuteBlobManager("MyCompany", CommonObj.NoSqlConnectionString);
                 string[] Dirs = { "BulkUpload", "ProductOpeningStock", ProductId };
-                return _blobManager.UploadFile(httpFileBase, Dirs, CommonObj.RequestId);
+                return BlobManager.UploadFile(httpFileBase, Dirs, CommonObj.RequestId);
             }
             else
                 return null;

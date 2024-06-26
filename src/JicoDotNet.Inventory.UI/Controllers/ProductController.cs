@@ -39,7 +39,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (string.IsNullOrEmpty(id))
+                if (string.IsNullOrEmpty(UrlParameterId))
                 {
                     // Limit Quota Checking
                     ProductModels productModels = new ProductModels()
@@ -65,7 +65,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (!string.IsNullOrEmpty(id))
+                if (!string.IsNullOrEmpty(UrlParameterId))
                 {
                     ProductModels productModels = new ProductModels()
                     {
@@ -74,7 +74,7 @@ namespace JicoDotNet.Inventory.UIControllers
                         _YesNo = GenericLogic.YesNo(),
                         _ProductCategory = GenericLogic.ProductCategory(),
                         _config = new ConfigarationManager(LogicHelper).GetConfig(),
-                        _product = new ProductLogic(LogicHelper).Get().FirstOrDefault(a => a.ProductId == Convert.ToInt64(id))
+                        _product = new ProductLogic(LogicHelper).Get().FirstOrDefault(a => a.ProductId == Convert.ToInt64(UrlParameterId))
                     };
                     return View("Add", productModels);
                 }
@@ -91,7 +91,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                product.ProductId = id == null ? 0 : Convert.ToInt64(id);
+                product.ProductId = UrlParameterId == null ? 0 : Convert.ToInt64(UrlParameterId);
 
                 #region Data Tracking...
                 DataTrackingLogicSet(product);
@@ -139,11 +139,11 @@ namespace JicoDotNet.Inventory.UIControllers
                 if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                 {
                     ProductLogic productLogic = new ProductLogic(LogicHelper);
-                    long deactivateId = Convert.ToInt64(productLogic.Deactive(id));
+                    long deactivateId = Convert.ToInt64(productLogic.Deactive(UrlParameterId));
                     return Json(new JsonReturnModels
                     {
                         _isSuccess = true,
-                        _returnObject = deactivateId > 0 ? id : "0"
+                        _returnObject = deactivateId > 0 ? UrlParameterId : "0"
                     }, JsonRequestBehavior.AllowGet);
                 }
                 else
@@ -164,14 +164,14 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (string.IsNullOrEmpty(id))
+                if (string.IsNullOrEmpty(UrlParameterId))
                     return RedirectToAction("Index");
 
                 ProductModels productModels = new ProductModels();
-                if (new StockLogic(LogicHelper).TotalNonOpeningStockQuantity(Convert.ToInt64(id)) == 0)
+                if (new StockLogic(LogicHelper).TotalNonOpeningStockQuantity(Convert.ToInt64(UrlParameterId)) == 0)
                 {
                     productModels._product = new ProductLogic(LogicHelper).Get(true)
-                        .FirstOrDefault(a => a.ProductId == Convert.ToInt64(id) && a.IsGoods);
+                        .FirstOrDefault(a => a.ProductId == Convert.ToInt64(UrlParameterId) && a.IsGoods);
                     productModels._wareHouses = new WareHouseLogic(LogicHelper).Get(true);
                 }
                 return View(productModels);
@@ -187,7 +187,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (Convert.ToInt64(new StockLogic(LogicHelper).AddOpeningStock(stockDetails, Convert.ToInt64(id))) > 0)
+                if (Convert.ToInt64(new StockLogic(LogicHelper).AddOpeningStock(stockDetails, Convert.ToInt64(UrlParameterId))) > 0)
                 {
                     ReturnMessage = new ReturnObject()
                     {
@@ -241,14 +241,14 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (string.IsNullOrEmpty(id))
+                if (string.IsNullOrEmpty(UrlParameterId))
                     return RedirectToAction("Index");
 
                 ProductModels productModels = new ProductModels();
-                if (new StockLogic(LogicHelper).TotalNonOpeningStockQuantity(Convert.ToInt64(id)) == 0)
+                if (new StockLogic(LogicHelper).TotalNonOpeningStockQuantity(Convert.ToInt64(UrlParameterId)) == 0)
                 {
                     productModels._product = new ProductLogic(LogicHelper).Get(true)
-                        .FirstOrDefault(a => a.ProductId == Convert.ToInt64(id) && a.IsGoods);
+                        .FirstOrDefault(a => a.ProductId == Convert.ToInt64(UrlParameterId) && a.IsGoods);
                     productModels._wareHouses = new WareHouseLogic(LogicHelper).Get(true);
                 }
                 return View(productModels);
@@ -264,11 +264,11 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (string.IsNullOrEmpty(id))
+                if (string.IsNullOrEmpty(UrlParameterId))
                     return;
 
                 Product product = new ProductLogic(LogicHelper).Get(true)
-                            .FirstOrDefault(a => a.ProductId == Convert.ToInt64(id) && a.IsGoods);
+                            .FirstOrDefault(a => a.ProductId == Convert.ToInt64(UrlParameterId) && a.IsGoods);
                 if (product == null)
                     return;
 
@@ -380,7 +380,7 @@ namespace JicoDotNet.Inventory.UIControllers
                                         stockDetails.Add(new StockDetail
                                         {
                                             Stock = Convert.ToDecimal(SplitRowData[Convert.ToInt64(blkForm["Stock"])]),
-                                            ProductId = Convert.ToInt64(id),
+                                            ProductId = Convert.ToInt64(UrlParameterId),
                                             WareHouseId = Convert.ToInt64(blkForm["WareHouseId"]),
 
                                             GRNDate = GRNDate,
@@ -402,11 +402,11 @@ namespace JicoDotNet.Inventory.UIControllers
                         Message = ex.Message,
                         Status = false
                     };
-                    return RedirectToAction("BulkOpeningStock", new { id = UrlIdEncrypt(id, false) });
+                    return RedirectToAction("BulkOpeningStock", new { id = UrlIdEncrypt(UrlParameterId, false) });
                 }
                 #endregion
 
-                if (Convert.ToInt64(stockLogic.AddOpeningStock(stockDetails, Convert.ToInt64(id))) > 0)
+                if (Convert.ToInt64(stockLogic.AddOpeningStock(stockDetails, Convert.ToInt64(UrlParameterId))) > 0)
                 {
                     ReturnMessage = new ReturnObject()
                     {
@@ -423,7 +423,7 @@ namespace JicoDotNet.Inventory.UIControllers
                         Status = false
                     };
                 }
-                return RedirectToAction("BulkOpeningStock", new { id = UrlIdEncrypt(id, false) });
+                return RedirectToAction("BulkOpeningStock", new { id = UrlIdEncrypt(UrlParameterId, false) });
             }
             catch (Exception ex)
             {
@@ -441,9 +441,9 @@ namespace JicoDotNet.Inventory.UIControllers
                 {
                     _productTypes = new ProductLogic(LogicHelper).TypeGet()
                 };
-                if (!string.IsNullOrEmpty(id))
+                if (!string.IsNullOrEmpty(UrlParameterId))
                 {
-                    productModels._productType = productModels._productTypes.Where(a => a.ProductTypeId == Convert.ToInt64(id)).FirstOrDefault();
+                    productModels._productType = productModels._productTypes.Where(a => a.ProductTypeId == Convert.ToInt64(UrlParameterId)).FirstOrDefault();
                 }
                 return View(productModels);
             }
@@ -458,7 +458,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                productType.ProductTypeId = id == null ? 0 : Convert.ToInt64(id);
+                productType.ProductTypeId = UrlParameterId == null ? 0 : Convert.ToInt64(UrlParameterId);
 
                 #region Data Tracking...
                 DataTrackingLogicSet(productType);
@@ -498,11 +498,11 @@ namespace JicoDotNet.Inventory.UIControllers
                 if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                 {
                     ProductLogic productTypeLogic = new ProductLogic(LogicHelper);
-                    long deactivateId = Convert.ToInt64(productTypeLogic.TypeDeactive(id));
+                    long deactivateId = Convert.ToInt64(productTypeLogic.TypeDeactive(UrlParameterId));
                     return Json(new JsonReturnModels
                     {
                         _isSuccess = true,
-                        _returnObject = deactivateId > 0 ? id : "0"
+                        _returnObject = deactivateId > 0 ? UrlParameterId : "0"
                     }, JsonRequestBehavior.AllowGet);
                 }
                 else
