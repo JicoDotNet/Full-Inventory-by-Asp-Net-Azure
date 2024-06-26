@@ -11,6 +11,6 @@ namespace JicoDotNet.Inventory.UI.Models
     {
         public Config _config { get; set; }
         public ICompanyBasic _company { get; set; }
-        public Dictionary<bool, string> _YesNo { get; set; }
+        public IDictionary<bool, string> _YesNo { get; set; }
     }
 }

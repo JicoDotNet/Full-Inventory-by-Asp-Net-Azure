@@ -1,20 +1,19 @@
-﻿using DataAccess.AzureStorage;
-using JicoDotNet.Inventory.BusinessLayer.Common;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Core;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using DataAccess.AzureStorage;
+using JicoDotNet.Inventory.BusinessLayer.Common;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
+
 #pragma warning disable CS4014
 
-namespace JicoDotNet.Inventory.BusinessLayer.BLL
+namespace JicoDotNet.Inventory.BusinessLayer.BLL.Tracking
 {
-    public class TrackingLogic : ConnectionString
+    public class LoggerLogic : ConnectionString
     {
-        public TrackingLogic(ICommonRequestDto commonObj) : base(commonObj) { }
+        public LoggerLogic(ICommonRequestDto commonObj) : base(commonObj) { }
 
         public async Task Log(ILogger logData)
         {
@@ -32,7 +31,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     ExecuteTableManager tableManager = new ExecuteTableManager("Log", CommonObj?.NoSqlConnectionString);
                     tableManager.InsertEntityAsync(log);
                 }
-                catch (Exception ex)
+                catch
                 {
                     return;
                 }

@@ -15,7 +15,7 @@ namespace JicoDotNet.Inventory.UI.Models
         public List<Vendor> _vendors { get; set; }
         public List<WareHouse> _wareHouses { get; set; }
         public List<PurchaseOrder> _purchaseOrders { get; set; }
-        public Dictionary<bool, string> _YesNo { get; set; }
+        public IDictionary<bool, string> _YesNo { get; set; }
         public PurchaseOrder _purchaseOrder { get; set; }
         public ICompanyBasic _company { get; set; }
         public Company _companyAddress { get; set; }

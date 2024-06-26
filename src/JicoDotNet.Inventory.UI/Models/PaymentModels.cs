@@ -19,7 +19,7 @@ namespace JicoDotNet.Inventory.UI.Models
         public List<VendorBank> _vendorBanks { get; set; }
         public List<Bill> _bills { get; set; }
         public List<PaymentOutDetail> _paymentOutDetails { get; set; }
-        public Dictionary<short, string> _paymentMode { get; set; }
+        public IDictionary<short, string> _paymentMode { get; set; }
 
         public Bill _bill { get; set; }
         public PaymentOutDetail _paymentOutDetail { get; set; }

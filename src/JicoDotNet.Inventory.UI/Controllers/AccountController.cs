@@ -6,6 +6,7 @@ using JicoDotNet.Inventory.UI.Models;
 using System;
 using System.Web;
 using System.Web.Mvc;
+using JicoDotNet.Inventory.BusinessLayer.BLL.Tracking;
 
 namespace JicoDotNet.Inventory.UIControllers
 {
@@ -50,7 +51,7 @@ namespace JicoDotNet.Inventory.UIControllers
                     #endregion
 
                     #region Login Track
-                    _ = new TrackingLogic(LogicHelper).LoginLog(new LoginLog());
+                    _ = new LoggerLogic(LogicHelper).LoginLog(new LoginLog());
                     #endregion
 
                     #region Set Session Cookie & redirect if Login Success

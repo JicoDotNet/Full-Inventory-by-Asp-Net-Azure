@@ -13,7 +13,7 @@ namespace JicoDotNet.Inventory.UI.Models
         public string[] _customersNumber { get; set; }
         public Dictionary<string, string> _state { get; set; }
         public Dictionary<string, string> _companyType { get; set; }
-        public Dictionary<bool, string> _YesNo { get; set; }
+        public IDictionary<bool, string> _YesNo { get; set; }
         public Config _config { get; set; }
         public List<WareHouse> _wareHouses { get; set; }
         

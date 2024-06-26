@@ -2,6 +2,7 @@
 using System.Text;
 using Newtonsoft.Json;
 using JicoDotNet.Inventory.BusinessLayer.BLL;
+using JicoDotNet.Inventory.BusinessLayer.BLL.Tracking;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Core;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
@@ -200,7 +201,7 @@ namespace System.Web.Mvc
 
         private void LogMaintain(ILogger logObject)
         {
-            new TrackingLogic(LogicHelper).Log(logObject);
+            new LoggerLogic(LogicHelper).Log(logObject);
         }
 
         protected string UrlIdDecrypt(string urlId)
