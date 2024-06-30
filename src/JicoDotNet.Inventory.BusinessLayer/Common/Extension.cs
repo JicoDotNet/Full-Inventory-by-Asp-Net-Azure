@@ -138,7 +138,7 @@
 
 namespace System
 {
-    using System.Text;
+    using Text;
     public static class StringExtension
     {
         /// <summary>
@@ -355,7 +355,7 @@ namespace System
 
 namespace System.Xml.Linq
 {
-    using System.Data;
+    using Data;
     using System.Linq;
     public static class XmlExtension
     {
@@ -377,6 +377,25 @@ namespace System.Xml.Linq
                 dtable.Rows.Add(dr);
             }
             return dtable;
+        }
+    }
+}
+
+namespace System
+{
+    using Linq;
+    using ComponentModel;
+    public static class EnumExtension
+    {
+        public static string GetEnumDescription(this Enum enumValue)
+        {
+            return enumValue == null ? null
+                : (
+                    enumValue.GetType()
+                        .GetMember(enumValue.GetType().ToString())[0]
+                        .GetCustomAttributes(typeof(DescriptionAttribute), false)
+                        .FirstOrDefault() as DescriptionAttribute
+                )?.Description;
         }
     }
 }
