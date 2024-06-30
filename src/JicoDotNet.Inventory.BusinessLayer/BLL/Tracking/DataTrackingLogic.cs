@@ -1,22 +1,18 @@
-﻿using DataAccess.AzureStorage;
-using Newtonsoft.Json;
-using JicoDotNet.Inventory.BusinessLayer.Common;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 using System.Threading.Tasks;
+using DataAccess.AzureStorage;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
+using Newtonsoft.Json;
+#pragma warning disable CS4014
+#pragma warning disable CS1998
 
-namespace JicoDotNet.Inventory.BusinessLayer.BLL
+namespace JicoDotNet.Inventory.BusinessLayer.BLL.Tracking
 {
     public class DataTrackingLogic
     {
-        #pragma warning disable CS1998
-        public static async Task Set(object _Object, sCommonDto CommonObj)
+        public static async Task Set(object _Object, ICommonRequestDto CommonObj)
         {
-            #pragma warning disable CS4014
             Task.Run(() =>
             {
                 try
@@ -30,7 +26,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                         Data = JsonConvert.SerializeObject(_Object)
                     };
                     if (dataTracking.Data.Length >= 32000)
-                        dataTracking.Data = null;
+                        dataTracking.Data = "Length is too high";
 
                     ExecuteTableManager _tableManager = new ExecuteTableManager("DataTracking", CommonObj.NoSqlConnectionString);
                     _tableManager.InsertEntityAsync(dataTracking);
@@ -40,7 +36,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     return;
                 }
             });
-            #pragma warning restore CS4014
         }
     }
 }

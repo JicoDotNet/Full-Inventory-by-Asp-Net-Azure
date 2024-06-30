@@ -3,7 +3,7 @@
     using Reflection;
     using Collections.Generic;
     using Linq;
-    public static class Extension
+    public static class DataExtension
     {
         public static DataTable ToDataTable<T>(this List<T> items) where T : new()
         {
@@ -138,8 +138,8 @@
 
 namespace System
 {
-    using System.Text;
-    public static class Extension
+    using Text;
+    public static class StringExtension
     {
         /// <summary>
         /// It will return the string or null if the string is null or Empty ("") or contain with white space (" ")
@@ -194,6 +194,38 @@ namespace System
             return value.Length <= maxLength ? value : value.Substring(0, maxLength);
         }
 
+    }
+    public static class DecimalExtension
+    {
+        public static string ToDisplayDecimal(this decimal decimalValue)
+        {
+            try
+            {
+                return Math.Round(decimalValue, 2).ToString();
+                //return decimalValue.ToString("0.00###");
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
+        public static string ToDisplayDouble(this double decimalValue)
+        {
+            try
+            {
+                return Math.Round(decimalValue, 2).ToString();
+                //return decimalValue.ToString("0.00###");
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+    }
+
+    public static class DateTimeExtension
+    {
         public static long TimeStamp(this DateTime DTobj)
         {
             try
@@ -318,40 +350,14 @@ namespace System
             }
             return txt;
         }
-
-        public static string ToDisplayDecimal(this decimal decimalValue)
-        {
-            try
-            {
-                return Math.Round(decimalValue, 2).ToString();
-                //return decimalValue.ToString("0.00###");
-            }
-            catch
-            {
-                return string.Empty;
-            }
-        }
-
-        public static string ToDisplayDouble(this double decimalValue)
-        {
-            try
-            {
-                return Math.Round(decimalValue, 2).ToString();
-                //return decimalValue.ToString("0.00###");
-            }
-            catch
-            {
-                return string.Empty;
-            }
-        }
     }
 }
 
 namespace System.Xml.Linq
 {
-    using System.Data;
+    using Data;
     using System.Linq;
-    public static class Extension
+    public static class XmlExtension
     {
         public static DataTable ToDataTable(this XElement x)
         {
@@ -371,6 +377,25 @@ namespace System.Xml.Linq
                 dtable.Rows.Add(dr);
             }
             return dtable;
+        }
+    }
+}
+
+namespace System
+{
+    using Linq;
+    using ComponentModel;
+    public static class EnumExtension
+    {
+        public static string GetEnumDescription(this Enum enumValue)
+        {
+            return enumValue == null ? null
+                : (
+                    enumValue.GetType()
+                        .GetMember(enumValue.GetType().ToString())[0]
+                        .GetCustomAttributes(typeof(DescriptionAttribute), false)
+                        .FirstOrDefault() as DescriptionAttribute
+                )?.Description;
         }
     }
 }

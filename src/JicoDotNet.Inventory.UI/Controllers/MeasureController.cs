@@ -18,12 +18,12 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 UnitOfMeasureModels unitOfMeasureModels = new UnitOfMeasureModels()
                 {
-                    _unitOfMeasures = new UnitOfMeasureLogic(BllCommonLogic).Get(),
+                    _unitOfMeasures = new UnitOfMeasureLogic(LogicHelper).Get(),
                 };
-                if (!string.IsNullOrEmpty(id))
+                if (!string.IsNullOrEmpty(UrlParameterId))
                 {
                     unitOfMeasureModels._unitOfMeasure = unitOfMeasureModels._unitOfMeasures
-                                        .Where(a => a.UnitOfMeasureId == Convert.ToInt64(id)).FirstOrDefault();
+                                        .Where(a => a.UnitOfMeasureId == Convert.ToInt64(UrlParameterId)).FirstOrDefault();
                 }
                 return View(unitOfMeasureModels);
             }
@@ -38,13 +38,13 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                unitOfMeasure.UnitOfMeasureId = id == null ? 0 : Convert.ToInt64(id);
+                unitOfMeasure.UnitOfMeasureId = UrlParameterId == null ? 0 : Convert.ToInt64(UrlParameterId);
 
                 #region Data Tracking...
                 DataTrackingLogicSet(unitOfMeasure);
                 #endregion
 
-                UnitOfMeasureLogic unitOfMeasureLogic = new UnitOfMeasureLogic(BllCommonLogic);
+                UnitOfMeasureLogic unitOfMeasureLogic = new UnitOfMeasureLogic(LogicHelper);
                 if (Convert.ToInt64(unitOfMeasureLogic.Set(unitOfMeasure)) > 0)
                 {
                     ReturnMessage = new ReturnObject()
@@ -75,14 +75,14 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (new LoginManagement(BllCommonLogic).Authenticate(SessionPerson.UserEmail, Context))
+                if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                 {
-                    UnitOfMeasureLogic measureLogic = new UnitOfMeasureLogic(BllCommonLogic);
-                    long deactivateId = Convert.ToInt64(measureLogic.Deactive(id));
+                    UnitOfMeasureLogic measureLogic = new UnitOfMeasureLogic(LogicHelper);
+                    long deactivateId = Convert.ToInt64(measureLogic.Deactive(UrlParameterId));
                     return Json(new JsonReturnModels
                     {
                         _isSuccess = true,
-                        _returnObject = deactivateId > 0 ? id : "0"
+                        _returnObject = deactivateId > 0 ? UrlParameterId : "0"
                     }, JsonRequestBehavior.AllowGet);
                 }
                 else

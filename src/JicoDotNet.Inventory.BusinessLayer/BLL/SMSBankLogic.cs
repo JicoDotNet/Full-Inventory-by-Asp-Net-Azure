@@ -1,7 +1,8 @@
 ﻿using DataAccess.AzureStorage;
 using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Core;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,17 +13,17 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class SMSBankLogic : ConnectionString
     {
-        public SMSBankLogic(sCommonDto CommonObj) : base(CommonObj) { }
+        public SMSBankLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
 
         public bool Deduction()
         {
             string Query = " IsActive eq true";
-            _tableManager = new ExecuteTableManager("SMSBank", CommonObj.NoSqlConnectionString);
-            SMSBank sMSBank = _tableManager.RetrieveEntity<SMSBank>(Query).FirstOrDefault();
+            TableManager = new ExecuteTableManager("SMSBank", CommonObj.NoSqlConnectionString);
+            SMSBank sMSBank = TableManager.RetrieveEntity<SMSBank>(Query).FirstOrDefault();
             if (sMSBank != null && sMSBank.Balance > 0)
             {
                 sMSBank.Balance--;
-                _tableManager.UpdateEntity(sMSBank);
+                TableManager.UpdateEntity(sMSBank);
                 return true;
             }
             return false;
@@ -34,12 +35,12 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             Task.Run(() =>
             {
                 string Query = " IsActive eq true";
-                _tableManager = new ExecuteTableManager("SMSBank", CommonObj.NoSqlConnectionString);
-                SMSBank sMSBank = _tableManager.RetrieveEntity<SMSBank>(Query).FirstOrDefault();
+                TableManager = new ExecuteTableManager("SMSBank", CommonObj.NoSqlConnectionString);
+                SMSBank sMSBank = TableManager.RetrieveEntity<SMSBank>(Query).FirstOrDefault();
                 if (sMSBank != null)
                 {
                     sMSBank.Balance += Balance;
-                    _tableManager.ReplaceEntity(sMSBank);
+                    TableManager.ReplaceEntity(sMSBank);
                     return;
                 }
                 else
@@ -53,7 +54,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                         RequestId = CommonObj.RequestId,
                         TransactionDate = GenericLogic.IstNow
                     };
-                    _tableManager.InsertEntity(sMSBank);
+                    TableManager.InsertEntity(sMSBank);
                     return;
                 }
             });
@@ -63,8 +64,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public SMSBank Get()
         {
             string Query = " IsActive eq true";
-            _tableManager = new ExecuteTableManager("SMSBank", CommonObj.NoSqlConnectionString);
-            return _tableManager.RetrieveEntity<SMSBank>(Query).FirstOrDefault();
+            TableManager = new ExecuteTableManager("SMSBank", CommonObj.NoSqlConnectionString);
+            return TableManager.RetrieveEntity<SMSBank>(Query).FirstOrDefault();
         }
     }
 }

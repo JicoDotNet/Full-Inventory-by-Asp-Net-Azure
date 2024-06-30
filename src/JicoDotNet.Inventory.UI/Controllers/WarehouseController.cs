@@ -18,15 +18,15 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 WareHouseModels wareHouseModels = new WareHouseModels()
                 {
-                    _wareHouses = new WareHouseLogic(BllCommonLogic).Get(),
-                    _branches = new BranchLogic(BllCommonLogic).Get().Where(a => a.IsActive).ToList(),
+                    _wareHouses = new WareHouseLogic(LogicHelper).Get(),
+                    _branches = new BranchLogic(LogicHelper).Get().Where(a => a.IsActive).ToList(),
                     
                 };
                 wareHouseModels._isRetailEligible = true;
 
-                if (!string.IsNullOrEmpty(id))
+                if (!string.IsNullOrEmpty(UrlParameterId))
                 {
-                    wareHouseModels._wareHouse = wareHouseModels._wareHouses.Where(a => a.WareHouseId == Convert.ToInt64(id)).FirstOrDefault();
+                    wareHouseModels._wareHouse = wareHouseModels._wareHouses.Where(a => a.WareHouseId == Convert.ToInt64(UrlParameterId)).FirstOrDefault();
                 }
                 return View(wareHouseModels);
             }
@@ -41,13 +41,13 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                wareHouse.WareHouseId = id == null ? 0 : Convert.ToInt64(id);
+                wareHouse.WareHouseId = UrlParameterId == null ? 0 : Convert.ToInt64(UrlParameterId);
 
                 #region Data Tracking...
                 DataTrackingLogicSet(wareHouse);
                 #endregion
 
-                WareHouseLogic wareHouseLogic = new WareHouseLogic(BllCommonLogic);
+                WareHouseLogic wareHouseLogic = new WareHouseLogic(LogicHelper);
                 ReturnMessage = Convert.ToInt64(wareHouseLogic.Set(wareHouse)) > 0
                     ? new ReturnObject()
                     {
@@ -73,14 +73,14 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (new LoginManagement(BllCommonLogic).Authenticate(SessionPerson.UserEmail, Context))
+                if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                 {
-                    WareHouseLogic wareHouseLogic = new WareHouseLogic(BllCommonLogic);
-                    long deactivateId = Convert.ToInt64(wareHouseLogic.Deactive(id));
+                    WareHouseLogic wareHouseLogic = new WareHouseLogic(LogicHelper);
+                    long deactivateId = Convert.ToInt64(wareHouseLogic.Deactive(UrlParameterId));
                     return Json(new JsonReturnModels
                     {
                         _isSuccess = true,
-                        _returnObject = deactivateId > 0 ? id : "0"
+                        _returnObject = deactivateId > 0 ? UrlParameterId : "0"
                     }, JsonRequestBehavior.AllowGet);
                 }
                 else

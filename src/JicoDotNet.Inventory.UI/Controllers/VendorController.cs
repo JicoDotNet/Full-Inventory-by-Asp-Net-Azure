@@ -19,11 +19,11 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 VendorModels vendorModels = new VendorModels()
                 {
-                    _vendorTypes = new VendorLogic(BllCommonLogic).TypeGet()
+                    _vendorTypes = new VendorLogic(LogicHelper).TypeGet()
                 };
-                if (!string.IsNullOrEmpty(id))
+                if (!string.IsNullOrEmpty(UrlParameterId))
                 {
-                    vendorModels._vendorType = vendorModels._vendorTypes.Where(a => a.VendorTypeId == Convert.ToInt64(id)).FirstOrDefault();
+                    vendorModels._vendorType = vendorModels._vendorTypes.Where(a => a.VendorTypeId == Convert.ToInt64(UrlParameterId)).FirstOrDefault();
                 }
                 return View(vendorModels);
             }
@@ -38,13 +38,13 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                vendorType.VendorTypeId = id == null ? 0 : Convert.ToInt64(id);
+                vendorType.VendorTypeId = UrlParameterId == null ? 0 : Convert.ToInt64(UrlParameterId);
 
                 #region Data Tracking...
                 DataTrackingLogicSet(vendorType);
                 #endregion
 
-                VendorLogic vendorLogic = new VendorLogic(BllCommonLogic);
+                VendorLogic vendorLogic = new VendorLogic(LogicHelper);
                 if (Convert.ToInt64(vendorLogic.TypeSet(vendorType)) > 0)
                 {
                     ReturnMessage = new ReturnObject()
@@ -75,14 +75,14 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (new LoginManagement(BllCommonLogic).Authenticate(SessionPerson.UserEmail, Context))
+                if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                 {
-                    VendorLogic vendorTypeLogic = new VendorLogic(BllCommonLogic);
-                    long deactivateId = Convert.ToInt64(vendorTypeLogic.TypeDeactive(id));
+                    VendorLogic vendorTypeLogic = new VendorLogic(LogicHelper);
+                    long deactivateId = Convert.ToInt64(vendorTypeLogic.TypeDeactive(UrlParameterId));
                     return Json(new JsonReturnModels
                     {
                         _isSuccess = true,
-                        _returnObject = deactivateId > 0 ? id : "0"
+                        _returnObject = deactivateId > 0 ? UrlParameterId : "0"
                     }, JsonRequestBehavior.AllowGet);
                 }
                 else
@@ -105,7 +105,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                VendorLogic vendorLogic = new VendorLogic(BllCommonLogic);
+                VendorLogic vendorLogic = new VendorLogic(LogicHelper);
                 VendorModels vendorModels = new VendorModels()
                 {
                     _vendors = vendorLogic.Get(),
@@ -114,9 +114,9 @@ namespace JicoDotNet.Inventory.UIControllers
                     _state = GenericLogic.State(),
                     _YesNo = GenericLogic.YesNo()
                 };
-                if (!string.IsNullOrEmpty(id))
+                if (!string.IsNullOrEmpty(UrlParameterId))
                 {
-                    vendorModels._vendor = vendorModels._vendors.Where(a => a.VendorId == Convert.ToInt64(id)).FirstOrDefault();
+                    vendorModels._vendor = vendorModels._vendors.Where(a => a.VendorId == Convert.ToInt64(UrlParameterId)).FirstOrDefault();
                 }
                 return View(vendorModels);
             }
@@ -131,13 +131,13 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                vendor.VendorId = id == null ? 0 : Convert.ToInt64(id);
+                vendor.VendorId = UrlParameterId == null ? 0 : Convert.ToInt64(UrlParameterId);
 
                 #region Data Tracking...
                 DataTrackingLogicSet(vendor);
                 #endregion
 
-                VendorLogic vendorLogic = new VendorLogic(BllCommonLogic);
+                VendorLogic vendorLogic = new VendorLogic(LogicHelper);
                 if (Convert.ToInt64(vendorLogic.Set(vendor)) > 0)
                 {
                     ReturnMessage = new ReturnObject()
@@ -168,14 +168,14 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (new LoginManagement(BllCommonLogic).Authenticate(SessionPerson.UserEmail, Context))
+                if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                 {
-                    VendorLogic vendorLogic = new VendorLogic(BllCommonLogic);
-                    long deactivateId = Convert.ToInt64(vendorLogic.Deactive(id));
+                    VendorLogic vendorLogic = new VendorLogic(LogicHelper);
+                    long deactivateId = Convert.ToInt64(vendorLogic.Deactive(UrlParameterId));
                     return Json(new JsonReturnModels
                     {
                         _isSuccess = true,
-                        _returnObject = deactivateId > 0 ? id : "0"
+                        _returnObject = deactivateId > 0 ? UrlParameterId : "0"
                     }, JsonRequestBehavior.AllowGet);
                 }
                 else
@@ -198,19 +198,19 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (string.IsNullOrEmpty(id))
+                if (string.IsNullOrEmpty(UrlParameterId))
                 {
                     return RedirectToAction("Index", "Vendor", new { id = string.Empty });
                 }
-                VendorLogic vendorLogic = new VendorLogic(BllCommonLogic);
+                VendorLogic vendorLogic = new VendorLogic(LogicHelper);
                 VendorModels vendorModels = new VendorModels()
                 {
-                    _vendor = vendorLogic.Get().FirstOrDefault(a => a.VendorId == Convert.ToInt64(id)),
-                    _vendorBanks = vendorLogic.BankGet(Convert.ToInt64(id))
+                    _vendor = vendorLogic.Get().FirstOrDefault(a => a.VendorId == Convert.ToInt64(UrlParameterId)),
+                    _vendorBanks = vendorLogic.BankGet(Convert.ToInt64(UrlParameterId))
                 };
-                if (!string.IsNullOrEmpty(id2))
+                if (!string.IsNullOrEmpty(UrlParameterId2))
                 {
-                    vendorModels._vendorBank = vendorModels._vendorBanks.Where(a => a.VendorBankId == Convert.ToInt64(id2)).FirstOrDefault();
+                    vendorModels._vendorBank = vendorModels._vendorBanks.Where(a => a.VendorBankId == Convert.ToInt64(UrlParameterId2)).FirstOrDefault();
                 }
                 return View(vendorModels);
             }
@@ -225,18 +225,18 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (string.IsNullOrEmpty(id))
+                if (string.IsNullOrEmpty(UrlParameterId))
                 {
                     return RedirectToAction("Index", "Vendor", new { id = string.Empty });
                 }
-                vendorBank.VendorId = Convert.ToInt64(id);
-                vendorBank.VendorBankId = id2 == null ? 0 : Convert.ToInt64(id2);
+                vendorBank.VendorId = Convert.ToInt64(UrlParameterId);
+                vendorBank.VendorBankId = UrlParameterId2 == null ? 0 : Convert.ToInt64(UrlParameterId2);
 
                 #region Data Tracking...
                 DataTrackingLogicSet(vendorBank);
                 #endregion
 
-                VendorLogic vendorLogic = new VendorLogic(BllCommonLogic);
+                VendorLogic vendorLogic = new VendorLogic(LogicHelper);
                 if (Convert.ToInt64(vendorLogic.BankSet(vendorBank)) > 0)
                 {
                     ReturnMessage = new ReturnObject()
@@ -254,7 +254,7 @@ namespace JicoDotNet.Inventory.UIControllers
                     };
                 }
 
-                return RedirectToAction("Bank", new { id = UrlIdEncrypt(id, false), id2 = string.Empty });
+                return RedirectToAction("Bank", new { id = UrlIdEncrypt(UrlParameterId, false), id2 = string.Empty });
             }
             catch (Exception ex)
             {
@@ -267,14 +267,14 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (new LoginManagement(BllCommonLogic).Authenticate(SessionPerson.UserEmail, Context))
+                if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                 {
-                    VendorLogic vendorLogic = new VendorLogic(BllCommonLogic);
-                    long deactivateId = Convert.ToInt64(vendorLogic.BankDeactive(id, id2));
+                    VendorLogic vendorLogic = new VendorLogic(LogicHelper);
+                    long deactivateId = Convert.ToInt64(vendorLogic.BankDeactive(UrlParameterId, UrlParameterId2));
                     return Json(new JsonReturnModels
                     {
                         _isSuccess = true,
-                        _returnObject = deactivateId > 0 ? id : "0"
+                        _returnObject = deactivateId > 0 ? UrlParameterId : "0"
                     }, JsonRequestBehavior.AllowGet);
                 }
                 else

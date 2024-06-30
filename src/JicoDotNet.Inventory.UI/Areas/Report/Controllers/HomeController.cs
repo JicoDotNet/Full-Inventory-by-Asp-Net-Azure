@@ -33,8 +33,8 @@ namespace JicoDotNet.Inventory.UI.Areas.Report.Controllers
             {
                 return PartialView("_PartialRpMaster", new ReportModels
                 {
-                    _reportMasterCount = new MasterDS(BllCommonLogic).CountReport(),
-                    _config = new ConfigarationManager(BllCommonLogic).GetConfig()
+                    _reportMasterCount = new MasterDS(LogicHelper).CountReport(),
+                    _config = new ConfigarationManager(LogicHelper).GetConfig()
                 });
             }
             catch (Exception ex)

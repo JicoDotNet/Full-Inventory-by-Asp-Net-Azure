@@ -15,8 +15,8 @@ namespace JicoDotNet.Inventory.UI.Models
         public List<Product> _products { get; set; }
         public Product _product { get; set; }
         public List<UnitOfMeasure> _unitOfMeasures { get; set; }
-        public Dictionary<bool, string> _YesNo { get; set; }
-        public Dictionary<int, string> _ProductCategory { get; set; }
+        public IDictionary<bool, string> _YesNo { get; set; }
+        public IDictionary<int, string> _ProductCategory { get; set; }
         public Config _config { get; set; }
         public List<WareHouse> _wareHouses { get; set; }
     }

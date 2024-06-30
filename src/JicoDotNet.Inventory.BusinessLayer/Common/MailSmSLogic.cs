@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Net;
 using System.Net.Mail;
-using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Core;
 using DataAccess.AzureStorage;
 using JicoDotNet.Inventory.BusinessLayer.DTO;
 using System.Web.Configuration;

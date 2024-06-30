@@ -16,7 +16,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.DTO.Interface
         string BrowserVersion { get; set; }
         string AbsoluteUri { get; set; }
         string MacAddress { get; set; }
-        bool IsMobile { get; set; }
+        bool IsMobileDevice { get; set; }
+        string OSType { get; set; }
 
         string Subdomain { get; set; }
         string Controller { get; set; }

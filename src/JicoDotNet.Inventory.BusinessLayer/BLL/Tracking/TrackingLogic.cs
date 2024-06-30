@@ -1,53 +1,51 @@
-﻿using DataAccess.AzureStorage;
-using JicoDotNet.Inventory.BusinessLayer.Common;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using DataAccess.AzureStorage;
+using JicoDotNet.Inventory.BusinessLayer.Common;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
 
-namespace JicoDotNet.Inventory.BusinessLayer.BLL
-{
-    public class TrackingLogic : ConnectionString
-    {
-        public TrackingLogic(sCommonDto CommonObj) : base(CommonObj) { }
-
-        public static async Task Log(Logger log, sCommonDto CommonObj)
-        {
 #pragma warning disable CS4014
+
+namespace JicoDotNet.Inventory.BusinessLayer.BLL.Tracking
+{
+    public class LoggerLogic : ConnectionString
+    {
+        public LoggerLogic(ICommonRequestDto commonObj) : base(commonObj) { }
+
+        public async Task Log(ILogger logData)
+        {
             Task.Run(() =>
             {
                 try
                 {
+                    Logger log = (Logger)logData;
                     log.PartitionKey = "ActivityLog";
-                    log.RowKey = (CommonObj?.RequestId == null) ? Guid.NewGuid().ToString() : CommonObj.RequestId;
+                    log.RowKey = CommonObj?.RequestId ?? Guid.NewGuid().ToString();
 
                     log.RequestId = CommonObj?.RequestId;
                     log.TransactionDate = GenericLogic.IstNow;
 
-                    ExecuteTableManager _tableManager = new ExecuteTableManager("Log", CommonObj.NoSqlConnectionString);
-                    _tableManager.InsertEntityAsync(log);
-                    return;
+                    ExecuteTableManager tableManager = new ExecuteTableManager("Log", CommonObj?.NoSqlConnectionString);
+                    tableManager.InsertEntityAsync(log);
                 }
                 catch
                 {
                     return;
                 }
             });
-#pragma warning restore CS4014
         }
 
         public async Task LoginLog(LoginLog loginLog)
         {
-#pragma warning disable CS4014
             Task.Run(() =>
             {
                 try
                 {
-                    _tableManager = new ExecuteTableManager("Log", CommonObj.NoSqlConnectionString);
-                    LoginLog log = _tableManager.RetrieveEntity<LoginLog>("RowKey eq '" + CommonObj.RequestId + "'").FirstOrDefault();
+                    TableManager = new ExecuteTableManager("Log", CommonObj.NoSqlConnectionString);
+                    LoginLog log = TableManager.RetrieveEntity<LoginLog>("RowKey eq '" + CommonObj.RequestId + "'").FirstOrDefault();
                     if (log == null)
                     {
                         log = new LoginLog
@@ -58,14 +56,13 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     log.PartitionKey = "LoginLog";
                     log.ActivityDate = loginLog.ActivityDate;
 
-                    _tableManager.InsertEntityAsync(log);
+                    TableManager.InsertEntityAsync(log);
                 }
                 catch
                 {
                     return;
                 }
             });
-#pragma warning restore CS4014            
         }
 
         public List<LoginLog> GetLoginLogs(long UserId, short Limit = 5)

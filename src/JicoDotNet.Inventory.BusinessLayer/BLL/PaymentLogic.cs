@@ -2,19 +2,18 @@
 using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class.Custom;
-using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Core;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class PaymentLogic : ConnectionString
     {
-        public PaymentLogic(sCommonDto CommonObj) : base(CommonObj) { }
+        public PaymentLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
 
         #region Payment Type
         public string TypeSet(PaymentType paymentType)
@@ -26,15 +25,15 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             else
                 qt = "INSERT";
 
-            nameValuePairs nvp = new nameValuePairs
+            NameValuePairs nvp = new NameValuePairs
             {
                  
-                new nameValuePair("@PaymentTypeId", paymentType.PaymentTypeId),
-                new nameValuePair("@PaymentTypeName", paymentType.PaymentTypeName),
-                new nameValuePair("@Description", paymentType.Description),
+                new NameValuePair("@PaymentTypeId", paymentType.PaymentTypeId),
+                new NameValuePair("@PaymentTypeName", paymentType.PaymentTypeName),
+                new NameValuePair("@Description", paymentType.Description),
                  
-                new nameValuePair("@RequestId", CommonObj.RequestId),
-                new nameValuePair("@QueryType", qt)
+                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@QueryType", qt)
             };
 
             string ReturnDS = _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetPaymentType]", nvp, "@OutParam").ToString();
@@ -46,13 +45,13 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             string qt = "INACTIVE";
 
-            nameValuePairs nvp = new nameValuePairs
+            NameValuePairs nvp = new NameValuePairs
             {
-                new nameValuePair("@PaymentTypeId", paymentTypeId),
+                new NameValuePair("@PaymentTypeId", paymentTypeId),
                  
                  
-                new nameValuePair("@RequestId", CommonObj.RequestId),
-                new nameValuePair("@QueryType", qt)
+                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@QueryType", qt)
             };
 
             string ReturnDS = _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetPaymentType]", nvp, "@OutParam").ToString();
@@ -62,11 +61,11 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public List<PaymentType> TypeGet()
         {
             return new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetPaymentType]",
-                new nameValuePairs
+                new NameValuePairs
                 {
                      
                      
-                    new nameValuePair("@QueryType", "ALL")
+                    new NameValuePair("@QueryType", "ALL")
                 }).ToList<PaymentType>();
         }
         #endregion
@@ -97,33 +96,33 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 if (payOutDtlTyps.Count > 0)
                 {
                     return new SqlDBAccess(CommonObj.SqlConnectionString)
-                        .InsertUpdateDeleteReturnObject("[dbo].[spSetPaymentOut]", new nameValuePairs
+                        .InsertUpdateDeleteReturnObject("[dbo].[spSetPaymentOut]", new NameValuePairs
                         {
                          
                          
-                        new nameValuePair("@VendorId", paymentOut.VendorId),
-                        new nameValuePair("@VendorBankId", paymentOut.VendorBankId),
+                        new NameValuePair("@VendorId", paymentOut.VendorId),
+                        new NameValuePair("@VendorBankId", paymentOut.VendorBankId),
 
-                        new nameValuePair("@IsTDSApplicable", paymentOut.IsTDSApplicable),
-                        new nameValuePair("@TDSPercentage", paymentOut.IsTDSApplicable?
+                        new NameValuePair("@IsTDSApplicable", paymentOut.IsTDSApplicable),
+                        new NameValuePair("@TDSPercentage", paymentOut.IsTDSApplicable?
                                                             paymentOut.TDSPercentage : default(decimal?)),
-                        new nameValuePair("@TDSAmount", paymentOut.IsTDSApplicable?
+                        new NameValuePair("@TDSAmount", paymentOut.IsTDSApplicable?
                                                             paymentOut.TotalAmount * paymentOut.TDSPercentage / 100 : default(decimal?)),
-                        new nameValuePair("@PayAmount", paymentOut.IsTDSApplicable?
+                        new NameValuePair("@PayAmount", paymentOut.IsTDSApplicable?
                                                             paymentOut.TotalAmount - (paymentOut.TotalAmount * paymentOut.TDSPercentage / 100)
                                                                     : paymentOut.TotalAmount),
 
-                        new nameValuePair("@TotalAmount", paymentOut.TotalAmount),
-                        new nameValuePair("@PaymentDate", paymentOut.PaymentDate),
-                        new nameValuePair("@PaymentMode", paymentOut.PaymentMode),
-                        new nameValuePair("@ReferenceNo", paymentOut.ReferenceNo),
-                        new nameValuePair("@Remarks", paymentOut.Remarks),
-                        new nameValuePair("@ChequeNo", paymentOut.ChequeNo),
-                        new nameValuePair("@ChequeDate", paymentOut.ChequeDate),
-                        new nameValuePair("@ChequeIFSC", paymentOut.ChequeIFSC),
-                        new nameValuePair("@PaymentOutDetail", payOutDtlTyps.ToDataTable()),
-                        new nameValuePair("@RequestId", CommonObj.RequestId),
-                        new nameValuePair("@QueryType", "INSERT")
+                        new NameValuePair("@TotalAmount", paymentOut.TotalAmount),
+                        new NameValuePair("@PaymentDate", paymentOut.PaymentDate),
+                        new NameValuePair("@PaymentMode", paymentOut.PaymentMode),
+                        new NameValuePair("@ReferenceNo", paymentOut.ReferenceNo),
+                        new NameValuePair("@Remarks", paymentOut.Remarks),
+                        new NameValuePair("@ChequeNo", paymentOut.ChequeNo),
+                        new NameValuePair("@ChequeDate", paymentOut.ChequeDate),
+                        new NameValuePair("@ChequeIFSC", paymentOut.ChequeIFSC),
+                        new NameValuePair("@PaymentOutDetail", payOutDtlTyps.ToDataTable()),
+                        new NameValuePair("@RequestId", CommonObj.RequestId),
+                        new NameValuePair("@QueryType", "INSERT")
                         },
                         "@OutParam"
                     ).ToString();
@@ -142,12 +141,12 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public List<PaymentOutDetail> GetPaymentOutDetails(long vendorId)
         {
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-            nameValuePairs nvp = new nameValuePairs()
+            NameValuePairs nvp = new NameValuePairs()
                 {
                      
                      
-                    new nameValuePair("@VendorId", vendorId),
-                    new nameValuePair("@QueryType", "COMULTATIVE")
+                    new NameValuePair("@VendorId", vendorId),
+                    new NameValuePair("@QueryType", "COMULTATIVE")
                 };
             List<PaymentOutDetail> pntoutdtl = _sqlDBAccess.GetData("[dbo].[spGetPaymentOut]", nvp).ToList<PaymentOutDetail>();
             return pntoutdtl;
@@ -156,11 +155,11 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public List<PaymentOut> GetPaymentOuts()
         {
             return new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetPaymentOut]",
-                new nameValuePairs
+                new NameValuePairs
                 {
                      
                      
-                    new nameValuePair("@QueryType", "LIST")
+                    new NameValuePair("@QueryType", "LIST")
                 }).ToList<PaymentOut>();
         }
         #endregion
@@ -189,33 +188,33 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             if (payInDtlTyps.Count > 0)
             {
                 return new SqlDBAccess(CommonObj.SqlConnectionString)
-                    .InsertUpdateDeleteReturnObject("[dbo].[spSetPaymentIn]", new nameValuePairs
+                    .InsertUpdateDeleteReturnObject("[dbo].[spSetPaymentIn]", new NameValuePairs
                     {
                          
                          
-                        new nameValuePair("@CustomerId", paymentIn.CustomerId),
-                        new nameValuePair("@CompanyBankId", paymentIn.CompanyBankId),
+                        new NameValuePair("@CustomerId", paymentIn.CustomerId),
+                        new NameValuePair("@CompanyBankId", paymentIn.CompanyBankId),
 
-                        new nameValuePair("@IsTDSApplicable", paymentIn.IsTDSApplicable),
-                        new nameValuePair("@TDSPercentage", paymentIn.IsTDSApplicable?
+                        new NameValuePair("@IsTDSApplicable", paymentIn.IsTDSApplicable),
+                        new NameValuePair("@TDSPercentage", paymentIn.IsTDSApplicable?
                                                             paymentIn.TDSPercentage : default(decimal?)),
-                        new nameValuePair("@TDSAmount", paymentIn.IsTDSApplicable?
+                        new NameValuePair("@TDSAmount", paymentIn.IsTDSApplicable?
                                                             paymentIn.TotalAmount * paymentIn.TDSPercentage / 100 : default(decimal?)),
-                        new nameValuePair("@ReceiveAmount", paymentIn.IsTDSApplicable?
+                        new NameValuePair("@ReceiveAmount", paymentIn.IsTDSApplicable?
                                                             paymentIn.TotalAmount - (paymentIn.TotalAmount * paymentIn.TDSPercentage / 100)
                                                                     : paymentIn.TotalAmount),
 
-                        new nameValuePair("@TotalAmount", paymentIn.TotalAmount),
-                        new nameValuePair("@PaymentDate", paymentIn.PaymentDate),
-                        new nameValuePair("@PaymentMode", paymentIn.PaymentMode),
-                        new nameValuePair("@ReferenceNo", paymentIn.ReferenceNo),
-                        new nameValuePair("@Remarks", paymentIn.Remarks),
-                        new nameValuePair("@ChequeNo", paymentIn.ChequeNo),
-                        new nameValuePair("@ChequeDate", paymentIn.ChequeDate),
-                        new nameValuePair("@ChequeIFSC", paymentIn.ChequeIFSC),
-                        new nameValuePair("@PaymentInDetail", payInDtlTyps.ToDataTable()),
-                        new nameValuePair("@RequestId", CommonObj.RequestId),
-                        new nameValuePair("@QueryType", "INSERT")
+                        new NameValuePair("@TotalAmount", paymentIn.TotalAmount),
+                        new NameValuePair("@PaymentDate", paymentIn.PaymentDate),
+                        new NameValuePair("@PaymentMode", paymentIn.PaymentMode),
+                        new NameValuePair("@ReferenceNo", paymentIn.ReferenceNo),
+                        new NameValuePair("@Remarks", paymentIn.Remarks),
+                        new NameValuePair("@ChequeNo", paymentIn.ChequeNo),
+                        new NameValuePair("@ChequeDate", paymentIn.ChequeDate),
+                        new NameValuePair("@ChequeIFSC", paymentIn.ChequeIFSC),
+                        new NameValuePair("@PaymentInDetail", payInDtlTyps.ToDataTable()),
+                        new NameValuePair("@RequestId", CommonObj.RequestId),
+                        new NameValuePair("@QueryType", "INSERT")
                     },
                     "@OutParam"
                 ).ToString();
@@ -229,12 +228,12 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public List<PaymentInDetail> GetPaymentInDetails(long customerId)
         {
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-            nameValuePairs nvp = new nameValuePairs()
+            NameValuePairs nvp = new NameValuePairs()
                 {
                      
                      
-                    new nameValuePair("@CustomerId", customerId),
-                    new nameValuePair("@QueryType", "COMULTATIVE")
+                    new NameValuePair("@CustomerId", customerId),
+                    new NameValuePair("@QueryType", "COMULTATIVE")
                 };
             List<PaymentInDetail> pntIndtl = _sqlDBAccess.GetData("[dbo].[spGetPaymentIn]", nvp).ToList<PaymentInDetail>();
             return pntIndtl;
@@ -243,11 +242,11 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public List<PaymentIn> GetPaymentIns()
         {
             return new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetPaymentIn]",
-                new nameValuePairs
+                new NameValuePairs
                 {
                      
                      
-                    new nameValuePair("@QueryType", "LIST")
+                    new NameValuePair("@QueryType", "LIST")
                 }).ToList<PaymentIn>();
         }
         #endregion

@@ -2,7 +2,8 @@
 using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class.Custom;
-using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Core;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -15,7 +16,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class QuotationLogic : ConnectionString
     {
-        public QuotationLogic(sCommonDto CommonObj) : base(CommonObj) { }
+        public QuotationLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
 
         public string SetForEntry(Quotation quotation)
         {
@@ -49,21 +50,21 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 if (quotationDetailTypes.Count > 0)
                 {
                     _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-                    nameValuePairs nvp = new nameValuePairs
+                    NameValuePairs nvp = new NameValuePairs
                     {
-                        new nameValuePair("@ComapnyIsGSTRegistered", GenericLogic.IsValidGSTNumber(WebConfigAppSettingsAccess.GSTNumber)),
+                        new NameValuePair("@ComapnyIsGSTRegistered", GenericLogic.IsValidGSTNumber(WebConfigAppSettingsAccess.GSTNumber)),
 
-                        new nameValuePair("@CustomerId", quotation.CustomerId),
-                        new nameValuePair("@QuotationDate", quotation.QuotationDate),
-                        new nameValuePair("@QuotationNumber", "QO-"),
-                        new nameValuePair("@QuotationAmount", quotation.QuotationAmount),
-                        new nameValuePair("@QuotationTaxAmount", quotation.QuotationTaxAmount),
-                        new nameValuePair("@QuotationTotalAmount", quotation.QuotationTotalAmount),
-                        new nameValuePair("@TandC", quotation.TandC),
-                        new nameValuePair("@Remarks", quotation.Remarks),
-                        new nameValuePair("@QuotationDetails", quotationDetailTypes.ToDataTable()),
-                        new nameValuePair("@RequestId", CommonObj.RequestId),
-                        new nameValuePair("@QueryType", "ENTRY")
+                        new NameValuePair("@CustomerId", quotation.CustomerId),
+                        new NameValuePair("@QuotationDate", quotation.QuotationDate),
+                        new NameValuePair("@QuotationNumber", "QO-"),
+                        new NameValuePair("@QuotationAmount", quotation.QuotationAmount),
+                        new NameValuePair("@QuotationTaxAmount", quotation.QuotationTaxAmount),
+                        new NameValuePair("@QuotationTotalAmount", quotation.QuotationTotalAmount),
+                        new NameValuePair("@TandC", quotation.TandC),
+                        new NameValuePair("@Remarks", quotation.Remarks),
+                        new NameValuePair("@QuotationDetails", quotationDetailTypes.ToDataTable()),
+                        new NameValuePair("@RequestId", CommonObj.RequestId),
+                        new NameValuePair("@QueryType", "ENTRY")
                     };
                     ReturnDS = _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetQuotation]",
                         nvp, "@OutParam").ToString();
@@ -79,11 +80,11 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public List<Quotation> GetQuotations()
         {
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-            nameValuePairs nvp = new nameValuePairs()
+            NameValuePairs nvp = new NameValuePairs()
                 {
                      
                      
-                    new nameValuePair("@QueryType", "LIST")
+                    new NameValuePair("@QueryType", "LIST")
                 };
             return _sqlDBAccess.GetData("[dbo].[spGetQuotation]", nvp).ToList<Quotation>();
         }
@@ -91,12 +92,12 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public Quotation GetForDetail(long QuotationId)
         {
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-            nameValuePairs nvp = new nameValuePairs()
+            NameValuePairs nvp = new NameValuePairs()
             {
                  
                  
-                new nameValuePair("@QuotationId", QuotationId),
-                new nameValuePair("@QueryType", "DETAIL")
+                new NameValuePair("@QuotationId", QuotationId),
+                new NameValuePair("@QueryType", "DETAIL")
             };
             DataSet ds = _sqlDBAccess.GetDataSet("[dbo].[spGetQuotation]", nvp);
             Quotation quotation;
@@ -119,11 +120,11 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             try
             {
                 _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-                nameValuePairs nvp = new nameValuePairs
+                NameValuePairs nvp = new NameValuePairs
                 {
-                    new nameValuePair("@QuotationId", QuotationId),
-                    new nameValuePair("@RequestId", CommonObj.RequestId),
-                    new nameValuePair("@QueryType", "DELETE")
+                    new NameValuePair("@QuotationId", QuotationId),
+                    new NameValuePair("@RequestId", CommonObj.RequestId),
+                    new NameValuePair("@QueryType", "DELETE")
                 };
                 string ReturnDS = _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetQuotation]", nvp, "@OutParam").ToString();
                 return ReturnDS;

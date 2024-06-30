@@ -1,6 +1,7 @@
 ﻿using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
 using System;
 using System.Collections.Generic;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
 
 namespace JicoDotNet.Inventory.UI.Models
 {
@@ -15,7 +16,7 @@ namespace JicoDotNet.Inventory.UI.Models
         public List<SalesOrder> _salesOrders { get; set; }
         public SalesOrder _salesOrder { get; set; }
         public EGSTType GSTType { get; set; }
-        public CompanyBasic _company { get; set; }
+        public ICompanyBasic _company { get; set; }
 
         public Company _companyAddress { get; set; }
         public CompanyBank _companyBank { get; set; }

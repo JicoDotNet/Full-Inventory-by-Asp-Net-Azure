@@ -1,18 +1,22 @@
-﻿using DataAccess.AzureStorage;
+﻿using System;
+using DataAccess.AzureStorage;
 using DataAccess.Sql;
-using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
+using DataAccess.Sql.Entity;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
 
 namespace JicoDotNet.Inventory.BusinessLayer.Common
 {
-    public class ConnectionString
+    public abstract class ConnectionString : IConnectionString
     {
-        public ConnectionString(sCommonDto sCommonDtoObj)
+        protected ConnectionString(ICommonRequestDto commonDtoObj)
         {
-            CommonObj = sCommonDtoObj;
+            CommonObj = commonDtoObj ?? throw new ArgumentNullException(nameof(commonDtoObj), "Object can not be null");
+            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
         }
-        protected sCommonDto CommonObj { get; private set; }
-        protected SqlDBAccess _sqlDBAccess;
-        protected ExecuteTableManager _tableManager;
-        protected ExecuteBlobManager _blobManager;
+        public ICommonRequestDto CommonObj { get; }
+        public ISqlDBAccess _sqlDBAccess { get; set; }
+
+        protected ExecuteTableManager TableManager;
+        protected ExecuteBlobManager BlobManager;
     }
 }

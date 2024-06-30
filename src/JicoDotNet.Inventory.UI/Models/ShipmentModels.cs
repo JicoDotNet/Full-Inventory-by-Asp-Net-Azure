@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
 
 namespace JicoDotNet.Inventory.UI.Models
 {
@@ -16,7 +17,7 @@ namespace JicoDotNet.Inventory.UI.Models
         public SalesOrder _salesOrder { get; set; }
         public Dictionary<bool, string> _YesNo { get; set; }
         public List<WareHouse> _wareHouses { get; set; }
-        public CompanyBasic _company { get; set; }
+        public ICompanyBasic _company { get; set; }
         public Company _companyAddress { get; set; }
 
         public Branch _branch { get; set; }

@@ -46,11 +46,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entity\INameValuePair.cs" />
+    <Compile Include="Entity\INameValuePairs.cs" />
+    <Compile Include="Entity\ISqlDBAccess.cs" />
+    <Compile Include="NameValuePairs.cs" />
     <Compile Include="SqlDBAccess.cs" />
     <Compile Include="SQLManager.cs" />
-    <Compile Include="nameValuePairs.cs" />
+    <Compile Include="NameValuePair.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -2,7 +2,8 @@
 using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class.Custom;
-using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Core;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,7 +15,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class ShipmentLogic : ConnectionString
     {
-        public ShipmentLogic(sCommonDto CommonObj) : base(CommonObj) { }
+        public ShipmentLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
 
         #region Payment Type
         public string TypeSet(ShipmentType shipmentType)
@@ -26,15 +27,15 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             else
                 qt = "INSERT";
 
-            nameValuePairs nvp = new nameValuePairs
+            NameValuePairs nvp = new NameValuePairs
             {
                  
-                new nameValuePair("@ShipmentTypeId", shipmentType.ShipmentTypeId),
-                new nameValuePair("@ShipmentTypeName", shipmentType.ShipmentTypeName),
-                new nameValuePair("@Description", shipmentType.Description),
+                new NameValuePair("@ShipmentTypeId", shipmentType.ShipmentTypeId),
+                new NameValuePair("@ShipmentTypeName", shipmentType.ShipmentTypeName),
+                new NameValuePair("@Description", shipmentType.Description),
                  
-                new nameValuePair("@RequestId", CommonObj.RequestId),
-                new nameValuePair("@QueryType", qt)
+                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@QueryType", qt)
             };
 
             string ReturnDS = _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetShipmentType]", nvp, "@OutParam").ToString();
@@ -46,13 +47,13 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             string qt = "INACTIVE";
 
-            nameValuePairs nvp = new nameValuePairs
+            NameValuePairs nvp = new NameValuePairs
             {
-                new nameValuePair("@ShipmentTypeId", ShipmentTypeId),
+                new NameValuePair("@ShipmentTypeId", ShipmentTypeId),
                  
                  
-                new nameValuePair("@RequestId", CommonObj.RequestId),
-                new nameValuePair("@QueryType", qt)
+                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@QueryType", qt)
             };
 
             string ReturnDS = _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetShipmentType]", nvp, "@OutParam").ToString();
@@ -62,11 +63,11 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public List<ShipmentType> TypeGet(bool? IsActive = null)
         {
             List<ShipmentType> shipmentTypes = new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetShipmentType]",
-                new nameValuePairs
+                new NameValuePairs
                 {
                      
                      
-                    new nameValuePair("@QueryType", "ALL")
+                    new NameValuePair("@QueryType", "ALL")
                 }).ToList<ShipmentType>();
             if (IsActive != null)
             {
@@ -82,23 +83,23 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public List<Shipment> GetShipments()
         {
             return new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetShipment]",
-                new nameValuePairs
+                new NameValuePairs
                 {
                      
                      
-                    new nameValuePair("@QueryType", "LIST")
+                    new NameValuePair("@QueryType", "LIST")
                 }).ToList<Shipment>();
         }
 
         public List<ShipmentDetail> GetShipmentDetails(long salesOrderId)
         {
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-            nameValuePairs nvp = new nameValuePairs()
+            NameValuePairs nvp = new NameValuePairs()
                 {
                      
                      
-                    new nameValuePair("@SalesOrderId", salesOrderId),
-                    new nameValuePair("@QueryType", "COMULTATIVE")
+                    new NameValuePair("@SalesOrderId", salesOrderId),
+                    new NameValuePair("@QueryType", "COMULTATIVE")
                 };
             List<ShipmentDetail> shpdtl = _sqlDBAccess.GetData("[dbo].[spGetShipment]", nvp).ToList<ShipmentDetail>();
             return shpdtl;
@@ -135,24 +136,24 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 if (shpDetailTypes.Count > 0)
                 {
                     return new SqlDBAccess(CommonObj.SqlConnectionString)
-                        .InsertUpdateDeleteReturnObject("[dbo].[spSetShipment]", new nameValuePairs
+                        .InsertUpdateDeleteReturnObject("[dbo].[spSetShipment]", new NameValuePairs
                         {
                          
                          
-                        new nameValuePair("@ShipmentTypeId", shipment.ShipmentTypeId),
-                        new nameValuePair("@ShipmentDate", shipment.ShipmentDate),
-                        new nameValuePair("@ShipmentNumber", "DO-"),
-                        new nameValuePair("@IsDirect", false),
-                        new nameValuePair("@IsFullShipped", shipment.IsFullShipped),
-                        new nameValuePair("@SalesOrderId", shipment.SalesOrderId),
-                        new nameValuePair("@WareHouseId", shipment.WareHouseId),
-                        new nameValuePair("@Remarks", shipment.Remarks),
-                        new nameValuePair("@VehicleNumber", shipment.VehicleNumber),
-                        new nameValuePair("@HandOverPerson", shipment.HandOverPerson),
-                        new nameValuePair("@HandOverPersonMobile", shipment.HandOverPersonMobile),
-                        new nameValuePair("@ShipmentDetail", shpDetailTypes.ToDataTable()),
-                        new nameValuePair("@RequestId", CommonObj.RequestId),
-                        new nameValuePair("@QueryType", "INSERT")
+                        new NameValuePair("@ShipmentTypeId", shipment.ShipmentTypeId),
+                        new NameValuePair("@ShipmentDate", shipment.ShipmentDate),
+                        new NameValuePair("@ShipmentNumber", "DO-"),
+                        new NameValuePair("@IsDirect", false),
+                        new NameValuePair("@IsFullShipped", shipment.IsFullShipped),
+                        new NameValuePair("@SalesOrderId", shipment.SalesOrderId),
+                        new NameValuePair("@WareHouseId", shipment.WareHouseId),
+                        new NameValuePair("@Remarks", shipment.Remarks),
+                        new NameValuePair("@VehicleNumber", shipment.VehicleNumber),
+                        new NameValuePair("@HandOverPerson", shipment.HandOverPerson),
+                        new NameValuePair("@HandOverPersonMobile", shipment.HandOverPersonMobile),
+                        new NameValuePair("@ShipmentDetail", shpDetailTypes.ToDataTable()),
+                        new NameValuePair("@RequestId", CommonObj.RequestId),
+                        new NameValuePair("@QueryType", "INSERT")
                         },
                         "@OutParam"
                     ).ToString();
@@ -217,39 +218,39 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             if (orderDetailTypes.Count > 0)
             {
                 _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-                nameValuePairs nvp = new nameValuePairs()
+                NameValuePairs nvp = new NameValuePairs()
                 {
-                    new nameValuePair("@ComapnyIsGSTRegistered", GenericLogic.IsValidGSTNumber(WebConfigAppSettingsAccess.GSTNumber)),                     
+                    new NameValuePair("@ComapnyIsGSTRegistered", GenericLogic.IsValidGSTNumber(WebConfigAppSettingsAccess.GSTNumber)),                     
 
                     //SO
-                    new nameValuePair("@SalesTypeId", shipmentDirect.SalesTypeId),
-                    new nameValuePair("@CustomerId", shipmentDirect.CustomerId),
-                    new nameValuePair("@SalesOrderDate", shipmentDirect.ShipmentDate),
-                    new nameValuePair("@SalesOrderAmount", shipmentDirect.SalesOrderAmount),
-                    new nameValuePair("@SalesOrderTaxAmount", shipmentDirect.SalesOrderTaxAmount),
-                    new nameValuePair("@SalesOrderTotalAmount", shipmentDirect.SalesOrderTotalAmount),
-                    new nameValuePair("@DeliveryDate", shipmentDirect.ShipmentDate),
+                    new NameValuePair("@SalesTypeId", shipmentDirect.SalesTypeId),
+                    new NameValuePair("@CustomerId", shipmentDirect.CustomerId),
+                    new NameValuePair("@SalesOrderDate", shipmentDirect.ShipmentDate),
+                    new NameValuePair("@SalesOrderAmount", shipmentDirect.SalesOrderAmount),
+                    new NameValuePair("@SalesOrderTaxAmount", shipmentDirect.SalesOrderTaxAmount),
+                    new NameValuePair("@SalesOrderTotalAmount", shipmentDirect.SalesOrderTotalAmount),
+                    new NameValuePair("@DeliveryDate", shipmentDirect.ShipmentDate),
 
-                    new nameValuePair("@SalesOrderDetails", orderDetailTypes.ToDataTable()),
+                    new NameValuePair("@SalesOrderDetails", orderDetailTypes.ToDataTable()),
 
                     //Ship
-                    new nameValuePair("@WareHouseId", shipmentDirect.WareHouseId),
-                    new nameValuePair("@ShipmentTypeId", shipmentDirect.ShipmentTypeId),
-                    new nameValuePair("@ShipmentNumber", "DO-"),
-                    new nameValuePair("@ShipmentDate", shipmentDirect.ShipmentDate),
-                    new nameValuePair("@IsDirect", true),
-                    new nameValuePair("@IsFullShipped", true),
-                    new nameValuePair("@VehicleNumber", shipmentDirect.VehicleNumber),
-                    new nameValuePair("@HandOverPerson", shipmentDirect.HandOverPerson),
-                    new nameValuePair("@HandOverPersonMobile", shipmentDirect.HandOverPersonMobile),
+                    new NameValuePair("@WareHouseId", shipmentDirect.WareHouseId),
+                    new NameValuePair("@ShipmentTypeId", shipmentDirect.ShipmentTypeId),
+                    new NameValuePair("@ShipmentNumber", "DO-"),
+                    new NameValuePair("@ShipmentDate", shipmentDirect.ShipmentDate),
+                    new NameValuePair("@IsDirect", true),
+                    new NameValuePair("@IsFullShipped", true),
+                    new NameValuePair("@VehicleNumber", shipmentDirect.VehicleNumber),
+                    new NameValuePair("@HandOverPerson", shipmentDirect.HandOverPerson),
+                    new NameValuePair("@HandOverPersonMobile", shipmentDirect.HandOverPersonMobile),
                     
-                    new nameValuePair("@ShipmentDetails", spmDetailTypes.ToDataTable()),
+                    new NameValuePair("@ShipmentDetails", spmDetailTypes.ToDataTable()),
 
                     // Common
-                    new nameValuePair("@Remarks", shipmentDirect.Remarks),
+                    new NameValuePair("@Remarks", shipmentDirect.Remarks),
 
-                    new nameValuePair("@RequestId", CommonObj.RequestId),
-                    new nameValuePair("@QueryType", "INSERT")
+                    new NameValuePair("@RequestId", CommonObj.RequestId),
+                    new NameValuePair("@QueryType", "INSERT")
                 };
                 return _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetShipmentDirect]", nvp, "@OutParam").ToString();
             }
@@ -260,12 +261,12 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             Shipment shipment = new Shipment();
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-            nameValuePairs nvp = new nameValuePairs()
+            NameValuePairs nvp = new NameValuePairs()
             {
                  
                  
-                new nameValuePair("@ShipmentId", ShipmentId),
-                new nameValuePair("@QueryType", "DETAIL")
+                new NameValuePair("@ShipmentId", ShipmentId),
+                new NameValuePair("@QueryType", "DETAIL")
             };
             DataSet ds = _sqlDBAccess.GetDataSet("[dbo].[spGetShipment]", nvp);
             shipment = ds.Tables[0].FirstOrDefault<Shipment>();

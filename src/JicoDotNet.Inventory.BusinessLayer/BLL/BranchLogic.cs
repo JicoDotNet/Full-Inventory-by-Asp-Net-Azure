@@ -1,7 +1,8 @@
 ﻿using DataAccess.Sql;
 using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Core;
+using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,7 +14,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class BranchLogic : ConnectionString
     {
-        public BranchLogic(sCommonDto CommonObj) : base(CommonObj) { }
+        public BranchLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
 
         public string Set(Branch branch)
         {
@@ -24,23 +25,23 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             else
                 qt = "INSERT";
 
-            nameValuePairs nvp = new nameValuePairs
+            NameValuePairs nvp = new NameValuePairs
             {
                  
-                new nameValuePair("@BranchId", branch.BranchId),
+                new NameValuePair("@BranchId", branch.BranchId),
                  
-                new nameValuePair("@BranchName", branch.BranchName),
-                new nameValuePair("@BranchCode", branch.BranchCode),
-                new nameValuePair("@Address", branch.Address),
-                new nameValuePair("@City", branch.City),
-                new nameValuePair("@State", branch.State),
-                new nameValuePair("@PostalCode", branch.PostalCode),
-                new nameValuePair("@ContactPerson", branch.ContactPerson),
-                new nameValuePair("@Email", branch.Email),
-                new nameValuePair("@Phone", branch.Phone),
-                new nameValuePair("@Description", branch.Description),
-                new nameValuePair("@RequestId", CommonObj.RequestId),
-                new nameValuePair("@QueryType", qt)
+                new NameValuePair("@BranchName", branch.BranchName),
+                new NameValuePair("@BranchCode", branch.BranchCode),
+                new NameValuePair("@Address", branch.Address),
+                new NameValuePair("@City", branch.City),
+                new NameValuePair("@State", branch.State),
+                new NameValuePair("@PostalCode", branch.PostalCode),
+                new NameValuePair("@ContactPerson", branch.ContactPerson),
+                new NameValuePair("@Email", branch.Email),
+                new NameValuePair("@Phone", branch.Phone),
+                new NameValuePair("@Description", branch.Description),
+                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@QueryType", qt)
             };
 
             string ReturnDS = _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetBranch]", nvp, "@OutParam").ToString();
@@ -50,11 +51,11 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public string Deactive(string BranchId)
         {
             return new SqlDBAccess(CommonObj.SqlConnectionString)
-                .InsertUpdateDeleteReturnObject("[dbo].[spSetBranch]", new nameValuePairs
+                .InsertUpdateDeleteReturnObject("[dbo].[spSetBranch]", new NameValuePairs
                 {
-                    new nameValuePair("@BranchId", BranchId),                     
-                    new nameValuePair("@RequestId", CommonObj.RequestId),
-                    new nameValuePair("@QueryType", "INACTIVE")
+                    new NameValuePair("@BranchId", BranchId),                     
+                    new NameValuePair("@RequestId", CommonObj.RequestId),
+                    new NameValuePair("@QueryType", "INACTIVE")
                 }, "@OutParam").ToString();
         }
 
@@ -62,11 +63,11 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             List<Branch> branchs = new SqlDBAccess(CommonObj.SqlConnectionString)
                 .GetData("[dbo].[spGetBranch]",
-                new nameValuePairs
+                new NameValuePairs
                 {
                      
                      
-                    new nameValuePair("@QueryType", "ALL")
+                    new NameValuePair("@QueryType", "ALL")
                 }).ToList<Branch>();
             if (IsActive != null)
             {
