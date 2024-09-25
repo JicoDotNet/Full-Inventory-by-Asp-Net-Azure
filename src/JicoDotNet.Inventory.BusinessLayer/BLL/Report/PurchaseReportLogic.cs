@@ -1,8 +1,7 @@
 ﻿using DataAccess.Sql;
 using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class.Report;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Core;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
+using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,22 +13,22 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
 {
     public class PurchaseReportLogic : ConnectionString
     {
-        public PurchaseReportLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public PurchaseReportLogic(sCommonDto CommonObj) : base(CommonObj) { }
 
         public List<RVendorPurchase> VendorWise(PVendorPurchase vendorPurchase)
         {
             try
             {
                 _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-                NameValuePairs nvp = new NameValuePairs
+                nameValuePairs nvp = new nameValuePairs
                 {
                      
                      
-                    new NameValuePair("@VendorTypeId", vendorPurchase.VendorTypeId),
-                    new NameValuePair("@VendorId", vendorPurchase.VendorId),
-                    new NameValuePair("@StartDate", vendorPurchase.SearchDate.StartDate),
-                    new NameValuePair("@EndDate", vendorPurchase.SearchDate.EndDate),
-                    new NameValuePair("@QueryType", "BYVENDOR")
+                    new nameValuePair("@VendorTypeId", vendorPurchase.VendorTypeId),
+                    new nameValuePair("@VendorId", vendorPurchase.VendorId),
+                    new nameValuePair("@StartDate", vendorPurchase.SearchDate.StartDate),
+                    new nameValuePair("@EndDate", vendorPurchase.SearchDate.EndDate),
+                    new nameValuePair("@QueryType", "BYVENDOR")
                 };
                 return _sqlDBAccess.GetData("[dbo].[spRpPurchase]", nvp).ToList<RVendorPurchase>();
             }
@@ -44,15 +43,15 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
             try
             {
                 _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-                NameValuePairs nvp = new NameValuePairs
+                nameValuePairs nvp = new nameValuePairs
                 {
                      
                      
-                    new NameValuePair("@ProductTypeId", productPurchase.ProductTypeId),
-                    new NameValuePair("@ProductId", productPurchase.ProductId),
-                    new NameValuePair("@StartDate", productPurchase.SearchDate.StartDate),
-                    new NameValuePair("@EndDate", productPurchase.SearchDate.EndDate),
-                    new NameValuePair("@QueryType", "BYPRODUCT")
+                    new nameValuePair("@ProductTypeId", productPurchase.ProductTypeId),
+                    new nameValuePair("@ProductId", productPurchase.ProductId),
+                    new nameValuePair("@StartDate", productPurchase.SearchDate.StartDate),
+                    new nameValuePair("@EndDate", productPurchase.SearchDate.EndDate),
+                    new nameValuePair("@QueryType", "BYPRODUCT")
                 };
                 return _sqlDBAccess.GetData("[dbo].[spRpPurchase]", nvp).ToList<RProductPurchase>();
             }

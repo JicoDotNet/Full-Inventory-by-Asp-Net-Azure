@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Core;
+using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,13 +11,12 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Configuration;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class LoginManagement : ConnectionString
     {
-        public LoginManagement(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public LoginManagement(sCommonDto CommonObj) : base(CommonObj) { }
 
         public AccountAuthentication Authenticate(LoginCredentials loginCredentials, string RequestedIP)
         {

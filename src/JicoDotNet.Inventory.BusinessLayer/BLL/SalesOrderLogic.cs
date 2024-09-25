@@ -2,8 +2,7 @@
 using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class.Custom;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Core;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
+using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -15,7 +14,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class SalesOrderLogic : ConnectionString
     {
-        public SalesOrderLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public SalesOrderLogic(sCommonDto CommonObj) : base(CommonObj) { }
 
         #region Sales Type
         public string TypeSet(SalesType salesType)
@@ -27,15 +26,15 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             else
                 qt = "INSERT";
 
-            NameValuePairs nvp = new NameValuePairs
+            nameValuePairs nvp = new nameValuePairs
             {
                  
                  
-                new NameValuePair("@SalesTypeId", salesType.SalesTypeId),
-                new NameValuePair("@SalesTypeName", salesType.SalesTypeName),
-                new NameValuePair("@Description", salesType.Description),
-                new NameValuePair("@RequestId", CommonObj.RequestId),
-                new NameValuePair("@QueryType", qt)
+                new nameValuePair("@SalesTypeId", salesType.SalesTypeId),
+                new nameValuePair("@SalesTypeName", salesType.SalesTypeName),
+                new nameValuePair("@Description", salesType.Description),
+                new nameValuePair("@RequestId", CommonObj.RequestId),
+                new nameValuePair("@QueryType", qt)
             };
 
             string ReturnDS = _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetSalesType]", nvp, "@OutParam").ToString();
@@ -45,24 +44,24 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public string TypeDeactive(string SalesTypeId)
         {
             return new SqlDBAccess(CommonObj.SqlConnectionString)
-                .InsertUpdateDeleteReturnObject("[dbo].[spSetSalesType]", new NameValuePairs
+                .InsertUpdateDeleteReturnObject("[dbo].[spSetSalesType]", new nameValuePairs
                 {
-                    new NameValuePair("@SalesTypeId", SalesTypeId),
+                    new nameValuePair("@SalesTypeId", SalesTypeId),
                      
                      
-                    new NameValuePair("@RequestId", CommonObj.RequestId),
-                    new NameValuePair("@QueryType", "INACTIVE")
+                    new nameValuePair("@RequestId", CommonObj.RequestId),
+                    new nameValuePair("@QueryType", "INACTIVE")
                 }, "@OutParam").ToString();
         }
 
         public List<SalesType> TypeGet(bool? IsActive = null)
         {
             List<SalesType> salesTypes = new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetSalesType]",
-                new NameValuePairs
+                new nameValuePairs
                 {
                      
                      
-                    new NameValuePair("@QueryType", "ALL")
+                    new nameValuePair("@QueryType", "ALL")
                 }).ToList<SalesType>();
             if (IsActive != null)
             {
@@ -78,11 +77,11 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public Dictionary<string, object> GetForEntry()
         {
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-            NameValuePairs nvp = new NameValuePairs
+            nameValuePairs nvp = new nameValuePairs
             {
                  
                  
-                    new NameValuePair("@QueryType", "ENTRY")
+                    new nameValuePair("@QueryType", "ENTRY")
             };
             DataSet dataSet = _sqlDBAccess.GetDataSet("[dbo].[spGetSalesOrder]", nvp);
             Dictionary<string, object> Datas = new Dictionary<string, object>
@@ -130,28 +129,28 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             if (orderDetailTypes.Count > 0)
             {
                 _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-                NameValuePairs nvp = new NameValuePairs
+                nameValuePairs nvp = new nameValuePairs
                 {
-                    new NameValuePair("@ComapnyIsGSTRegistered", GenericLogic.IsValidGSTNumber(WebConfigAppSettingsAccess.GSTNumber)),
-                    new NameValuePair("@QuotationId", salesOrder.QuotationId),
-                    new NameValuePair("@SalesTypeId", salesOrder.SalesTypeId),
-                    new NameValuePair("@BranchId", salesOrder.BranchId),
-                    new NameValuePair("@CustomerId", salesOrder.CustomerId),
-                    new NameValuePair("@SalesOrderDate", salesOrder.SalesOrderDate),
-                    new NameValuePair("@SalesOrderNumber", "SO-"),
-                    new NameValuePair("@AmendmentNumber", salesOrder.AmendmentNumber),
-                    new NameValuePair("@AmendmentDate", salesOrder.AmendmentDate > salesOrder.SalesOrderDate? (object)salesOrder.AmendmentDate: DBNull.Value),
-                    new NameValuePair("@CustomerPONumber", salesOrder.CustomerPONumber),
-                    new NameValuePair("@CustomerPODate", salesOrder.CustomerPODate),
-                    new NameValuePair("@DeliveryDate", salesOrder.DeliveryDate > salesOrder.SalesOrderDate? (object)salesOrder.DeliveryDate: DBNull.Value),
-                    new NameValuePair("@SalesOrderAmount", salesOrder.SalesOrderAmount),
-                    new NameValuePair("@SalesOrderTaxAmount", salesOrder.SalesOrderTaxAmount),
-                    new NameValuePair("@SalesOrderTotalAmount", salesOrder.SalesOrderTotalAmount),
-                    new NameValuePair("@TandC", salesOrder.TandC),
-                    new NameValuePair("@Remarks", salesOrder.Remarks),
-                    new NameValuePair("@SalesOrderDetails", orderDetailTypes.ToDataTable()),
-                    new NameValuePair("@RequestId", CommonObj.RequestId),
-                    new NameValuePair("@QueryType", "ENTRY")
+                    new nameValuePair("@ComapnyIsGSTRegistered", GenericLogic.IsValidGSTNumber(WebConfigAppSettingsAccess.GSTNumber)),
+                    new nameValuePair("@QuotationId", salesOrder.QuotationId),
+                    new nameValuePair("@SalesTypeId", salesOrder.SalesTypeId),
+                    new nameValuePair("@BranchId", salesOrder.BranchId),
+                    new nameValuePair("@CustomerId", salesOrder.CustomerId),
+                    new nameValuePair("@SalesOrderDate", salesOrder.SalesOrderDate),
+                    new nameValuePair("@SalesOrderNumber", "SO-"),
+                    new nameValuePair("@AmendmentNumber", salesOrder.AmendmentNumber),
+                    new nameValuePair("@AmendmentDate", salesOrder.AmendmentDate > salesOrder.SalesOrderDate? (object)salesOrder.AmendmentDate: DBNull.Value),
+                    new nameValuePair("@CustomerPONumber", salesOrder.CustomerPONumber),
+                    new nameValuePair("@CustomerPODate", salesOrder.CustomerPODate),
+                    new nameValuePair("@DeliveryDate", salesOrder.DeliveryDate > salesOrder.SalesOrderDate? (object)salesOrder.DeliveryDate: DBNull.Value),
+                    new nameValuePair("@SalesOrderAmount", salesOrder.SalesOrderAmount),
+                    new nameValuePair("@SalesOrderTaxAmount", salesOrder.SalesOrderTaxAmount),
+                    new nameValuePair("@SalesOrderTotalAmount", salesOrder.SalesOrderTotalAmount),
+                    new nameValuePair("@TandC", salesOrder.TandC),
+                    new nameValuePair("@Remarks", salesOrder.Remarks),
+                    new nameValuePair("@SalesOrderDetails", orderDetailTypes.ToDataTable()),
+                    new nameValuePair("@RequestId", CommonObj.RequestId),
+                    new nameValuePair("@QueryType", "ENTRY")
                 };
                 ReturnDS = _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetSalesOrder]", nvp, "@OutParam").ToString();
             }
@@ -166,13 +165,13 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             try
             {
                 _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-                NameValuePairs nvp = new NameValuePairs
+                nameValuePairs nvp = new nameValuePairs
                 {
-                    new NameValuePair("@SalesOrderId", SalesOrderId),
+                    new nameValuePair("@SalesOrderId", SalesOrderId),
                      
                      
-                    new NameValuePair("@RequestId", CommonObj.RequestId),
-                    new NameValuePair("@QueryType", "DELETE")
+                    new nameValuePair("@RequestId", CommonObj.RequestId),
+                    new nameValuePair("@QueryType", "DELETE")
                 };
                 string ReturnDS = _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetSalesOrder]", nvp, "@OutParam").ToString();
                 return ReturnDS;
@@ -186,11 +185,11 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public List<SalesOrder> GetForShipment()
         {
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-            NameValuePairs nvp = new NameValuePairs
+            nameValuePairs nvp = new nameValuePairs
             {
                  
                  
-                    new NameValuePair("@QueryType", "SHIPENTRY")
+                    new nameValuePair("@QueryType", "SHIPENTRY")
             };
             return _sqlDBAccess.GetData("[dbo].[spGetSalesOrder]", nvp).ToList<SalesOrder>();
         }
@@ -198,11 +197,11 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public List<SalesOrder> GetSOs()
         {
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-            NameValuePairs nvp = new NameValuePairs()
+            nameValuePairs nvp = new nameValuePairs()
                 {
                      
                      
-                    new NameValuePair("@QueryType", "LIST")
+                    new nameValuePair("@QueryType", "LIST")
                 };
             return _sqlDBAccess.GetData("[dbo].[spGetSalesOrder]", nvp).ToList<SalesOrder>();
         }
@@ -210,12 +209,12 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public SalesOrder GetForDetail(long SalesOrderId)
         {            
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-            NameValuePairs nvp = new NameValuePairs()
+            nameValuePairs nvp = new nameValuePairs()
             {
                  
                  
-                new NameValuePair("@SalesOrderId", SalesOrderId),
-                new NameValuePair("@QueryType", "DETAIL")
+                new nameValuePair("@SalesOrderId", SalesOrderId),
+                new nameValuePair("@QueryType", "DETAIL")
             };
             DataSet ds = _sqlDBAccess.GetDataSet("[dbo].[spGetSalesOrder]", nvp);
             SalesOrder salesOrder;
@@ -270,21 +269,21 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 if (orderDetailTypes.Count > 0)
                 {
                     _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-                    NameValuePairs nvp = new NameValuePairs
+                    nameValuePairs nvp = new nameValuePairs
                     {
-                        new NameValuePair("@SalesOrderId", salesOrder.SalesOrderId),
+                        new nameValuePair("@SalesOrderId", salesOrder.SalesOrderId),
 
-                        new NameValuePair("@ComapnyIsGSTRegistered", GenericLogic.IsValidGSTNumber(WebConfigAppSettingsAccess.GSTNumber)),
-                        new NameValuePair("@AmendmentNumber", ""),
-                        new NameValuePair("@AmendmentDate", salesOrder.AmendmentDate),
-                        new NameValuePair("@SalesOrderAmount", salesOrder.SalesOrderAmount),
-                        new NameValuePair("@SalesOrderTaxAmount", salesOrder.SalesOrderTaxAmount),
-                        new NameValuePair("@SalesOrderTotalAmount", salesOrder.SalesOrderTotalAmount),
-                        new NameValuePair("@TandC", salesOrder.TandC),
-                        new NameValuePair("@Remarks", salesOrder.Remarks),
-                        new NameValuePair("@SalesOrderDetails", orderDetailTypes.ToDataTable()),
-                        new NameValuePair("@RequestId", CommonObj.RequestId),
-                        new NameValuePair("@QueryType", "AMENDMENT")
+                        new nameValuePair("@ComapnyIsGSTRegistered", GenericLogic.IsValidGSTNumber(WebConfigAppSettingsAccess.GSTNumber)),
+                        new nameValuePair("@AmendmentNumber", ""),
+                        new nameValuePair("@AmendmentDate", salesOrder.AmendmentDate),
+                        new nameValuePair("@SalesOrderAmount", salesOrder.SalesOrderAmount),
+                        new nameValuePair("@SalesOrderTaxAmount", salesOrder.SalesOrderTaxAmount),
+                        new nameValuePair("@SalesOrderTotalAmount", salesOrder.SalesOrderTotalAmount),
+                        new nameValuePair("@TandC", salesOrder.TandC),
+                        new nameValuePair("@Remarks", salesOrder.Remarks),
+                        new nameValuePair("@SalesOrderDetails", orderDetailTypes.ToDataTable()),
+                        new nameValuePair("@RequestId", CommonObj.RequestId),
+                        new nameValuePair("@QueryType", "AMENDMENT")
                     };
                     ReturnDS = _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetSalesOrder]", nvp, "@OutParam").ToString();
                 }

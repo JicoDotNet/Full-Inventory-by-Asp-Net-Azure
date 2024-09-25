@@ -1,8 +1,7 @@
 ﻿using DataAccess.AzureStorage;
 using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Core;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
+using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +13,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class SupportLogic : ConnectionString
     {
-        public SupportLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public SupportLogic(sCommonDto CommonObj) : base(CommonObj) { }
 
         public Support Set(Support support, MemoryFile memory)
         {
@@ -29,8 +28,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             support.RequestId = CommonObj.RequestId;
             if (memory != null)
                 support.ScreenshotImageUrl = new ExecuteBlobManager("MyCompany", CommonObj.NoSqlConnectionString).UploadFile(memory, new string[] { "Support", "Screenshot", support.UserId.ToString() }, CommonObj.RequestId);
-            TableManager = new ExecuteTableManager("Support", CommonObj.NoSqlConnectionString);
-            TableManager.InsertEntity(support);
+            _tableManager = new ExecuteTableManager("Support", CommonObj.NoSqlConnectionString);
+            _tableManager.InsertEntity(support);
             return support;
         }
     }

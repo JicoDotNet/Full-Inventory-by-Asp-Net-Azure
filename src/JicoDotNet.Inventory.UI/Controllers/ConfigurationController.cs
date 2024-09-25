@@ -18,7 +18,7 @@ namespace JicoDotNet.Inventory.UIControllers
             try
             {
 
-                ConfigarationManager configarationManager = new ConfigarationManager(LogicHelper);
+                ConfigarationManager configarationManager = new ConfigarationManager(BllCommonLogic);
                 ConfigModels configModels = new ConfigModels
                 {
                     _YesNo = GenericLogic.YesNo(),
@@ -56,14 +56,14 @@ namespace JicoDotNet.Inventory.UIControllers
                 DataTrackingLogicSet(config);
                 #endregion
 
-                ConfigarationManager configarationManager = new ConfigarationManager(LogicHelper);                
+                ConfigarationManager configarationManager = new ConfigarationManager(BllCommonLogic);                
                 configarationManager.SetConfig(config);
                 ReturnMessage = new ReturnObject()
                 {
                     Message = "Success",
                     Status = true
                 };
-                return RedirectToAction("Detail", "Company", new { id = UrlIdEncrypt(UrlParameterId, false) });
+                return RedirectToAction("Detail", "Company", new { id = UrlIdEncrypt(id, false) });
             }
             catch (Exception ex)
             {
@@ -79,7 +79,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 ConfigModels configModels = new ConfigModels
                 {
                     _company = SessionCompany,
-                    _config = new ConfigarationManager(LogicHelper).GetConfig(),
+                    _config = new ConfigarationManager(BllCommonLogic).GetConfig(),
                     _YesNo = GenericLogic.YesNo()
                 };
                 return View(configModels);
@@ -95,7 +95,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             ConfigModels configModels = new ConfigModels
             {
-                _config = new ConfigarationManager(LogicHelper).GetConfig(),
+                _config = new ConfigarationManager(BllCommonLogic).GetConfig(),
             };
             return View(configModels);
         }
@@ -109,7 +109,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 DataTrackingLogicSet(config);
                 #endregion
 
-                ConfigarationManager configarationManager = new ConfigarationManager(LogicHelper);
+                ConfigarationManager configarationManager = new ConfigarationManager(BllCommonLogic);
                 configarationManager.SetConfig(config);
                 ReturnMessage = new ReturnObject()
                 {

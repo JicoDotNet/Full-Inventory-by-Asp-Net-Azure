@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using DataAccess.Sql.Entity;
 
 namespace DataAccess.Sql
 {
-    public sealed class SqlDBAccess : SQLManager, ISqlDBAccess
+    public sealed class SqlDBAccess : SQLManager
     {
         private CommandType CommandType { get; }
         private SqlConnection SqlConnectionObject { get; set; }
@@ -20,7 +19,7 @@ namespace DataAccess.Sql
         }
 
         #region Select Query
-        public DataRow GetFirstOrDefaultRow(string Command, INameValuePairs NameValuePairObject)
+        public DataRow GetFirstOrDefaultRow(string Command, nameValuePairs NameValuePairObject)
         {
             try
             {
@@ -39,7 +38,7 @@ namespace DataAccess.Sql
             }
         }
 
-        public DataTable GetData(string Command, INameValuePairs NameValuePairObject)
+        public DataTable GetData(string Command, nameValuePairs NameValuePairObject)
         {
             try
             {
@@ -61,7 +60,7 @@ namespace DataAccess.Sql
             }
         }
 
-        public DataSet GetDataSet(string Command, INameValuePairs NameValuePairObject)
+        public DataSet GetDataSet(string Command, nameValuePairs NameValuePairObject)
         {
             try
             {
@@ -78,7 +77,7 @@ namespace DataAccess.Sql
             }
         }
 
-        private DataSet Get(string Command, INameValuePairs NameValuePairObject)
+        private DataSet Get(string Command, nameValuePairs NameValuePairObject)
         {
             try
             {
@@ -103,7 +102,7 @@ namespace DataAccess.Sql
         #endregion
 
         public object InsertUpdateDeleteReturnObject(string Command, 
-            INameValuePairs NameValuePairObject, 
+            nameValuePairs NameValuePairObject, 
             string outParameterName)
         {
             try
@@ -129,7 +128,7 @@ namespace DataAccess.Sql
             }
         }
 
-        private SqlCommand CreateSqlCommand(string _Command, INameValuePairs _NameValuePairObject = null)
+        private SqlCommand CreateSqlCommand(string _Command, nameValuePairs _NameValuePairObject = null)
         {
             try
             {
@@ -143,7 +142,7 @@ namespace DataAccess.Sql
                     cmdObject.Parameters.Clear();
                     if (_NameValuePairObject != null)
                     {
-                        foreach (NameValuePair objList in _NameValuePairObject)
+                        foreach (nameValuePair objList in _NameValuePairObject)
                         {
                             cmdObject.Parameters.Add(new SqlParameter(objList.getName, objList.getValue));
                         }

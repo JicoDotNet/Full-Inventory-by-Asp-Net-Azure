@@ -1,10 +1,10 @@
 ﻿using Newtonsoft.Json;
 using JicoDotNet.Inventory.BusinessLayer.BLL;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Core;
+using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
+using System.Web.Configuration;
 using System.Web.Routing;
 
-// ReSharper disable once CheckNamespace
 namespace System.Web.Mvc
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = false)]
@@ -49,10 +49,9 @@ namespace System.Web.Mvc
                     return;
                 }
                 else
-                    _SessionKey = new TokenManagement(new CommonRequestDto
+                    _SessionKey = new TokenManagement(new sCommonDto
                     {
-                        NoSqlConnectionString = WebConfigDbConnection.AzureStorage,
-                        SqlConnectionString = WebConfigDbConnection.SqlServer
+                        NoSqlConnectionString = WebConfigDBConnection.AzureStorage
                     }).GetCredential(Token);
 
                 // If session exists

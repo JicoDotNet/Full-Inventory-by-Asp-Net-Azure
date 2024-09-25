@@ -2,8 +2,7 @@
 using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class.Custom;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Core;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
+using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -15,7 +14,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class StockTransferLogic : ConnectionString
     {
-        public StockTransferLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public StockTransferLogic(sCommonDto CommonObj) : base(CommonObj) { }
 
         public string Set(StockTransfer stockTransfer)
         {
@@ -45,18 +44,18 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             if (stDetailTypes.Count > 0)
             {
                 return new SqlDBAccess(CommonObj.SqlConnectionString)
-                    .InsertUpdateDeleteReturnObject("[dbo].[spSetStockTransfer]", new NameValuePairs
+                    .InsertUpdateDeleteReturnObject("[dbo].[spSetStockTransfer]", new nameValuePairs
                     {
                          
                          
-                        new NameValuePair("@FromWareHouseId", stockTransfer.FromWareHouseId),
-                        new NameValuePair("@ToWareHouseId", stockTransfer.ToWareHouseId),
-                        new NameValuePair("@StockTransferNumber", "SKT-"),
-                        new NameValuePair("@StockTransferDate", stockTransfer.StockTransferDate),
-                        new NameValuePair("@Remarks", stockTransfer.Remarks),
-                        new NameValuePair("@RequestId", CommonObj.RequestId),
-                        new NameValuePair("@STDetail", stDetailTypes.ToDataTable()),
-                        new NameValuePair("@QueryType", "INSERT")
+                        new nameValuePair("@FromWareHouseId", stockTransfer.FromWareHouseId),
+                        new nameValuePair("@ToWareHouseId", stockTransfer.ToWareHouseId),
+                        new nameValuePair("@StockTransferNumber", "SKT-"),
+                        new nameValuePair("@StockTransferDate", stockTransfer.StockTransferDate),
+                        new nameValuePair("@Remarks", stockTransfer.Remarks),
+                        new nameValuePair("@RequestId", CommonObj.RequestId),
+                        new nameValuePair("@STDetail", stDetailTypes.ToDataTable()),
+                        new nameValuePair("@QueryType", "INSERT")
                     }, "@OutParam"
                 ).ToString();
             }

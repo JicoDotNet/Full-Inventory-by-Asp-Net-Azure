@@ -17,7 +17,7 @@ namespace JicoDotNet.Inventory.UI.Areas.Report.Controllers
         {
             try
             {
-                CustomerLogic customerLogic = new CustomerLogic(LogicHelper);
+                CustomerLogic customerLogic = new CustomerLogic(BllCommonLogic);
                 SalesReportModels salesReportModels = new SalesReportModels
                 {
                     _customerTypes = customerLogic.TypeGet(),
@@ -37,7 +37,7 @@ namespace JicoDotNet.Inventory.UI.Areas.Report.Controllers
             {
                 if (customerSales.SearchDate.IsInOneYearRange())
                 {
-                    SalesReportLogic salesReport = new SalesReportLogic(LogicHelper);
+                    SalesReportLogic salesReport = new SalesReportLogic(BllCommonLogic);
                     SalesReportModels salesReportModels = new SalesReportModels
                     {
                         _rCustomerSales = salesReport.CustomerWise(customerSales)
@@ -60,7 +60,7 @@ namespace JicoDotNet.Inventory.UI.Areas.Report.Controllers
         {
             try
             {
-                ProductLogic productLogic = new ProductLogic(LogicHelper);
+                ProductLogic productLogic = new ProductLogic(BllCommonLogic);
                 SalesReportModels salesReportModels = new SalesReportModels
                 {
                     _productTypes = productLogic.TypeGet(),
@@ -81,7 +81,7 @@ namespace JicoDotNet.Inventory.UI.Areas.Report.Controllers
             {
                 if (productSales.SearchDate.IsInOneYearRange())
                 {
-                    SalesReportLogic salesReport = new SalesReportLogic(LogicHelper);
+                    SalesReportLogic salesReport = new SalesReportLogic(BllCommonLogic);
                     SalesReportModels salesReportModels = new SalesReportModels
                     {
                         _rProductSales = salesReport.ProductWise(productSales)

@@ -1,11 +1,11 @@
-﻿// ReSharper disable once CheckNamespace
-namespace System.Web.Mvc
+﻿namespace System.Web.Mvc
 {
-    using Configuration;
+    using System.Text;
+    using System.Web.Configuration;
     
-    public class WebConfigDbConnection
+    public class WebConfigDBConnection
     {
-        public static object SqlServer => WebConfigurationManager.ConnectionStrings["SqlServerConnection"];
-        public static object AzureStorage => WebConfigurationManager.ConnectionStrings["AzureStorageConnection"];
+        public static object SqlServer { get { return (object)WebConfigurationManager.ConnectionStrings["SqlServerConnection"]?.ToString(); } }
+        public static object AzureStorage { get { return (object)WebConfigurationManager.ConnectionStrings["AzureStorageConnection"]?.ToString(); } }
     }
 }

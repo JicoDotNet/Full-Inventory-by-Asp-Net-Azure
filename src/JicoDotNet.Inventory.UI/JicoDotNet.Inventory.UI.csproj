@@ -146,8 +146,8 @@
     <Compile Include="Areas\Report\ReportAreaRegistration.cs" />
     <Compile Include="Auth\BaseController.cs" />
     <Compile Include="Auth\SessionAuthenticate.cs" />
-    <Compile Include="Common\WebConfigDbConnection.cs" />
-    <Compile Include="Common\MvcExtension.cs" />
+    <Compile Include="Common\WebConfigDBConnection.cs" />
+    <Compile Include="Common\Extension.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BillController.cs" />
     <Compile Include="Controllers\BranchController.cs" />
@@ -362,6 +362,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Jio\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccess.Sql\DataAccess.Sql.csproj">

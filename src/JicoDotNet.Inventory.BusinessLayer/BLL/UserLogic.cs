@@ -2,8 +2,7 @@
 using DataAccess.Sql;
 using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Core;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
+using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -16,7 +15,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class UserLogic : ConnectionString
     {
-        public UserLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public UserLogic(sCommonDto CommonObj) : base(CommonObj) { }
 
         public User Get()
         {

@@ -1,17 +1,22 @@
 ﻿using Newtonsoft.Json;
 using JicoDotNet.Inventory.BusinessLayer.BLL;
 using JicoDotNet.Inventory.BusinessLayer.Common;
+using JicoDotNet.Inventory.BusinessLayer.DTO;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
 using JicoDotNet.Inventory.UI.Models;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using JicoDotNet.Inventory.BusinessLayer.BLL.Tracking;
+using System.Web.Security;
 
 namespace JicoDotNet.Inventory.UIControllers
 {
     public class AccountController : BaseController
     {
+        readonly int TaxPercentage = 0;
+
         #region Login
         public ActionResult Index(string returnUrl)
         {
@@ -37,12 +42,12 @@ namespace JicoDotNet.Inventory.UIControllers
                     UserEmail = formCollection["UserEmail"],
                     Password = formCollection["Password"],
                 };
-                AccountAuthentication accountAuthenticate = new LoginManagement(LogicHelper)
+                AccountAuthentication accountAuthenticate = new LoginManagement(BllCommonLogic)
                                         .Authenticate(loginCredentials, GetRequestedIp());
                
                 if (accountAuthenticate.credential != null)
                 {
-                    #region Set Token Data & Duplicate finding
+                    #region Set Token Data & Duplicate finding                    
                     if (accountAuthenticate.eLoginStatus == ELoginStatus.DuplicateLogin)
                     {
                         TempData["UserEmail"] = accountAuthenticate.credential.UserEmail;
@@ -51,7 +56,7 @@ namespace JicoDotNet.Inventory.UIControllers
                     #endregion
 
                     #region Login Track
-                    _ = new LoggerLogic(LogicHelper).LoginLog(new LoginLog());
+                    _ = new TrackingLogic(BllCommonLogic).LoginLog(new LoginLog());
                     #endregion
 
                     #region Set Session Cookie & redirect if Login Success
@@ -116,23 +121,24 @@ namespace JicoDotNet.Inventory.UIControllers
         public ActionResult Duplicate()
         {
             string UserEmail;
+            string TenantCode;
             if (TempData["UserEmail"] != null)
             {
                 UserEmail = TempData["UserEmail"].ToString();
             }
             else
                 return RedirectToAction("Index", "Logout");
-            TokenManagement token = new TokenManagement(LogicHelper);
+            TokenManagement token = new TokenManagement(BllCommonLogic);
             return View(token.GetUser(UserEmail));
         }
 
         [HttpPost]
         public ActionResult Delete(SessionCredential sessionCredential)
         {
-            if (sessionCredential.UserEmail == UrlParameterId)
+            if (sessionCredential.UserEmail == id)
             {
-                TokenManagement token = new TokenManagement(LogicHelper);
-                token.Delete(UrlParameterId);
+                TokenManagement token = new TokenManagement(BllCommonLogic);
+                token.Delete(id);
             }
             return RedirectToAction("Index", "Logout");
         }

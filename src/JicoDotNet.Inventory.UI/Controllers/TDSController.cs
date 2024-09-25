@@ -18,8 +18,8 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 TDSModels taxingModels = new TDSModels
                 {
-                    _tDSPays = new TaxingLogic(LogicHelper).GetTDSOuts(),
-                    _config = new ConfigarationManager(LogicHelper).GetConfig(),
+                    _tDSPays = new TaxingLogic(BllCommonLogic).GetTDSOuts(),
+                    _config = new ConfigarationManager(BllCommonLogic).GetConfig(),
                     _state = GenericLogic.State()
                 };
                 return View(taxingModels);
@@ -35,9 +35,9 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (tDSPay.TDSPayId == Convert.ToInt64(UrlParameterId))
+                if (tDSPay.TDSPayId == Convert.ToInt64(id))
                 {
-                    if (!string.IsNullOrEmpty(new TaxingLogic(LogicHelper).SetTDSOut(tDSPay)))
+                    if (!string.IsNullOrEmpty(new TaxingLogic(BllCommonLogic).SetTDSOut(tDSPay)))
                     {
                         ReturnMessage = new ReturnObject
                         {
@@ -67,8 +67,8 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 TDSModels taxingModels = new TDSModels
                 {
-                    _tDSReceives = new TaxingLogic(LogicHelper).GetTDSIns(),
-                    _config = new ConfigarationManager(LogicHelper).GetConfig(),
+                    _tDSReceives = new TaxingLogic(BllCommonLogic).GetTDSIns(),
+                    _config = new ConfigarationManager(BllCommonLogic).GetConfig(),
                     _state = GenericLogic.State()
                 };
                 return View(taxingModels);
@@ -84,9 +84,9 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (tDSReceive.TDSReceiveId == Convert.ToInt64(UrlParameterId))
+                if (tDSReceive.TDSReceiveId == Convert.ToInt64(id))
                 {
-                    if (!string.IsNullOrEmpty(new TaxingLogic(LogicHelper).SetTDSIn(tDSReceive)))
+                    if (!string.IsNullOrEmpty(new TaxingLogic(BllCommonLogic).SetTDSIn(tDSReceive)))
                     {
                         ReturnMessage = new ReturnObject
                         {

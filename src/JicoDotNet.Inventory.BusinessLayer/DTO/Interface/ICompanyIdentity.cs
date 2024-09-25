@@ -4,7 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Sql.Entity
+namespace JicoDotNet.Inventory.BusinessLayer.DTO.Interface
 {
-    public interface INameValuePairs : IList<INameValuePair> {}
+    //public interface  
+    //{
+    //     
+    //}
 }

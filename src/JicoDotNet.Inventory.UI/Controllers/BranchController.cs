@@ -18,12 +18,12 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 BranchModels branchModels = new BranchModels()
                 {
-                    _branches = new BranchLogic(LogicHelper).Get(),
+                    _branches = new BranchLogic(BllCommonLogic).Get(),
                     _State = GenericLogic.State()
                 };
-                if (!string.IsNullOrEmpty(UrlParameterId))
+                if (!string.IsNullOrEmpty(id))
                 {
-                    branchModels._branch = branchModels._branches.Where(a => a.BranchId == Convert.ToInt64(UrlParameterId)).FirstOrDefault();
+                    branchModels._branch = branchModels._branches.Where(a => a.BranchId == Convert.ToInt64(id)).FirstOrDefault();
                 }
                 return View(branchModels);
             }
@@ -38,13 +38,13 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                branch.BranchId = UrlParameterId == null ? 0 : Convert.ToInt64(UrlParameterId);
+                branch.BranchId = id == null ? 0 : Convert.ToInt64(id);
 
                 #region Data Tracking...
                 DataTrackingLogicSet(branch);
                 #endregion
 
-                BranchLogic branchLogic = new BranchLogic(LogicHelper);
+                BranchLogic branchLogic = new BranchLogic(BllCommonLogic);
                 ReturnMessage = Convert.ToInt64(branchLogic.Set(branch)) > 0
                     ? new ReturnObject()
                     {
@@ -70,14 +70,14 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
+                if (new LoginManagement(BllCommonLogic).Authenticate(SessionPerson.UserEmail, Context))
                 {
-                    BranchLogic branchLogic = new BranchLogic(LogicHelper);
-                    long deactivateId = Convert.ToInt64(branchLogic.Deactive(UrlParameterId));
+                    BranchLogic branchLogic = new BranchLogic(BllCommonLogic);
+                    long deactivateId = Convert.ToInt64(branchLogic.Deactive(id));
                     return Json(new JsonReturnModels
                     {
                         _isSuccess = true,
-                        _returnObject = deactivateId > 0 ? UrlParameterId : "0"
+                        _returnObject = deactivateId > 0 ? id : "0"
                     }, JsonRequestBehavior.AllowGet);
                 }
                 else

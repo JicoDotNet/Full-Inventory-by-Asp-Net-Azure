@@ -2,8 +2,7 @@
 using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class.Custom;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Core;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
+using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -15,27 +14,27 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class GoodsReceiveNoteLogic : ConnectionString
     {
-        public GoodsReceiveNoteLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public GoodsReceiveNoteLogic(sCommonDto CommonObj) : base(CommonObj) { }
 
         public List<GoodsReceiveNote> GetGRNs()
         {
             return new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetGRN]",
-                new NameValuePairs
+                new nameValuePairs
                 {
                      
                      
-                    new NameValuePair("@QueryType", "LIST")
+                    new nameValuePair("@QueryType", "LIST")
                 }).ToList<GoodsReceiveNote>();
         }
 
         public List<PurchaseOrder> GetForGRN()
         {
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-            NameValuePairs nvp = new NameValuePairs()
+            nameValuePairs nvp = new nameValuePairs()
             {
                  
                  
-                new NameValuePair("@QueryType", "ENTRY")
+                new nameValuePair("@QueryType", "ENTRY")
             };
             List<PurchaseOrder> purchaseOrders = _sqlDBAccess.GetData("[dbo].[spGetGRN]", nvp).ToList<PurchaseOrder>();
             return purchaseOrders;
@@ -44,12 +43,12 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public PurchaseOrder GetForGRN(long purchaseOrderId)
         {
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-            NameValuePairs nvp = new NameValuePairs()
+            nameValuePairs nvp = new nameValuePairs()
             {
                  
                  
-                new NameValuePair("@PurchaseOrderId", purchaseOrderId),
-                new NameValuePair("@QueryType", "ENTRYSINGLE")
+                new nameValuePair("@PurchaseOrderId", purchaseOrderId),
+                new nameValuePair("@QueryType", "ENTRYSINGLE")
             };
             PurchaseOrder purchaseOrder = _sqlDBAccess.GetData("[dbo].[spGetGRN]", nvp).FirstOrDefault<PurchaseOrder>();
             return purchaseOrder;
@@ -59,12 +58,12 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             GoodsReceiveNote goodsReceiveNote = new GoodsReceiveNote();
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-            NameValuePairs nvp = new NameValuePairs()
+            nameValuePairs nvp = new nameValuePairs()
             {
                  
                  
-                new NameValuePair("@GRNId", GRNId),
-                new NameValuePair("@QueryType", "DETAIL")
+                new nameValuePair("@GRNId", GRNId),
+                new nameValuePair("@QueryType", "DETAIL")
             };
             DataSet ds = _sqlDBAccess.GetDataSet("[dbo].[spGetGRN]", nvp);
             goodsReceiveNote = ds.Tables[0].FirstOrDefault<GoodsReceiveNote>();
@@ -81,12 +80,12 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public List<GoodsReceiveNoteDetail> GetGRNDetails(long purchaseOrderId)
         {
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-            NameValuePairs nvp = new NameValuePairs()
+            nameValuePairs nvp = new nameValuePairs()
                 {
                      
                      
-                    new NameValuePair("@PurchaseOrderId", purchaseOrderId),
-                    new NameValuePair("@QueryType", "COMULTATIVE")
+                    new nameValuePair("@PurchaseOrderId", purchaseOrderId),
+                    new nameValuePair("@QueryType", "COMULTATIVE")
                 };
             List<GoodsReceiveNoteDetail> grndtl = _sqlDBAccess.GetData("[dbo].[spGetGRN]", nvp).ToList<GoodsReceiveNoteDetail>();
             return grndtl;
@@ -116,24 +115,24 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             if (grnDetailTypes.Count > 0)
             {
                 return new SqlDBAccess(CommonObj.SqlConnectionString)
-                    .InsertUpdateDeleteReturnObject("[dbo].[spSetGRN]", new NameValuePairs
+                    .InsertUpdateDeleteReturnObject("[dbo].[spSetGRN]", new nameValuePairs
                     {
-                        new NameValuePair("@PurchaseOrderId", goodsReceiveNote.PurchaseOrderId),
+                        new nameValuePair("@PurchaseOrderId", goodsReceiveNote.PurchaseOrderId),
                          
                          
-                        new NameValuePair("@GRNNumber", "GRN-"),
-                        new NameValuePair("@GRNDate", goodsReceiveNote.GRNDate),
-                        new NameValuePair("@IsDirect", false),
-                        new NameValuePair("@IsFullReceived", goodsReceiveNote.IsFullReceived),
-                        new NameValuePair("@VendorDONumber", goodsReceiveNote.VendorDONumber),
-                        new NameValuePair("@VendorInvoiceNumber", goodsReceiveNote.VendorInvoiceNumber),
-                        new NameValuePair("@VendorInvoiceDate", goodsReceiveNote.VendorInvoiceDate > new DateTime(2001, 1, 1)?
+                        new nameValuePair("@GRNNumber", "GRN-"),
+                        new nameValuePair("@GRNDate", goodsReceiveNote.GRNDate),
+                        new nameValuePair("@IsDirect", false),
+                        new nameValuePair("@IsFullReceived", goodsReceiveNote.IsFullReceived),
+                        new nameValuePair("@VendorDONumber", goodsReceiveNote.VendorDONumber),
+                        new nameValuePair("@VendorInvoiceNumber", goodsReceiveNote.VendorInvoiceNumber),
+                        new nameValuePair("@VendorInvoiceDate", goodsReceiveNote.VendorInvoiceDate > new DateTime(2001, 1, 1)?
                                                                 (object)goodsReceiveNote.VendorInvoiceDate : DBNull.Value),
-                        new NameValuePair("@WareHouseId", goodsReceiveNote.WareHouseId),
-                        new NameValuePair("@Remarks", goodsReceiveNote.Remarks),
-                        new NameValuePair("@RequestId", CommonObj.RequestId),
-                        new NameValuePair("@GRNDetails", grnDetailTypes.ToDataTable()),
-                        new NameValuePair("@QueryType", "INSERT")
+                        new nameValuePair("@WareHouseId", goodsReceiveNote.WareHouseId),
+                        new nameValuePair("@Remarks", goodsReceiveNote.Remarks),
+                        new nameValuePair("@RequestId", CommonObj.RequestId),
+                        new nameValuePair("@GRNDetails", grnDetailTypes.ToDataTable()),
+                        new nameValuePair("@QueryType", "INSERT")
                     },
                     "@OutParam"
                 ).ToString();
@@ -193,37 +192,37 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             if (grnDetailTypes.Count > 0 && orderDetailTypes.Count > 0)
             {
                 _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-                NameValuePairs nvp = new NameValuePairs()
+                nameValuePairs nvp = new nameValuePairs()
                 {
                      
                      
 
                     //PO
-                    new NameValuePair("@PurchaseTypeId", goodsReceiveNoteDirect.PurchaseTypeId),
-                    new NameValuePair("@VendorId", goodsReceiveNoteDirect.VendorId),
-                    new NameValuePair("@PurchaseOrderDate", goodsReceiveNoteDirect.GRNDate),
-                    new NameValuePair("@PurchaseOrderAmount", goodsReceiveNoteDirect.PurchaseOrderAmount),
-                    new NameValuePair("@PurchaseOrderTaxAmount", goodsReceiveNoteDirect.PurchaseOrderTaxAmount),
-                    new NameValuePair("@PurchaseOrderTotalAmount", goodsReceiveNoteDirect.PurchaseOrderTotalAmount),                    
-                    new NameValuePair("@PurchaseOrderDetails", orderDetailTypes.ToDataTable()),
+                    new nameValuePair("@PurchaseTypeId", goodsReceiveNoteDirect.PurchaseTypeId),
+                    new nameValuePair("@VendorId", goodsReceiveNoteDirect.VendorId),
+                    new nameValuePair("@PurchaseOrderDate", goodsReceiveNoteDirect.GRNDate),
+                    new nameValuePair("@PurchaseOrderAmount", goodsReceiveNoteDirect.PurchaseOrderAmount),
+                    new nameValuePair("@PurchaseOrderTaxAmount", goodsReceiveNoteDirect.PurchaseOrderTaxAmount),
+                    new nameValuePair("@PurchaseOrderTotalAmount", goodsReceiveNoteDirect.PurchaseOrderTotalAmount),                    
+                    new nameValuePair("@PurchaseOrderDetails", orderDetailTypes.ToDataTable()),
 
                     //GRN                       
-                    new NameValuePair("@GRNNumber", "GRN-"),
-                    new NameValuePair("@GRNDate", goodsReceiveNoteDirect.GRNDate),
-                    new NameValuePair("@IsDirect", true),
-                    new NameValuePair("@IsFullReceived", true),
-                    new NameValuePair("@VendorDONumber", goodsReceiveNoteDirect.VendorDONumber),
-                    new NameValuePair("@VendorInvoiceNumber", goodsReceiveNoteDirect.VendorInvoiceNumber),
-                    new NameValuePair("@VendorInvoiceDate", goodsReceiveNoteDirect.VendorInvoiceDate > new DateTime(2001, 1, 1)?
+                    new nameValuePair("@GRNNumber", "GRN-"),
+                    new nameValuePair("@GRNDate", goodsReceiveNoteDirect.GRNDate),
+                    new nameValuePair("@IsDirect", true),
+                    new nameValuePair("@IsFullReceived", true),
+                    new nameValuePair("@VendorDONumber", goodsReceiveNoteDirect.VendorDONumber),
+                    new nameValuePair("@VendorInvoiceNumber", goodsReceiveNoteDirect.VendorInvoiceNumber),
+                    new nameValuePair("@VendorInvoiceDate", goodsReceiveNoteDirect.VendorInvoiceDate > new DateTime(2001, 1, 1)?
                                                             (object)goodsReceiveNoteDirect.VendorInvoiceDate : DBNull.Value),
-                    new NameValuePair("@WareHouseId", goodsReceiveNoteDirect.WareHouseId),                    
-                    new NameValuePair("@GRNDetail", grnDetailTypes.ToDataTable()),
+                    new nameValuePair("@WareHouseId", goodsReceiveNoteDirect.WareHouseId),                    
+                    new nameValuePair("@GRNDetail", grnDetailTypes.ToDataTable()),
 
                     // Common
-                    new NameValuePair("@Remarks", goodsReceiveNoteDirect.Remarks),
+                    new nameValuePair("@Remarks", goodsReceiveNoteDirect.Remarks),
 
-                    new NameValuePair("@RequestId", CommonObj.RequestId),                    
-                    new NameValuePair("@QueryType", "INSERT")
+                    new nameValuePair("@RequestId", CommonObj.RequestId),                    
+                    new nameValuePair("@QueryType", "INSERT")
                 };
                 return _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetGRNDirect]", nvp, "@OutParam").ToString();
             }
@@ -233,11 +232,11 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public List<GoodsReceiveNote> GetForReturn()
         {
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-            NameValuePairs nvp = new NameValuePairs()
+            nameValuePairs nvp = new nameValuePairs()
             {
                  
                  
-                new NameValuePair("@QueryType", "RETURN")
+                new nameValuePair("@QueryType", "RETURN")
             };
             List<GoodsReceiveNote> purchaseOrders = _sqlDBAccess.GetData("[dbo].[spGetGRN]", nvp).ToList<GoodsReceiveNote>();
             return purchaseOrders;

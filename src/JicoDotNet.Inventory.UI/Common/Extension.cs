@@ -3,7 +3,7 @@
     using System.Text;
     using System.Web.Configuration;
 
-    public static class MvcExtension
+    public static class Extension
     {
         public static string UrlIdEncrypt(this HtmlHelper htmlHelper, object id, bool isEscape = true)
         {

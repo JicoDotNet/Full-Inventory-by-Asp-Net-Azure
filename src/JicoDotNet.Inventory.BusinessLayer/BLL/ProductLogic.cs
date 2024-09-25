@@ -2,8 +2,7 @@
 using DataAccess.Sql;
 using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Core;
+using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,13 +10,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using DataAccess.Sql.Entity;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class ProductLogic : ConnectionString
     {
-        public ProductLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public ProductLogic(sCommonDto CommonObj) : base(CommonObj) { }
 
         public string TypeSet(ProductType productType)
         {
@@ -28,13 +26,13 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             else
                 qt = "INSERT";
 
-            NameValuePairs nvp = new NameValuePairs
+            nameValuePairs nvp = new nameValuePairs
             {
-                new NameValuePair("@ProductTypeId", productType.ProductTypeId),
-                new NameValuePair("@ProductTypeName", productType.ProductTypeName),
-                new NameValuePair("@Description", productType.Description),
-                new NameValuePair("@RequestId", CommonObj.RequestId),
-                new NameValuePair("@QueryType", qt)
+                new nameValuePair("@ProductTypeId", productType.ProductTypeId),
+                new nameValuePair("@ProductTypeName", productType.ProductTypeName),
+                new nameValuePair("@Description", productType.Description),
+                new nameValuePair("@RequestId", CommonObj.RequestId),
+                new nameValuePair("@QueryType", qt)
             };
 
             string ReturnDS = _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetProductType]", nvp, "@OutParam").ToString();
@@ -46,13 +44,13 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             string qt = "DEACTIVE";
 
-            NameValuePairs nvp = new NameValuePairs
+            nameValuePairs nvp = new nameValuePairs
             {
-                new NameValuePair("@ProductTypeId", ProductTypeId),
+                new nameValuePair("@ProductTypeId", ProductTypeId),
                  
                  
-                new NameValuePair("@RequestId", CommonObj.RequestId),
-                new NameValuePair("@QueryType", qt)
+                new nameValuePair("@RequestId", CommonObj.RequestId),
+                new nameValuePair("@QueryType", qt)
             };
 
             string ReturnDS = _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetProductType]", nvp, "@OutParam").ToString();
@@ -62,13 +60,15 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public List<ProductType> TypeGet()
         {
             return new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetProductType]",
-                new NameValuePairs
+                new nameValuePairs
                 {
-                    new NameValuePair("@QueryType", "ALL")
+                     
+                     
+                    new nameValuePair("@QueryType", "ALL")
                 }).ToList<ProductType>();
         }
 
-        public string Set(IProduct product)
+        public string Set(Product product)
         {
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             string qt = string.Empty;
@@ -77,32 +77,33 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             else
                 qt = "INSERT";
 
-            INameValuePairs nvp = new NameValuePairs
+            nameValuePairs nvp = new nameValuePairs
             {
-                new NameValuePair("@ProductId", product.ProductId),                 
+                new nameValuePair("@ProductId", product.ProductId),
                  
-                new NameValuePair("@ProductTypeId", product.ProductTypeId),
-                new NameValuePair("@ProductInOut", product.ProductInOut),
-                new NameValuePair("@Brand", product.Brand),
-                new NameValuePair("@ProductName", product.ProductName),
-                new NameValuePair("@ProductCode", product.ProductCode),
+                 
+                new nameValuePair("@ProductTypeId", product.ProductTypeId),
+                new nameValuePair("@ProductInOut", product.ProductInOut),
+                new nameValuePair("@Brand", product.Brand),
+                new nameValuePair("@ProductName", product.ProductName),
+                new nameValuePair("@ProductCode", product.ProductCode),
 
-                new NameValuePair("@IsGoods", product.IsGoods),
-                new NameValuePair("@SKU", product.SKU),
-                new NameValuePair("@PurchasePrice", product.PurchasePrice),
-                new NameValuePair("@SalePrice", product.SalePrice),
+                new nameValuePair("@IsGoods", product.IsGoods),
+                new nameValuePair("@SKU", product.SKU),
+                new nameValuePair("@PurchasePrice", product.PurchasePrice),
+                new nameValuePair("@SalePrice", product.SalePrice),
 
-                new NameValuePair("@HSNSAC", product.HSNSAC),
-                new NameValuePair("@TaxPercentage", product.TaxPercentage),
+                new nameValuePair("@HSNSAC", product.HSNSAC),
+                new nameValuePair("@TaxPercentage", product.TaxPercentage),
 
-                new NameValuePair("@Description", product.Description?.Trim()),
-                new NameValuePair("@IsPerishableProduct", product.IsPerishableProduct),
-                new NameValuePair("@HasExpirationDate", product.HasExpirationDate),
-                new NameValuePair("@HasBatchNo", product.HasBatchNo),
-                new NameValuePair("@ProductImageUrl", product.ProductImageUrl),
-                new NameValuePair("@UnitOfMeasureId", product.UnitOfMeasureId),
-                new NameValuePair("@RequestId", CommonObj.RequestId),
-                new NameValuePair("@QueryType", qt)
+                new nameValuePair("@Description", product.Description?.Trim()),
+                new nameValuePair("@IsPerishableProduct", product.IsPerishableProduct),
+                new nameValuePair("@HasExpirationDate", product.HasExpirationDate),
+                new nameValuePair("@HasBatchNo", product.HasBatchNo),
+                new nameValuePair("@ProductImageUrl", product.ProductImageUrl),
+                new nameValuePair("@UnitOfMeasureId", product.UnitOfMeasureId),
+                new nameValuePair("@RequestId", CommonObj.RequestId),
+                new nameValuePair("@QueryType", qt)
             };
 
             string ReturnDS = _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetProduct]", nvp, "@OutParam").ToString();
@@ -114,13 +115,13 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             string qt = "DEACTIVE";
 
-            NameValuePairs nvp = new NameValuePairs
+            nameValuePairs nvp = new nameValuePairs
             {
-                new NameValuePair("@ProductId", ProductId),
+                new nameValuePair("@ProductId", ProductId),
                  
                  
-                new NameValuePair("@RequestId", CommonObj.RequestId),
-                new NameValuePair("@QueryType", qt)
+                new nameValuePair("@RequestId", CommonObj.RequestId),
+                new nameValuePair("@QueryType", qt)
             };
 
             string ReturnDS = _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetProduct]", nvp, "@OutParam").ToString();
@@ -130,11 +131,11 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public List<Product> Get(bool? IsActive = null)
         {
             List<Product> products = new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetProduct]",
-                new NameValuePairs
+                new nameValuePairs
                 {
                      
                      
-                    new NameValuePair("@QueryType", "ALL")
+                    new nameValuePair("@QueryType", "ALL")
                 }).ToList<Product>();
             if (IsActive != null)
             {
@@ -149,22 +150,22 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public List<Product> GetIn()
         {
             return new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetProduct]",
-                new NameValuePairs
+                new nameValuePairs
                 {
                      
                      
-                    new NameValuePair("@QueryType", "INTIME")
+                    new nameValuePair("@QueryType", "INTIME")
                 }).ToList<Product>();
         }
 
         public List<Product> GetOut()
         {
             return new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetProduct]",
-                new NameValuePairs
+                new nameValuePairs
                 {
                      
                      
-                    new NameValuePair("@QueryType", "OUTTIME")
+                    new nameValuePair("@QueryType", "OUTTIME")
                 }).ToList<Product>();
         }
 
@@ -172,9 +173,9 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             if (httpFileBase != null)
             {
-                BlobManager = new ExecuteBlobManager("MyCompany", CommonObj.NoSqlConnectionString);
+                _blobManager = new ExecuteBlobManager("MyCompany", CommonObj.NoSqlConnectionString);
                 string[] Dirs = { "Product" };
-                return BlobManager.UploadFile(httpFileBase, Dirs, CommonObj.RequestId);
+                return _blobManager.UploadFile(httpFileBase, Dirs, CommonObj.RequestId);
             }
             else
                 return null;

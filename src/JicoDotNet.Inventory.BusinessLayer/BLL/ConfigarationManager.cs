@@ -2,19 +2,18 @@
 using Newtonsoft.Json;
 using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Core;
+using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class ConfigarationManager : ConnectionString
     {
-        public ConfigarationManager(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public ConfigarationManager(sCommonDto CommonObj) : base(CommonObj) { }
 
         public void SetConfig(Config config)
         {
@@ -23,14 +22,14 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             config.TransactionDate = GenericLogic.IstNow;
             config.IsActive = true;
 
-            TableManager = new ExecuteTableManager("Config", CommonObj.NoSqlConnectionString);
-            TableManager.UpdateEntity(config);
+            _tableManager = new ExecuteTableManager("Config", CommonObj.NoSqlConnectionString);
+            _tableManager.UpdateEntity(config);
         }
 
         public Config GetConfig()
         {
-            TableManager = new ExecuteTableManager("Config", CommonObj.NoSqlConnectionString);
-            Config config = TableManager.RetrieveEntity<Config>("").FirstOrDefault();
+            _tableManager = new ExecuteTableManager("Config", CommonObj.NoSqlConnectionString);
+            Config config = _tableManager.RetrieveEntity<Config>("").FirstOrDefault();
             if (config == null)
             {
                 config = new Config

@@ -44,7 +44,7 @@ namespace JicoDotNet.Inventory.UI.Areas.Report.Controllers
             {
                 if (gst.SearchDate.IsInOneYearRange())
                 {
-                    TaxReportLogic taxReport = new TaxReportLogic(LogicHelper);
+                    TaxReportLogic taxReport = new TaxReportLogic(BllCommonLogic);
                     TaxReportModels taxReportModels = new TaxReportModels
                     {
                         _rGSTOut = taxReport.GSTOutputs(gst)
@@ -82,7 +82,7 @@ namespace JicoDotNet.Inventory.UI.Areas.Report.Controllers
             {
                 if (gst.SearchDate.IsInOneYearRange())
                 {
-                    TaxReportLogic taxReport = new TaxReportLogic(LogicHelper);
+                    TaxReportLogic taxReport = new TaxReportLogic(BllCommonLogic);
                     TaxReportModels taxReportModels = new TaxReportModels
                     {
                         _rGSTIn = taxReport.GSTInputs(gst)

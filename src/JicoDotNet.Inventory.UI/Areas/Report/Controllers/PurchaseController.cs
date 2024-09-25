@@ -17,7 +17,7 @@ namespace JicoDotNet.Inventory.UI.Areas.Report.Controllers
         {
             try
             {
-                VendorLogic vendorLogic = new VendorLogic(LogicHelper);
+                VendorLogic vendorLogic = new VendorLogic(BllCommonLogic);
                 PurchaseReportModels purchaseReportModels = new PurchaseReportModels
                 {
                     _vendorTypes = vendorLogic.TypeGet(),
@@ -37,7 +37,7 @@ namespace JicoDotNet.Inventory.UI.Areas.Report.Controllers
             {
                 if (vendorPurchase.SearchDate.IsInOneYearRange())
                 {
-                    PurchaseReportLogic purchaseReport = new PurchaseReportLogic(LogicHelper);
+                    PurchaseReportLogic purchaseReport = new PurchaseReportLogic(BllCommonLogic);
                     PurchaseReportModels salesReportModels = new PurchaseReportModels
                     {
                         _rVendorPurchase = purchaseReport.VendorWise(vendorPurchase)
@@ -60,7 +60,7 @@ namespace JicoDotNet.Inventory.UI.Areas.Report.Controllers
         {
             try
             {
-                ProductLogic productLogic = new ProductLogic(LogicHelper);
+                ProductLogic productLogic = new ProductLogic(BllCommonLogic);
                 PurchaseReportModels salesReportModels = new PurchaseReportModels
                 {
                     _productTypes = productLogic.TypeGet(),
@@ -81,7 +81,7 @@ namespace JicoDotNet.Inventory.UI.Areas.Report.Controllers
             {
                 if (productPurchase.SearchDate.IsInOneYearRange())
                 {
-                    PurchaseReportLogic salesReport = new PurchaseReportLogic(LogicHelper);
+                    PurchaseReportLogic salesReport = new PurchaseReportLogic(BllCommonLogic);
                     PurchaseReportModels salesReportModels = new PurchaseReportModels
                     {
                         _rProductPurchase = salesReport.ProductWise(productPurchase)

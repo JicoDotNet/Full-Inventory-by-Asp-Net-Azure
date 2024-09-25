@@ -24,7 +24,7 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 return PartialView("_PartialHmMaster", new HomeModels
                 {
-                    _homeMasterCount = new MasterDS(LogicHelper).CountHome(),
+                    _homeMasterCount = new MasterDS(BllCommonLogic).CountHome(),
                 });
             }
             catch (Exception ex)

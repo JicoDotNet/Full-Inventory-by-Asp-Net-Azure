@@ -3,8 +3,7 @@ using DataAccess.Sql;
 using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class.Custom;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Core;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
+using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,22 +16,22 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class StockLogic : ConnectionString
     {
-        public StockLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public StockLogic(sCommonDto CommonObj) : base(CommonObj) { }
 
         public List<Stock> Get(Stock stock)
         {
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
 
-            NameValuePairs nvp = new NameValuePairs()
+            nameValuePairs nvp = new nameValuePairs()
             {
                  
                  
 
-                new NameValuePair("@WareHouseId", stock.WareHouseId),
-                new NameValuePair("@ProductId", stock.ProductId),
-                new NameValuePair("@GRNOrShipmentDate", stock.GRNOrShipmentDate > new DateTime(2001, 1, 1)?
+                new nameValuePair("@WareHouseId", stock.WareHouseId),
+                new nameValuePair("@ProductId", stock.ProductId),
+                new nameValuePair("@GRNOrShipmentDate", stock.GRNOrShipmentDate > new DateTime(2001, 1, 1)?
                                                            (object)stock.GRNOrShipmentDate : DBNull.Value),
-                new NameValuePair("@QueryType", "CURRENT")
+                new nameValuePair("@QueryType", "CURRENT")
             };
             return _sqlDBAccess.GetData("[dbo].[spGetStock]", nvp).ToList<Stock>();
         }
@@ -41,15 +40,15 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
 
-            NameValuePairs nvp = new NameValuePairs()
+            nameValuePairs nvp = new nameValuePairs()
             {
                  
                  
 
-                new NameValuePair("@WareHouseId", stock.WareHouseId),
-                new NameValuePair("@ProductId", stock.ProductId),
+                new nameValuePair("@WareHouseId", stock.WareHouseId),
+                new nameValuePair("@ProductId", stock.ProductId),
                 
-                new NameValuePair("@QueryType", "DETAIL")
+                new nameValuePair("@QueryType", "DETAIL")
             };
             DataSet dataSet = _sqlDBAccess.GetDataSet("[dbo].[spGetStock]", nvp);
             List<Stock> stocks = dataSet.Tables[0].ToList<Stock>();
@@ -68,13 +67,13 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
 
-            NameValuePairs nvp = new NameValuePairs()
+            nameValuePairs nvp = new nameValuePairs()
             {
                  
                  
 
-                new NameValuePair("@ProductId", ProductId),
-                new NameValuePair("@QueryType", "NOTOPNINGSTOCK")
+                new nameValuePair("@ProductId", ProductId),
+                new nameValuePair("@QueryType", "NOTOPNINGSTOCK")
             };
             try
             {
@@ -115,13 +114,13 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             if (opnStkDetailTypes.Count > 0)
             {
                 return new SqlDBAccess(CommonObj.SqlConnectionString)
-                    .InsertUpdateDeleteReturnObject("[dbo].[spSetOpeningStock]", new NameValuePairs
+                    .InsertUpdateDeleteReturnObject("[dbo].[spSetOpeningStock]", new nameValuePairs
                     {
                          
                          
-                        new NameValuePair("@RequestId", CommonObj.RequestId),
-                        new NameValuePair("@OpeningStockDetail", opnStkDetailTypes.ToDataTable()),
-                        new NameValuePair("@QueryType", "INSERT")
+                        new nameValuePair("@RequestId", CommonObj.RequestId),
+                        new nameValuePair("@OpeningStockDetail", opnStkDetailTypes.ToDataTable()),
+                        new nameValuePair("@QueryType", "INSERT")
                     },"@OutParam"
                 ).ToString();
             }
@@ -135,9 +134,9 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             if (httpFileBase != null)
             {
-                BlobManager = new ExecuteBlobManager("MyCompany", CommonObj.NoSqlConnectionString);
+                _blobManager = new ExecuteBlobManager("MyCompany", CommonObj.NoSqlConnectionString);
                 string[] Dirs = { "BulkUpload", "ProductOpeningStock", ProductId };
-                return BlobManager.UploadFile(httpFileBase, Dirs, CommonObj.RequestId);
+                return _blobManager.UploadFile(httpFileBase, Dirs, CommonObj.RequestId);
             }
             else
                 return null;

@@ -9,20 +9,44 @@
 
     public class GenericLogic
     {
-        public static DateTime IstNow => DateTime.UtcNow.AddMinutes(330);
+        public static DateTime IstNow
+        {
+            get
+            {
+                return DateTime.UtcNow.AddMinutes(330);
+            }
+        }
 
-        public static string DisplayLongDateFormat => "MMM-dd-yyyy, hh:mm:ss tt, ddd";
+        public static string DisplayLongDateFormat
+        {
+            get
+            {
+                return "MMM-dd-yyyy, hh:mm:ss tt, ddd";
+            }
+        }
 
-        public static string DisplayShortDateFormat => "MMM-dd-yyyy, ddd";
+        public static string DisplayShortDateFormat
+        {
+            get
+            {
+                return "MMM-dd-yyyy, ddd";
+            }
+        }
 
-        public static string DateMaskFormat => "dd/MM/yyyy";
+        public static string DateMaskFormat
+        {
+            get
+            {
+                return "dd/MM/yyyy";
+            }
+        }
 
-        public static string StringGenerate(int lengths = 16)
+        public static string StringGenerate(int lenght = 16)
         {
             NameGenerator();
             Random random = new Random();
-            StringBuilder buffer = new StringBuilder(lengths);
-            for (int i = 0; i < lengths; i++)
+            StringBuilder buffer = new StringBuilder(lenght);
+            for (int i = 0; i < lenght; i++)
             {
                 int randomNumber = random.Next(0, _characters.Count);
                 char randomChar = _characters[randomNumber];
@@ -138,16 +162,16 @@
                 if (GSTNumber.Length != 15)
                     return null;
 
-                string stateCode = GSTNumber.Substring(0, 2);
-                if (stateCode != "99")
+                string StateCode = GSTNumber.Substring(0, 2);
+                if (StateCode != "99")
                 {
-                    if (State().FirstOrDefault(a => a.Key == stateCode).Key != null)
+                    if (State().FirstOrDefault(a => a.Key == StateCode).Key != null)
                     {
-                        return stateCode;
+                        return StateCode;
                     }
                 }
                 else
-                    return stateCode;
+                    return StateCode;
             }
             catch
             {
@@ -160,11 +184,12 @@
         {
             if (string.IsNullOrEmpty(GSTNumber)) return false;
 
-            string strRegex = "^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$";
+            string strRegex = @"^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$";
             Regex re = new Regex(strRegex);
             if (re.IsMatch(GSTNumber))
                 return true;
-            return false;
+            else
+                return false;
         }
 
         public static Dictionary<string, string> CompanyType()
@@ -184,7 +209,7 @@
             };
         }
 
-        public static IDictionary<bool, string> YesNo()
+        public static Dictionary<bool, string> YesNo()
         {
             return new Dictionary<bool, string>
             {
@@ -193,7 +218,7 @@
             };
         }
 
-        public static IDictionary<int, string> ProductCategory()
+        public static Dictionary<int, string> ProductCategory()
         {
             return new Dictionary<int, string>
             {
@@ -203,7 +228,7 @@
             };
         }
 
-        public static IDictionary<short, string> PaymentMode()
+        public static Dictionary<short, string> PaymentMode()
         {
             return new Dictionary<short, string>
             {
@@ -216,7 +241,7 @@
             };
         }
 
-        public static IDictionary<Microsoft.WindowsAzure.Storage.Table.EdmType, string> DataType()
+        public static Dictionary<Microsoft.WindowsAzure.Storage.Table.EdmType, string> DataType()
         {
             return new Dictionary<Microsoft.WindowsAzure.Storage.Table.EdmType, string>
             {
@@ -316,7 +341,7 @@
         {
             try
             {
-                IDictionary<string, string> characters = new Dictionary<string, string>
+                Dictionary<string, string> characters = new Dictionary<string, string>
                 {
                     { "0", "_" },
                     { "1", "W" },
@@ -355,7 +380,7 @@
         {
             try
             {
-                IDictionary<string, string> characters = new Dictionary<string, string>
+                Dictionary<string, string> characters = new Dictionary<string, string>
                 {
                     { "_", "0" },
                     { "W", "1" },
@@ -420,13 +445,16 @@
         {
             try
             {
-                long amountInt = (long)amount;
-                long amountDec = (long)Math.Round((amount - amountInt) * 100);
-                if (amountDec == 0)
+                long amount_int = (long)amount;
+                long amount_dec = (long)Math.Round((amount - amount_int) * 100);
+                if (amount_dec == 0)
                 {
-                    return Convert(amountInt) + " Only.";
+                    return Convert(amount_int) + " Only.";
                 }
-                return Convert(amountInt) + " Point " + Convert(amountDec) + " Only.";
+                else
+                {
+                    return Convert(amount_int) + " Point " + Convert(amount_dec) + " Only.";
+                }
             }
             catch (Exception e)
             {

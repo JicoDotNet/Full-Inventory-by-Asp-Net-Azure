@@ -190,6 +190,7 @@
     <Build Include="dbo\Stored Procedures\spGetBill.sql" />
     <Build Include="dbo\Stored Procedures\spDsMaster.sql" />
     <Build Include="dbo\Stored Procedures\_FindByKeyWord.sql" />
+    <Build Include="dbo\User Defined Types\UserMenuType.sql" />
     <Build Include="dbo\User Defined Types\StockTransferDetailType.sql" />
     <Build Include="dbo\User Defined Types\StockAdjustDetailType.sql" />
     <Build Include="dbo\User Defined Types\ShipmentDetailType.sql" />
