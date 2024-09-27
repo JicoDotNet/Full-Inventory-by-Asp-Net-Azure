@@ -1,24 +1,22 @@
 ﻿using DataAccess.Sql;
 using JicoDotNet.Inventory.BusinessLayer.Common;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class.Custom;
-using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
-using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using JicoDotNet.Inventory.Core.Common;
+using JicoDotNet.Inventory.Core.Custom;
+using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Inventory.Core.Models;
+using JicoDotNet.Inventory.Core.Custom.Interface;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class StockTransferLogic : ConnectionString
     {
-        public StockTransferLogic(sCommonDto CommonObj) : base(CommonObj) { }
+        public StockTransferLogic(ICommonRequestDto commonObj) : base(commonObj) { }
 
         public string Set(StockTransfer stockTransfer)
         {
-            List<StockTransferDetailType> stDetailTypes = new List<StockTransferDetailType>();
+            List<IStockTransferDetailType> stDetailTypes = new List<IStockTransferDetailType>();
             int count = 1;
             if (stockTransfer.StockTransferDetails != null)
             {
@@ -44,18 +42,18 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             if (stDetailTypes.Count > 0)
             {
                 return new SqlDBAccess(CommonObj.SqlConnectionString)
-                    .InsertUpdateDeleteReturnObject("[dbo].[spSetStockTransfer]", new nameValuePairs
+                    .DataManipulation("[dbo].[spSetStockTransfer]", new NameValuePairs
                     {
                          
                          
-                        new nameValuePair("@FromWareHouseId", stockTransfer.FromWareHouseId),
-                        new nameValuePair("@ToWareHouseId", stockTransfer.ToWareHouseId),
-                        new nameValuePair("@StockTransferNumber", "SKT-"),
-                        new nameValuePair("@StockTransferDate", stockTransfer.StockTransferDate),
-                        new nameValuePair("@Remarks", stockTransfer.Remarks),
-                        new nameValuePair("@RequestId", CommonObj.RequestId),
-                        new nameValuePair("@STDetail", stDetailTypes.ToDataTable()),
-                        new nameValuePair("@QueryType", "INSERT")
+                        new NameValuePair("@FromWareHouseId", stockTransfer.FromWareHouseId),
+                        new NameValuePair("@ToWareHouseId", stockTransfer.ToWareHouseId),
+                        new NameValuePair("@StockTransferNumber", "SKT-"),
+                        new NameValuePair("@StockTransferDate", stockTransfer.StockTransferDate),
+                        new NameValuePair("@Remarks", stockTransfer.Remarks),
+                        new NameValuePair("@RequestId", CommonObj.RequestId),
+                        new NameValuePair("@STDetail", stDetailTypes.ToDataTable()),
+                        new NameValuePair("@QueryType", "INSERT")
                     }, "@OutParam"
                 ).ToString();
             }

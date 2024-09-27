@@ -72,7 +72,7 @@ BEGIN
 				WHERE bil.BillId = @BillId
 				ORDER BY bil.BillDate DESC, bil.BillId DESC;
 			END
-			ELSE IF (@QueryType = 'COMULTATIVE')
+			ELSE IF (@QueryType = 'COMMUTATIVE')
 			BEGIN
 				SELECT
 					0 AS BillDetailId,

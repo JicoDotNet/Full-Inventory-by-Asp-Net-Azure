@@ -9,6 +9,8 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using JicoDotNet.Inventory.BusinessLayer.Common;
+using JicoDotNet.Inventory.Core.Enumeration;
+using JicoDotNet.Inventory.Core.Models;
 
 namespace JicoDotNet.Inventory.UIControllers
 {
@@ -21,8 +23,8 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 InvoiceModels invoiceModels = new InvoiceModels()
                 {
-                    _invoices = new InvoiceLogic(BllCommonLogic).GetRetailInvoices(),
-                    _config = new ConfigarationManager(BllCommonLogic).GetConfig(),
+                    _invoices = new InvoiceLogic(LogicHelper).GetRetailInvoices(),
+                    _config = new ConfigarationManager(LogicHelper).GetConfig(),
                     _company = SessionCompany,
                 };
                 return View(invoiceModels);
@@ -41,11 +43,11 @@ namespace JicoDotNet.Inventory.UIControllers
                 RetailModels retailModels = new RetailModels()
                 {
                     _company = SessionCompany,
-                    _wareHouses = new WareHouseLogic(BllCommonLogic).Get(true).Where(a => a.IsRetailCounter).ToList(),
+                    _wareHouses = new WareHouseLogic(LogicHelper).Get(true).Where(a => a.IsRetailCounter).ToList(),
                     _companyType = GenericLogic.CompanyType(),
                     _state = GenericLogic.State(),
                     _YesNo = GenericLogic.YesNo(),
-                    _config = new ConfigarationManager(BllCommonLogic).GetConfig()
+                    _config = new ConfigarationManager(LogicHelper).GetConfig()
                 };
                 return View(retailModels);
             }
@@ -70,7 +72,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 retailSales.HandOverPerson = retailSales.ContactPerson;
                 retailSales.HandOverPersonMobile = retailSales.Mobile;
 
-                long Id = new RetailLogic(BllCommonLogic).Set(retailSales, 
+                long Id = new RetailLogic(LogicHelper).Set(retailSales, 
                     SessionCompany, 
                     form.AllKeys.ToDictionary(key => key, value => (object)form[value]), 
                     out short Rtpe);
@@ -99,7 +101,7 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 SalesOrderModels salesOrderModels = new SalesOrderModels()
                 {
-                    _config = new ConfigarationManager(BllCommonLogic).GetConfig(),
+                    _config = new ConfigarationManager(LogicHelper).GetConfig(),
                     _isGstEnabled = Gst == 1
                 };
                 return PartialView("_PartialRetailDetails", salesOrderModels);
@@ -116,10 +118,10 @@ namespace JicoDotNet.Inventory.UIControllers
             try
             {
                 ShipmentModels shipmentModels = new ShipmentModels();
-                if (!string.IsNullOrEmpty(id) && !string.IsNullOrEmpty(id2))
+                if (!string.IsNullOrEmpty(UrlParameterId) && !string.IsNullOrEmpty(UrlParameterId2))
                 {
-                    shipmentModels._config = new ConfigarationManager(BllCommonLogic).GetConfig();
-                    shipmentModels._stocks = new StockLogic(BllCommonLogic).GetDetail(new Stock { WareHouseId = Convert.ToInt64(id), ProductId = Convert.ToInt64(id2) });
+                    shipmentModels._config = new ConfigarationManager(LogicHelper).GetConfig();
+                    shipmentModels._stocks = new StockLogic(LogicHelper).GetDetail(new Stock { WareHouseId = Convert.ToInt64(UrlParameterId), ProductId = Convert.ToInt64(UrlParameterId2) });
                 }
 
                 return PartialView("_PartialStockDetailRetail", shipmentModels);
@@ -135,20 +137,20 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (string.IsNullOrEmpty(id))
+                if (string.IsNullOrEmpty(UrlParameterId))
                     return RedirectToAction("Sales");
 
                 PaymentModels paymentModels = new PaymentModels
                 {
-                    _config = new ConfigarationManager(BllCommonLogic).GetConfig()
+                    _config = new ConfigarationManager(LogicHelper).GetConfig()
                 };
-                paymentModels._invoice = new InvoiceLogic(BllCommonLogic).GetForDetail(Convert.ToInt64(id));
-                paymentModels._customer = new CustomerLogic(BllCommonLogic).Get(paymentModels._invoice.CustomerId, true);
-                paymentModels._companyBanks = new CompanyManagment(BllCommonLogic).BankGet(true);
+                paymentModels._invoice = new InvoiceLogic(LogicHelper).GetForDetail(Convert.ToInt64(UrlParameterId));
+                paymentModels._customer = new CustomerLogic(LogicHelper).Get(paymentModels._invoice.CustomerId, true);
+                paymentModels._companyBanks = new CompanyManagment(LogicHelper).BankGet(true);
                 paymentModels._paymentMode = GenericLogic.PaymentMode();
                 if (paymentModels._invoice != null)
                 {
-                    paymentModels._paymentInDetail = new PaymentLogic(BllCommonLogic)
+                    paymentModels._paymentInDetail = new PaymentLogic(LogicHelper)
                         .GetPaymentInDetails(paymentModels._invoice.CustomerId)
                         .FirstOrDefault(a => a.InvoiceId == paymentModels._invoice.InvoiceId);
                 }
@@ -182,7 +184,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (string.IsNullOrEmpty(id))
+                if (string.IsNullOrEmpty(UrlParameterId))
                     return RedirectToAction("Sales", new { id = string.Empty });
 
                 foreach (PaymentInDetail inDetail in paymentIn.PaymentInDetails)
@@ -195,7 +197,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 DataTrackingLogicSet(paymentIn);
                 #endregion
 
-                PaymentLogic paymentLogic = new PaymentLogic(BllCommonLogic);
+                PaymentLogic paymentLogic = new PaymentLogic(LogicHelper);
                 if (Convert.ToInt64(paymentLogic.SetIn(paymentIn)) > 0)
                 {
                     SMSSendTrack sMSSend = new SMSSendTrack
@@ -219,7 +221,7 @@ namespace JicoDotNet.Inventory.UIControllers
                         Status = false
                     };
                 }
-                return RedirectToAction("Invoice", new { id = UrlIdEncrypt(id, false) });
+                return RedirectToAction("Invoice", new { id = UrlIdEncrypt(UrlParameterId, false) });
             }
             catch (Exception ex)
             {
@@ -232,19 +234,19 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (string.IsNullOrEmpty(id))
+                if (string.IsNullOrEmpty(UrlParameterId))
                 {
                     return RedirectToAction("Index");
                 }
-                InvoiceLogic invoiceLogic = new InvoiceLogic(BllCommonLogic);
+                InvoiceLogic invoiceLogic = new InvoiceLogic(LogicHelper);
                 InvoiceModels invoiceModels = new InvoiceModels
                 {
-                    _invoice = invoiceLogic.GetForDetail(Convert.ToInt64(id))
+                    _invoice = invoiceLogic.GetForDetail(Convert.ToInt64(UrlParameterId))
                 };
                 if (invoiceModels._invoice != null)
                 {
-                    CompanyManagment companyManagment = new CompanyManagment(BllCommonLogic);
-                    invoiceModels._config = new ConfigarationManager(BllCommonLogic).GetConfig();
+                    CompanyManagment companyManagment = new CompanyManagment(LogicHelper);
+                    invoiceModels._config = new ConfigarationManager(LogicHelper).GetConfig();
                     invoiceModels._companyAddress = new Company()
                     {
                         CompanyName = SessionCompany.CompanyName,
@@ -260,11 +262,11 @@ namespace JicoDotNet.Inventory.UIControllers
                         Mobile = WebConfigAppSettingsAccess.CompanyMobile,
                         WebsiteUrl = WebConfigAppSettingsAccess.CompanyWebsite,
                     };
-                    invoiceModels._customer = new CustomerLogic(BllCommonLogic).Get(invoiceModels._invoice.CustomerId);
-                    invoiceModels._salesOrder = new SalesOrderLogic(BllCommonLogic).GetForDetail(invoiceModels._invoice.SalesOrderId);
+                    invoiceModels._customer = new CustomerLogic(LogicHelper).Get(invoiceModels._invoice.CustomerId);
+                    invoiceModels._salesOrder = new SalesOrderLogic(LogicHelper).GetForDetail(invoiceModels._invoice.SalesOrderId);
                     invoiceModels._companyBank = companyManagment.BankPrintable();
                     invoiceModels._invoiceHtml = invoiceLogic.GetHTMLDesign();
-                    invoiceModels._customPropertyValue = new CustomPropertyLogic(BllCommonLogic).GetValue(ECustomPropertyFor.RetailSalesInvoice, invoiceModels._invoice.InvoiceId);                    
+                    invoiceModels._customPropertyValue = new CustomPropertyLogic(LogicHelper).GetValue(ECustomPropertyFor.RetailSalesInvoice, invoiceModels._invoice.InvoiceId);                    
                     return View(invoiceModels);
                 }
                 return RedirectToAction("Index");
@@ -279,19 +281,19 @@ namespace JicoDotNet.Inventory.UIControllers
         [SessionAuthenticate]
         public ActionResult SMS()
         {
-            if (!string.IsNullOrEmpty(id))
+            if (!string.IsNullOrEmpty(UrlParameterId))
             {
-                SMSBankLogic bankLogic = new SMSBankLogic(BllCommonLogic);
+                SMSBankLogic bankLogic = new SMSBankLogic(LogicHelper);
                 SMSBank sMSBank = bankLogic.Get();
                 if (sMSBank != null && sMSBank.Balance > 0)
                 {
                     InvoiceModels invoiceModels = new InvoiceModels
                     {
-                        _invoice = new InvoiceLogic(BllCommonLogic).GetForDetail(Convert.ToInt64(id))
+                        _invoice = new InvoiceLogic(LogicHelper).GetForDetail(Convert.ToInt64(UrlParameterId))
                     };
                     if (invoiceModels._invoice != null)
                     {
-                        invoiceModels._customer = new CustomerLogic(BllCommonLogic).Get(invoiceModels._invoice.CustomerId);
+                        invoiceModels._customer = new CustomerLogic(LogicHelper).Get(invoiceModels._invoice.CustomerId);
                         return View(invoiceModels);
                     }
                 }
@@ -307,18 +309,18 @@ namespace JicoDotNet.Inventory.UIControllers
         [SessionAuthenticate]
         public ActionResult SMSSending(SMSSendTrack sMSSend)
         {
-            if (string.IsNullOrEmpty(id))
+            if (string.IsNullOrEmpty(UrlParameterId))
             {
                 return RedirectToAction("Index");
             }
             sMSSend.IsResend = true;
-            return RedirectToAction("SmsSent", new { id = UrlIdEncrypt(id, false) });
+            return RedirectToAction("SmsSent", new { id = UrlIdEncrypt(UrlParameterId, false) });
         }
 
         [SessionAuthenticate]
         public ActionResult SmsSent()
         {
-            if (!string.IsNullOrEmpty(id))
+            if (!string.IsNullOrEmpty(UrlParameterId))
             {
             }
             return RedirectToAction("Index");

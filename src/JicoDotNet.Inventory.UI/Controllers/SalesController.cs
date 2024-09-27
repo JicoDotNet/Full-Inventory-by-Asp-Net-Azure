@@ -1,14 +1,13 @@
 ﻿using Newtonsoft.Json;
 using JicoDotNet.Inventory.BusinessLayer.BLL;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
 using JicoDotNet.Inventory.UI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Web;
 using System.Web.Mvc;
 using JicoDotNet.Inventory.BusinessLayer.Common;
+using JicoDotNet.Inventory.Core.Enumeration;
+using JicoDotNet.Inventory.Core.Models;
 
 namespace JicoDotNet.Inventory.UIControllers
 {
@@ -22,11 +21,11 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 SalesOrderModels salesModels = new SalesOrderModels()
                 {
-                    _salesTypes = new SalesOrderLogic(BllCommonLogic).TypeGet()
+                    _salesTypes = new SalesOrderLogic(LogicHelper).TypeGet()
                 };
-                if (!string.IsNullOrEmpty(id))
+                if (!string.IsNullOrEmpty(UrlParameterId))
                 {
-                    salesModels._salesType = salesModels._salesTypes.FirstOrDefault(a => a.SalesTypeId == Convert.ToInt64(id));
+                    salesModels._salesType = salesModels._salesTypes.FirstOrDefault(a => a.SalesTypeId == Convert.ToInt64(UrlParameterId));
                 }
                 return View(salesModels);
             }
@@ -41,13 +40,13 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                salesType.SalesTypeId = id == null ? 0 : Convert.ToInt64(id);
+                salesType.SalesTypeId = UrlParameterId == null ? 0 : Convert.ToInt64(UrlParameterId);
 
                 #region Data Tracking...
                 DataTrackingLogicSet(salesType);
                 #endregion
 
-                SalesOrderLogic salesTypeLogic = new SalesOrderLogic(BllCommonLogic);
+                SalesOrderLogic salesTypeLogic = new SalesOrderLogic(LogicHelper);
                 if (Convert.ToInt64(salesTypeLogic.TypeSet(salesType)) > 0)
                 {
                     ReturnMessage = new ReturnObject()
@@ -78,14 +77,14 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (new LoginManagement(BllCommonLogic).Authenticate(SessionPerson.UserEmail, Context))
+                if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                 {
-                    SalesOrderLogic salesTypeLogic = new SalesOrderLogic(BllCommonLogic);
-                    long deactivateId = Convert.ToInt64(salesTypeLogic.TypeDeactive(id));
+                    SalesOrderLogic salesTypeLogic = new SalesOrderLogic(LogicHelper);
+                    long deactivateId = Convert.ToInt64(salesTypeLogic.TypeDeactive(UrlParameterId));
                     return Json(new JsonReturnModels
                     {
                         _isSuccess = true,
-                        _returnObject = deactivateId > 0 ? id : "0"
+                        _returnObject = deactivateId > 0 ? UrlParameterId : "0"
                     }, JsonRequestBehavior.AllowGet);
                 }
                 else
@@ -115,8 +114,8 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 SalesOrderModels purchaseOrderModels = new SalesOrderModels()
                 {
-                    _salesOrders = new SalesOrderLogic(BllCommonLogic).GetSOs(),
-                    _config = new ConfigarationManager(BllCommonLogic).GetConfig(),
+                    _salesOrders = new SalesOrderLogic(LogicHelper).GetSOs(),
+                    _config = new ConfigarationManager(LogicHelper).GetConfig(),
                     _company = SessionCompany
                 };
                 return PartialView("_PartialIndex", purchaseOrderModels);
@@ -132,7 +131,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                Dictionary<string, object> Datas = new SalesOrderLogic(BllCommonLogic).GetForEntry();
+                Dictionary<string, object> Datas = new SalesOrderLogic(LogicHelper).GetForEntry();
                 SalesOrderModels salesOrderModels = new SalesOrderModels()
                 {
                     _salesTypes = (List<SalesType>)Datas["SalesType"],
@@ -140,7 +139,7 @@ namespace JicoDotNet.Inventory.UIControllers
                     _customers = (List<Customer>)Datas["Customer"],
                     _products = (List<Product>)Datas["Product"],
                     _company = SessionCompany,
-                    _config = new ConfigarationManager(BllCommonLogic).GetConfig()
+                    _config = new ConfigarationManager(LogicHelper).GetConfig()
                 };
                 return View(salesOrderModels);
             }
@@ -153,10 +152,10 @@ namespace JicoDotNet.Inventory.UIControllers
         [HttpPost]
         public ActionResult Order(SalesOrder salesOrder)
         {
-            DraftManagment draftManagment = new DraftManagment(BllCommonLogic);
+            DraftManagement draftManagement = new DraftManagement(LogicHelper);
             try
             {
-                string ObjectId = draftManagment.SetAsDraft(salesOrder, EDraft.SO);
+                string ObjectId = draftManagement.SetAsDraft(salesOrder, EDraft.SO);
                 return RedirectToAction("OrderDetail", "Sales", new { id = UrlIdEncrypt(ObjectId, false), id2 = "Draft" });
             }
             catch (Exception ex)
@@ -170,21 +169,21 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (string.IsNullOrEmpty(id))
+                if (string.IsNullOrEmpty(UrlParameterId))
                     return RedirectToAction("Index");
 
                 SalesOrderModels salesOrderModels;
-                if (id2 == "Draft")
+                if (UrlParameterId2 == "Draft")
                 {
-                    DraftManagment draftManagment = new DraftManagment(BllCommonLogic);
+                    DraftManagement draftManagement = new DraftManagement(LogicHelper);
                     salesOrderModels = new SalesOrderModels()
                     {
-                        _salesOrder = draftManagment.GetFromDraft<SalesOrder>(id, EDraft.SO),
-                        _draftId = id
+                        _salesOrder = draftManagement.GetFromDraft<SalesOrder>(UrlParameterId, EDraft.SO),
+                        _draftId = UrlParameterId
                     };
                     if (salesOrderModels._salesOrder != null)
                     {
-                        salesOrderModels._config = new ConfigarationManager(BllCommonLogic).GetConfig();
+                        salesOrderModels._config = new ConfigarationManager(LogicHelper).GetConfig();
                         salesOrderModels._companyAddress = new Company()
                         {
                             CompanyName = SessionCompany.CompanyName,
@@ -200,7 +199,7 @@ namespace JicoDotNet.Inventory.UIControllers
                             Mobile = WebConfigAppSettingsAccess.CompanyMobile,
                             WebsiteUrl = WebConfigAppSettingsAccess.CompanyWebsite,
                         };
-                        salesOrderModels._customer = new CustomerLogic(BllCommonLogic).Get(salesOrderModels._salesOrder.CustomerId);
+                        salesOrderModels._customer = new CustomerLogic(LogicHelper).Get(salesOrderModels._salesOrder.CustomerId);
                         return View(salesOrderModels);
                     }
                 }
@@ -208,11 +207,11 @@ namespace JicoDotNet.Inventory.UIControllers
                 {
                     salesOrderModels = new SalesOrderModels()
                     {
-                        _salesOrder = new SalesOrderLogic(BllCommonLogic).GetForDetail(Convert.ToInt64(id))
+                        _salesOrder = new SalesOrderLogic(LogicHelper).GetForDetail(Convert.ToInt64(UrlParameterId))
                     };
                     if (salesOrderModels._salesOrder != null)
                     {
-                        salesOrderModels._config = new ConfigarationManager(BllCommonLogic).GetConfig();
+                        salesOrderModels._config = new ConfigarationManager(LogicHelper).GetConfig();
                         salesOrderModels._companyAddress = new Company()
                         {
                             CompanyName = SessionCompany.CompanyName,
@@ -228,7 +227,7 @@ namespace JicoDotNet.Inventory.UIControllers
                             Mobile = WebConfigAppSettingsAccess.CompanyMobile,
                             WebsiteUrl = WebConfigAppSettingsAccess.CompanyWebsite,
                         };
-                        salesOrderModels._customer = new CustomerLogic(BllCommonLogic).Get(salesOrderModels._salesOrder.CustomerId);
+                        salesOrderModels._customer = new CustomerLogic(LogicHelper).Get(salesOrderModels._salesOrder.CustomerId);
                         return View(salesOrderModels);
                     }
                 }
@@ -247,7 +246,7 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 SalesOrderModels salesOrderModels = new SalesOrderModels()
                 {
-                    _config = (new ConfigarationManager(BllCommonLogic)).GetConfig(),
+                    _config = (new ConfigarationManager(LogicHelper)).GetConfig(),
                     _isGstEnabled = Gst == 1
                 };
                 return PartialView("_PartialSOItemDetails", salesOrderModels);
@@ -263,21 +262,21 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                DraftManagment draftManagment = new DraftManagment(BllCommonLogic);
-                if (string.IsNullOrEmpty(id))
+                DraftManagement draftManagement = new DraftManagement(LogicHelper);
+                if (string.IsNullOrEmpty(UrlParameterId))
                 {
                     return RedirectToAction("Order");
                 }
                 SalesOrderModels salesOrderModels = new SalesOrderModels()
                 {
-                    _salesOrder = draftManagment.GetFromDraft<SalesOrder>(id, EDraft.SO)
+                    _salesOrder = draftManagement.GetFromDraft<SalesOrder>(UrlParameterId, EDraft.SO)
                 };
 
                 #region Data Tracking...
                 DataTrackingLogicSet(salesOrderModels._salesOrder);
                 #endregion
 
-                string obj = new SalesOrderLogic(BllCommonLogic).SetForEntry(salesOrderModels._salesOrder);
+                string obj = new SalesOrderLogic(LogicHelper).SetForEntry(salesOrderModels._salesOrder);
                 SalesOrder SoObj = JsonConvert.DeserializeObject<SalesOrder>(obj);
 
                 if (SoObj != null && SoObj.SalesOrderId > 0)
@@ -287,7 +286,7 @@ namespace JicoDotNet.Inventory.UIControllers
                         Status = true,
                         Message = "Sales Order generated successfully!!"
                     };
-                    draftManagment.DeleteDraft(id, EDraft.SO);
+                    draftManagement.DeleteDraft(UrlParameterId, EDraft.SO);
                     return RedirectToAction("OrderDetail", "Sales", new { id = UrlIdEncrypt(SoObj.SalesOrderId, false), id2 = string.Empty });
                 }
                 else
@@ -298,7 +297,7 @@ namespace JicoDotNet.Inventory.UIControllers
                         Message = "Something went wrong!!"
                     };
                 }
-                return RedirectToAction("OrderDetail", "Sales", new { id = UrlIdEncrypt(id, false), id2 = "Draft" });
+                return RedirectToAction("OrderDetail", "Sales", new { id = UrlIdEncrypt(UrlParameterId, false), id2 = "Draft" });
             }
             catch (Exception ex)
             {
@@ -311,14 +310,14 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (new LoginManagement(BllCommonLogic).Authenticate(SessionPerson.UserEmail, Context))
+                if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                 {
-                    SalesOrderLogic salesOrderLogic = new SalesOrderLogic(BllCommonLogic);
-                    long deactivateId = Convert.ToInt64(salesOrderLogic.Deactive(Convert.ToInt64(id)));
+                    SalesOrderLogic salesOrderLogic = new SalesOrderLogic(LogicHelper);
+                    long deactivateId = Convert.ToInt64(salesOrderLogic.Deactive(Convert.ToInt64(UrlParameterId)));
                     return Json(new JsonReturnModels
                     {
                         _isSuccess = true,
-                        _returnObject = deactivateId > 0 ? id : "0"
+                        _returnObject = deactivateId > 0 ? UrlParameterId : "0"
                     }, JsonRequestBehavior.AllowGet);
                 }
                 else
@@ -339,25 +338,25 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(id2))
+                if (string.IsNullOrEmpty(UrlParameterId) || string.IsNullOrEmpty(UrlParameterId2))
                     return RedirectToAction("Index");
 
                 SalesOrderModels salesOrderModels = new SalesOrderModels()
                 {
                     _company = SessionCompany,
-                    _salesOrder = new SalesOrderLogic(BllCommonLogic).GetForDetail(Convert.ToInt64(id))
+                    _salesOrder = new SalesOrderLogic(LogicHelper).GetForDetail(Convert.ToInt64(UrlParameterId))
                 };
-                salesOrderModels._config = new ConfigarationManager(BllCommonLogic).GetConfig();
-                salesOrderModels._customer = new CustomerLogic(BllCommonLogic).Get(salesOrderModels._salesOrder.CustomerId);
+                salesOrderModels._config = new ConfigarationManager(LogicHelper).GetConfig();
+                salesOrderModels._customer = new CustomerLogic(LogicHelper).Get(salesOrderModels._salesOrder.CustomerId);
                 if (salesOrderModels._salesOrder == null || string.IsNullOrEmpty(salesOrderModels._salesOrder.SalesOrderNumber))
                     return RedirectToAction("Index");
 
-                if (id2?.ToLower() == "quantity")
+                if (UrlParameterId2?.ToLower() == "quantity")
                 {
                     if (salesOrderModels._salesOrder.ShippedStatus == null)
                         return View("_QuantityAmendment", salesOrderModels);
                 }
-                if (id2?.ToLower() == "price")
+                if (UrlParameterId2?.ToLower() == "price")
                 {
                     if (salesOrderModels._salesOrder.InvoicedStatus == null)
                         return View("_PriceAmendment", salesOrderModels);
@@ -375,11 +374,11 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (string.IsNullOrEmpty(id))
+                if (string.IsNullOrEmpty(UrlParameterId))
                     return RedirectToAction("Index");
 
-                salesOrder.SalesOrderId = Convert.ToInt64(id);
-                string obj = new SalesOrderLogic(BllCommonLogic).SetForAmendment(salesOrder);
+                salesOrder.SalesOrderId = Convert.ToInt64(UrlParameterId);
+                string obj = new SalesOrderLogic(LogicHelper).SetForAmendment(salesOrder);
                 SalesOrder POobj = JsonConvert.DeserializeObject<SalesOrder>(obj);
 
                 if (POobj != null && POobj.SalesOrderId > 0)
@@ -399,7 +398,7 @@ namespace JicoDotNet.Inventory.UIControllers
                         Message = "Something went wrong!!"
                     };
                 }
-                return RedirectToAction("OrderDetail", "Sales", new { id = UrlIdEncrypt(id, false), id2 = string.Empty });
+                return RedirectToAction("OrderDetail", "Sales", new { id = UrlIdEncrypt(UrlParameterId, false), id2 = string.Empty });
             }
             catch (Exception ex)
             {

@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Inventory.Core.Models;
 
 namespace JicoDotNet.Inventory.UI.Models
 {
@@ -19,7 +21,7 @@ namespace JicoDotNet.Inventory.UI.Models
         public bool _isGstEnabled { get; set; }
         
         public Customer _customer { get; set; }
-        public CompanyBasic _company { get; set; }
+        public ICompanyBasic _company { get; set; }
         public SalesOrder _salesOrder { get; set; }
         public List<SalesOrder> _salesOrders { get; set; }
         public Config _config { get; internal set; }

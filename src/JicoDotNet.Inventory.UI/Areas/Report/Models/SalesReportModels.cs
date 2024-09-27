@@ -1,9 +1,7 @@
-﻿using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class.Report;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
+using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Inventory.Core.Models;
+using JicoDotNet.Inventory.Core.Report;
 
 namespace JicoDotNet.Inventory.UI.Report.Models
 {
@@ -11,11 +9,11 @@ namespace JicoDotNet.Inventory.UI.Report.Models
     {
         public List<Customer> _customers { get; set; }
         public List<CustomerType> _customerTypes { get; set; }
-        public List<RCustomerSales> _rCustomerSales { get; set; }
+        public IList<ResponseCustomerSalesResult> _rCustomerSales { get; set; }
 
 
-        public List<Product> _products { get; set; }
-        public List<ProductType> _productTypes { get; set; }
-        public List<RProductSales> _rProductSales { get; set; }
+        public IList<Product> _products { get; set; }
+        public IList<ProductType> _productTypes { get; set; }
+        public IList<ResponseProductSalesResult> _rProductSales { get; set; }
     }
 }

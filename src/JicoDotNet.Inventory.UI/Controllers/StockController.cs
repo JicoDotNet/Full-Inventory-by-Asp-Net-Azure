@@ -1,14 +1,12 @@
-﻿using Newtonsoft.Json;
-using JicoDotNet.Inventory.BusinessLayer.BLL;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.UI.Models;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using JicoDotNet.Inventory.BusinessLayer.BLL;
+using JicoDotNet.Inventory.Core.Models;
+using JicoDotNet.Inventory.UI.Models;
+using Newtonsoft.Json;
 
-namespace JicoDotNet.Inventory.UIControllers
+namespace JicoDotNet.Inventory.UI.Controllers
 {
     public class StockController : BaseController
     {
@@ -17,16 +15,16 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                StockModels stockModels = new StockModels()
+                StockModels stockModels = new StockModels
                 {
-                    _products = new ProductLogic(BllCommonLogic).Get(true).Where(a => a.IsGoods).ToList(),
-                    _wareHouses = new WareHouseLogic(BllCommonLogic).Get(true)
+                    _products = new ProductLogic(LogicHelper).Get(true).Where(a => a.IsGoods).ToList(),
+                    _wareHouses = new WareHouseLogic(LogicHelper).Get(true)
                 };
 
                 // If it's redirect from product page to view product's current stock. 
                 // then id is ProductId, id can't be null
-                if (!string.IsNullOrEmpty(id))
-                    stockModels._productId = Convert.ToInt64(id);
+                if (!string.IsNullOrEmpty(UrlParameterId))
+                    stockModels._productId = Convert.ToInt64(UrlParameterId);
 
                 return View(stockModels);
             }
@@ -43,7 +41,7 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 StockModels stockModels = new StockModels()
                 {
-                    _stocks = new StockLogic(BllCommonLogic).Get(stock)
+                    _stocks = new StockLogic(LogicHelper).Get(stock)
                 };
                 return PartialView("_PartialCurrentStock", stockModels);
             }
@@ -60,8 +58,8 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 StockModels stockModels = new StockModels()
                 {
-                    _selectedProduct = new ProductLogic(BllCommonLogic).Get().FirstOrDefault(a => a.ProductId == detailView.ProductId),
-                    _stock = new StockLogic(BllCommonLogic).GetDetail(detailView).FirstOrDefault(),
+                    _selectedProduct = new ProductLogic(LogicHelper).Get().FirstOrDefault(a => a.ProductId == detailView.ProductId),
+                    _stock = new StockLogic(LogicHelper).GetDetail(detailView).FirstOrDefault(),
                 };
                 return PartialView("_PartialCurrentStockDetail", stockModels);
             }
@@ -79,8 +77,8 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 StockModels stockModels = new StockModels()
                 {
-                    _products = new ProductLogic(BllCommonLogic).Get(true).Where(a => a.IsGoods).ToList(),
-                    _wareHouses = new WareHouseLogic(BllCommonLogic).Get(true)
+                    _products = new ProductLogic(LogicHelper).Get(true).Where(a => a.IsGoods).ToList(),
+                    _wareHouses = new WareHouseLogic(LogicHelper).Get(true)
                 };
                 return View(stockModels);
             }
@@ -98,9 +96,9 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 StockModels stockModels = new StockModels()
                 {
-                    _products = new ProductLogic(BllCommonLogic).Get().Where(a => a.IsActive).ToList(),
-                    _wareHouses = new WareHouseLogic(BllCommonLogic).Get().Where(a => a.IsActive).ToList(),
-                    _stocks = new StockLogic(BllCommonLogic).GetDetail(stock),
+                    _products = new ProductLogic(LogicHelper).Get().Where(a => a.IsActive).ToList(),
+                    _wareHouses = new WareHouseLogic(LogicHelper).Get().Where(a => a.IsActive).ToList(),
+                    _stocks = new StockLogic(LogicHelper).GetDetail(stock),
                     _stock = stock
                 };
                 return View("Transfer", stockModels);
@@ -120,7 +118,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 DataTrackingLogicSet(stockTransfer);
                 #endregion
 
-                StockTransferLogic stockTransferLogic = new StockTransferLogic(BllCommonLogic);
+                StockTransferLogic stockTransferLogic = new StockTransferLogic(LogicHelper);
                 StockTransfer STobj = JsonConvert.DeserializeObject<StockTransfer>(stockTransferLogic.Set(stockTransfer));
                 if (STobj == null || STobj.StockTransferId < 1)
                 {
@@ -143,7 +141,7 @@ namespace JicoDotNet.Inventory.UIControllers
         [SessionAuthenticate]
         public ActionResult TransferDetail()
         {
-            if (!string.IsNullOrEmpty(id))
+            if (!string.IsNullOrEmpty(UrlParameterId))
                 return View();
             else
                 return RedirectToAction("Transfer");
@@ -156,15 +154,15 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 StockModels stockModels = new StockModels()
                 {
-                    _products = new ProductLogic(BllCommonLogic).Get(true).Where(a => a.IsGoods).ToList(),
-                    _wareHouses = new WareHouseLogic(BllCommonLogic).Get(true),
-                    _adjustReasons = new StockAdjustLogic(BllCommonLogic).GetReasons().Where(a => a.IsActive).ToList()
+                    _products = new ProductLogic(LogicHelper).Get(true).Where(a => a.IsGoods).ToList(),
+                    _wareHouses = new WareHouseLogic(LogicHelper).Get(true),
+                    _adjustReasons = new StockAdjustLogic(LogicHelper).GetReasons().Where(a => a.IsActive).ToList()
                 };
 
                 // If it's redirect from product page to view product's Adjust stock. 
                 // then id is ProductId, id can't be null
-                if (!string.IsNullOrEmpty(id))
-                    stockModels._productId = Convert.ToInt64(id);
+                if (!string.IsNullOrEmpty(UrlParameterId))
+                    stockModels._productId = Convert.ToInt64(UrlParameterId);
 
                 return View(stockModels);
             }
@@ -183,7 +181,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 {
                     StockModels stockModels = new StockModels()
                     {
-                        _selectedProduct = new ProductLogic(BllCommonLogic).Get().FirstOrDefault(p => p.ProductId == adjustParam.ProductId)
+                        _selectedProduct = new ProductLogic(LogicHelper).Get().FirstOrDefault(p => p.ProductId == adjustParam.ProductId)
                     };
                     return PartialView("_PartialStockIncrease", stockModels);
                 }
@@ -191,8 +189,8 @@ namespace JicoDotNet.Inventory.UIControllers
                 {
                     StockModels stockModels = new StockModels()
                     {
-                        _selectedProduct = new ProductLogic(BllCommonLogic).Get().FirstOrDefault(p => p.ProductId == adjustParam.ProductId),
-                        _stock = new StockLogic(BllCommonLogic).GetDetail(new Stock() { WareHouseId = adjustParam.WareHouseId, ProductId = adjustParam.ProductId }).FirstOrDefault()
+                        _selectedProduct = new ProductLogic(LogicHelper).Get().FirstOrDefault(p => p.ProductId == adjustParam.ProductId),
+                        _stock = new StockLogic(LogicHelper).GetDetail(new Stock() { WareHouseId = adjustParam.WareHouseId, ProductId = adjustParam.ProductId }).FirstOrDefault()
                     };
                     return PartialView("_PartialStockDecrease", stockModels);
                 }
@@ -208,7 +206,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                StockAdjustLogic stockAdjustLogic = new StockAdjustLogic(BllCommonLogic);
+                StockAdjustLogic stockAdjustLogic = new StockAdjustLogic(LogicHelper);
                 StockAdjust stockAdjust = JsonConvert.DeserializeObject<StockAdjust>(stockAdjustLogic.Set(model));
 
                 if (stockAdjust == null || stockAdjust.StockAdjustId < 1)
@@ -231,7 +229,7 @@ namespace JicoDotNet.Inventory.UIControllers
         [SessionAuthenticate]
         public ActionResult AdjustDetail()
         {
-            if (!string.IsNullOrEmpty(id))
+            if (!string.IsNullOrEmpty(UrlParameterId))
                 return View();
             else
                 return RedirectToAction("Adjust");

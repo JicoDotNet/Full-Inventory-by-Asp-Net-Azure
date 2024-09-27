@@ -1,36 +1,38 @@
 ﻿using DataAccess.Sql;
 using JicoDotNet.Inventory.BusinessLayer.Common;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class.Report;
-using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using JicoDotNet.Inventory.Core.Common;
+using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Inventory.Core.Report;
+using JicoDotNet.Inventory.Core.Report.Interface;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
 {
     public class PurchaseReportLogic : ConnectionString
     {
-        public PurchaseReportLogic(sCommonDto CommonObj) : base(CommonObj) { }
+        public PurchaseReportLogic(ICommonRequestDto commonObj) : base(commonObj) { }
 
-        public List<RVendorPurchase> VendorWise(PVendorPurchase vendorPurchase)
+        public List<ResponseVendorPurchaseResult> VendorWise(IRequestVendorPurchaseParam vendorPurchase)
         {
             try
             {
                 _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-                nameValuePairs nvp = new nameValuePairs
+                NameValuePairs nvp = new NameValuePairs
                 {
                      
                      
-                    new nameValuePair("@VendorTypeId", vendorPurchase.VendorTypeId),
-                    new nameValuePair("@VendorId", vendorPurchase.VendorId),
-                    new nameValuePair("@StartDate", vendorPurchase.SearchDate.StartDate),
-                    new nameValuePair("@EndDate", vendorPurchase.SearchDate.EndDate),
-                    new nameValuePair("@QueryType", "BYVENDOR")
+                    new NameValuePair("@VendorTypeId", vendorPurchase.VendorTypeId),
+                    new NameValuePair("@VendorId", vendorPurchase.VendorId),
+                    new NameValuePair("@StartDate", vendorPurchase.SearchDate.StartDate),
+                    new NameValuePair("@EndDate", vendorPurchase.SearchDate.EndDate),
+                    new NameValuePair("@QueryType", "BYVENDOR")
                 };
-                return _sqlDBAccess.GetData("[dbo].[spRpPurchase]", nvp).ToList<RVendorPurchase>();
+                return _sqlDBAccess.GetData("[dbo].[spRpPurchase]", nvp).ToList<ResponseVendorPurchaseResult>();
             }
             catch (Exception ex)
             {
@@ -38,22 +40,22 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
             }
         }
 
-        public List<RProductPurchase> ProductWise(PProductPurchase productPurchase)
+        public List<ResponseProductPurchaseResult> ProductWise(IRequestProductPurchaseParam productPurchase)
         {
             try
             {
                 _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-                nameValuePairs nvp = new nameValuePairs
+                NameValuePairs nvp = new NameValuePairs
                 {
                      
                      
-                    new nameValuePair("@ProductTypeId", productPurchase.ProductTypeId),
-                    new nameValuePair("@ProductId", productPurchase.ProductId),
-                    new nameValuePair("@StartDate", productPurchase.SearchDate.StartDate),
-                    new nameValuePair("@EndDate", productPurchase.SearchDate.EndDate),
-                    new nameValuePair("@QueryType", "BYPRODUCT")
+                    new NameValuePair("@ProductTypeId", productPurchase.ProductTypeId),
+                    new NameValuePair("@ProductId", productPurchase.ProductId),
+                    new NameValuePair("@StartDate", productPurchase.SearchDate.StartDate),
+                    new NameValuePair("@EndDate", productPurchase.SearchDate.EndDate),
+                    new NameValuePair("@QueryType", "BYPRODUCT")
                 };
-                return _sqlDBAccess.GetData("[dbo].[spRpPurchase]", nvp).ToList<RProductPurchase>();
+                return _sqlDBAccess.GetData("[dbo].[spRpPurchase]", nvp).ToList<ResponseProductPurchaseResult>();
             }
             catch (Exception ex)
             {

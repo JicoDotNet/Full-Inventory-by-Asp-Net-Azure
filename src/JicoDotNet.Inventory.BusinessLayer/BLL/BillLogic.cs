@@ -1,76 +1,74 @@
 ﻿using DataAccess.Sql;
 using JicoDotNet.Inventory.BusinessLayer.Common;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class.Custom;
-using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using DataAccess.Sql.Entity;
+using JicoDotNet.Inventory.Core.Common;
+using JicoDotNet.Inventory.Core.Custom;
+using JicoDotNet.Inventory.Core.Custom.Interface;
+using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Inventory.Core.Enumeration;
+using JicoDotNet.Inventory.Core.Models;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class BillLogic : ConnectionString
     {
-        public BillLogic(sCommonDto CommonObj) : base(CommonObj) { }
+        public BillLogic(ICommonRequestDto commonObj) : base(commonObj) { }
 
         #region Bill Type
-        public string TypeSet(BillType billType)
+        public string TypeSet(IBillType billType)
         {
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-            string qt;
-            if (billType.BillTypeId > 0)
-                qt = "UPDATE";
-            else
-                qt = "INSERT";
+            var queryType = billType.BillTypeId > 0 ? "UPDATE" : "INSERT";
 
-            nameValuePairs nvp = new nameValuePairs
+            INameValuePairs nvp = new NameValuePairs
             {
                  
-                new nameValuePair("@BillTypeId", billType.BillTypeId),
-                new nameValuePair("@BillTypeName", billType.BillTypeName),
-                new nameValuePair("@Description", billType.Description),
+                new NameValuePair("@BillTypeId", billType.BillTypeId),
+                new NameValuePair("@BillTypeName", billType.BillTypeName),
+                new NameValuePair("@Description", billType.Description),
                  
-                new nameValuePair("@RequestId", CommonObj.RequestId),
-                new nameValuePair("@QueryType", qt)
+                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@QueryType", queryType)
             };
 
-            string ReturnDS = _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetBillType]", nvp, "@OutParam").ToString();
-            return ReturnDS;
+            string returnDs = _sqlDBAccess.DataManipulation("[dbo].[spSetBillType]", nvp, "@OutParam").ToString();
+            return returnDs;
         }
 
-        public string TypeDeactive(string BillTypeId)
+        public string TypeDeactivate(string billTypeId)
         {
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-            string qt = "INACTIVE";
+            string queryType = "INACTIVE";
 
-            nameValuePairs nvp = new nameValuePairs
+            INameValuePairs nvp = new NameValuePairs
             {
-                new nameValuePair("@BillTypeId", BillTypeId),
+                new NameValuePair("@BillTypeId", billTypeId),
                  
                  
-                new nameValuePair("@RequestId", CommonObj.RequestId),
-                new nameValuePair("@QueryType", qt)
+                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@QueryType", queryType)
             };
 
-            string ReturnDS = _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetBillType]", nvp, "@OutParam").ToString();
-            return ReturnDS;
+            string returnDs = _sqlDBAccess.DataManipulation("[dbo].[spSetBillType]", nvp, "@OutParam").ToString();
+            return returnDs;
         }
 
-        public List<BillType> TypeGet(bool? IsActive = null)
+        public IList<BillType> TypeGet(bool? isActive = null)
         {
-            List<BillType> billTypes = new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetBillType]",
-                new nameValuePairs
+            IList<BillType> billTypes = new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetBillType]",
+                new NameValuePairs
                 {
-                     
-                     
-                    new nameValuePair("@QueryType", "ALL")
+                    new NameValuePair("@QueryType", "ALL")
                 }).ToList<BillType>();
-            if (IsActive != null)
+            if (isActive != null)
             {
-                if (IsActive.Value)
+                if (isActive.Value)
                     return billTypes.Where(a => a.IsActive).ToList();
-                if (!IsActive.Value)
+                if (!isActive.Value)
                     return billTypes.Where(a => !a.IsActive).ToList();
             }
             return billTypes;
@@ -78,18 +76,16 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         #endregion
 
         #region Bill
-        public List<Bill> GetBills()
+        public IList<Bill> GetBills()
         {
             try
             {
                 _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-                nameValuePairs nvp = new nameValuePairs()
+                INameValuePairs nvp = new NameValuePairs()
                 {
-                     
-                     
-                    new nameValuePair("@QueryType", "LIST")
+                    new NameValuePair("@QueryType", "LIST")
                 };
-                List<Bill> bills = _sqlDBAccess.GetData("[dbo].[spGetBill]", nvp).ToList<Bill>();
+                IList<Bill> bills = _sqlDBAccess.GetData("[dbo].[spGetBill]", nvp).ToList<Bill>();
                 return bills;
             }
             catch (Exception ex)
@@ -98,19 +94,19 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             }
         }
 
-        public Bill GetBill(long BillId)
+        public IBill GetBill(long billId)
         {
             try
             {
                 _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-                nameValuePairs nvp = new nameValuePairs()
+                INameValuePairs nvp = new NameValuePairs()
                 {
                      
                      
-                    new nameValuePair("@BillId", BillId),
-                    new nameValuePair("@QueryType", "SINGLE")
+                    new NameValuePair("@BillId", billId),
+                    new NameValuePair("@QueryType", "SINGLE")
                 };
-                Bill bill = _sqlDBAccess.GetData("[dbo].[spGetBill]", nvp).FirstOrDefault<Bill>();
+                IBill bill = _sqlDBAccess.GetData("[dbo].[spGetBill]", nvp).FirstOrDefault<Bill>();
                 return bill;
             }
             catch (Exception ex)
@@ -119,30 +115,26 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             }
         }
 
-        public List<PurchaseOrder> GetForEntry()
+        public IList<PurchaseOrder> GetForEntry()
         {
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-            nameValuePairs nvp = new nameValuePairs()
-                {
-                     
-                     
-                    new nameValuePair("@QueryType", "ENTRY")
-                };
-            List<PurchaseOrder> purchaseOrders = _sqlDBAccess.GetData("[dbo].[spGetBill]", nvp).ToList<PurchaseOrder>();
+            INameValuePairs nvp = new NameValuePairs()
+            {
+                new NameValuePair("@QueryType", "ENTRY")
+            };
+            IList<PurchaseOrder> purchaseOrders = _sqlDBAccess.GetData("[dbo].[spGetBill]", nvp).ToList<PurchaseOrder>();
             return purchaseOrders;
         }
 
-        public PurchaseOrder GetForEntry(long purchaseOrderId)
+        public IPurchaseOrder GetForEntry(long purchaseOrderId)
         {
             try
             {
                 _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-                nameValuePairs nvp = new nameValuePairs()
-                {
-                     
-                     
-                    new nameValuePair("@PurchaseOrderId", purchaseOrderId),
-                    new nameValuePair("@QueryType", "ENTRYSINGLE")
+                INameValuePairs nvp = new NameValuePairs
+                {    
+                    new NameValuePair("@PurchaseOrderId", purchaseOrderId),
+                    new NameValuePair("@QueryType", "ENTRYSINGLE")
                 };
                 PurchaseOrder purchaseOrder = _sqlDBAccess.GetData("[dbo].[spGetBill]", nvp).FirstOrDefault<PurchaseOrder>();
                 return purchaseOrder;
@@ -153,33 +145,29 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             }
         }
 
-        public List<BillDetail> GetBillDetails(long purchaseOrderId)
+        public IList<BillDetail> GetBillDetails(long purchaseOrderId)
         {
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-            nameValuePairs nvp = new nameValuePairs()
-                {
-                     
-                     
-                    new nameValuePair("@PurchaseOrderId", purchaseOrderId),
-                    new nameValuePair("@QueryType", "COMULTATIVE")
-                };
-            List<BillDetail> bildtl = _sqlDBAccess.GetData("[dbo].[spGetBill]", nvp).ToList<BillDetail>();
-            return bildtl;
+            INameValuePairs nvp = new NameValuePairs
+            {
+                new NameValuePair("@PurchaseOrderId", purchaseOrderId),
+                new NameValuePair("@QueryType", "COMMUTATIVE")
+            };
+            IList<BillDetail> billDetails = _sqlDBAccess.GetData("[dbo].[spGetBill]", nvp).ToList<BillDetail>();
+            return billDetails;
         }
 
-        public List<Bill> GetBillsForPayment(long vendorId)
+        public IList<Bill> GetBillsForPayment(long vendorId)
         {
             try
             {
                 _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-                nameValuePairs nvp = new nameValuePairs()
+                INameValuePairs nvp = new NameValuePairs
                 {
-                     
-                     
-                    new nameValuePair("@VendorId", vendorId),
-                    new nameValuePair("@QueryType", "PAYMENT")
+                    new NameValuePair("@VendorId", vendorId),
+                    new NameValuePair("@QueryType", "PAYMENT")
                 };
-                List<Bill> bills = _sqlDBAccess.GetData("[dbo].[spGetBill]", nvp).ToList<Bill>();                
+                IList<Bill> bills = _sqlDBAccess.GetData("[dbo].[spGetBill]", nvp).ToList<Bill>();                
                 return bills;
             }
             catch (Exception ex)
@@ -192,7 +180,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             try
             {
-                List<BillDetailsType> billDetailsTypes = new List<BillDetailsType>();
+                IList<IBillDetailsType> billDetailsTypes = new List<IBillDetailsType>();
                 int count = 1;
                 bill.BilledAmount = 0;
                 bill.TaxAmount = 0;
@@ -202,7 +190,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 {
                     if(billItem.BilledQuantity > 0)
                     {
-                        BillDetailsType billDetailsType = new BillDetailsType
+                        IBillDetailsType billDetailsType = new BillDetailsType
                         {
                             Id = count++,
                             PurchaseOrderDetailId = billItem.PurchaseOrderDetailId,
@@ -252,33 +240,33 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 if (billDetailsTypes.Count > 0)
                 {
                     _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-                    nameValuePairs nvp = new nameValuePairs()
+                    NameValuePairs nvp = new NameValuePairs()
                     {
                          
                          
-                        new nameValuePair("@BillTypeId", bill.BillTypeId),
-                        new nameValuePair("@BillDate", bill.BillDate),
-                        new nameValuePair("@BillDueDate", bill.BillDueDate),
-                        new nameValuePair("@BillNumber", "BIL-"),
-                        new nameValuePair("@VendorId", bill.VendorId),
-                        new nameValuePair("@PurchaseOrderId", bill.PurchaseOrderId),
-                        new nameValuePair("@VendorDONumber", bill.VendorDONumber),
-                        new nameValuePair("@VendorInvoiceNumber", bill.VendorInvoiceNumber),
-                        new nameValuePair("@VendorInvoiceDate", bill.VendorInvoiceDate),
-                        new nameValuePair("@Remarks", bill.Remarks),
-                        new nameValuePair("@IsGstApplicable", bill.IsGstApplicable),
-                        new nameValuePair("@GSTNumber", bill.GSTNumber),
-                        new nameValuePair("@GSTStateCode", bill.GSTStateCode),
-                        new nameValuePair("@GSTType", bill.GSTType),
-                        new nameValuePair("@BilledAmount", bill.BilledAmount),
-                        new nameValuePair("@TaxAmount", bill.TaxAmount),
-                        new nameValuePair("@TotalAmount", bill.TotalAmount),
-                        new nameValuePair("@IsFullBilled", bill.IsFullBilled),
-                        new nameValuePair("@BillDetail", billDetailsTypes.ToDataTable()),
-                        new nameValuePair("@RequestId", CommonObj.RequestId),
-                        new nameValuePair("@QueryType", "INSERT")
+                        new NameValuePair("@BillTypeId", bill.BillTypeId),
+                        new NameValuePair("@BillDate", bill.BillDate),
+                        new NameValuePair("@BillDueDate", bill.BillDueDate),
+                        new NameValuePair("@BillNumber", "BIL-"),
+                        new NameValuePair("@VendorId", bill.VendorId),
+                        new NameValuePair("@PurchaseOrderId", bill.PurchaseOrderId),
+                        new NameValuePair("@VendorDONumber", bill.VendorDONumber),
+                        new NameValuePair("@VendorInvoiceNumber", bill.VendorInvoiceNumber),
+                        new NameValuePair("@VendorInvoiceDate", bill.VendorInvoiceDate),
+                        new NameValuePair("@Remarks", bill.Remarks),
+                        new NameValuePair("@IsGstApplicable", bill.IsGstApplicable),
+                        new NameValuePair("@GSTNumber", bill.GSTNumber),
+                        new NameValuePair("@GSTStateCode", bill.GSTStateCode),
+                        new NameValuePair("@GSTType", bill.GSTType),
+                        new NameValuePair("@BilledAmount", bill.BilledAmount),
+                        new NameValuePair("@TaxAmount", bill.TaxAmount),
+                        new NameValuePair("@TotalAmount", bill.TotalAmount),
+                        new NameValuePair("@IsFullBilled", bill.IsFullBilled),
+                        new NameValuePair("@BillDetail", billDetailsTypes.ToDataTable()),
+                        new NameValuePair("@RequestId", CommonObj.RequestId),
+                        new NameValuePair("@QueryType", "INSERT")
                     };
-                    return _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetBill]", nvp, "@OutParam").ToString();
+                    return _sqlDBAccess.DataManipulation("[dbo].[spSetBill]", nvp, "@OutParam").ToString();
                 }
                 else
                 {
@@ -295,12 +283,12 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             Bill bill = new Bill();
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-            nameValuePairs nvp = new nameValuePairs()
+            NameValuePairs nvp = new NameValuePairs()
             {
                  
                  
-                new nameValuePair("@BillId", BillId),
-                new nameValuePair("@QueryType", "DETAIL")
+                new NameValuePair("@BillId", BillId),
+                new NameValuePair("@QueryType", "DETAIL")
             };
             DataSet ds = _sqlDBAccess.GetDataSet("[dbo].[spGetBill]", nvp);
             bill = ds.Tables[0].Rows.Count > 0 ? ds.Tables[0].FirstOrDefault<Bill>() : null;

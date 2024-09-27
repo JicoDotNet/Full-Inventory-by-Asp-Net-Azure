@@ -1,12 +1,10 @@
 ﻿using JicoDotNet.Inventory.BusinessLayer.BLL;
 using JicoDotNet.Inventory.BusinessLayer.BLL.Report;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class.Report;
 using JicoDotNet.Inventory.UI.Report.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using JicoDotNet.Inventory.Core.Report;
+using JicoDotNet.Inventory.Core.Report.Interface;
 
 namespace JicoDotNet.Inventory.UI.Areas.Report.Controllers
 {
@@ -17,7 +15,7 @@ namespace JicoDotNet.Inventory.UI.Areas.Report.Controllers
         {
             try
             {
-                CustomerLogic customerLogic = new CustomerLogic(BllCommonLogic);
+                CustomerLogic customerLogic = new CustomerLogic(LogicHelper);
                 SalesReportModels salesReportModels = new SalesReportModels
                 {
                     _customerTypes = customerLogic.TypeGet(),
@@ -30,14 +28,15 @@ namespace JicoDotNet.Inventory.UI.Areas.Report.Controllers
                 return ErrorLoggingToView(ex);
             }
         }
+
         [HttpPost]
-        public PartialViewResult Customer(PCustomerSales customerSales)
+        public PartialViewResult Customer(RequestCustomerSalesParam customerSales)
         {
             try
             {
-                if (customerSales.SearchDate.IsInOneYearRange())
+                if (customerSales.SearchDate.IsInOneYearRange)
                 {
-                    SalesReportLogic salesReport = new SalesReportLogic(BllCommonLogic);
+                    SalesReportLogic salesReport = new SalesReportLogic(LogicHelper);
                     SalesReportModels salesReportModels = new SalesReportModels
                     {
                         _rCustomerSales = salesReport.CustomerWise(customerSales)
@@ -60,7 +59,7 @@ namespace JicoDotNet.Inventory.UI.Areas.Report.Controllers
         {
             try
             {
-                ProductLogic productLogic = new ProductLogic(BllCommonLogic);
+                ProductLogic productLogic = new ProductLogic(LogicHelper);
                 SalesReportModels salesReportModels = new SalesReportModels
                 {
                     _productTypes = productLogic.TypeGet(),
@@ -75,13 +74,13 @@ namespace JicoDotNet.Inventory.UI.Areas.Report.Controllers
         }
 
         [HttpPost]
-        public PartialViewResult Product(PProductSales productSales)
+        public PartialViewResult Product(RequestProductSalesParam productSales)
         {
             try
             {
-                if (productSales.SearchDate.IsInOneYearRange())
+                if (productSales.SearchDate.IsInOneYearRange)
                 {
-                    SalesReportLogic salesReport = new SalesReportLogic(BllCommonLogic);
+                    SalesReportLogic salesReport = new SalesReportLogic(LogicHelper);
                     SalesReportModels salesReportModels = new SalesReportModels
                     {
                         _rProductSales = salesReport.ProductWise(productSales)

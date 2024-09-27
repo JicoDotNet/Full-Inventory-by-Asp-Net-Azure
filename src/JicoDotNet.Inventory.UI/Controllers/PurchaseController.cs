@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using JicoDotNet.Inventory.BusinessLayer.Common;
+using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Inventory.Core.Enumeration;
+using JicoDotNet.Inventory.Core.Models;
 
 namespace JicoDotNet.Inventory.UIControllers
 {
@@ -23,11 +26,11 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 PurchaseModels purchaseModels = new PurchaseModels()
                 {
-                    _purchaseTypes = new PurchaseOrderLogic(BllCommonLogic).TypeGet()
+                    _purchaseTypes = new PurchaseOrderLogic(LogicHelper).TypeGet()
                 };
-                if (!string.IsNullOrEmpty(id))
+                if (!string.IsNullOrEmpty(UrlParameterId))
                 {
-                    purchaseModels._purchaseType = purchaseModels._purchaseTypes.Where(a => a.PurchaseTypeId == Convert.ToInt64(id)).FirstOrDefault();
+                    purchaseModels._purchaseType = purchaseModels._purchaseTypes.Where(a => a.PurchaseTypeId == Convert.ToInt64(UrlParameterId)).FirstOrDefault();
                 }
                 return View(purchaseModels);
             }
@@ -42,13 +45,13 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                purchaseType.PurchaseTypeId = id == null ? 0 : Convert.ToInt64(id);
+                purchaseType.PurchaseTypeId = UrlParameterId == null ? 0 : Convert.ToInt64(UrlParameterId);
 
                 #region Data Tracking...
                 DataTrackingLogicSet(purchaseType);
                 #endregion
 
-                PurchaseOrderLogic purchaseTypeLogic = new PurchaseOrderLogic(BllCommonLogic);
+                PurchaseOrderLogic purchaseTypeLogic = new PurchaseOrderLogic(LogicHelper);
                 if (Convert.ToInt64(purchaseTypeLogic.TypeSet(purchaseType)) > 0)
                 {
                     ReturnMessage = new ReturnObject()
@@ -79,14 +82,14 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (new LoginManagement(BllCommonLogic).Authenticate(SessionPerson.UserEmail, Context))
+                if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, Context))
                 {
-                    PurchaseOrderLogic purchaseTypeLogic = new PurchaseOrderLogic(BllCommonLogic);
-                    long deactivateId = Convert.ToInt64(purchaseTypeLogic.TypeDeactive(id));
+                    PurchaseOrderLogic purchaseTypeLogic = new PurchaseOrderLogic(LogicHelper);
+                    long deactivateId = Convert.ToInt64(purchaseTypeLogic.TypeDeactive(UrlParameterId));
                     return Json(new JsonReturnModels
                     {
                         _isSuccess = true,
-                        _returnObject = deactivateId > 0 ? id : "0"
+                        _returnObject = deactivateId > 0 ? UrlParameterId : "0"
                     }, JsonRequestBehavior.AllowGet);
                 }
                 else
@@ -116,8 +119,8 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 PurchaseOrderModels purchaseOrderModels = new PurchaseOrderModels()
                 {
-                    _purchaseOrders = new PurchaseOrderLogic(BllCommonLogic).GetPOs(),
-                    _config = new ConfigarationManager(BllCommonLogic).GetConfig()
+                    _purchaseOrders = new PurchaseOrderLogic(LogicHelper).GetPOs(),
+                    _config = new ConfigarationManager(LogicHelper).GetConfig()
                 };
                 return PartialView("_PartialIndex", purchaseOrderModels);
             }
@@ -132,7 +135,7 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                Dictionary<string, object> Datas = new PurchaseOrderLogic(BllCommonLogic).GetForEntry();
+                Dictionary<string, object> Datas = new PurchaseOrderLogic(LogicHelper).GetForEntry();
                 PurchaseOrderModels purchaseOrderModels = new PurchaseOrderModels()
                 {
                     _purchaseTypes = (List<PurchaseType>)Datas["PurchaseType"],
@@ -140,7 +143,7 @@ namespace JicoDotNet.Inventory.UIControllers
                     _vendors = (List<Vendor>)Datas["Vendor"],
                     _products = (List<Product>)Datas["Product"],
                     _company = SessionCompany,
-                    _config = new ConfigarationManager(BllCommonLogic).GetConfig()
+                    _config = new ConfigarationManager(LogicHelper).GetConfig()
                 };
                 return View(purchaseOrderModels);
             }
@@ -155,8 +158,8 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                DraftManagment draftManagment = new DraftManagment(BllCommonLogic);
-                string ObjectId = draftManagment.SetAsDraft(purchaseOrder, EDraft.PO);
+                DraftManagement draftManagement = new DraftManagement(LogicHelper);
+                string ObjectId = draftManagement.SetAsDraft(purchaseOrder, EDraft.PO);
                 return RedirectToAction("OrderDetail", "Purchase", new { id = UrlIdEncrypt(ObjectId, false), id2 = "Draft" });
             }
             catch (Exception ex)
@@ -172,10 +175,10 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 PurchaseOrderModels purchaseOrderModels = new PurchaseOrderModels()
                 {
-                    _config = new ConfigarationManager(BllCommonLogic).GetConfig()
+                    _config = new ConfigarationManager(LogicHelper).GetConfig()
                 };
                 // id == true :: Vendor is GST Registered. PO should be with Tax
-                if (id == "true")
+                if (UrlParameterId == "true")
                     return PartialView("_PartialPOItemDetailsWithTax", purchaseOrderModels);
                 else
                     return PartialView("_PartialPOItemDetailsNonTax", purchaseOrderModels);
@@ -191,21 +194,21 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (string.IsNullOrEmpty(id))
+                if (string.IsNullOrEmpty(UrlParameterId))
                     return RedirectToAction("Index");
 
                 PurchaseOrderModels purchaseOrderModels;
-                if (id2 == "Draft")
+                if (UrlParameterId2 == "Draft")
                 {
-                    DraftManagment draftManagment = new DraftManagment(BllCommonLogic);
+                    DraftManagement draftManagement = new DraftManagement(LogicHelper);
                     purchaseOrderModels = new PurchaseOrderModels()
                     {
-                        _purchaseOrder = draftManagment.GetFromDraft<PurchaseOrder>(id, EDraft.PO),
-                        _draftId = id
+                        _purchaseOrder = draftManagement.GetFromDraft<PurchaseOrder>(UrlParameterId, EDraft.PO),
+                        _draftId = UrlParameterId
                     };
                     if (purchaseOrderModels._purchaseOrder != null)
                     {
-                        purchaseOrderModels._config = new ConfigarationManager(BllCommonLogic).GetConfig();
+                        purchaseOrderModels._config = new ConfigarationManager(LogicHelper).GetConfig();
                         purchaseOrderModels._companyAddress = new Company()
                         {
                             CompanyName = SessionCompany.CompanyName,
@@ -221,7 +224,7 @@ namespace JicoDotNet.Inventory.UIControllers
                             Mobile = WebConfigAppSettingsAccess.CompanyMobile,
                             WebsiteUrl = WebConfigAppSettingsAccess.CompanyWebsite,
                         };
-                        purchaseOrderModels._vendor = new VendorLogic(BllCommonLogic).Get().FirstOrDefault(a => a.VendorId == purchaseOrderModels._purchaseOrder.VendorId);
+                        purchaseOrderModels._vendor = new VendorLogic(LogicHelper).Get().FirstOrDefault(a => a.VendorId == purchaseOrderModels._purchaseOrder.VendorId);
                         return View(purchaseOrderModels);
                     }
                 }
@@ -229,11 +232,11 @@ namespace JicoDotNet.Inventory.UIControllers
                 {
                     purchaseOrderModels = new PurchaseOrderModels()
                     {
-                        _purchaseOrder = new PurchaseOrderLogic(BllCommonLogic).GetForDetail(Convert.ToInt64(id))
+                        _purchaseOrder = new PurchaseOrderLogic(LogicHelper).GetForDetail(Convert.ToInt64(UrlParameterId))
                     };
                     if (purchaseOrderModels._purchaseOrder != null)
                     {
-                        purchaseOrderModels._config = new ConfigarationManager(BllCommonLogic).GetConfig();
+                        purchaseOrderModels._config = new ConfigarationManager(LogicHelper).GetConfig();
                         purchaseOrderModels._companyAddress = new Company()
                         {
                             CompanyName = SessionCompany.CompanyName,
@@ -249,7 +252,7 @@ namespace JicoDotNet.Inventory.UIControllers
                             Mobile = WebConfigAppSettingsAccess.CompanyMobile,
                             WebsiteUrl = WebConfigAppSettingsAccess.CompanyWebsite,
                         };
-                        purchaseOrderModels._vendor = new VendorLogic(BllCommonLogic).Get().FirstOrDefault(a => a.VendorId == purchaseOrderModels._purchaseOrder.VendorId);
+                        purchaseOrderModels._vendor = new VendorLogic(LogicHelper).Get().FirstOrDefault(a => a.VendorId == purchaseOrderModels._purchaseOrder.VendorId);
                         return View(purchaseOrderModels);
                     }
                 }
@@ -266,31 +269,31 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                DraftManagment draftManagment = new DraftManagment(BllCommonLogic);
-                if (string.IsNullOrEmpty(id))
+                DraftManagement draftManagement = new DraftManagement(LogicHelper);
+                if (string.IsNullOrEmpty(UrlParameterId))
                 {
                     return RedirectToAction("Order");
                 }
                 PurchaseOrderModels purchaseOrderModels = new PurchaseOrderModels()
                 {
-                    _purchaseOrder = draftManagment.GetFromDraft<PurchaseOrder>(id, EDraft.PO)
+                    _purchaseOrder = draftManagement.GetFromDraft<PurchaseOrder>(UrlParameterId, EDraft.PO)
                 };
 
                 #region Data Tracking...
                 DataTrackingLogicSet(purchaseOrderModels._purchaseOrder);
                 #endregion
 
-                string obj = new PurchaseOrderLogic(BllCommonLogic).SetForEntry(purchaseOrderModels._purchaseOrder);
+                string obj = new PurchaseOrderLogic(LogicHelper).SetForEntry(purchaseOrderModels._purchaseOrder);
                 PurchaseOrder POobj = JsonConvert.DeserializeObject<PurchaseOrder>(obj);
 
                 if (POobj != null && POobj.PurchaseOrderId > 0)
                 {
-                    ReturnMessage = new ReturnObject()
+                    ReturnMessage = new ReturnObject
                     {
                         Status = true,
                         Message = "Purchase Order generated successfully!!"
                     };
-                    draftManagment.DeleteDraft(id, EDraft.PO);
+                    _ = draftManagement.DeleteDraft(UrlParameterId, EDraft.PO);
                     return RedirectToAction("OrderDetail", "Purchase", new { id = UrlIdEncrypt(POobj.PurchaseOrderId, false), id2 = string.Empty });
                 }
                 else
@@ -301,7 +304,7 @@ namespace JicoDotNet.Inventory.UIControllers
                         Message = "Something went wrong!!"
                     };
                 }
-                return RedirectToAction("OrderDetail", "Purchase", new { id = UrlIdEncrypt(id, false), id2 = "Draft" });
+                return RedirectToAction($"OrderDetail", "Purchase", new { id = UrlIdEncrypt(UrlParameterId, false), id2 = "Draft" });
             }
             catch (Exception ex)
             {
@@ -310,18 +313,18 @@ namespace JicoDotNet.Inventory.UIControllers
         }
 
         [HttpPost]
-        public JsonResult Deactivate(string Context)
+        public JsonResult Deactivate(string context)
         {
             try
             {
-                if (new LoginManagement(BllCommonLogic).Authenticate(SessionPerson.UserEmail, Context))
+                if (new LoginManagement(LogicHelper).Authenticate(SessionPerson.UserEmail, context))
                 {
-                    PurchaseOrderLogic purchaseOrderLogic = new PurchaseOrderLogic(BllCommonLogic);
-                    long deactivateId = Convert.ToInt64(purchaseOrderLogic.Deactive(Convert.ToInt64(id)));
+                    PurchaseOrderLogic purchaseOrderLogic = new PurchaseOrderLogic(LogicHelper);
+                    long deactivateId = Convert.ToInt64(purchaseOrderLogic.Deactive(Convert.ToInt64(UrlParameterId)));
                     return Json(new JsonReturnModels
                     {
                         _isSuccess = true,
-                        _returnObject = deactivateId > 0 ? id : "0"
+                        _returnObject = deactivateId > 0 ? UrlParameterId : "0"
                     }, JsonRequestBehavior.AllowGet);
                 }
                 else
@@ -342,25 +345,25 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(id2))
+                if (string.IsNullOrEmpty(UrlParameterId) || string.IsNullOrEmpty(UrlParameterId2))
                     return RedirectToAction("Index");
 
                 PurchaseOrderModels purchaseOrderModels = new PurchaseOrderModels()
                 {
                     _company = SessionCompany,
-                    _purchaseOrder = new PurchaseOrderLogic(BllCommonLogic).GetForDetail(Convert.ToInt64(id))
+                    _purchaseOrder = new PurchaseOrderLogic(LogicHelper).GetForDetail(Convert.ToInt64(UrlParameterId))
                 };
-                purchaseOrderModels._config = new ConfigarationManager(BllCommonLogic).GetConfig();
-                purchaseOrderModels._vendor = new VendorLogic(BllCommonLogic).Get().FirstOrDefault(a => a.VendorId == purchaseOrderModels._purchaseOrder.VendorId);
+                purchaseOrderModels._config = new ConfigarationManager(LogicHelper).GetConfig();
+                purchaseOrderModels._vendor = new VendorLogic(LogicHelper).Get().FirstOrDefault(a => a.VendorId == purchaseOrderModels._purchaseOrder.VendorId);
                 if (purchaseOrderModels._purchaseOrder == null || string.IsNullOrEmpty(purchaseOrderModels._purchaseOrder.PurchaseOrderNumber))
                     return RedirectToAction("Index");
 
-                if (id2?.ToLower() == "quantity")
+                if (UrlParameterId2?.ToLower() == "quantity")
                 {
                     if (purchaseOrderModels._purchaseOrder.GoodsReceivedStatus == null)
                         return View("_QuantityAmendment", purchaseOrderModels);
                 }
-                if (id2?.ToLower() == "price")
+                if (UrlParameterId2?.ToLower() == "price")
                 {
                     if (purchaseOrderModels._purchaseOrder.BilledStatus == null)
                         return View("_PriceAmendment", purchaseOrderModels);
@@ -378,11 +381,11 @@ namespace JicoDotNet.Inventory.UIControllers
         {
             try
             {
-                if (string.IsNullOrEmpty(id))
+                if (string.IsNullOrEmpty(UrlParameterId))
                     return RedirectToAction("Index");
 
-                purchaseOrder.PurchaseOrderId = Convert.ToInt64(id);
-                string obj = new PurchaseOrderLogic(BllCommonLogic).SetForAmendment(purchaseOrder);
+                purchaseOrder.PurchaseOrderId = Convert.ToInt64(UrlParameterId);
+                string obj = new PurchaseOrderLogic(LogicHelper).SetForAmendment(purchaseOrder);
                 PurchaseOrder POobj = JsonConvert.DeserializeObject<PurchaseOrder>(obj);
 
                 if (POobj != null && POobj.PurchaseOrderId > 0)
@@ -402,7 +405,7 @@ namespace JicoDotNet.Inventory.UIControllers
                         Message = "Something went wrong!!"
                     };
                 }
-                return RedirectToAction("OrderDetail", "Purchase", new { id = UrlIdEncrypt(id, false), id2 = string.Empty });                
+                return RedirectToAction("OrderDetail", "Purchase", new { id = UrlIdEncrypt(UrlParameterId, false), id2 = string.Empty });                
             }
             catch (Exception ex)
             {

@@ -1,5 +1,6 @@
 ﻿@using JicoDotNet.Inventory.UI.Models;
 @using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+@using JicoDotNet.Inventory.Core.Models
 @using Microsoft.WindowsAzure.Storage.Table;
 @model CustomPropertyModels
 
@@ -17,19 +18,19 @@
                         <input type="text" placeholder="@customProperty.LabelName"
                                @if (customProperty.IsRequired) { <text> required </text> }
                                value="@customProperty.DefaultValue"
-                               name="@customProperty.ColoumnName" class="form-control form-control-sm">
+                               name="@customProperty.ColumnName" class="form-control form-control-sm">
                     }
                     else if (customProperty.DataType == EdmType.Double.ToString())
                     {
                         <input type="number" placeholder="@customProperty.LabelName"
                                @if (customProperty.IsRequired) { <text> required </text> }
-                               name="@customProperty.ColoumnName" class="form-control form-control-sm">
+                               name="@customProperty.ColumnName" class="form-control form-control-sm">
                     }
                     else if (customProperty.DataType == EdmType.Boolean.ToString())
                     {
                         <select class="form-control form-control-sm"
                                 @if (customProperty.IsRequired) { <text> required </text> }
-                                name="@customProperty.ColoumnName">
+                                name="@customProperty.ColumnName">
                             <option value="">-- Select --</option>
                             @for (int i = 0; i < Model._YesNo.Count; i++)
                             {
@@ -46,7 +47,7 @@
                         <input type="text" placeholder="@customProperty.LabelName"
                                data-mask readonly
                                @if (customProperty.IsRequired) { <text> required </text> }
-                               name="@customProperty.ColoumnName" class="form-control form-control-sm">
+                               name="@customProperty.ColumnName" class="form-control form-control-sm">
                     }
                 </div>
             </div>

@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using JicoDotNet.Inventory.Core.Models;
+using JicoDotNet.Inventory.Core.Models.DS;
 
 namespace JicoDotNet.Inventory.UI.Report.Models
 {

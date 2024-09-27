@@ -1,14 +1,13 @@
 ﻿using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Inventory.Core.Models;
 
 namespace JicoDotNet.Inventory.UI.Models
 {
     public class CompanyModels
     {
-        public SessionCredential _sessionCredential { get; set; }
+        public ISessionCredential _sessionCredential { get; set; }
         public Dictionary<string, string> _state { get; set; }
         public Dictionary<string, string> _companyType { get; set; }
         public Company _company { get; set; }

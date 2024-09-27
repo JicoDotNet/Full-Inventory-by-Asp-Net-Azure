@@ -1,5 +1,5 @@
-﻿@using JicoDotNet.Inventory.BusinessLayer.DTO.Class
-@model List<SessionCredential>
+﻿@using JicoDotNet.Inventory.Core.Common.Auth
+@model IList<JicoDotNet.Inventory.Core.Common.Auth.SessionCredential>
 
 <!DOCTYPE html>
 
@@ -68,7 +68,7 @@
                                         <h5>Previous Session Details</h5>
                                         @using (Html.BeginForm("Delete", "Account", new { id = Html.UrlIdEncrypt(sc.UserEmail, false) }, FormMethod.Post))
                                         {
-                                            <p class="card-success">Previous Login Time: @sc.TokenDate.ToDisplayDateString()</p>
+                                            <p class="card-success">Previous Login Time: @sc.TokenDate.Value.ToDisplayDateString()</p>
                                             <input type="hidden" name="UserEmail" value="@sc.UserEmail" />
                                             <button type="submit" class="btn btn-danger">
                                                 <i class="fas fa-power-off"></i>

@@ -146,8 +146,8 @@
     <Compile Include="Areas\Report\ReportAreaRegistration.cs" />
     <Compile Include="Auth\BaseController.cs" />
     <Compile Include="Auth\SessionAuthenticate.cs" />
-    <Compile Include="Common\WebConfigDBConnection.cs" />
-    <Compile Include="Common\Extension.cs" />
+    <Compile Include="Common\WebConfigDbConnection.cs" />
+    <Compile Include="Common\MvcExtension.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BillController.cs" />
     <Compile Include="Controllers\BranchController.cs" />
@@ -362,17 +362,35 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Jio\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccess.Sql\DataAccess.Sql.csproj">
       <Project>{6c964b6a-45a0-4402-abfe-8e4aff85800b}</Project>
       <Name>DataAccess.Sql</Name>
     </ProjectReference>
+    <ProjectReference Include="..\JicoDotNet.Authentication\JicoDotNet.Authentication.csproj">
+      <Project>{0266a8db-72f2-43e8-a5e9-40c76f1703c6}</Project>
+      <Name>JicoDotNet.Authentication</Name>
+    </ProjectReference>
     <ProjectReference Include="..\JicoDotNet.Inventory.BusinessLayer\JicoDotNet.Inventory.BusinessLayer.csproj">
       <Project>{922d9388-95ea-428e-a175-08bbb655d626}</Project>
       <Name>JicoDotNet.Inventory.BusinessLayer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\JicoDotNet.Inventory.Common\JicoDotNet.Inventory.Common.csproj">
+      <Project>{24E99C89-9B33-483D-8DF9-5A3C312FFF4A}</Project>
+      <Name>JicoDotNet.Inventory.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JicoDotNet.Inventory.Core\JicoDotNet.Inventory.Core.csproj">
+      <Project>{9f34c785-6745-4251-bf32-0d6503383385}</Project>
+      <Name>JicoDotNet.Inventory.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JicoDotNet.Inventory.Logging\JicoDotNet.Inventory.Logging.csproj">
+      <Project>{68D794C3-71B8-4E08-A1AD-CF3091082664}</Project>
+      <Name>JicoDotNet.Inventory.Logging</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
