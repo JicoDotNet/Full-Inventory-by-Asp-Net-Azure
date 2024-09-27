@@ -1,28 +1,27 @@
 ﻿using DataAccess.Sql;
-using Newtonsoft.Json;
 using JicoDotNet.Inventory.BusinessLayer.Common;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class.Custom;
-using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using JicoDotNet.Inventory.Core.Common;
+using JicoDotNet.Inventory.Core.Custom;
+using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Inventory.Core.Enumeration;
+using JicoDotNet.Inventory.Core.Models;
+using JicoDotNet.Inventory.Core.Custom.Interface;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class RetailLogic : ConnectionString
     {
-        public RetailLogic(sCommonDto CommonObj) : base(CommonObj) { }
+        public RetailLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
 
-        public long Set(RetailSales retailSales, CompanyBasic currentCompany, 
+        public long Set(RetailSales retailSales, ICompanyBasic currentCompany, 
             Dictionary<string, object> dynamicFormValue, out short ReturnType)
         {
             long SalesOrderId = 0;
-            List<ShipmentDetailType> spmDetailTypes = new List<ShipmentDetailType>();
-            List<SalesOrderDetailType> orderDetailTypes = new List<SalesOrderDetailType>();
+            List<IShipmentDetailType> spmDetailTypes = new List<IShipmentDetailType>();
+            List<ISalesOrderDetailType> orderDetailTypes = new List<ISalesOrderDetailType>();
             int count = 1;
             try
             {
@@ -76,50 +75,50 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 try
                 {
                     _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-                    nameValuePairs nvp = new nameValuePairs()
+                    NameValuePairs nvp = new NameValuePairs()
                     {
                          
                          
 
                         // Customer
-                        new nameValuePair("@ContactPerson", retailSales.ContactPerson),
-                        new nameValuePair("@Email", retailSales.Email),
-                        new nameValuePair("@Mobile", retailSales.Mobile),
-                        new nameValuePair("@CompanyName", retailSales.CompanyName),
-                        new nameValuePair("@CompanyType", retailSales.CompanyType),
-                        new nameValuePair("@StateCode", retailSales.IsGSTRegistered? GenericLogic.GstStateCode(retailSales.GSTNumber) : retailSales.StateCode),
-                        new nameValuePair("@IsGSTRegistered", retailSales.IsGSTRegistered),
-                        new nameValuePair("@GSTStateCode", retailSales.IsGSTRegistered? (object)GenericLogic.GstStateCode(retailSales.GSTNumber) : DBNull.Value),
-                        new nameValuePair("@GSTNumber", retailSales.IsGSTRegistered?(object)retailSales.GSTNumber:DBNull.Value),
-                        new nameValuePair("@PANNumber", retailSales.PANNumber),
+                        new NameValuePair("@ContactPerson", retailSales.ContactPerson),
+                        new NameValuePair("@Email", retailSales.Email),
+                        new NameValuePair("@Mobile", retailSales.Mobile),
+                        new NameValuePair("@CompanyName", retailSales.CompanyName),
+                        new NameValuePair("@CompanyType", retailSales.CompanyType),
+                        new NameValuePair("@StateCode", retailSales.IsGSTRegistered? GenericLogic.GstStateCode(retailSales.GSTNumber) : retailSales.StateCode),
+                        new NameValuePair("@IsGSTRegistered", retailSales.IsGSTRegistered),
+                        new NameValuePair("@GSTStateCode", retailSales.IsGSTRegistered? (object)GenericLogic.GstStateCode(retailSales.GSTNumber) : DBNull.Value),
+                        new NameValuePair("@GSTNumber", retailSales.IsGSTRegistered?(object)retailSales.GSTNumber:DBNull.Value),
+                        new NameValuePair("@PANNumber", retailSales.PANNumber),
 
                         //SO
-                        new nameValuePair("@CustomerId", retailSales.CustomerId),
-                        new nameValuePair("@SalesOrderDate", retailSales.ShipmentDate),
-                        new nameValuePair("@SalesOrderAmount", retailSales.SalesOrderAmount),
-                        new nameValuePair("@SalesOrderTaxAmount", retailSales.SalesOrderTaxAmount),
-                        new nameValuePair("@SalesOrderTotalAmount", retailSales.SalesOrderTotalAmount),
-                        new nameValuePair("@DeliveryDate", retailSales.ShipmentDate),
-                        new nameValuePair("@SalesOrderDetails", orderDetailTypes.ToDataTable()),
+                        new NameValuePair("@CustomerId", retailSales.CustomerId),
+                        new NameValuePair("@SalesOrderDate", retailSales.ShipmentDate),
+                        new NameValuePair("@SalesOrderAmount", retailSales.SalesOrderAmount),
+                        new NameValuePair("@SalesOrderTaxAmount", retailSales.SalesOrderTaxAmount),
+                        new NameValuePair("@SalesOrderTotalAmount", retailSales.SalesOrderTotalAmount),
+                        new NameValuePair("@DeliveryDate", retailSales.ShipmentDate),
+                        new NameValuePair("@SalesOrderDetails", orderDetailTypes.ToDataTable()),
 
                         // Ship
-                        new nameValuePair("@WareHouseId", retailSales.WareHouseId),
-                        new nameValuePair("@ShipmentNumber", "DO-"),
-                        new nameValuePair("@ShipmentDate", retailSales.ShipmentDate),
-                        new nameValuePair("@IsDirect", true),
-                        new nameValuePair("@IsFullShipped", true),
-                        new nameValuePair("@VehicleNumber", retailSales.VehicleNumber),
-                        new nameValuePair("@HandOverPerson", retailSales.HandOverPerson),
-                        new nameValuePair("@HandOverPersonMobile", retailSales.HandOverPersonMobile),
-                        new nameValuePair("@ShipmentDetails", spmDetailTypes.ToDataTable()),
+                        new NameValuePair("@WareHouseId", retailSales.WareHouseId),
+                        new NameValuePair("@ShipmentNumber", "DO-"),
+                        new NameValuePair("@ShipmentDate", retailSales.ShipmentDate),
+                        new NameValuePair("@IsDirect", true),
+                        new NameValuePair("@IsFullShipped", true),
+                        new NameValuePair("@VehicleNumber", retailSales.VehicleNumber),
+                        new NameValuePair("@HandOverPerson", retailSales.HandOverPerson),
+                        new NameValuePair("@HandOverPersonMobile", retailSales.HandOverPersonMobile),
+                        new NameValuePair("@ShipmentDetails", spmDetailTypes.ToDataTable()),
 
                         // Common
-                        new nameValuePair("@Remarks", retailSales.Remarks),
+                        new NameValuePair("@Remarks", retailSales.Remarks),
 
-                        new nameValuePair("@RequestId", CommonObj.RequestId),
-                        new nameValuePair("@QueryType", "INSERT")
+                        new NameValuePair("@RequestId", CommonObj.RequestId),
+                        new NameValuePair("@QueryType", "INSERT")
                     };
-                    SalesOrderId = Convert.ToInt64(_sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetRetailSales]", nvp, "@OutParam"));
+                    SalesOrderId = Convert.ToInt64(_sqlDBAccess.DataManipulation("[dbo].[spSetRetailSales]", nvp, "@OutParam"));
                 }
                 catch (Exception ex) { throw ex; }
 

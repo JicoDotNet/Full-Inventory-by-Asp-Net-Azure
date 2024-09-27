@@ -1,6 +1,7 @@
-﻿@using JicoDotNet.Inventory.UIReport.Models;
+﻿@using JicoDotNet.Inventory.UI.Report.Models;
 @using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-@using JicoDotNet.Inventory.BusinessLayer.DTO.Class.Report;
+@using JicoDotNet.Inventory.Core.Enumeration
+@using JicoDotNet.Inventory.Core.Report
 @model TaxReportModels
 
 <table class="table table-striped table-bordered dt-responsive nowrap" data-table="report">
@@ -21,7 +22,7 @@
     <tbody>
         @if (Model != null && Model._rGSTIn != null)
         {
-            foreach (RGSTInput rGSTInput in Model._rGSTIn)
+            foreach (ResponseGSTInputResult rGSTInput in Model._rGSTIn)
             {
                 <tr>
                     <td>

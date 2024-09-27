@@ -1,12 +1,13 @@
 ﻿using JicoDotNet.Inventory.BusinessLayer.BLL;
 using JicoDotNet.Inventory.BusinessLayer.BLL.Report;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class.Report;
 using JicoDotNet.Inventory.UI.Report.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using JicoDotNet.Inventory.Core.Report;
+using JicoDotNet.Inventory.Core.Report.Interface;
 
 namespace JicoDotNet.Inventory.UI.Areas.Report.Controllers
 {
@@ -17,7 +18,7 @@ namespace JicoDotNet.Inventory.UI.Areas.Report.Controllers
         {
             try
             {
-                VendorLogic vendorLogic = new VendorLogic(BllCommonLogic);
+                VendorLogic vendorLogic = new VendorLogic(LogicHelper);
                 PurchaseReportModels purchaseReportModels = new PurchaseReportModels
                 {
                     _vendorTypes = vendorLogic.TypeGet(),
@@ -31,13 +32,13 @@ namespace JicoDotNet.Inventory.UI.Areas.Report.Controllers
             }
         }
         [HttpPost]
-        public PartialViewResult Vendor(PVendorPurchase vendorPurchase)
+        public PartialViewResult Vendor(RequestVendorPurchaseParam vendorPurchase)
         {
             try
             {
-                if (vendorPurchase.SearchDate.IsInOneYearRange())
+                if (vendorPurchase.SearchDate.IsInOneYearRange)
                 {
-                    PurchaseReportLogic purchaseReport = new PurchaseReportLogic(BllCommonLogic);
+                    PurchaseReportLogic purchaseReport = new PurchaseReportLogic(LogicHelper);
                     PurchaseReportModels salesReportModels = new PurchaseReportModels
                     {
                         _rVendorPurchase = purchaseReport.VendorWise(vendorPurchase)
@@ -60,7 +61,7 @@ namespace JicoDotNet.Inventory.UI.Areas.Report.Controllers
         {
             try
             {
-                ProductLogic productLogic = new ProductLogic(BllCommonLogic);
+                ProductLogic productLogic = new ProductLogic(LogicHelper);
                 PurchaseReportModels salesReportModels = new PurchaseReportModels
                 {
                     _productTypes = productLogic.TypeGet(),
@@ -75,13 +76,13 @@ namespace JicoDotNet.Inventory.UI.Areas.Report.Controllers
         }
 
         [HttpPost]
-        public PartialViewResult Product(PProductPurchase productPurchase)
+        public PartialViewResult Product(RequestProductPurchaseParam productPurchase)
         {
             try
             {
-                if (productPurchase.SearchDate.IsInOneYearRange())
+                if (productPurchase.SearchDate.IsInOneYearRange)
                 {
-                    PurchaseReportLogic salesReport = new PurchaseReportLogic(BllCommonLogic);
+                    PurchaseReportLogic salesReport = new PurchaseReportLogic(LogicHelper);
                     PurchaseReportModels salesReportModels = new PurchaseReportModels
                     {
                         _rProductPurchase = salesReport.ProductWise(productPurchase)

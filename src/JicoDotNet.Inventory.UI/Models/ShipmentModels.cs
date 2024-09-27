@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Inventory.Core.Models;
 
 namespace JicoDotNet.Inventory.UI.Models
 {
@@ -16,7 +18,7 @@ namespace JicoDotNet.Inventory.UI.Models
         public SalesOrder _salesOrder { get; set; }
         public Dictionary<bool, string> _YesNo { get; set; }
         public List<WareHouse> _wareHouses { get; set; }
-        public CompanyBasic _company { get; set; }
+        public ICompanyBasic _company { get; set; }
         public Company _companyAddress { get; set; }
 
         public Branch _branch { get; set; }
@@ -24,7 +26,7 @@ namespace JicoDotNet.Inventory.UI.Models
         public Shipment _shipment { get; set; }
         public List<ShipmentDetail>  _shipmentDetails { get; set; }
         public List<Stock> _stocks { get; set; }
-        public List<Product> _products { get; set; }
+        public IList<Product> _products { get; set; }
 
         public List<Customer> _customers { get; set; }
         public List<SalesType> _salesTypes { get; set; }

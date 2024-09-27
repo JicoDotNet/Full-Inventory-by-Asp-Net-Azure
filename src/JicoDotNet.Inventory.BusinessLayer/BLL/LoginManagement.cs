@@ -1,26 +1,21 @@
-﻿using DataAccess.Sql;
-using Newtonsoft.Json;
-using JicoDotNet.Inventory.BusinessLayer.Common;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
+﻿using JicoDotNet.Inventory.BusinessLayer.Common;
 using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Configuration;
+using JicoDotNet.Inventory.Core.Common;
+using JicoDotNet.Inventory.Core.Common.Auth;
+using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Inventory.Core.Enumeration;
+using JicoDotNet.Inventory.Core.Models;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class LoginManagement : ConnectionString
     {
-        public LoginManagement(sCommonDto CommonObj) : base(CommonObj) { }
+        public LoginManagement(ICommonRequestDto commonObj) : base(commonObj) { }
 
-        public AccountAuthentication Authenticate(LoginCredentials loginCredentials, string RequestedIP)
+        public IAccountAuthentication Authenticate(LoginCredentials loginCredentials, string requestedIP)
         {
-            AccountAuthentication accountAuthenticate = new AccountAuthentication
+            IAccountAuthentication accountAuthenticate = new AccountAuthentication
             {
                 eLoginStatus = ELoginStatus.Error
             };
@@ -44,7 +39,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     try
                     {
                         IPAddressRange range = new IPAddressRange(IPAddress.Parse(WebConfigAppSettingsAccess.AllowedStartIP), IPAddress.Parse(WebConfigAppSettingsAccess.AllowedEndIP));
-                        IPFlag = range.IsInRange(IPAddress.Parse(RequestedIP));
+                        IPFlag = range.IsInRange(IPAddress.Parse(requestedIP));
                     }
                     catch
                     {

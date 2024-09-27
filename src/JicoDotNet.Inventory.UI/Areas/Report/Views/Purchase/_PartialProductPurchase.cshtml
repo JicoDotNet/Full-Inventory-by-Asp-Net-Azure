@@ -1,6 +1,6 @@
-﻿@using JicoDotNet.Inventory.UIReport.Models;
+﻿@using JicoDotNet.Inventory.UI.Report.Models;
 @using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-@using JicoDotNet.Inventory.BusinessLayer.DTO.Class.Report;
+@using JicoDotNet.Inventory.Core.Report
 @model PurchaseReportModels
 
 <table class="table table-striped table-bordered dt-responsive nowrap" data-table="report">
@@ -22,7 +22,7 @@
     <tbody>
         @if (Model != null && Model._rProductPurchase != null)
         {
-            foreach (RProductPurchase rProductPurchase in Model._rProductPurchase)
+            foreach (ResponseProductPurchaseResult rProductPurchase in Model._rProductPurchase)
             {
                 <tr>
                     <td>

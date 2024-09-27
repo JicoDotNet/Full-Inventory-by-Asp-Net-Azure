@@ -18,7 +18,5 @@
     [Description]           NVARCHAR (256)  NULL,
     [TransactionDate]       DATETIME2 (7)   NULL,
     [IsActive]              BIT             NULL,
-    [TenantId]              INT             NULL,
-    [TenantCode]            NVARCHAR (64)   NULL,
     [RequestId]             NVARCHAR (64)   NULL);
 

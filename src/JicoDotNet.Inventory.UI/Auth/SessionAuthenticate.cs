@@ -1,10 +1,13 @@
 ﻿using Newtonsoft.Json;
 using JicoDotNet.Inventory.BusinessLayer.BLL;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
-using System.Web.Configuration;
 using System.Web.Routing;
+using JicoDotNet.Inventory.Core.Common;
+using JicoDotNet.Inventory.Core.Common.Auth;
+using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Inventory.Core.Models;
 
+// ReSharper disable once CheckNamespace
 namespace System.Web.Mvc
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = false)]
@@ -41,7 +44,7 @@ namespace System.Web.Mvc
                 #endregion
 
                 #region Get Session Value & check exists or not
-                SessionCredential _SessionKey;
+                ISessionCredential _SessionKey;
                 if (string.IsNullOrEmpty(Token))
                 {
                     filterContext.Result =
@@ -49,9 +52,10 @@ namespace System.Web.Mvc
                     return;
                 }
                 else
-                    _SessionKey = new TokenManagement(new sCommonDto
+                    _SessionKey = new TokenManagement(new CommonRequestDto
                     {
-                        NoSqlConnectionString = WebConfigDBConnection.AzureStorage
+                        NoSqlConnectionString = WebConfigDbConnection.AzureStorage,
+                        SqlConnectionString = WebConfigDbConnection.SqlServer
                     }).GetCredential(Token);
 
                 // If session exists

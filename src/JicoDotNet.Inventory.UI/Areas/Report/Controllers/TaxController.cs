@@ -1,12 +1,13 @@
 ﻿using JicoDotNet.Inventory.BusinessLayer.BLL;
 using JicoDotNet.Inventory.BusinessLayer.BLL.Report;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class.Report;
 using JicoDotNet.Inventory.UI.Report.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using JicoDotNet.Inventory.Core.Report;
+using JicoDotNet.Inventory.Core.Report.Interface;
 
 namespace JicoDotNet.Inventory.UI.Areas.Report.Controllers
 {
@@ -38,13 +39,13 @@ namespace JicoDotNet.Inventory.UI.Areas.Report.Controllers
         }
 
         [HttpPost]
-        public PartialViewResult Output(PTax gst)
+        public PartialViewResult Output(RequestTaxParam gst)
         {
             try
             {
-                if (gst.SearchDate.IsInOneYearRange())
+                if (gst.SearchDate.IsInOneYearRange)
                 {
-                    TaxReportLogic taxReport = new TaxReportLogic(BllCommonLogic);
+                    TaxReportLogic taxReport = new TaxReportLogic(LogicHelper);
                     TaxReportModels taxReportModels = new TaxReportModels
                     {
                         _rGSTOut = taxReport.GSTOutputs(gst)
@@ -76,13 +77,13 @@ namespace JicoDotNet.Inventory.UI.Areas.Report.Controllers
         }
 
         [HttpPost]
-        public PartialViewResult Input(PTax gst)
+        public PartialViewResult Input(RequestTaxParam gst)
         {
             try
             {
-                if (gst.SearchDate.IsInOneYearRange())
+                if (gst.SearchDate.IsInOneYearRange)
                 {
-                    TaxReportLogic taxReport = new TaxReportLogic(BllCommonLogic);
+                    TaxReportLogic taxReport = new TaxReportLogic(LogicHelper);
                     TaxReportModels taxReportModels = new TaxReportModels
                     {
                         _rGSTIn = taxReport.GSTInputs(gst)

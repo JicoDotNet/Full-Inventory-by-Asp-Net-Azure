@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using JicoDotNet.Inventory.Core.Models;
 
 namespace JicoDotNet.Inventory.UI.Models
 {
@@ -17,6 +18,6 @@ namespace JicoDotNet.Inventory.UI.Models
 
         public Dictionary<string, string> _state { get; set; }
         public Dictionary<string, string> _companyType { get; set; }
-        public Dictionary<bool, string> _YesNo { get; set; }
+        public IDictionary<bool, string> _YesNo { get; set; }
     }
 }

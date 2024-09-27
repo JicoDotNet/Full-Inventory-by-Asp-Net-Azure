@@ -1,5 +1,5 @@
 ﻿@using JicoDotNet.Inventory.UI.Models;
-@using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+@using JicoDotNet.Inventory.Core.Entities
 @model ProductModels
 
 <div class="col-md-12">
@@ -34,7 +34,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (Product product in Model._products)
+                    @foreach (IProduct product in Model._products)
                     {
                         <tr @if (!product.IsActive) { <text> style="background-color:#e5bfc0;" </text> }>
                             <td class="d-none d-sm-block">

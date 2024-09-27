@@ -1,22 +1,20 @@
 ﻿using System;
-using System.Data;
-using System.Data.SqlClient;
 
 namespace DataAccess.Sql
 {
     public abstract class SQLManager
     {
-        internal protected string ConnectionString { get; private set; }
+        private protected string SqlConnectionString { get; private set; }
 
-        public SQLManager(object _ConnectionString)
+        private protected SQLManager(object connectionString)
         {
             try
             {
-                if (string.IsNullOrEmpty(_ConnectionString.ToString()))
+                if (string.IsNullOrEmpty(connectionString.ToString()))
                 {
-                    throw new ArgumentNullException("_ConnectionString", "Connection String value can't be empty");
+                    throw new ArgumentNullException(nameof(connectionString), "Connection String value can't be empty");
                 }
-                ConnectionString = _ConnectionString.ToString();
+                SqlConnectionString = connectionString.ToString();
             }
             catch (Exception ex)
             {

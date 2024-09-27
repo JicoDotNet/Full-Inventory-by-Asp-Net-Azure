@@ -49,8 +49,8 @@
     <Reference Include="Microsoft.WindowsAzure.Storage, Version=8.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WindowsAzure.Storage.8.7.0\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp, Version=106.11.4.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharp.106.11.4\lib\net452\RestSharp.dll</HintPath>
@@ -75,11 +75,10 @@
     <Compile Include="BLL\ConfigarationManager.cs" />
     <Compile Include="BLL\CustomerLogic.cs" />
     <Compile Include="BLL\CustomPropertyLogic.cs" />
-    <Compile Include="BLL\DraftManagment.cs" />
+    <Compile Include="BLL\DraftManagement.cs" />
     <Compile Include="BLL\DS\MasterDS.cs" />
     <Compile Include="BLL\GoodsReceiveNoteLogic.cs" />
     <Compile Include="BLL\InvoiceLogic.cs" />
-    <Compile Include="BLL\IPsManagment.cs" />
     <Compile Include="BLL\LoginManagement.cs" />
     <Compile Include="BLL\PaymentLogic.cs" />
     <Compile Include="BLL\ProductLogic.cs" />
@@ -92,233 +91,21 @@
     <Compile Include="BLL\SalesOrderLogic.cs" />
     <Compile Include="BLL\ShipmentLogic.cs" />
     <Compile Include="BLL\SMSBankLogic.cs" />
-    <Compile Include="BLL\SMSManageLogic.cs" />
     <Compile Include="BLL\StockAdjustLogic.cs" />
     <Compile Include="BLL\StockLogic.cs" />
     <Compile Include="BLL\StockTransferLogic.cs" />
     <Compile Include="BLL\SupportLogic.cs" />
     <Compile Include="BLL\TaxingLogic.cs" />
     <Compile Include="BLL\TokenManagement.cs" />
-    <Compile Include="BLL\Tracking\DataTrackingLogic.cs" />
-    <Compile Include="BLL\Tracking\TrackingLogic.cs" />
     <Compile Include="BLL\UnitOfMeasureLogic.cs" />
     <Compile Include="BLL\UserLogic.cs" />
     <Compile Include="BLL\VendorLogic.cs" />
     <Compile Include="BLL\WareHouseLogic.cs" />
-    <Compile Include="Common\ConnectionString.cs" />
-    <Compile Include="Common\DateRange.cs" />
-    <Compile Include="Common\Extension.cs" />
-    <Compile Include="Common\GenericLogic.cs" />
     <Compile Include="Common\GSTLogic.cs" />
     <Compile Include="Common\IPAddressRange.cs" />
     <Compile Include="Common\MailSmSLogic.cs" />
     <Compile Include="Common\MemoryFile.cs" />
     <Compile Include="Common\WebConfigAppSettingsAccess.cs" />
-    <Compile Include="DTO\Class\AccountAuthenticate.cs" />
-    <Compile Include="DTO\Class\AllowIPs.cs" />
-    <Compile Include="DTO\Class\Bill.cs" />
-    <Compile Include="DTO\Class\BillDetail.cs" />
-    <Compile Include="DTO\Class\BillType.cs" />
-    <Compile Include="DTO\Class\Branch.cs" />
-    <Compile Include="DTO\Class\Company.cs" />
-    <Compile Include="DTO\Class\CompanyBank.cs" />
-    <Compile Include="DTO\Class\CompanyBasic.cs" />
-    <Compile Include="DTO\Class\Config.cs" />
-    <Compile Include="DTO\Class\Customer.cs" />
-    <Compile Include="DTO\Class\CustomerType.cs" />
-    <Compile Include="DTO\Class\CustomProperty.cs" />
-    <Compile Include="DTO\Class\Custom\BillDetailsType.cs" />
-    <Compile Include="DTO\Class\Custom\GRNDetailType.cs" />
-    <Compile Include="DTO\Class\Custom\InvoiceDetailType.cs" />
-    <Compile Include="DTO\Class\Custom\OpeningStockDetail.cs" />
-    <Compile Include="DTO\Class\Custom\PaymentInDetailType.cs" />
-    <Compile Include="DTO\Class\Custom\PaymentOutDetailType.cs" />
-    <Compile Include="DTO\Class\Custom\PurchaseOrderDetailType.cs" />
-    <Compile Include="DTO\Class\Custom\PurchaseReturnDetailType.cs" />
-    <Compile Include="DTO\Class\Custom\QuotationDetailType.cs" />
-    <Compile Include="DTO\Class\Custom\SalesOrderDetailType.cs" />
-    <Compile Include="DTO\Class\Custom\SearchType.cs" />
-    <Compile Include="DTO\Class\Custom\ShipmentDetailType.cs" />
-    <Compile Include="DTO\Class\Custom\StockAdjustDetailType.cs" />
-    <Compile Include="DTO\Class\Custom\StockTransferDetailType.cs" />
-    <Compile Include="DTO\Class\Custom\UserMenuType.cs" />
-    <Compile Include="DTO\Class\DataTracking.cs" />
-    <Compile Include="DTO\Class\Draft.cs" />
-    <Compile Include="DTO\Class\ForgetPassword.cs" />
-    <Compile Include="DTO\Class\GoodsReceiveNote.cs" />
-    <Compile Include="DTO\Class\GoodsReceiveNoteDetail.cs" />
-    <Compile Include="DTO\Class\GoodsReceiveNoteDirect.cs" />
-    <Compile Include="DTO\Class\GoodsReceiveNoteDirectDetail.cs" />
-    <Compile Include="DTO\Class\HtmlDesign.cs" />
-    <Compile Include="DTO\Class\InvalidModel.cs" />
-    <Compile Include="DTO\Class\Invoice.cs" />
-    <Compile Include="DTO\Class\InvoiceDetail.cs" />
-    <Compile Include="DTO\Class\InvoiceType.cs" />
-    <Compile Include="DTO\Class\Logger.cs" />
-    <Compile Include="DTO\Class\LoginCredentials.cs" />
-    <Compile Include="DTO\Class\LoginLog.cs" />
-    <Compile Include="DTO\Class\Password.cs" />
-    <Compile Include="DTO\Class\PaymentIn.cs" />
-    <Compile Include="DTO\Class\PaymentInDetail.cs" />
-    <Compile Include="DTO\Class\PaymentOut.cs" />
-    <Compile Include="DTO\Class\PaymentOutDetail.cs" />
-    <Compile Include="DTO\Class\PaymentType.cs" />
-    <Compile Include="DTO\Class\Product.cs" />
-    <Compile Include="DTO\Class\ProductFiltered.cs" />
-    <Compile Include="DTO\Class\ProductType.cs" />
-    <Compile Include="DTO\Class\PurchaseOrder.cs" />
-    <Compile Include="DTO\Class\PurchaseOrderDetail.cs" />
-    <Compile Include="DTO\Class\PurchaseReturn.cs" />
-    <Compile Include="DTO\Class\PurchaseReturnDetail.cs" />
-    <Compile Include="DTO\Class\PurchaseType.cs" />
-    <Compile Include="DTO\Class\Quotation.cs" />
-    <Compile Include="DTO\Class\QuotationDetail.cs" />
-    <Compile Include="DTO\Class\Report\PCustomerSales.cs" />
-    <Compile Include="DTO\Class\Report\PProductPurchase.cs" />
-    <Compile Include="DTO\Class\Report\PProductSales.cs" />
-    <Compile Include="DTO\Class\Report\PTax.cs" />
-    <Compile Include="DTO\Class\Report\PVendorPurchase.cs" />
-    <Compile Include="DTO\Class\Report\RCustomerSales.cs" />
-    <Compile Include="DTO\Class\Report\RGSTInput.cs" />
-    <Compile Include="DTO\Class\Report\RGSTOutput.cs" />
-    <Compile Include="DTO\Class\Report\RProductPurchase.cs" />
-    <Compile Include="DTO\Class\Report\RProductSales.cs" />
-    <Compile Include="DTO\Class\Report\RVendorPurchase.cs" />
-    <Compile Include="DTO\Class\RetailSales.cs" />
-    <Compile Include="DTO\Class\ReturnObject.cs" />
-    <Compile Include="DTO\Class\SalesOrder.cs" />
-    <Compile Include="DTO\Class\SalesOrderDetail.cs" />
-    <Compile Include="DTO\Class\SalesType.cs" />
-    <Compile Include="DTO\Class\SessionCredential.cs" />
-    <Compile Include="DTO\Class\Shipment.cs" />
-    <Compile Include="DTO\Class\ShipmentDetail.cs" />
-    <Compile Include="DTO\Class\ShipmentDirect.cs" />
-    <Compile Include="DTO\Class\ShipmentDirectDetail.cs" />
-    <Compile Include="DTO\Class\ShipmentType.cs" />
-    <Compile Include="DTO\Class\SMSBank.cs" />
-    <Compile Include="DTO\Class\SMSSendTrack.cs" />
-    <Compile Include="DTO\Class\Stock.cs" />
-    <Compile Include="DTO\Class\StockAdjust.cs" />
-    <Compile Include="DTO\Class\StockAdjustDetail.cs" />
-    <Compile Include="DTO\Class\StockAdjustReason.cs" />
-    <Compile Include="DTO\Class\StockDetail.cs" />
-    <Compile Include="DTO\Class\StockTransfer.cs" />
-    <Compile Include="DTO\Class\StockTransferDetail.cs" />
-    <Compile Include="DTO\Class\StoreCredential.cs" />
-    <Compile Include="DTO\Class\StoreSessionCredential.cs" />
-    <Compile Include="DTO\Class\Support.cs" />
-    <Compile Include="DTO\Class\TDSPay.cs" />
-    <Compile Include="DTO\Class\TDSReceive.cs" />
-    <Compile Include="DTO\Class\TenantQuota.cs" />
-    <Compile Include="DTO\Class\UnitOfMeasure.cs" />
-    <Compile Include="DTO\Class\User.cs" />
-    <Compile Include="DTO\Class\UserCompany.cs" />
-    <Compile Include="DTO\Class\UserMenu.cs" />
-    <Compile Include="DTO\Class\UserRecharge.cs" />
-    <Compile Include="DTO\Class\UserType.cs" />
-    <Compile Include="DTO\Class\Vendor.cs" />
-    <Compile Include="DTO\Class\VendorBank.cs" />
-    <Compile Include="DTO\Class\VendorType.cs" />
-    <Compile Include="DTO\Class\WareHouse.cs" />
-    <Compile Include="DTO\DS\HomeMasterCount.cs" />
-    <Compile Include="DTO\DS\ReportMasterCount.cs" />
-    <Compile Include="DTO\Interface\IActivity.cs" />
-    <Compile Include="DTO\Interface\IAllowIPs.cs" />
-    <Compile Include="DTO\Interface\IBank.cs" />
-    <Compile Include="DTO\Interface\IBill.cs" />
-    <Compile Include="DTO\Interface\IBillDetail.cs" />
-    <Compile Include="DTO\Interface\IBillType.cs" />
-    <Compile Include="DTO\Interface\IBranch.cs" />
-    <Compile Include="DTO\Interface\ICompany.cs" />
-    <Compile Include="DTO\Interface\ICompanyBank.cs" />
-    <Compile Include="DTO\Interface\ICompanyBasic.cs" />
-    <Compile Include="DTO\Interface\ICompanyIdentity.cs" />
-    <Compile Include="DTO\Interface\IConfig.cs" />
-    <Compile Include="DTO\Interface\ICustomer.cs" />
-    <Compile Include="DTO\Interface\ICustomerType.cs" />
-    <Compile Include="DTO\Interface\ICustomProperty.cs" />
-    <Compile Include="DTO\Interface\IDataTracking.cs" />
-    <Compile Include="DTO\Interface\IDateRange.cs" />
-    <Compile Include="DTO\Interface\IDefaultSettings.cs" />
-    <Compile Include="DTO\Interface\IDetail.cs" />
-    <Compile Include="DTO\Interface\IDraft.cs" />
-    <Compile Include="DTO\Interface\IGoodsReceiveNote.cs" />
-    <Compile Include="DTO\Interface\IGoodsReceiveNoteDetail.cs" />
-    <Compile Include="DTO\Interface\IHRequest.cs" />
-    <Compile Include="DTO\Interface\IInvalidModel.cs" />
-    <Compile Include="DTO\Interface\IInvoice.cs" />
-    <Compile Include="DTO\Interface\IInvoiceDetail.cs" />
-    <Compile Include="DTO\Interface\IInvoiceType.cs" />
-    <Compile Include="DTO\Interface\ILogger.cs" />
-    <Compile Include="DTO\Interface\ILoginLog.cs" />
-    <Compile Include="DTO\Interface\IMenu.cs" />
-    <Compile Include="DTO\Interface\IMenuGroup.cs" />
-    <Compile Include="DTO\Interface\IMenuList.cs" />
-    <Compile Include="DTO\Interface\IOrderDetails.cs" />
-    <Compile Include="DTO\Interface\IPassword.cs" />
-    <Compile Include="DTO\Interface\IPaymentIn.cs" />
-    <Compile Include="DTO\Interface\IPaymentInDetail.cs" />
-    <Compile Include="DTO\Interface\IPaymentOut.cs" />
-    <Compile Include="DTO\Interface\IPaymentOutDetail.cs" />
-    <Compile Include="DTO\Interface\IPaymentType.cs" />
-    <Compile Include="DTO\Interface\IProduct.cs" />
-    <Compile Include="DTO\Interface\IProductAttribute.cs" />
-    <Compile Include="DTO\Interface\IProductType.cs" />
-    <Compile Include="DTO\Interface\IPurchaseOrder.cs" />
-    <Compile Include="DTO\Interface\IPurchaseOrderDetail.cs" />
-    <Compile Include="DTO\Interface\IPurchaseReturn.cs" />
-    <Compile Include="DTO\Interface\IPurchaseReturnDetail.cs" />
-    <Compile Include="DTO\Interface\IPurchaseTracking.cs" />
-    <Compile Include="DTO\Interface\IPurchaseType.cs" />
-    <Compile Include="DTO\Interface\IQuotation.cs" />
-    <Compile Include="DTO\Interface\IQuotationDetail.cs" />
-    <Compile Include="DTO\Interface\IRecharge.cs" />
-    <Compile Include="DTO\Interface\IReturnObject.cs" />
-    <Compile Include="DTO\Interface\ISalesOrder.cs" />
-    <Compile Include="DTO\Interface\ISalesOrderDetail.cs" />
-    <Compile Include="DTO\Interface\ISalesType.cs" />
-    <Compile Include="DTO\Interface\ISessionCredentials.cs" />
-    <Compile Include="DTO\Interface\IShipment.cs" />
-    <Compile Include="DTO\Interface\IShipmentDetail.cs" />
-    <Compile Include="DTO\Interface\IShipmentType.cs" />
-    <Compile Include="DTO\Interface\ISMSBank.cs" />
-    <Compile Include="DTO\Interface\ISMSSendTrack.cs" />
-    <Compile Include="DTO\Interface\IStatus.cs" />
-    <Compile Include="DTO\Interface\IStock.cs" />
-    <Compile Include="DTO\Interface\IStockAdjust.cs" />
-    <Compile Include="DTO\Interface\IStockAdjustDetail.cs" />
-    <Compile Include="DTO\Interface\IStockAdjustReason.cs" />
-    <Compile Include="DTO\Interface\IStockDetail.cs" />
-    <Compile Include="DTO\Interface\IStockTransfer.cs" />
-    <Compile Include="DTO\Interface\IStockTransferDetail.cs" />
-    <Compile Include="DTO\Interface\ISupport.cs" />
-    <Compile Include="DTO\Interface\ITDSPay.cs" />
-    <Compile Include="DTO\Interface\ITDSReceive.cs" />
-    <Compile Include="DTO\Interface\ITenantIdentity.cs" />
-    <Compile Include="DTO\Interface\ITenantQuota.cs" />
-    <Compile Include="DTO\Interface\ITenantQuotaUsage.cs" />
-    <Compile Include="DTO\Interface\IUnitOfMeasure.cs" />
-    <Compile Include="DTO\Interface\IUser.cs" />
-    <Compile Include="DTO\Interface\IUserAddress.cs" />
-    <Compile Include="DTO\Interface\IUserIdentity.cs" />
-    <Compile Include="DTO\Interface\IUserMenu.cs" />
-    <Compile Include="DTO\Interface\IUserPrivilege.cs" />
-    <Compile Include="DTO\Interface\IUserType.cs" />
-    <Compile Include="DTO\Interface\IVendor.cs" />
-    <Compile Include="DTO\Interface\IVendorBank.cs" />
-    <Compile Include="DTO\Interface\IVendorType.cs" />
-    <Compile Include="DTO\Interface\IWareHouse.cs" />
-    <Compile Include="DTO\SP\sCommonDto.cs" />
-    <Compile Include="Enumeration\ECustomPropertyFor.cs" />
-    <Compile Include="Enumeration\ECustomPropertyType.cs" />
-    <Compile Include="Enumeration\EDraft.cs" />
-    <Compile Include="Enumeration\EGSTType.cs" />
-    <Compile Include="Enumeration\ELimitOn.cs" />
-    <Compile Include="Enumeration\ELoginStatus.cs" />
-    <Compile Include="Enumeration\EPaymentMode.cs" />
-    <Compile Include="Enumeration\ESMSFor.cs" />
-    <Compile Include="Enumeration\EStockType.cs" />
-    <Compile Include="Enumeration\ETokenChangePurpose.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -326,9 +113,19 @@
       <Project>{6c964b6a-45a0-4402-abfe-8e4aff85800b}</Project>
       <Name>DataAccess.Sql</Name>
     </ProjectReference>
+    <ProjectReference Include="..\JicoDotNet.Inventory.Common\JicoDotNet.Inventory.Common.csproj">
+      <Project>{24E99C89-9B33-483D-8DF9-5A3C312FFF4A}</Project>
+      <Name>JicoDotNet.Inventory.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JicoDotNet.Inventory.Core\JicoDotNet.Inventory.Core.csproj">
+      <Project>{9f34c785-6745-4251-bf32-0d6503383385}</Project>
+      <Name>JicoDotNet.Inventory.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

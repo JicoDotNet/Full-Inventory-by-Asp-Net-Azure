@@ -1,30 +1,49 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Text;
-using System.Web.Configuration;
-using System.Collections.Generic;
-using System.Linq;
 using Newtonsoft.Json;
-using JicoDotNet.Inventory.BusinessLayer.BLL;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Interface;
+using JicoDotNet.Inventory.Core.Common;
+using JicoDotNet.Inventory.Core.Common.Auth;
+using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Inventory.Core.Models;
+using JicoDotNet.Inventory.Logging;
 using JicoDotNet.Inventory.UI.Models;
+#pragma warning disable CS4014
 
+// ReSharper disable once CheckNamespace
 namespace System.Web.Mvc
 {
     public abstract class BaseController : Controller
     {
+        #region Properties
+        protected string ControllerName { get; private set; }
+        protected string ActionName { get; private set; }
+        protected string UrlParameterId { get; set; }
+        protected string UrlParameterId2 { get; set; }
+        protected string BaseUrl { get; private set; }
+
+        protected ISessionCredential SessionPerson { get; private set; }
+        protected ICompanyBasic SessionCompany { get; private set; }
+
+        protected IReturnObject ReturnMessage { get; set; }
+        protected IInvalidModel InvalidModelObject { get; set; }
+        protected ICommonRequestDto LogicHelper { get; }
+       
+
+
+        private ActionExecutingContext _filteringContext;
+        private ActionExecutedContext _filteredContext;
+        #endregion
+
         /// <summary>
         /// Constructor
         /// </summary>
-        public BaseController()
+        protected BaseController()
         {
-            this.BllCommonLogic = new sCommonDto
+            LogicHelper = new CommonRequestDto
             {
-                SqlConnectionString = WebConfigDBConnection.SqlServer,
-                NoSqlConnectionString = WebConfigDBConnection.AzureStorage,
-                RequestId = Guid.NewGuid().ToString().Replace("-", "").ToUpper(),
+                SqlConnectionString = WebConfigDbConnection.SqlServer,
+                NoSqlConnectionString = WebConfigDbConnection.AzureStorage,
+                RequestId = Guid.NewGuid().ToString().Replace("-", "").ToUpper()
             };
         }
 
@@ -37,31 +56,30 @@ namespace System.Web.Mvc
                 #endregion
 
                 #region Get Route Value
-                this.controller = _filteringContext.RouteData.Values["controller"].ToString();
-                this.action = _filteringContext.RouteData.Values["action"].ToString();
-                this.id = _filteringContext.RouteData.Values["id"]?.ToString();
-                this.id2 = _filteringContext.RouteData.Values["id2"]?.ToString();
-                this.id = id == null ? null : UrlIdDecrypt(id);
-                this.baseUrl = _filteringContext.HttpContext.Request.Url.Scheme
-                    + "://" + _filteringContext.HttpContext.Request.Url.Authority;
+                this.ControllerName = _filteringContext.RouteData.Values["controller"].ToString();
+                this.ActionName = _filteringContext.RouteData.Values["action"].ToString();
+                this.UrlParameterId = _filteringContext.RouteData.Values["id"]?.ToString();
+                this.UrlParameterId2 = _filteringContext.RouteData.Values["id2"]?.ToString();
+                this.UrlParameterId = UrlParameterId == null ? null : UrlIdDecrypt(UrlParameterId);
+                this.BaseUrl = _filteringContext.HttpContext.Request.Url != null? 
+                            _filteringContext.HttpContext.Request.Url.Scheme + "://" + _filteringContext.HttpContext.Request.Url.Authority
+                            : string.Empty;
                 #endregion
 
                 #region Cookie Manage for Session Person
                 HttpCookie cookie = _filteringContext.RequestContext.HttpContext.Request.Cookies[".AspNetCore.Session"];
                 if (cookie != null)
                 {
-                    // Increase the expire date of session Person cookie
+                    // Increase the expiry date of session Person cookie
                     cookie.Expires = GenericLogic.IstNow.AddDays(1).AddSeconds(-1);
                     Response.Cookies.Add(cookie);
                     try
                     {
                         SessionPerson = JsonConvert.DeserializeObject<SessionCredential>(cookie.Value ?? "");
-                        Token = SessionPerson?.Token;
-                        SessionPerson.Token = null;
+                        if (SessionPerson != null) SessionPerson.Token = null;
                     }
                     catch
                     {
-                        Token = null;
                         SessionPerson = null;
                     }
                 }
@@ -71,7 +89,7 @@ namespace System.Web.Mvc
                 cookie = _filteringContext.RequestContext.HttpContext.Request.Cookies["laravel_session"];
                 if (cookie != null)
                 {
-                    // Increase the expire date of company cookie
+                    // Increase the expiry date of company cookie
                     cookie.Expires = GenericLogic.IstNow.AddDays(1).AddSeconds(-1);
                     Response.Cookies.Add(cookie);
 
@@ -87,7 +105,7 @@ namespace System.Web.Mvc
                 #endregion
 
                 #region Set Global value into CommonDto
-                BllCommonLogic.Token = Token;
+                LogicHelper.Token = SessionPerson?.Token;
                 #endregion
                 
                 #region TempData Manage
@@ -95,40 +113,40 @@ namespace System.Web.Mvc
                 InvalidModelObject = (InvalidModel)TempData["InvalidModel"];
                 #endregion
 
-                #region Logger Activity
-                LogSet(new Logger
+                #region Audit Logger
+                AuditLogMaintain(new Logger
                 {
                     IPAddress = GetRequestedIp(),
-                    DNS = System.Net.Dns.GetHostName(),
+                    DNS = Net.Dns.GetHostName(),
                     HttpVerbs = _filteringContext.HttpContext.Request.HttpMethod,
                     Browser = _filteringContext.HttpContext.Request.Browser.Browser,
                     BrowserType = _filteringContext.HttpContext.Request.Browser.Type,
                     BrowserVersion = _filteringContext.HttpContext.Request.Browser.Version,
-                    AbsoluteUri = _filteringContext.HttpContext.Request.Url.AbsoluteUri,
+                    AbsoluteUri = _filteringContext.HttpContext.Request.Url != null
+                        ? _filteringContext.HttpContext.Request.Url.AbsoluteUri
+                        : string.Empty,
                     MacAddress = _filteringContext.HttpContext.Request.Headers["X-Forwarded-For"],
-                    Controller = controller,
-                    Action = action,
-                    Id = id,
-                    Id2 = id2,
-                    IsMobile = _filteringContext.HttpContext.Request.Browser.IsMobileDevice,
+                    Controller = ControllerName,
+                    Action = ActionName,
+                    Id = UrlParameterId,
+                    Id2 = UrlParameterId2,
+                    IsMobileDevice = _filteringContext.HttpContext.Request.Browser.IsMobileDevice,
                     OSType = _filteringContext.HttpContext.Request.Browser.Platform
                 });
                 #endregion
 
                 #region View Bag for Rezor View
                 ViewBag.SessionPerson = this.SessionPerson;
-                ViewBag.Company = SessionCompany;
+                ViewBag.Company = this.SessionCompany;
                 #endregion
 
                 base.OnActionExecuting(_filteringContext);
-                return;
             }
             catch (Exception e)
             {
                 ErrorLoggingToView(e);
                 _filteringContext.Result =
                                     RedirectToAction("Index", "Error", new { returnUrl = _filteringContext.HttpContext.Request.RawUrl, Ex = e });
-                return;
             }
         }
 
@@ -140,7 +158,7 @@ namespace System.Web.Mvc
 
             TempData["ReturnMessage"] = ReturnMessage;
             TempData["InvalidModel"] = InvalidModelObject;
-            base.OnActionExecuted(filterContext);
+            base.OnActionExecuted(_filteredContext);
         }
 
         protected void AbandonSession()
@@ -171,39 +189,30 @@ namespace System.Web.Mvc
                 if (string.IsNullOrEmpty(ip))
                     ip = null;
             }
-            if (ip == "::1" || ip.Contains("localhost"))
+            if (ip != null && (ip == "::1" || ip.Contains("localhost")))
                 ip = "127.0.0.1";
             return ip;
         }
 
-        public void DataTrackingLogicSet(object _object)
+        protected void DataTrackingLogicSet(object objectValue)
         {
-            #pragma warning disable CS4014
-            DataTrackingLogic.Set(_object, BllCommonLogic);
-            #pragma warning restore CS4014
+            DataTrackingLogic.Set(objectValue, LogicHelper);
         }
 
-        private void LogSet(Logger LogObject)
+        private void AuditLogMaintain(ILogger logObject)
         {
-            TrackingLogic.Log(LogObject, BllCommonLogic);
+            AuditLogLogic.AuditLog(logObject, LogicHelper);
         }
 
-        protected string UrlIdDecrypt(string id)
+        protected string UrlIdDecrypt(string urlId)
         {
             try
             {
-                if (!string.IsNullOrEmpty(id))
-                {
-                    return Encoding.ASCII.GetString(Convert.FromBase64String(id));
-                }
-                else
-                {
-                    return null;
-                }
+                return !string.IsNullOrEmpty(urlId) ? Encoding.ASCII.GetString(Convert.FromBase64String(urlId)) : null;
             }
             catch (FormatException)
             {
-                return id;
+                return urlId;
             }
             catch (Exception ex)
             {
@@ -215,15 +224,8 @@ namespace System.Web.Mvc
         {
             if (id != null)
             {
-                string _id = id?.ToString();
-                if (!string.IsNullOrEmpty(_id))
-                {
-                    var IdBytes = Encoding.UTF8.GetBytes(_id);
-                    if (isEscape)
-                        return Uri.EscapeDataString(Convert.ToBase64String(IdBytes));
-                    else
-                        return Convert.ToBase64String(IdBytes);
-                }
+                byte[] idBytes = Encoding.UTF8.GetBytes(id.ToString());
+                return isEscape ? Uri.EscapeDataString(Convert.ToBase64String(idBytes)) : Convert.ToBase64String(idBytes);
             }
             return null;
         }
@@ -231,24 +233,24 @@ namespace System.Web.Mvc
         protected RedirectToRouteResult ErrorLoggingToView(Exception ex)
         {
             TrackErrorLogging(ex);
-            TempData["Error"] = new JicoDotNet.Inventory.UI.Models.ErrorModels
+            TempData["Error"] = new ErrorModels
             {
                 ErrorStatus = 500,
-                ErrorCode = BllCommonLogic?.RequestId,
-                RequestId = BllCommonLogic?.RequestId,
+                ErrorCode = LogicHelper?.RequestId,
+                RequestId = LogicHelper?.RequestId,
                 Message = ex.Message
             };
-            return RedirectToAction("Index", "Error", new { Area = string.Empty, id = BllCommonLogic?.RequestId });
+            return RedirectToAction("Index", "Error", new { Area = string.Empty, id = LogicHelper?.RequestId });
         }
 
         protected PartialViewResult ErrorLoggingToPartial(Exception ex)
         {
             TrackErrorLogging(ex);
-            return PartialView("_PartialErrorBlock", new JicoDotNet.Inventory.UI.Models.ErrorModels
+            return PartialView("_PartialErrorBlock", new ErrorModels
             {
                 ErrorStatus = 500,
-                ErrorCode = BllCommonLogic?.RequestId,
-                RequestId = BllCommonLogic?.RequestId,
+                ErrorCode = LogicHelper?.RequestId,
+                RequestId = LogicHelper?.RequestId,
                 Message = ex.Message
             });
         }
@@ -259,13 +261,13 @@ namespace System.Web.Mvc
             JsonReturnModels model = new JsonReturnModels
             {
                 _isSuccess = false,
-                _returnObject = new JicoDotNet.Inventory.UI.Models.ErrorModels
+                _returnObject = new ErrorModels
                 {
                     ErrorStatus = 500,
-                    ErrorCode = BllCommonLogic?.RequestId,
-                    RequestId = BllCommonLogic?.RequestId
+                    ErrorCode = LogicHelper?.RequestId,
+                    RequestId = LogicHelper?.RequestId
                 },
-                _redirectURL = Url.Action("Index", "Error", new { Area = string.Empty, id = BllCommonLogic?.RequestId })
+                _redirectURL = Url.Action("Index", "Error", new { Area = string.Empty, id = LogicHelper?.RequestId })
             };
             return Json(model, JsonRequestBehavior.AllowGet);
         }
@@ -275,6 +277,30 @@ namespace System.Web.Mvc
             TrackErrorLogging(ex);
         }
 
+        protected bool SessionValidate()
+        {
+            try
+            {
+                HttpCookie cookie = Request.Cookies["sessionid"];
+                if (cookie != null)
+                {
+                    // Increase the expiry date of session cookie
+                    cookie.Expires = GenericLogic.IstNow.AddMinutes(30).AddSeconds(-1);
+                    Response.Cookies.Add(cookie);
+
+                    SessionPerson = JsonConvert.DeserializeObject<SessionCredential>(cookie.Value ?? "");
+                    //SessionPerson.Token = null;
+                    LogicHelper.Token = SessionPerson.Token;
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+            return false;
+        }
+
         private void TrackErrorLogging(Exception ex)
         {
             try
@@ -282,27 +308,30 @@ namespace System.Web.Mvc
                 string message = string.Empty;
                 message += Environment.NewLine;
                 message += "-------------------------------------------------\n";
-                message += string.Format("Time: {0}", GenericLogic.IstNow.ToString("dd/MMM/yyyy hh:mm:ss tt"));
+                message += $"Time: {GenericLogic.IstNow:dd/MMM/yyyy hh:mm:ss tt}";
                 message += Environment.NewLine;
-                message += string.Format("RequestId: {0}", BllCommonLogic?.RequestId);
+                message += $"RequestId: {LogicHelper?.RequestId}";
                 message += Environment.NewLine;
                 message += "-------------------------------------------------";
                 message += Environment.NewLine;
-                message += string.Format("Message: {0}", ex?.Message);
+                message += $"Message: {ex?.Message}";
                 message += Environment.NewLine;
-                message += string.Format("StackTrace: {0}", ex?.StackTrace);
+                message += $"StackTrace: {ex?.StackTrace}";
                 message += Environment.NewLine;
-                message += string.Format("Source: {0}", ex?.Source);
+                message += $"Source: {ex?.Source}";
                 message += Environment.NewLine;
-                message += string.Format("TargetSite: {0}", ex?.TargetSite?.ToString());
+                message += $"TargetSite: {ex?.TargetSite}";
                 message += Environment.NewLine;
-                message += string.Format("HResult: {0}", ex?.HResult);
+                message += $"HResult: {ex?.HResult}";
                 message += Environment.NewLine;
-                message += string.Format("Path: {0}", Request?.HttpMethod + " :-> /" + controller + "/" + action + "/" + id + "/" + id2);
+                message += $"HttpMethod: {Request?.HttpMethod}";
                 message += Environment.NewLine;
-                message += string.Format("Data: {0}", JsonConvert.SerializeObject(ex?.Data));
+                message +=
+                    $"Path: {Request?.HttpMethod + " :-> /" + ControllerName + "/" + ActionName + "/" + UrlParameterId + "/" + UrlParameterId2}";
                 message += Environment.NewLine;
-                message += string.Format("InnerException: {0}", JsonConvert.SerializeObject(ex?.InnerException));
+                message += $"Data: {JsonConvert.SerializeObject(ex?.Data)}";
+                message += Environment.NewLine;
+                message += $"InnerException: {JsonConvert.SerializeObject(ex?.InnerException)}";
                 message += Environment.NewLine;
                 message += "___________________________________________________________\n";
                 message += "===========================================================\n";
@@ -322,57 +351,12 @@ namespace System.Web.Mvc
             }
             catch
             {
-                return;
+                // ignored
             }
         }
-
-        protected bool SessionValidate()
-        {
-            try
-            {
-                HttpCookie cookie = Request.Cookies["sessionid"];
-                if (cookie != null)
-                {
-                    // Increase the expire date of session cookie
-                    cookie.Expires = GenericLogic.IstNow.AddMinutes(30).AddSeconds(-1);                    
-                    Response.Cookies.Add(cookie);
-
-                    SessionPerson = JsonConvert.DeserializeObject<SessionCredential>(cookie.Value ?? "");
-                    Token = SessionPerson?.Token;
-                    //SessionPerson.Token = null;
-                    BllCommonLogic.Token = SessionPerson.Token;
-                    return true;
-                }
-            }
-            catch
-            {                
-                return false;
-            }
-            return false;
-        }
-
-        #region private variable
-        private ActionExecutingContext _filteringContext;
-        private ActionExecutedContext _filteredContext;
-        #endregion
-
-        #region protected Property
-        protected string controller { get; private set; }
-        protected string action { get; private set; }
-        protected string id { get; set; }
-        protected string id2 { get; set; }
-        protected string baseUrl { get; private set; }
-
-        protected SessionCredential SessionPerson { get; private set; }
-        protected CompanyBasic SessionCompany { get; private set; }
-        protected string Token { get; private set; }
-
-        protected ReturnObject ReturnMessage { get; set; }
-        protected InvalidModel InvalidModelObject { get; set; }
-        protected sCommonDto BllCommonLogic { get; private set; }
-        #endregion
 
         #region Cookie Details
+        // ReSharper disable once InvalidXmlDocComment
         /**
          * Cookie Variable Documentation
          * |----------------------|-------------------------|

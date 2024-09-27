@@ -2,17 +2,20 @@
 using Newtonsoft.Json;
 using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using JicoDotNet.Inventory.Core.Common;
+using JicoDotNet.Inventory.Core.Common.Auth;
+using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Inventory.Core.Models;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class TokenManagement : ConnectionString
     {
-        public TokenManagement(sCommonDto CommonObj) : base(CommonObj) { }
+        public TokenManagement(ICommonRequestDto CommonObj) : base(CommonObj) { }
 
         /// <summary>
         /// Token Creation
@@ -21,14 +24,14 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         /// <returns>
         /// true: if Token Creation successfull... false: if already exists the token for a user
         /// </returns>
-        public bool SetToken(SessionCredential credential)
+        public bool SetToken(ISessionCredential credential)
         {
             try
             {
                 ExecuteTableManager tableManager = new ExecuteTableManager("SessionToken", CommonObj.NoSqlConnectionString);
                 credential.PartitionKey = "MyCompany";
-                credential.RowKey = credential.UserEmail.ToString();
-                tableManager.InsertEntity(credential);
+                credential.RowKey = credential.UserEmail;
+                tableManager.InsertEntity(credential as SessionCredential);
                 return true;
             }
             catch
@@ -75,10 +78,10 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 //#pragma warning restore CS4014
 //        }
 
-        public SessionCredential GetCredential(string Token)
+        public ISessionCredential GetCredential(string token)
         {
-            _tableManager = new ExecuteTableManager("SessionToken", CommonObj.NoSqlConnectionString);
-            List<SessionCredential> credentials = _tableManager.RetrieveEntity<SessionCredential>("Token eq '" + Token + "'");
+            TableManager = new ExecuteTableManager("SessionToken", CommonObj.NoSqlConnectionString);
+            List<SessionCredential> credentials = TableManager.RetrieveEntity<SessionCredential>("Token eq '" + token + "'");
             if (credentials.Count == 1)
                 return credentials[0];
             return null;
@@ -121,14 +124,14 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         /// <summary>
         /// For Previous Session - Duplicate Session
         /// </summary>
-        /// <param name="UserId"></param>
+        /// <param name="userEmail"></param>
         /// <returns></returns>
-        public List<SessionCredential> GetUser(string UserEmail)
+        public IList<SessionCredential> GetUser(string userEmail)
         {
             ExecuteTableManager tableManager = new ExecuteTableManager("SessionToken", CommonObj.NoSqlConnectionString);
-            List<SessionCredential> credentials = tableManager
-                .RetrieveEntity<SessionCredential>("UserEmail eq '" + UserEmail + "'");
-            foreach (SessionCredential sessionCredential in credentials)
+            IList<SessionCredential> credentials = tableManager
+                .RetrieveEntity<SessionCredential>("UserEmail eq '" + userEmail + "'");
+            foreach (ISessionCredential sessionCredential in credentials)
             {
                 sessionCredential.Token = null;
             }
@@ -140,11 +143,11 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 #pragma warning disable CS4014
             Task.Run(() =>
             {
-                _tableManager = new ExecuteTableManager("SessionToken", CommonObj.NoSqlConnectionString);
-                List<SessionCredential> credentials = _tableManager.RetrieveEntity<SessionCredential>("UserEmail eq '" + UserEmail + "'");
+                TableManager = new ExecuteTableManager("SessionToken", CommonObj.NoSqlConnectionString);
+                List<SessionCredential> credentials = TableManager.RetrieveEntity<SessionCredential>("UserEmail eq '" + UserEmail + "'");
                 foreach (SessionCredential sc in credentials)
                 {
-                    _tableManager.DeleteEntity(sc);
+                    TableManager.DeleteEntity(sc);
                 }
             });
 #pragma warning restore CS4014

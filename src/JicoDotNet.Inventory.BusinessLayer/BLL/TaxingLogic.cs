@@ -1,28 +1,30 @@
 ﻿using DataAccess.Sql;
 using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.BusinessLayer.DTO.SP;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using JicoDotNet.Inventory.Core.Common;
+using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Inventory.Core.Models;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class TaxingLogic : ConnectionString
     {
-        public TaxingLogic(sCommonDto CommonObj) : base(CommonObj) { }
+        public TaxingLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
 
         public List<TDSPay> GetTDSOuts()
         {
             return new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetTDSPay]",
-                new nameValuePairs
+                new NameValuePairs
                 {
                      
                      
-                    new nameValuePair("@QueryType", "UNPAID")
+                    new NameValuePair("@QueryType", "UNPAID")
                 }).ToList<TDSPay>();
         }
 
@@ -30,17 +32,17 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             try
             {
-                nameValuePairs nvp = new nameValuePairs
+                NameValuePairs nvp = new NameValuePairs
                 {
                      
                      
-                    new nameValuePair("@PayDate", tDSPay.PayDate),
-                    new nameValuePair("@TDSPayId", tDSPay.TDSPayId),
-                    new nameValuePair("@RequestId", CommonObj.RequestId),
-                    new nameValuePair("@QueryType", "PAY")
+                    new NameValuePair("@PayDate", tDSPay.PayDate),
+                    new NameValuePair("@TDSPayId", tDSPay.TDSPayId),
+                    new NameValuePair("@RequestId", CommonObj.RequestId),
+                    new NameValuePair("@QueryType", "PAY")
                 };
                 _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-                return _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetTDSPay]", nvp, "@OutParam").ToString();
+                return _sqlDBAccess.DataManipulation("[dbo].[spSetTDSPay]", nvp, "@OutParam").ToString();
             }
             catch (Exception ex)
             {
@@ -51,11 +53,11 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public List<TDSReceive> GetTDSIns()
         {
             return new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetTDSReceive]",
-                new nameValuePairs
+                new NameValuePairs
                 {
                      
                      
-                    new nameValuePair("@QueryType", "UNRECEIVED")
+                    new NameValuePair("@QueryType", "UNRECEIVED")
                 }).ToList<TDSReceive>();
         }
 
@@ -63,17 +65,17 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             try
             {
-                nameValuePairs nvp = new nameValuePairs
+                NameValuePairs nvp = new NameValuePairs
                 {
                      
                      
-                    new nameValuePair("@ReceivedDate", tDSReceive.ReceivedDate),
-                    new nameValuePair("@TDSReceiveId", tDSReceive.TDSReceiveId),
-                    new nameValuePair("@RequestId", CommonObj.RequestId),
-                    new nameValuePair("@QueryType", "RECEIVE")
+                    new NameValuePair("@ReceivedDate", tDSReceive.ReceivedDate),
+                    new NameValuePair("@TDSReceiveId", tDSReceive.TDSReceiveId),
+                    new NameValuePair("@RequestId", CommonObj.RequestId),
+                    new NameValuePair("@QueryType", "RECEIVE")
                 };
                 _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-                return _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetTDSReceive]", nvp, "@OutParam").ToString();
+                return _sqlDBAccess.DataManipulation("[dbo].[spSetTDSReceive]", nvp, "@OutParam").ToString();
             }
             catch (Exception ex)
             {

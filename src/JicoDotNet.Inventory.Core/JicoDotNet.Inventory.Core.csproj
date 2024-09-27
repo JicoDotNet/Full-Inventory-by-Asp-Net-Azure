@@ -1,0 +1,290 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9F34C785-6745-4251-BF32-0D6503383385}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JicoDotNet.Inventory.Core</RootNamespace>
+    <AssemblyName>JicoDotNet.Inventory.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DataAccess.AzureStorage, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DataAccess.AzureStorage.1.1.0\lib\net45\DataAccess.AzureStorage.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Edm, Version=5.8.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Edm.5.8.2\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.8.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.OData.5.8.2\lib\net40\Microsoft.Data.OData.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.8.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Services.Client.5.8.2\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=8.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.8.7.0\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Spatial, Version=5.8.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Spatial.5.8.2\lib\net40\System.Spatial.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\Auth\AccountAuthenticate.cs" />
+    <Compile Include="Common\Auth\SessionToken.cs" />
+    <Compile Include="Common\CommonRequestDto.cs" />
+    <Compile Include="Common\ConnectionString.cs" />
+    <Compile Include="Common\DateRange.cs" />
+    <Compile Include="Custom\BillDetailsType.cs" />
+    <Compile Include="Custom\GRNDetailType.cs" />
+    <Compile Include="Custom\Interface\IBillDetailsType.cs" />
+    <Compile Include="Custom\Interface\IGRNDetailType.cs" />
+    <Compile Include="Custom\Interface\IInvoiceDetailType.cs" />
+    <Compile Include="Custom\Interface\IOpeningStockDetail.cs" />
+    <Compile Include="Custom\Interface\IPaymentInDetailType.cs" />
+    <Compile Include="Custom\Interface\IPaymentOutDetailType.cs" />
+    <Compile Include="Custom\Interface\IPurchaseOrderDetailType.cs" />
+    <Compile Include="Custom\Interface\IPurchaseReturnDetailType.cs" />
+    <Compile Include="Custom\Interface\IQuotationDetailType.cs" />
+    <Compile Include="Custom\Interface\ISalesOrderDetailType.cs" />
+    <Compile Include="Custom\Interface\IShipmentDetailType.cs" />
+    <Compile Include="Custom\Interface\IStockAdjustDetailType.cs" />
+    <Compile Include="Custom\Interface\IStockTransferDetailType.cs" />
+    <Compile Include="Custom\InvoiceDetailType.cs" />
+    <Compile Include="Custom\OpeningStockDetail.cs" />
+    <Compile Include="Custom\PaymentInDetailType.cs" />
+    <Compile Include="Custom\PaymentOutDetailType.cs" />
+    <Compile Include="Custom\PurchaseOrderDetailType.cs" />
+    <Compile Include="Custom\PurchaseReturnDetailType.cs" />
+    <Compile Include="Custom\QuotationDetailType.cs" />
+    <Compile Include="Custom\SalesOrderDetailType.cs" />
+    <Compile Include="Custom\ShipmentDetailType.cs" />
+    <Compile Include="Custom\StockAdjustDetailType.cs" />
+    <Compile Include="Custom\StockTransferDetailType.cs" />
+    <Compile Include="Entities\IAccountAuthentication.cs" />
+    <Compile Include="Entities\Inner\IBankCommon.cs" />
+    <Compile Include="Entities\IBill.cs" />
+    <Compile Include="Entities\IBillDetail.cs" />
+    <Compile Include="Entities\IBillType.cs" />
+    <Compile Include="Entities\IBranch.cs" />
+    <Compile Include="Entities\ICompany.cs" />
+    <Compile Include="Entities\ICompanyBank.cs" />
+    <Compile Include="Entities\ICompanyBasic.cs" />
+    <Compile Include="Entities\IConfig.cs" />
+    <Compile Include="Entities\IConnectionString.cs" />
+    <Compile Include="Entities\ICustomer.cs" />
+    <Compile Include="Entities\ICustomerType.cs" />
+    <Compile Include="Entities\ICustomProperty.cs" />
+    <Compile Include="Entities\IDataTracking.cs" />
+    <Compile Include="Entities\IDefaultSettings.cs" />
+    <Compile Include="Entities\IDetail.cs" />
+    <Compile Include="Entities\IDraft.cs" />
+    <Compile Include="Entities\IGoodsReceiveNote.cs" />
+    <Compile Include="Entities\IGoodsReceiveNoteDetail.cs" />
+    <Compile Include="Entities\IInvalidModel.cs" />
+    <Compile Include="Entities\IInvoice.cs" />
+    <Compile Include="Entities\IInvoiceDetail.cs" />
+    <Compile Include="Entities\IInvoiceType.cs" />
+    <Compile Include="Entities\ILogger.cs" />
+    <Compile Include="Entities\ILoginLog.cs" />
+    <Compile Include="Entities\Inner\IActivity.cs" />
+    <Compile Include="Entities\ICommonRequestDto.cs" />
+    <Compile Include="Entities\IDtoHeader.cs" />
+    <Compile Include="Entities\Inner\IDateRange.cs" />
+    <Compile Include="Entities\Inner\IGstEntity.cs" />
+    <Compile Include="Entities\Inner\IHRequest.cs" />
+    <Compile Include="Entities\Inner\IStatus.cs" />
+    <Compile Include="Entities\IOrderDetails.cs" />
+    <Compile Include="Entities\IPaymentIn.cs" />
+    <Compile Include="Entities\IPaymentInDetail.cs" />
+    <Compile Include="Entities\IPaymentOut.cs" />
+    <Compile Include="Entities\IPaymentOutDetail.cs" />
+    <Compile Include="Entities\IPaymentType.cs" />
+    <Compile Include="Entities\IProduct.cs" />
+    <Compile Include="Entities\IProductAttribute.cs" />
+    <Compile Include="Entities\IProductType.cs" />
+    <Compile Include="Entities\IPurchaseOrder.cs" />
+    <Compile Include="Entities\IPurchaseOrderDetail.cs" />
+    <Compile Include="Entities\IPurchaseReturn.cs" />
+    <Compile Include="Entities\IPurchaseReturnDetail.cs" />
+    <Compile Include="Entities\IPurchaseTracking.cs" />
+    <Compile Include="Entities\IPurchaseType.cs" />
+    <Compile Include="Entities\IQuotation.cs" />
+    <Compile Include="Entities\IQuotationDetail.cs" />
+    <Compile Include="Entities\IReturnObject.cs" />
+    <Compile Include="Entities\ISalesOrder.cs" />
+    <Compile Include="Entities\ISalesOrderDetail.cs" />
+    <Compile Include="Entities\ISalesType.cs" />
+    <Compile Include="Entities\ISessionCredential.cs" />
+    <Compile Include="Entities\ISessionCredentials.cs" />
+    <Compile Include="Entities\ISessionToken.cs" />
+    <Compile Include="Entities\IToken.cs" />
+    <Compile Include="Entities\IShipment.cs" />
+    <Compile Include="Entities\IShipmentDetail.cs" />
+    <Compile Include="Entities\IShipmentType.cs" />
+    <Compile Include="Entities\ISMSBank.cs" />
+    <Compile Include="Entities\ISMSSendTrack.cs" />
+    <Compile Include="Entities\IStock.cs" />
+    <Compile Include="Entities\IStockAdjust.cs" />
+    <Compile Include="Entities\IStockAdjustDetail.cs" />
+    <Compile Include="Entities\IStockAdjustReason.cs" />
+    <Compile Include="Entities\IStockDetail.cs" />
+    <Compile Include="Entities\IStockTransfer.cs" />
+    <Compile Include="Entities\IStockTransferDetail.cs" />
+    <Compile Include="Entities\ISupport.cs" />
+    <Compile Include="Entities\ITDSPay.cs" />
+    <Compile Include="Entities\ITDSReceive.cs" />
+    <Compile Include="Entities\IUnitOfMeasure.cs" />
+    <Compile Include="Entities\IUser.cs" />
+    <Compile Include="Entities\IVendor.cs" />
+    <Compile Include="Entities\IVendorBank.cs" />
+    <Compile Include="Entities\IVendorType.cs" />
+    <Compile Include="Entities\IWareHouse.cs" />
+    <Compile Include="Enumeration\ECustomPropertyFor.cs" />
+    <Compile Include="Enumeration\EDraft.cs" />
+    <Compile Include="Enumeration\EGSTType.cs" />
+    <Compile Include="Enumeration\ELoginStatus.cs" />
+    <Compile Include="Enumeration\EPaymentMode.cs" />
+    <Compile Include="Enumeration\EStockType.cs" />
+    <Compile Include="Enumeration\ETokenChangePurpose.cs" />
+    <Compile Include="Models\Bill.cs" />
+    <Compile Include="Models\BillDetail.cs" />
+    <Compile Include="Models\BillType.cs" />
+    <Compile Include="Models\Branch.cs" />
+    <Compile Include="Models\Company.cs" />
+    <Compile Include="Models\CompanyBank.cs" />
+    <Compile Include="Models\CompanyBasic.cs" />
+    <Compile Include="Models\Config.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\CustomerType.cs" />
+    <Compile Include="Models\CustomProperty.cs" />
+    <Compile Include="Models\DataTracking.cs" />
+    <Compile Include="Models\Draft.cs" />
+    <Compile Include="Models\DS\HomeMasterCount.cs" />
+    <Compile Include="Models\DS\ReportMasterCount.cs" />
+    <Compile Include="Models\GoodsReceiveNote.cs" />
+    <Compile Include="Models\GoodsReceiveNoteDetail.cs" />
+    <Compile Include="Models\GoodsReceiveNoteDirect.cs" />
+    <Compile Include="Models\GoodsReceiveNoteDirectDetail.cs" />
+    <Compile Include="Models\HtmlDesign.cs" />
+    <Compile Include="Models\InvalidModel.cs" />
+    <Compile Include="Models\Invoice.cs" />
+    <Compile Include="Models\InvoiceDetail.cs" />
+    <Compile Include="Models\InvoiceType.cs" />
+    <Compile Include="Models\Logger.cs" />
+    <Compile Include="Models\LoginCredentials.cs" />
+    <Compile Include="Models\LoginLog.cs" />
+    <Compile Include="Models\PaymentIn.cs" />
+    <Compile Include="Models\PaymentInDetail.cs" />
+    <Compile Include="Models\PaymentOut.cs" />
+    <Compile Include="Models\PaymentOutDetail.cs" />
+    <Compile Include="Models\PaymentType.cs" />
+    <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\ProductFiltered.cs" />
+    <Compile Include="Models\ProductType.cs" />
+    <Compile Include="Models\PurchaseOrder.cs" />
+    <Compile Include="Models\PurchaseOrderDetail.cs" />
+    <Compile Include="Models\PurchaseReturn.cs" />
+    <Compile Include="Models\PurchaseReturnDetail.cs" />
+    <Compile Include="Models\PurchaseType.cs" />
+    <Compile Include="Models\Quotation.cs" />
+    <Compile Include="Models\QuotationDetail.cs" />
+    <Compile Include="Report\Interface\IRequestCustomerSalesParam.cs" />
+    <Compile Include="Report\Interface\IRequestProductPurchaseParam.cs" />
+    <Compile Include="Report\Interface\IRequestProductSalesParam.cs" />
+    <Compile Include="Report\Interface\IRequestTaxParam.cs" />
+    <Compile Include="Report\Interface\IRequestVendorPurchaseParam.cs" />
+    <Compile Include="Report\RequestCustomerSalesParam.cs" />
+    <Compile Include="Report\RequestProductPurchaseParam.cs" />
+    <Compile Include="Report\RequestProductSalesParam.cs" />
+    <Compile Include="Report\RequestTaxParam.cs" />
+    <Compile Include="Report\RequestVendorPurchaseParam.cs" />
+    <Compile Include="Report\ResponseCustomerSalesResult.cs" />
+    <Compile Include="Report\ResponseGSTInputResult.cs" />
+    <Compile Include="Report\ResponseGSTOutputResult.cs" />
+    <Compile Include="Report\ResponseProductPurchaseResult.cs" />
+    <Compile Include="Report\ResponseProductSalesResult.cs" />
+    <Compile Include="Report\ResponseVendorPurchaseResult.cs" />
+    <Compile Include="Models\RetailSales.cs" />
+    <Compile Include="Models\ReturnObject.cs" />
+    <Compile Include="Models\SalesOrder.cs" />
+    <Compile Include="Models\SalesOrderDetail.cs" />
+    <Compile Include="Models\SalesType.cs" />
+    <Compile Include="Common\Auth\SessionCredential.cs" />
+    <Compile Include="Models\Shipment.cs" />
+    <Compile Include="Models\ShipmentDetail.cs" />
+    <Compile Include="Models\ShipmentDirect.cs" />
+    <Compile Include="Models\ShipmentDirectDetail.cs" />
+    <Compile Include="Models\ShipmentType.cs" />
+    <Compile Include="Models\SMSBank.cs" />
+    <Compile Include="Models\SMSSendTrack.cs" />
+    <Compile Include="Models\Stock.cs" />
+    <Compile Include="Models\StockAdjust.cs" />
+    <Compile Include="Models\StockAdjustDetail.cs" />
+    <Compile Include="Models\StockAdjustReason.cs" />
+    <Compile Include="Models\StockDetail.cs" />
+    <Compile Include="Models\StockTransfer.cs" />
+    <Compile Include="Models\StockTransferDetail.cs" />
+    <Compile Include="Models\StoreSessionCredential.cs" />
+    <Compile Include="Models\Support.cs" />
+    <Compile Include="Models\TDSPay.cs" />
+    <Compile Include="Models\TDSReceive.cs" />
+    <Compile Include="Models\UnitOfMeasure.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\Vendor.cs" />
+    <Compile Include="Models\VendorBank.cs" />
+    <Compile Include="Models\VendorType.cs" />
+    <Compile Include="Models\WareHouse.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Requests\" />
+    <Folder Include="Responses\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataAccess.Sql\DataAccess.Sql.csproj">
+      <Project>{6c964b6a-45a0-4402-abfe-8e4aff85800b}</Project>
+      <Name>DataAccess.Sql</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

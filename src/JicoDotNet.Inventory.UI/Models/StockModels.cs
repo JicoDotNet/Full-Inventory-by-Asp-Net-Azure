@@ -3,13 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Inventory.Core.Models;
 
 namespace JicoDotNet.Inventory.UI.Models
 {
     public class StockModels
     {
         public List<WareHouse> _wareHouses { get; set; }
-        public List<Product> _products { get; set; }
+        public IList<Product> _products { get; set; }
 
         public List<Stock> _stocks { get; set; }
         public Stock _stock { get; set; }
@@ -17,7 +19,7 @@ namespace JicoDotNet.Inventory.UI.Models
         public StockAdjust _stockAdjust { get; set; }
         public long _productId { get; set; }
 
-        public Product _selectedProduct { get; set; }
+        public IProduct _selectedProduct { get; set; }
         public List<StockAdjustReason> _adjustReasons { get; set; }
 
 
