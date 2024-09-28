@@ -1,0 +1,28 @@
+﻿CREATE PROCEDURE [SingleIB].[spGetVendor]
+(
+	@QueryType	varchar(10)
+)
+AS
+BEGIN
+	SET NOCOUNT ON;
+	DECLARE @T1 VARCHAR(30);
+	SELECT @T1 = 'Select';
+	
+    BEGIN TRY
+		BEGIN TRANSACTION @T1
+			IF (@QueryType ='ALL')
+			BEGIN
+				SELECT *
+				FROM SingleIB.mVendor v
+					INNER JOIN SingleIB.mVendorType as vt
+				ON v.VendorTypeId = vt.VendorTypeId;
+			END
+		COMMIT TRANSACTION @T1;
+	END TRY
+	BEGIN CATCH
+		PRINT(ERROR_MESSAGE())
+		IF @@TRANCOUNT > 0
+			ROLLBACK TRANSACTION @T1
+		RETURN ERROR_MESSAGE()
+	END CATCH
+END

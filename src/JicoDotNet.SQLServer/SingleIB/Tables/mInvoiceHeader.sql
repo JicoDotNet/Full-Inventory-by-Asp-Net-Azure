@@ -1,0 +1,26 @@
+﻿CREATE TABLE [SingleIB].[mInvoiceHeader] (
+    [InvoiceId]            BIGINT          IDENTITY (1, 1) NOT NULL,
+    [InvoiceTypeId]        BIGINT          NULL,
+    [InvoiceDate]          DATETIME        NULL,
+    [InvoiceDueDate]       DATETIME        NULL,
+    [InvoiceNumber]        NVARCHAR (16)   NULL,
+    [IsFullInvoiced]       BIT             NULL,
+    [SalesOrderId]         BIGINT          NULL,
+    [CustomerId]           BIGINT          NULL,
+    [IsGstApplicable]      BIT             NULL,
+    [GSTNumber]            NVARCHAR (16)   NULL,
+    [GSTStateCode]         NVARCHAR (2)    NULL,
+    [GSTType]              SMALLINT        NULL,
+    [InvoicedAmount]       DECIMAL (18, 5) NULL,
+    [TaxAmount]            DECIMAL (18, 5) NULL,
+    [TotalAmount]          DECIMAL (18, 5) NULL,
+    [VehicleNumber]        NVARCHAR (16)   NULL,
+    [HandOverPerson]       NVARCHAR (64)   NULL,
+    [HandOverPersonMobile] NVARCHAR (16)   NULL,
+    [Remarks]              NVARCHAR (512)  NULL,
+    [IsActive]             BIT             NULL,
+    [TransactionDate]      DATETIME        NULL,
+    [RequestId]            NVARCHAR (64)   NULL,
+    CONSTRAINT [PK_mInvoiceHeader] PRIMARY KEY CLUSTERED ([InvoiceId] ASC)
+);
+
