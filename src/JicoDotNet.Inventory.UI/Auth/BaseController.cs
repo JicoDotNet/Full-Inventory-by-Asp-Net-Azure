@@ -12,7 +12,7 @@ using JicoDotNet.Inventory.UI.Models;
 // ReSharper disable once CheckNamespace
 namespace System.Web.Mvc
 {
-    public abstract class BaseController : Controller
+    internal abstract class BaseController : Controller
     {
         #region Properties
         protected string ControllerName { get; private set; }

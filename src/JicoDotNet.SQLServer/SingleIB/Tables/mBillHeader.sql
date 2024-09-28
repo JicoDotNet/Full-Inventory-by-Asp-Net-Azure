@@ -1,0 +1,26 @@
+﻿CREATE TABLE [SingleIB].[mBillHeader] (
+    [BillId]              BIGINT          IDENTITY (1, 1) NOT NULL,
+    [BillTypeId]          BIGINT          NULL,
+    [BillDate]            DATETIME        NULL,
+    [BillDueDate]         DATETIME        NULL,
+    [BillNumber]          NVARCHAR (16)   NULL,
+    [IsFullBilled]        BIT             NULL,
+    [PurchaseOrderId]     BIGINT          NULL,
+    [VendorId]            BIGINT          NULL,
+    [IsGstApplicable]     BIT             NULL,
+    [GSTNumber]           NVARCHAR (16)   NULL,
+    [GSTStateCode]        NVARCHAR (2)    NULL,
+    [GSTType]             SMALLINT        NULL,
+    [BilledAmount]        DECIMAL (18, 5) NULL,
+    [TaxAmount]           DECIMAL (18, 5) NULL,
+    [TotalAmount]         DECIMAL (18, 5) NULL,
+    [VendorDONumber]      NVARCHAR (64)   NULL,
+    [VendorInvoiceNumber] NVARCHAR (64)   NULL,
+    [VendorInvoiceDate]   DATETIME        NULL,
+    [Remarks]             NVARCHAR (512)  NULL,
+    [IsActive]            BIT             NULL,
+    [TransactionDate]     DATETIME        NULL,
+    [RequestId]           NVARCHAR (64)   NULL,
+    CONSTRAINT [PK_mBill] PRIMARY KEY CLUSTERED ([BillId] ASC)
+);
+
