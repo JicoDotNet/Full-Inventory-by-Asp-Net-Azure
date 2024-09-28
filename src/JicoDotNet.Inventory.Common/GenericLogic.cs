@@ -17,6 +17,8 @@
 
         public static string DateMaskFormat => "dd/MM/yyyy";
 
+        public static string SqlSchema { get { return "[SingleIB]"; } }
+
         public static string StringGenerate(int lengths = 16)
         {
             NameGenerator();
@@ -362,22 +364,6 @@
                 r += characters[cs[i].ToString()];
             }
             return Convert.ToInt64(r, 16);
-        }
-
-        private static async Threading.Tasks.Task<string> BingImageUrl()
-        {
-            try
-            {
-                dynamic strJsonString = "";
-                HttpClient client = new HttpClient();
-                HttpResponseMessage response = await client.GetAsync(new Uri("http://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=en-IN"));
-                strJsonString = await response.Content.ReadAsStringAsync();
-                return "https://www.bing.com" + JsonConvert.DeserializeObject<dynamic>(strJsonString).images[0].url;
-            }
-            catch
-            {
-                return null;
-            }
         }
     }
 
