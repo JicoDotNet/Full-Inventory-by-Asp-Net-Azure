@@ -36,7 +36,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation("[dbo].[spSetPaymentType]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetPaymentType]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
 
@@ -54,13 +54,13 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation("[dbo].[spSetPaymentType]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetPaymentType]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
 
         public List<PaymentType> TypeGet()
         {
-            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetPaymentType]",
+            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetPaymentType]",
                 new NameValuePairs
                 {
                      
@@ -96,7 +96,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 if (payOutDtlTypes.Count > 0)
                 {
                     return new SqlDBAccess(CommonObj.SqlConnectionString)
-                        .DataManipulation("[dbo].[spSetPaymentOut]", new NameValuePairs
+                        .DataManipulation(GenericLogic.SqlSchema + ".[spSetPaymentOut]", new NameValuePairs
                         {
                          
                          
@@ -148,13 +148,13 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     new NameValuePair("@VendorId", vendorId),
                     new NameValuePair("@QueryType", "COMULTATIVE")
                 };
-            List<PaymentOutDetail> pntoutdtl = _sqlDBAccess.GetData("[dbo].[spGetPaymentOut]", nvp).ToList<PaymentOutDetail>();
+            List<PaymentOutDetail> pntoutdtl = _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetPaymentOut]", nvp).ToList<PaymentOutDetail>();
             return pntoutdtl;
         }
 
         public List<PaymentOut> GetPaymentOuts()
         {
-            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetPaymentOut]",
+            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetPaymentOut]",
                 new NameValuePairs
                 {
                      
@@ -188,7 +188,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             if (payInDtlTypes.Count > 0)
             {
                 return new SqlDBAccess(CommonObj.SqlConnectionString)
-                    .DataManipulation("[dbo].[spSetPaymentIn]", new NameValuePairs
+                    .DataManipulation(GenericLogic.SqlSchema + ".[spSetPaymentIn]", new NameValuePairs
                     {
                          
                          
@@ -235,13 +235,13 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     new NameValuePair("@CustomerId", customerId),
                     new NameValuePair("@QueryType", "COMULTATIVE")
                 };
-            List<PaymentInDetail> pntIndtl = _sqlDBAccess.GetData("[dbo].[spGetPaymentIn]", nvp).ToList<PaymentInDetail>();
+            List<PaymentInDetail> pntIndtl = _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetPaymentIn]", nvp).ToList<PaymentInDetail>();
             return pntIndtl;
         }
 
         public List<PaymentIn> GetPaymentIns()
         {
-            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetPaymentIn]",
+            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetPaymentIn]",
                 new NameValuePairs
                 {
                      

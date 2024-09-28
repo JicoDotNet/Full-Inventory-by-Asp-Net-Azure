@@ -31,7 +31,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
                 new NameValuePair("@ForRetail", customerSales.ForRetail),
                 new NameValuePair("@QueryType", "BYCUSTOMER")
             };
-            return _sqlDBAccess.GetData("[dbo].[spRpSales]", nvp).ToList<ResponseCustomerSalesResult>();
+            return _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spRpSales]", nvp).ToList<ResponseCustomerSalesResult>();
         }
 
         public IList<ResponseProductSalesResult> ProductWise(IRequestProductSalesParam productSales)
@@ -48,7 +48,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
                 new NameValuePair("@ForRetail", productSales.ForRetail),
                 new NameValuePair("@QueryType", "BYPRODUCT")
             };
-            return _sqlDBAccess.GetData("[dbo].[spRpSales]", nvp).ToList<ResponseProductSalesResult>();
+            return _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spRpSales]", nvp).ToList<ResponseProductSalesResult>();
         }
     }
 }

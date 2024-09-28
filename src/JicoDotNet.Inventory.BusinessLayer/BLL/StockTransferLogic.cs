@@ -42,7 +42,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             if (stDetailTypes.Count > 0)
             {
                 return new SqlDBAccess(CommonObj.SqlConnectionString)
-                    .DataManipulation("[dbo].[spSetStockTransfer]", new NameValuePairs
+                    .DataManipulation(GenericLogic.SqlSchema + ".[spSetStockTransfer]", new NameValuePairs
                     {
                          
                          

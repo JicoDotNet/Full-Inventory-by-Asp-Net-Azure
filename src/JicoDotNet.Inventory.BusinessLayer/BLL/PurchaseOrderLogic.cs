@@ -37,14 +37,14 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation("[dbo].[spSetPurchaseType]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetPurchaseType]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
 
         public string TypeDeactive(string PurchaseTypeId)
         {
             return new SqlDBAccess(CommonObj.SqlConnectionString)
-                .DataManipulation("[dbo].[spSetPurchaseType]", new NameValuePairs
+                .DataManipulation(GenericLogic.SqlSchema + ".[spSetPurchaseType]", new NameValuePairs
                 {
                     new NameValuePair("@PurchaseTypeId", PurchaseTypeId),
                      
@@ -56,7 +56,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public List<PurchaseType> TypeGet(bool? IsActive = null)
         {
-            List<PurchaseType> purchaseTypes = new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetPurchaseType]",
+            List<PurchaseType> purchaseTypes = new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetPurchaseType]",
                 new NameValuePairs
                 {
                      
@@ -83,7 +83,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                  
                 new NameValuePair("@QueryType", "ENTRY")
             };
-            DataSet dataSet = _sqlDBAccess.GetDataSet("[dbo].[spGetPurchaseOrder]", nvp);
+            DataSet dataSet = _sqlDBAccess.GetDataSet(GenericLogic.SqlSchema + ".[spGetPurchaseOrder]", nvp);
             Dictionary<string, object> Datas = new Dictionary<string, object>
             {
                 { "PurchaseType", dataSet.Tables[0].ToList<PurchaseType>() },
@@ -156,7 +156,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     new NameValuePair("@RequestId", CommonObj.RequestId),
                     new NameValuePair("@QueryType", "ENTRY")
                 };
-                ReturnDS = _sqlDBAccess.DataManipulation("[dbo].[spSetPurchaseOrder]", nvp, "@OutParam").ToString();
+                ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetPurchaseOrder]", nvp, "@OutParam").ToString();
             }
             return ReturnDS;
         }
@@ -177,7 +177,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     new NameValuePair("@RequestId", CommonObj.RequestId),
                     new NameValuePair("@QueryType", "DELETE")
                 };
-                string ReturnDS = _sqlDBAccess.DataManipulation("[dbo].[spSetPurchaseOrder]", nvp, "@OutParam").ToString();
+                string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetPurchaseOrder]", nvp, "@OutParam").ToString();
                 return ReturnDS;
             }
             catch (Exception ex)
@@ -196,7 +196,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@PurchaseOrderId", PurchaseOrderId),
                 new NameValuePair("@QueryType", "DETAIL")
             };
-            DataSet ds = _sqlDBAccess.GetDataSet("[dbo].[spGetPurchaseOrder]", nvp);
+            DataSet ds = _sqlDBAccess.GetDataSet(GenericLogic.SqlSchema + ".[spGetPurchaseOrder]", nvp);
             PurchaseOrder purchaseOrder = ds.Tables[0].FirstOrDefault<PurchaseOrder>();
             if (purchaseOrder != null)
             {
@@ -217,7 +217,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                      
                     new NameValuePair("@QueryType", "LIST")
                 };
-            return _sqlDBAccess.GetData("[dbo].[spGetPurchaseOrder]", nvp).ToList<PurchaseOrder>();
+            return _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetPurchaseOrder]", nvp).ToList<PurchaseOrder>();
         }
 
         /// <summary>
@@ -279,7 +279,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                         new NameValuePair("@RequestId", CommonObj.RequestId),
                         new NameValuePair("@QueryType", "AMENDMENT")
                     };
-                    ReturnDS = _sqlDBAccess.DataManipulation("[dbo].[spSetPurchaseOrder]", nvp, "@OutParam").ToString();
+                    ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetPurchaseOrder]", nvp, "@OutParam").ToString();
                 }
                 return ReturnDS;
             }
@@ -314,7 +314,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             if (PReturnDetailTypes.Count > 0)
             {
                 return new SqlDBAccess(CommonObj.SqlConnectionString)
-                    .DataManipulation("[dbo].[spSetPurchaseReturn]", new NameValuePairs
+                    .DataManipulation(GenericLogic.SqlSchema + ".[spSetPurchaseReturn]", new NameValuePairs
                     {
                          
                          

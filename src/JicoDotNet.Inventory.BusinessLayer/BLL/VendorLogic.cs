@@ -38,7 +38,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation("[dbo].[spSetVendorType]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetVendorType]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
 
@@ -55,13 +55,13 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation("[dbo].[spSetVendorType]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetVendorType]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
 
         public List<VendorType> TypeGet()
         {
-            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetVendorType]",
+            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetVendorType]",
                 new NameValuePairs
                 {
                      
@@ -102,7 +102,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation("[dbo].[spSetVendor]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetVendor]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
 
@@ -119,13 +119,13 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation("[dbo].[spSetVendor]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetVendor]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
 
         public List<Vendor> Get(bool? IsActive = null)
         {
-            List<Vendor> vendors = new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetVendor]",
+            List<Vendor> vendors = new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetVendor]",
                 new NameValuePairs
                 {
                      
@@ -172,7 +172,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation("[dbo].[spSetVendorBank]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetVendorBank]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
 
@@ -191,13 +191,13 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation("[dbo].[spSetVendorBank]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetVendorBank]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
 
         public List<VendorBank> BankGet(long VendorId, bool? IsActive = null)
         {
-            List<VendorBank> vendorBanks = new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetVendorBank]",
+            List<VendorBank> vendorBanks = new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetVendorBank]",
                 new NameValuePairs
                 {
                      

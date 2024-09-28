@@ -19,7 +19,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public List<TDSPay> GetTDSOuts()
         {
-            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetTDSPay]",
+            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetTDSPay]",
                 new NameValuePairs
                 {
                      
@@ -42,7 +42,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     new NameValuePair("@QueryType", "PAY")
                 };
                 _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-                return _sqlDBAccess.DataManipulation("[dbo].[spSetTDSPay]", nvp, "@OutParam").ToString();
+                return _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetTDSPay]", nvp, "@OutParam").ToString();
             }
             catch (Exception ex)
             {
@@ -52,7 +52,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public List<TDSReceive> GetTDSIns()
         {
-            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetTDSReceive]",
+            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetTDSReceive]",
                 new NameValuePairs
                 {
                      
@@ -75,7 +75,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     new NameValuePair("@QueryType", "RECEIVE")
                 };
                 _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-                return _sqlDBAccess.DataManipulation("[dbo].[spSetTDSReceive]", nvp, "@OutParam").ToString();
+                return _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetTDSReceive]", nvp, "@OutParam").ToString();
             }
             catch (Exception ex)
             {

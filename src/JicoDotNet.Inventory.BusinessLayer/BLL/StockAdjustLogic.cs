@@ -17,7 +17,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public List<StockAdjustReason> GetReasons()
         {
-            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetStockAdjustReason]",
+            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetStockAdjustReason]",
                 new NameValuePairs
                 {
                      
@@ -52,7 +52,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             if (stockAdjustDetailTypes.Count > 0)
             {
                 _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-                string returnString = _sqlDBAccess.DataManipulation("[dbo].[spSetStockAdjust]", new NameValuePairs
+                string returnString = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetStockAdjust]", new NameValuePairs
                     {
                         new NameValuePair("@StockAdjustNumber", "SKA-"),
                          
