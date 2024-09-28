@@ -9,6 +9,7 @@ using DataAccess.Sql.Entity;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
+using System;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
