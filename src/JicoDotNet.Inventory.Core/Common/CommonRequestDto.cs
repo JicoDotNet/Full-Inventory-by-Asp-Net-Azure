@@ -7,7 +7,7 @@ namespace JicoDotNet.Inventory.Core.Common
         public string RequestId { get; set; }
 
         public string Token { get; set; }
-        public object SqlConnectionString { get; set; }
+        public string SqlConnectionString { get; set; }
         public object NoSqlConnectionString { get; set; }
     }
 }

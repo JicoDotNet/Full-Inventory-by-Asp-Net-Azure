@@ -5,7 +5,7 @@
 
     public class WebConfigDbConnection
     {
-        public static object SqlServer
+        public static string SqlServer
         {
             get
             {
@@ -15,7 +15,7 @@
                     && !string.IsNullOrEmpty(sqlConnectionString.ToString())
                     && sqlConnectionString.ToString().Contains("Data Source"))
                     {
-                    return sqlConnectionString;
+                    return sqlConnectionString.ToString();
                 }
                 else
                 {
