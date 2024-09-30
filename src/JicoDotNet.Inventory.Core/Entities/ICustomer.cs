@@ -2,7 +2,6 @@
 {
     public interface ICustomer : ICustomerType
     {
-        long CustomerTypeId { get; set; }
         string CompanyName { get; set; }
         string CompanyType { get; set; }
         string StateCode { get; set; }

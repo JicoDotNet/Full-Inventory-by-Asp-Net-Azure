@@ -7,9 +7,7 @@ using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
 using JicoDotNet.Inventory.Logging;
 using JicoDotNet.Inventory.UI.Models;
-#pragma warning disable CS4014
 
-// ReSharper disable once CheckNamespace
 namespace System.Web.Mvc
 {
     public abstract class BaseController : Controller
@@ -19,7 +17,6 @@ namespace System.Web.Mvc
         protected string ActionName { get; private set; }
         protected string UrlParameterId { get; set; }
         protected string UrlParameterId2 { get; set; }
-        protected string BaseUrl { get; private set; }
 
         protected ISessionCredential SessionPerson { get; private set; }
         protected ICompanyBasic SessionCompany { get; private set; }
@@ -61,50 +58,17 @@ namespace System.Web.Mvc
                 this.UrlParameterId = _filteringContext.RouteData.Values["id"]?.ToString();
                 this.UrlParameterId2 = _filteringContext.RouteData.Values["id2"]?.ToString();
                 this.UrlParameterId = UrlParameterId == null ? null : UrlIdDecrypt(UrlParameterId);
-                this.BaseUrl = _filteringContext.HttpContext.Request.Url != null? 
-                            _filteringContext.HttpContext.Request.Url.Scheme + "://" + _filteringContext.HttpContext.Request.Url.Authority
-                            : string.Empty;
                 #endregion
 
                 #region Cookie Manage for Session Person
-                HttpCookie cookie = _filteringContext.RequestContext.HttpContext.Request.Cookies[".AspNetCore.Session"];
-                if (cookie != null)
-                {
-                    // Increase the expiry date of session Person cookie
-                    cookie.Expires = GenericLogic.IstNow.AddDays(1).AddSeconds(-1);
-                    Response.Cookies.Add(cookie);
-                    try
-                    {
-                        SessionPerson = JsonConvert.DeserializeObject<SessionCredential>(cookie.Value ?? "");
-                        if (SessionPerson != null) SessionPerson.Token = null;
-                    }
-                    catch
-                    {
-                        SessionPerson = null;
-                    }
-                }
+                SessionPerson = this.HttpContext.GetCookie<SessionCredential>(".AspNetCore.Session");
                 #endregion
 
-                #region Cookie Manage for Company or Org
-                cookie = _filteringContext.RequestContext.HttpContext.Request.Cookies["laravel_session"];
-                if (cookie != null)
-                {
-                    // Increase the expiry date of company cookie
-                    cookie.Expires = GenericLogic.IstNow.AddDays(1).AddSeconds(-1);
-                    Response.Cookies.Add(cookie);
-
-                    try
-                    {
-                        SessionCompany = JsonConvert.DeserializeObject<CompanyBasic>(cookie.Value ?? "");
-                    }
-                    catch
-                    {
-                        SessionCompany = null;
-                    }
-                }
+                #region Cookie Manage for Company
+                SessionCompany = this.HttpContext.GetCookie<CompanyBasic>(".AspNetCore.Company");
                 #endregion
 
-                #region Set Global value into CommonDto
+                #region Set Token Global value into CommonDto
                 LogicHelper.Token = SessionPerson?.Token;
                 #endregion
                 
@@ -167,17 +131,9 @@ namespace System.Web.Mvc
             Session.Abandon();
             Session.RemoveAll();
 
-            Response.Cookies["ASP.NET_SessionId"].Value = string.Empty;
-            Response.Cookies["ASP.NET_SessionId"].Expires = GenericLogic.IstNow.AddMonths(-20);
-
-            Response.Cookies[".AspNetCore.Session"].Value = string.Empty;
-            Response.Cookies[".AspNetCore.Session"].Expires = GenericLogic.IstNow.AddMonths(-20);
-
-            Response.Cookies["laravel_session"].Value = string.Empty;
-            Response.Cookies["laravel_session"].Expires = GenericLogic.IstNow.AddMonths(-20);
-
-            Response.Cookies["sessionid"].Value = string.Empty;
-            Response.Cookies["sessionid"].Expires = GenericLogic.IstNow.AddMonths(-20);
+            HttpContext.DeleteCookie("ASP.NET_SessionId");
+            HttpContext.DeleteCookie(".AspNetCore.Session");
+            HttpContext.DeleteCookie(".AspNetCore.Company");
         }
 
         protected string GetRequestedIp()
@@ -277,30 +233,6 @@ namespace System.Web.Mvc
             TrackErrorLogging(ex);
         }
 
-        protected bool SessionValidate()
-        {
-            try
-            {
-                HttpCookie cookie = Request.Cookies["sessionid"];
-                if (cookie != null)
-                {
-                    // Increase the expiry date of session cookie
-                    cookie.Expires = GenericLogic.IstNow.AddMinutes(30).AddSeconds(-1);
-                    Response.Cookies.Add(cookie);
-
-                    SessionPerson = JsonConvert.DeserializeObject<SessionCredential>(cookie.Value ?? "");
-                    //SessionPerson.Token = null;
-                    LogicHelper.Token = SessionPerson.Token;
-                    return true;
-                }
-            }
-            catch
-            {
-                return false;
-            }
-            return false;
-        }
-
         private void TrackErrorLogging(Exception ex)
         {
             try
@@ -356,23 +288,17 @@ namespace System.Web.Mvc
         }
 
         #region Cookie Details
-        // ReSharper disable once InvalidXmlDocComment
-        /**
-         * Cookie Variable Documentation
+        /** Cookie Variable Documentation
          * |----------------------|-------------------------|
          * |         Name         |         Purpose         |
          * |----------------------|-------------------------|
          * |.AspNetCore.Session   |Session Person           |
          * |----------------------|-------------------------|
-         * |sessionid             |Session Person (b4 login)|
-         * |----------------------|-------------------------|
-         * |laravel_session       |Session Company          |
+         * |.AspNetCore.Company   |Session Company          |
          * |----------------------|-------------------------|
          * |ASP.NET_SessionId     |Anti Forgery Token       |
          * |----------------------|-------------------------|
          * |JSESSIONID            |Session- default(asp.net)|
-         * |----------------------|-------------------------|
-         * |Session.cookie        |[BLANK - can use later]  |
          * |----------------------|-------------------------|
          **/
         #endregion

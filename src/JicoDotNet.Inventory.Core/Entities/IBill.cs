@@ -12,10 +12,7 @@ namespace JicoDotNet.Inventory.Core.Entities
         string BillNumber { get; set; }
         bool IsFullBilled { get; set; }
 
-        long VendorId { get; set; }
         bool IsGstApplicable { get; set; }
-        string GSTNumber { get; set; }
-        string GSTStateCode { get; set; }
         short GSTType { get; set; }
 
         decimal BilledAmount { get; set; }

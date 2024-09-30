@@ -5,14 +5,11 @@ using DataAccess.AzureStorage;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
 
-#pragma warning disable CS4014
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-
 namespace JicoDotNet.Inventory.Logging
 {
     public class AuditLogLogic
     {
-        public static async Task AuditLog(ILogger logData, ICommonRequestDto commonObj)
+        public static void AuditLog(ILogger logData, ICommonRequestDto commonObj)
         {
             Task.Run(() =>
             {
@@ -35,7 +32,7 @@ namespace JicoDotNet.Inventory.Logging
             });
         }
 
-        public static async Task LoginLog(ICommonRequestDto commonObj)
+        public static void LoginLog(ICommonRequestDto commonObj)
         {
             Task.Run(() =>
             {

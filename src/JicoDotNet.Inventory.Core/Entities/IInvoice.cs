@@ -15,8 +15,6 @@ namespace JicoDotNet.Inventory.Core.Entities
 
         long CustomerId { get; set; }
         bool IsGstApplicable { get; set; }
-        string GSTNumber { get; set; }
-        string GSTStateCode { get; set; }
         short GSTType { get; set; }
 
         decimal InvoicedAmount { get; set; }

@@ -1,10 +1,6 @@
 ﻿using DataAccess.AzureStorage;
-using JicoDotNet.Inventory.BusinessLayer.Common;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Entities;
@@ -30,9 +26,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             return false;
         }
 
-        public async Task Addition(long Balance)
+        public void Addition(long Balance)
         {
-            #pragma warning disable CS4014
             Task.Run(() =>
             {
                 string Query = " IsActive eq true";
@@ -59,7 +54,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     return;
                 }
             });
-            #pragma warning restore CS4014
         }
 
         public SMSBank Get()

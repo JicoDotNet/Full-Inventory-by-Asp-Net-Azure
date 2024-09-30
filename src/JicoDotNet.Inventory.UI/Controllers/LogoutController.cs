@@ -1,8 +1,4 @@
 ﻿using JicoDotNet.Inventory.BusinessLayer.BLL;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace JicoDotNet.Inventory.UIControllers
@@ -11,7 +7,6 @@ namespace JicoDotNet.Inventory.UIControllers
     {
         public ActionResult Index(string returnUrl)
         {
-            SessionValidate();
             if (SessionPerson != null)
                 if (!string.IsNullOrEmpty(SessionPerson.UserEmail))
                 {

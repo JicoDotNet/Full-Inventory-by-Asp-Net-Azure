@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Web;
 using System.Web.Mvc;
-using Newtonsoft.Json;
 using JicoDotNet.Inventory.BusinessLayer.BLL;
 using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.Core.Common.Auth;
@@ -10,30 +8,16 @@ using JicoDotNet.Inventory.Core.Enumeration;
 using JicoDotNet.Inventory.Core.Models;
 using JicoDotNet.Inventory.Logging;
 using JicoDotNet.Inventory.UI.Models;
-using JicoDotNet.Authentication;
-using JicoDotNet.Inventory.Core.Entities.Inner;
 
 namespace JicoDotNet.Inventory.UI.Controllers
 {
     public class AccountController : BaseController
     {
-        //private readonly UserAuthenticationService authService;
-
-        //public AccountController()
-        //{
-        //    var secretKey = "JZwBz0kAnGz7xXqkR3Djq8VB7cXrvYbc1JuzW7Z98Fk=";
-        //    authService = new UserAuthenticationService(secretKey);
-        //}
-
         #region Login
         public ActionResult Index(string returnUrl)
         {
             try
             {
-                //var token = authService.Authenticate("test");
-                //Response.Headers.Add("Authorization", "Bearer " + token);
-
-
                 ViewBag.returnUrl = returnUrl;
                 return View();
             }
@@ -45,19 +29,10 @@ namespace JicoDotNet.Inventory.UI.Controllers
 
         [AllowAnonymous]
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Login(string returnUrl, FormCollection formCollection)
+        public ActionResult Login(FormCollection formCollection)
         {
             try
             {
-                //var token = HttpContext.Request.Headers["Authorization"];
-
-                //var principal = authService.ValidateToken(token);
-                //if (principal != null)
-                //{
-                //    Console.WriteLine("Token is valid. User: " + principal.Identity.Name);
-                //}
-
-
                 LoginCredentials loginCredentials = new LoginCredentials
                 {
                     UserEmail = formCollection["UserEmail"],
@@ -77,7 +52,7 @@ namespace JicoDotNet.Inventory.UI.Controllers
                     #endregion
 
                     #region Login Track
-                    _ = AuditLogLogic.LoginLog(LogicHelper);
+                    AuditLogLogic.LoginLog(LogicHelper);
                     #endregion
 
                     #region Set Session Cookie & redirect if Login Success
@@ -87,7 +62,7 @@ namespace JicoDotNet.Inventory.UI.Controllers
                         SetSessionCookie(accountAuthenticate.credential);
 
                         // Get Company Details
-                        CompanyBasic companyBasic = new CompanyBasic
+                        ICompanyBasic companyBasic = new CompanyBasic
                         {
                             CompanyName = WebConfigAppSettingsAccess.CompanyName,
                             GSTNumber = GenericLogic.IsValidGSTNumber(WebConfigAppSettingsAccess.GSTNumber) ? WebConfigAppSettingsAccess.GSTNumber : null
@@ -97,7 +72,7 @@ namespace JicoDotNet.Inventory.UI.Controllers
                         companyBasic.StateCode = companyBasic.IsGSTRegistered ? GenericLogic.GstStateCode(companyBasic.GSTNumber) : "29";
 
                         // Set Cookie for Company Details 
-                        _ = SetCompanyCookie(companyBasic);
+                        SetCompanyCookie(companyBasic);
 
                         // Success Redirection
                         TempData["Url"] = Url.Action("Index", "Home");
@@ -158,7 +133,7 @@ namespace JicoDotNet.Inventory.UI.Controllers
             if (sessionCredential.UserEmail == UrlParameterId)
             {
                 TokenManagement token = new TokenManagement(LogicHelper);
-                _ = token.Delete(UrlParameterId);
+                token.Delete(UrlParameterId);
             }
             return RedirectToAction("Index", "Logout");
         }
@@ -175,39 +150,15 @@ namespace JicoDotNet.Inventory.UI.Controllers
                 return RedirectToAction("Index");
         }
 
-        private void SetSessionCookie(ISessionCredential credential, string cookieName = ".AspNetCore.Session")
+        private void SetSessionCookie(ISessionCredential credential)
         {
-            SessionToken sessionToken = new SessionToken(credential);
-            HttpCookie cookie = new HttpCookie(cookieName,
-                JsonConvert.SerializeObject(sessionToken))
-            {
-                Expires = GenericLogic.IstNow.AddDays(1).AddSeconds(-1),
-            };
-            Response.Cookies.Add(cookie);
+            ISessionToken sessionToken = new SessionToken(credential);
+            HttpContext.SetCookie(".AspNetCore.Session", sessionToken);
         }
 
-        //private void RemoveSessionCookie(string CookieName = ".AspNetCore.Session")
-        //{
-        //    Response.Cookies[CookieName].Value = string.Empty;
-        //    Response.Cookies[CookieName].Expires = GenericLogic.IstNow.AddMonths(-20);
-        //}
-
-        private bool SetCompanyCookie(CompanyBasic company)
+        private void SetCompanyCookie(ICompanyBasic company)
         {
-            #region Set Cookie Org
-            if (company != null)
-            {
-                HttpCookie cookieCom = new HttpCookie("laravel_session",
-                        JsonConvert.SerializeObject(company))
-                {
-                    Expires = GenericLogic.IstNow.AddDays(1).AddSeconds(-1),
-                };
-                Response.Cookies.Add(cookieCom);
-                return true;
-            }
-
-            return false;
-            #endregion
+            HttpContext.SetCookie(".AspNetCore.Company", company);
         }
     }
 }

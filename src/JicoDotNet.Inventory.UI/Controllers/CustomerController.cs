@@ -10,6 +10,7 @@ using JicoDotNet.Inventory.Core.Models;
 
 namespace JicoDotNet.Inventory.UIControllers
 {
+    [SessionAuthenticate]
     public class CustomerController : BaseController
     {
         #region Customer Type
@@ -95,7 +96,6 @@ namespace JicoDotNet.Inventory.UIControllers
         #endregion
 
         #region Customer
-        [SessionAuthenticate]
         public ActionResult Index()
         {
             try
@@ -124,7 +124,6 @@ namespace JicoDotNet.Inventory.UIControllers
         }
 
         [HttpPost]
-        [SessionAuthenticate]
         public ActionResult Index(Customer customer)
         {
             try
@@ -162,7 +161,6 @@ namespace JicoDotNet.Inventory.UIControllers
         }
 
         [HttpPost]
-        [SessionAuthenticate]
         public JsonResult Deactivate(string Context)
         {
             try
