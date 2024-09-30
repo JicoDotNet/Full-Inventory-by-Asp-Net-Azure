@@ -32,7 +32,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
                     new NameValuePair("@EndDate", vendorPurchase.SearchDate.EndDate),
                     new NameValuePair("@QueryType", "BYVENDOR")
                 };
-                return _sqlDBAccess.GetData("[dbo].[spRpPurchase]", nvp).ToList<ResponseVendorPurchaseResult>();
+                return _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spRpPurchase]", nvp).ToList<ResponseVendorPurchaseResult>();
             }
             catch (Exception ex)
             {
@@ -55,7 +55,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
                     new NameValuePair("@EndDate", productPurchase.SearchDate.EndDate),
                     new NameValuePair("@QueryType", "BYPRODUCT")
                 };
-                return _sqlDBAccess.GetData("[dbo].[spRpPurchase]", nvp).ToList<ResponseProductPurchaseResult>();
+                return _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spRpPurchase]", nvp).ToList<ResponseProductPurchaseResult>();
             }
             catch (Exception ex)
             {

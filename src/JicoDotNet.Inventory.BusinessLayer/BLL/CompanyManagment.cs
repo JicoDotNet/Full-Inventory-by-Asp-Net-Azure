@@ -42,7 +42,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation("[dbo].[spSetCompanyBank]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetCompanyBank]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
         public string BankDeactive(long CompanyBankId)
@@ -57,13 +57,13 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation("[dbo].[spSetCompanyBank]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetCompanyBank]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
         public List<CompanyBank> BankGet(bool? IsActive = null)
         {
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-            List<CompanyBank> companyBanks = _sqlDBAccess.GetData("[dbo].[spGetCompanyBank]",
+            List<CompanyBank> companyBanks = _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetCompanyBank]",
                 new NameValuePairs
                 {
                     new NameValuePair("@QueryType", "ALL")
@@ -89,13 +89,13 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@RequestId", CommonObj.RequestId),
                 new NameValuePair("@QueryType", "PRINTABILITY")
             };
-            string v = _sqlDBAccess.DataManipulation("[dbo].[spSetCompanyBank]", nvp, "@OutParam").ToString();
+            string v = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetCompanyBank]", nvp, "@OutParam").ToString();
             return v;
         }
         public CompanyBank BankPrintable()
         {
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-            CompanyBank companyBank = _sqlDBAccess.GetFirstOrDefaultData("[dbo].[spGetCompanyBank]",
+            CompanyBank companyBank = _sqlDBAccess.GetFirstOrDefaultData(GenericLogic.SqlSchema + ".[spGetCompanyBank]",
                 new NameValuePairs
                 {
                     new NameValuePair("@QueryType", "PRINTABLE")

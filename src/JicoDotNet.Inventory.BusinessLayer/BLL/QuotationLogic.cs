@@ -64,7 +64,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                         new NameValuePair("@RequestId", CommonObj.RequestId),
                         new NameValuePair("@QueryType", "ENTRY")
                     };
-                    ReturnDS = _sqlDBAccess.DataManipulation("[dbo].[spSetQuotation]",
+                    ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetQuotation]",
                         nvp, "@OutParam").ToString();
                 }
                 return ReturnDS;
@@ -84,7 +84,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                      
                     new NameValuePair("@QueryType", "LIST")
                 };
-            return _sqlDBAccess.GetData("[dbo].[spGetQuotation]", nvp).ToList<Quotation>();
+            return _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetQuotation]", nvp).ToList<Quotation>();
         }
 
         public Quotation GetForDetail(long QuotationId)
@@ -97,7 +97,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@QuotationId", QuotationId),
                 new NameValuePair("@QueryType", "DETAIL")
             };
-            DataSet ds = _sqlDBAccess.GetDataSet("[dbo].[spGetQuotation]", nvp);
+            DataSet ds = _sqlDBAccess.GetDataSet(GenericLogic.SqlSchema + ".[spGetQuotation]", nvp);
             Quotation quotation;
             quotation = ds.Tables[0].FirstOrDefault<Quotation>();
             if (quotation != null)
@@ -124,7 +124,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     new NameValuePair("@RequestId", CommonObj.RequestId),
                     new NameValuePair("@QueryType", "DELETE")
                 };
-                string ReturnDS = _sqlDBAccess.DataManipulation("[dbo].[spSetQuotation]", nvp, "@OutParam").ToString();
+                string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetQuotation]", nvp, "@OutParam").ToString();
                 return ReturnDS;
             }
             catch (Exception ex)

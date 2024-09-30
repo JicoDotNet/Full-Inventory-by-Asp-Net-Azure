@@ -19,7 +19,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public HomeMasterCount CountHome()
         {
-            return new SqlDBAccess(CommonObj.SqlConnectionString).GetFirstOrDefaultData("[dbo].[spDsMaster]",
+            return new SqlDBAccess(CommonObj.SqlConnectionString).GetFirstOrDefaultData(GenericLogic.SqlSchema + ".[spDsMaster]",
                 new NameValuePairs
                 {
                     new NameValuePair("@QueryType", "HOMECOUNT")
@@ -28,7 +28,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public ReportMasterCount CountReport()
         {
-            return new SqlDBAccess(CommonObj.SqlConnectionString).GetFirstOrDefaultData("[dbo].[spDsMaster]",
+            return new SqlDBAccess(CommonObj.SqlConnectionString).GetFirstOrDefaultData(GenericLogic.SqlSchema + ".[spDsMaster]",
                 new NameValuePairs
                 {
                     new NameValuePair("@QueryType", "REPORTCOUNT")

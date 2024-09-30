@@ -9,6 +9,7 @@ using DataAccess.Sql.Entity;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
+using System;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
@@ -30,7 +31,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@QueryType", queryType)
             };
 
-            string returnDs = _sqlDBAccess.DataManipulation("[dbo].[spSetProductType]", nvp, "@OutParam").ToString();
+            string returnDs = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetProductType]", nvp, "@OutParam").ToString();
             return returnDs;
         }
 
@@ -48,13 +49,13 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@QueryType", queryType)
             };
 
-            string returnDs = _sqlDBAccess.DataManipulation("[dbo].[spSetProductType]", nvp, "@OutParam").ToString();
+            string returnDs = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetProductType]", nvp, "@OutParam").ToString();
             return returnDs;
         }
 
         public IList<ProductType> TypeGet()
         {
-            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetProductType]",
+            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetProductType]",
                 new NameValuePairs
                 {
                     new NameValuePair("@QueryType", "ALL")
@@ -94,7 +95,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@QueryType", queryType)
             };
 
-            string returnDs = _sqlDBAccess.DataManipulation("[dbo].[spSetProduct]", nvp, "@OutParam").ToString();
+            string returnDs = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetProduct]", nvp, "@OutParam").ToString();
             return returnDs;
         }
 
@@ -115,13 +116,13 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 "@OutParam"
             };
 
-            var returnDs = _sqlDBAccess.DataManipulation("[dbo].[spSetProduct]", nvp, nvpOut);
+            var returnDs = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetProduct]", nvp, nvpOut);
             return returnDs.FirstOrDefault()?.getValue?.ToString();
         }
 
         public IList<Product> Get(bool? isActive = null)
         {
-            IList<Product> products = new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetProduct]",
+            IList<Product> products = new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetProduct]",
                 new NameValuePairs
                 {
                     new NameValuePair("@QueryType", "ALL")
@@ -138,7 +139,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public IList<Product> GetIn()
         {
-            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetProduct]",
+            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetProduct]",
                 new NameValuePairs
                 {
                     new NameValuePair("@QueryType", "INTIME")
@@ -147,7 +148,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public IList<Product> GetOut()
         {
-            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetProduct]",
+            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetProduct]",
                 new NameValuePairs
                 {
                     new NameValuePair("@QueryType", "OUTTIME")

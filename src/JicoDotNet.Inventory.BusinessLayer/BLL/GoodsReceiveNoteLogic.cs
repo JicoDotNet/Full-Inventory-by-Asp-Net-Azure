@@ -17,7 +17,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public List<GoodsReceiveNote> GetGRNs()
         {
-            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetGRN]",
+            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetGRN]",
                 new NameValuePairs
                 {
                      
@@ -35,7 +35,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                  
                 new NameValuePair("@QueryType", "ENTRY")
             };
-            List<PurchaseOrder> purchaseOrders = _sqlDBAccess.GetData("[dbo].[spGetGRN]", nvp).ToList<PurchaseOrder>();
+            List<PurchaseOrder> purchaseOrders = _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetGRN]", nvp).ToList<PurchaseOrder>();
             return purchaseOrders;
         }
 
@@ -49,7 +49,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@PurchaseOrderId", purchaseOrderId),
                 new NameValuePair("@QueryType", "ENTRYSINGLE")
             };
-            PurchaseOrder purchaseOrder = _sqlDBAccess.GetData("[dbo].[spGetGRN]", nvp).FirstOrDefault<PurchaseOrder>();
+            PurchaseOrder purchaseOrder = _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetGRN]", nvp).FirstOrDefault<PurchaseOrder>();
             return purchaseOrder;
         }
 
@@ -64,7 +64,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@GRNId", GRNId),
                 new NameValuePair("@QueryType", "DETAIL")
             };
-            DataSet ds = _sqlDBAccess.GetDataSet("[dbo].[spGetGRN]", nvp);
+            DataSet ds = _sqlDBAccess.GetDataSet(GenericLogic.SqlSchema + ".[spGetGRN]", nvp);
             goodsReceiveNote = ds.Tables[0].FirstOrDefault<GoodsReceiveNote>();
             if (goodsReceiveNote != null)
             {
@@ -86,7 +86,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     new NameValuePair("@PurchaseOrderId", purchaseOrderId),
                     new NameValuePair("@QueryType", "COMULTATIVE")
                 };
-            List<GoodsReceiveNoteDetail> grndtl = _sqlDBAccess.GetData("[dbo].[spGetGRN]", nvp).ToList<GoodsReceiveNoteDetail>();
+            List<GoodsReceiveNoteDetail> grndtl = _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetGRN]", nvp).ToList<GoodsReceiveNoteDetail>();
             return grndtl;
         }
 
@@ -114,7 +114,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             if (grnDetailTypes.Count > 0)
             {
                 return new SqlDBAccess(CommonObj.SqlConnectionString)
-                    .DataManipulation("[dbo].[spSetGRN]", new NameValuePairs
+                    .DataManipulation(GenericLogic.SqlSchema + ".[spSetGRN]", new NameValuePairs
                     {
                         new NameValuePair("@PurchaseOrderId", goodsReceiveNote.PurchaseOrderId),
                          
@@ -223,7 +223,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     new NameValuePair("@RequestId", CommonObj.RequestId),                    
                     new NameValuePair("@QueryType", "INSERT")
                 };
-                return _sqlDBAccess.DataManipulation("[dbo].[spSetGRNDirect]", nvp, "@OutParam").ToString();
+                return _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetGRNDirect]", nvp, "@OutParam").ToString();
             }
             return string.Empty;
         }
@@ -237,7 +237,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                  
                 new NameValuePair("@QueryType", "RETURN")
             };
-            List<GoodsReceiveNote> purchaseOrders = _sqlDBAccess.GetData("[dbo].[spGetGRN]", nvp).ToList<GoodsReceiveNote>();
+            List<GoodsReceiveNote> purchaseOrders = _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetGRN]", nvp).ToList<GoodsReceiveNote>();
             return purchaseOrders;
         }
     }

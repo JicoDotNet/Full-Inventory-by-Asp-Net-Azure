@@ -40,7 +40,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation("[dbo].[spSetShipmentType]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetShipmentType]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
 
@@ -58,13 +58,13 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation("[dbo].[spSetShipmentType]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetShipmentType]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
 
         public List<ShipmentType> TypeGet(bool? IsActive = null)
         {
-            List<ShipmentType> shipmentTypes = new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetShipmentType]",
+            List<ShipmentType> shipmentTypes = new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetShipmentType]",
                 new NameValuePairs
                 {
                      
@@ -84,7 +84,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public List<Shipment> GetShipments()
         {
-            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetShipment]",
+            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetShipment]",
                 new NameValuePairs
                 {
                      
@@ -103,7 +103,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     new NameValuePair("@SalesOrderId", salesOrderId),
                     new NameValuePair("@QueryType", "COMULTATIVE")
                 };
-            List<ShipmentDetail> shpdtl = _sqlDBAccess.GetData("[dbo].[spGetShipment]", nvp).ToList<ShipmentDetail>();
+            List<ShipmentDetail> shpdtl = _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetShipment]", nvp).ToList<ShipmentDetail>();
             return shpdtl;
         }
 
@@ -138,7 +138,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 if (shpDetailTypes.Count > 0)
                 {
                     return new SqlDBAccess(CommonObj.SqlConnectionString)
-                        .DataManipulation("[dbo].[spSetShipment]", new NameValuePairs
+                        .DataManipulation(GenericLogic.SqlSchema + ".[spSetShipment]", new NameValuePairs
                         {
                          
                          
@@ -252,7 +252,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     new NameValuePair("@RequestId", CommonObj.RequestId),
                     new NameValuePair("@QueryType", "INSERT")
                 };
-                return _sqlDBAccess.DataManipulation("[dbo].[spSetShipmentDirect]", nvp, "@OutParam").ToString();
+                return _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetShipmentDirect]", nvp, "@OutParam").ToString();
             }
             return string.Empty;
         }
@@ -268,7 +268,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@ShipmentId", ShipmentId),
                 new NameValuePair("@QueryType", "DETAIL")
             };
-            DataSet ds = _sqlDBAccess.GetDataSet("[dbo].[spGetShipment]", nvp);
+            DataSet ds = _sqlDBAccess.GetDataSet(GenericLogic.SqlSchema + ".[spGetShipment]", nvp);
             shipment = ds.Tables[0].FirstOrDefault<Shipment>();
             if (shipment != null)
             {

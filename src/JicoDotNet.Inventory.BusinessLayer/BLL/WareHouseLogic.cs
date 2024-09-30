@@ -19,7 +19,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public List<WareHouse> Get(bool? IsActive = null)
         {
-            List<WareHouse> wareHouses = new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetWareHouse]",
+            List<WareHouse> wareHouses = new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetWareHouse]",
                 new NameValuePairs
                 {
                      
@@ -58,14 +58,14 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation("[dbo].[spSetWareHouse]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetWareHouse]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
 
         public string Deactive(string wareHouseId)
         {
             return new SqlDBAccess(CommonObj.SqlConnectionString)
-                .DataManipulation("[dbo].[spSetWareHouse]", new NameValuePairs
+                .DataManipulation(GenericLogic.SqlSchema + ".[spSetWareHouse]", new NameValuePairs
                 {
                     new NameValuePair("@WareHouseId", wareHouseId),
                      
