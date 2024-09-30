@@ -1,18 +1,21 @@
 ﻿namespace System.Web.Mvc
 {
     using Configuration;
+    using System.Configuration;
 
     public class WebConfigDbConnection
     {
-        public static object SqlServer
+        public static string SqlServer
         {
             get
             {
-                if (WebConfigurationManager.ConnectionStrings["SqlServerConnection"] != null
-                    && !string.IsNullOrEmpty(WebConfigurationManager.ConnectionStrings["SqlServerConnection"].ToString())
-                    && WebConfigurationManager.ConnectionStrings["SqlServerConnection"].ToString().Contains("Data Source"))
-                {
-                    return WebConfigurationManager.ConnectionStrings["SqlServerConnection"];
+                ConnectionStringSettings sqlConnectionString = WebConfigurationManager.ConnectionStrings["SqlServerConnection"];
+
+                if (sqlConnectionString != null
+                    && !string.IsNullOrEmpty(sqlConnectionString.ToString())
+                    && sqlConnectionString.ToString().Contains("Data Source"))
+                    {
+                    return sqlConnectionString.ToString();
                 }
                 else
                 {
@@ -24,11 +27,13 @@
         {
             get
             {
-                if (WebConfigurationManager.ConnectionStrings["AzureStorageConnection"] != null
-                    && !string.IsNullOrEmpty(WebConfigurationManager.ConnectionStrings["AzureStorageConnection"].ToString())
-                    && WebConfigurationManager.ConnectionStrings["AzureStorageConnection"].ToString().Contains("AccountName"))
+                ConnectionStringSettings azureConnectionString = WebConfigurationManager.ConnectionStrings["AzureStorageConnection"];
+
+                if (azureConnectionString != null
+                    && !string.IsNullOrEmpty(azureConnectionString.ToString())
+                    && azureConnectionString.ToString().Contains("AccountName"))
                 {
-                    return WebConfigurationManager.ConnectionStrings["AzureStorageConnection"];
+                    return azureConnectionString;
                 }
                 else
                 {

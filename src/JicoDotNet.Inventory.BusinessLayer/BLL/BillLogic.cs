@@ -35,7 +35,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@QueryType", queryType)
             };
 
-            string returnDs = _sqlDBAccess.DataManipulation("[dbo].[spSetBillType]", nvp, "@OutParam").ToString();
+            string returnDs = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetBillType]", nvp, "@OutParam").ToString();
             return returnDs;
         }
 
@@ -53,13 +53,13 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@QueryType", queryType)
             };
 
-            string returnDs = _sqlDBAccess.DataManipulation("[dbo].[spSetBillType]", nvp, "@OutParam").ToString();
+            string returnDs = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetBillType]", nvp, "@OutParam").ToString();
             return returnDs;
         }
 
         public IList<BillType> TypeGet(bool? isActive = null)
         {
-            IList<BillType> billTypes = new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetBillType]",
+            IList<BillType> billTypes = new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetBillType]",
                 new NameValuePairs
                 {
                     new NameValuePair("@QueryType", "ALL")
@@ -85,7 +85,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 {
                     new NameValuePair("@QueryType", "LIST")
                 };
-                IList<Bill> bills = _sqlDBAccess.GetData("[dbo].[spGetBill]", nvp).ToList<Bill>();
+                IList<Bill> bills = _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetBill]", nvp).ToList<Bill>();
                 return bills;
             }
             catch (Exception ex)
@@ -106,7 +106,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     new NameValuePair("@BillId", billId),
                     new NameValuePair("@QueryType", "SINGLE")
                 };
-                IBill bill = _sqlDBAccess.GetData("[dbo].[spGetBill]", nvp).FirstOrDefault<Bill>();
+                IBill bill = _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetBill]", nvp).FirstOrDefault<Bill>();
                 return bill;
             }
             catch (Exception ex)
@@ -122,7 +122,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             {
                 new NameValuePair("@QueryType", "ENTRY")
             };
-            IList<PurchaseOrder> purchaseOrders = _sqlDBAccess.GetData("[dbo].[spGetBill]", nvp).ToList<PurchaseOrder>();
+            IList<PurchaseOrder> purchaseOrders = _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetBill]", nvp).ToList<PurchaseOrder>();
             return purchaseOrders;
         }
 
@@ -136,7 +136,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     new NameValuePair("@PurchaseOrderId", purchaseOrderId),
                     new NameValuePair("@QueryType", "ENTRYSINGLE")
                 };
-                PurchaseOrder purchaseOrder = _sqlDBAccess.GetData("[dbo].[spGetBill]", nvp).FirstOrDefault<PurchaseOrder>();
+                PurchaseOrder purchaseOrder = _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetBill]", nvp).FirstOrDefault<PurchaseOrder>();
                 return purchaseOrder;
             }
             catch (Exception ex)
@@ -153,7 +153,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@PurchaseOrderId", purchaseOrderId),
                 new NameValuePair("@QueryType", "COMMUTATIVE")
             };
-            IList<BillDetail> billDetails = _sqlDBAccess.GetData("[dbo].[spGetBill]", nvp).ToList<BillDetail>();
+            IList<BillDetail> billDetails = _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetBill]", nvp).ToList<BillDetail>();
             return billDetails;
         }
 
@@ -167,7 +167,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     new NameValuePair("@VendorId", vendorId),
                     new NameValuePair("@QueryType", "PAYMENT")
                 };
-                IList<Bill> bills = _sqlDBAccess.GetData("[dbo].[spGetBill]", nvp).ToList<Bill>();                
+                IList<Bill> bills = _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetBill]", nvp).ToList<Bill>();                
                 return bills;
             }
             catch (Exception ex)
@@ -266,7 +266,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                         new NameValuePair("@RequestId", CommonObj.RequestId),
                         new NameValuePair("@QueryType", "INSERT")
                     };
-                    return _sqlDBAccess.DataManipulation("[dbo].[spSetBill]", nvp, "@OutParam").ToString();
+                    return _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetBill]", nvp, "@OutParam").ToString();
                 }
                 else
                 {
@@ -290,7 +290,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@BillId", BillId),
                 new NameValuePair("@QueryType", "DETAIL")
             };
-            DataSet ds = _sqlDBAccess.GetDataSet("[dbo].[spGetBill]", nvp);
+            DataSet ds = _sqlDBAccess.GetDataSet(GenericLogic.SqlSchema + ".[spGetBill]", nvp);
             bill = ds.Tables[0].Rows.Count > 0 ? ds.Tables[0].FirstOrDefault<Bill>() : null;
             if (bill != null)
             {

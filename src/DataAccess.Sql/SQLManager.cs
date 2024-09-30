@@ -6,15 +6,15 @@ namespace DataAccess.Sql
     {
         private protected string SqlConnectionString { get; private set; }
 
-        private protected SQLManager(object connectionString)
+        private protected SQLManager(string connectionString)
         {
             try
             {
-                if (string.IsNullOrEmpty(connectionString.ToString()))
+                if (string.IsNullOrEmpty(connectionString))
                 {
                     throw new ArgumentNullException(nameof(connectionString), "Connection String value can't be empty");
                 }
-                SqlConnectionString = connectionString.ToString();
+                SqlConnectionString = connectionString;
             }
             catch (Exception ex)
             {

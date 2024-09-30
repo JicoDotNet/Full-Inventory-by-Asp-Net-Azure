@@ -118,7 +118,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                         new NameValuePair("@RequestId", CommonObj.RequestId),
                         new NameValuePair("@QueryType", "INSERT")
                     };
-                    SalesOrderId = Convert.ToInt64(_sqlDBAccess.DataManipulation("[dbo].[spSetRetailSales]", nvp, "@OutParam"));
+                    SalesOrderId = Convert.ToInt64(_sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetRetailSales]", nvp, "@OutParam"));
                 }
                 catch (Exception ex) { throw ex; }
 

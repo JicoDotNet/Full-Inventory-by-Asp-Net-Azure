@@ -56,18 +56,16 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
-    <Folder Include="DefaultData" />
+    <Folder Include="DefaultScript" />
     <Folder Include="SingleIB\" />
     <Folder Include="SingleIB\Tables\" />
     <Folder Include="SingleIB\Functions\" />
     <Folder Include="SingleIB\Stored Procedures\" />
     <Folder Include="SingleIB\User Defined Types\" />
     <Folder Include="Security\" />
-    <Folder Include="MasterScript" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="DefaultData\Data.sql" />
-    <None Include="MasterScript\AllScript.sql" />
+    <None Include="DefaultScript\Data.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="SingleIB\Tables\mPaymentInDetail.sql" />
@@ -209,5 +207,6 @@
     <Build Include="SingleIB\User Defined Types\ShipmentDetailType.sql" />
     <Build Include="SingleIB\User Defined Types\StockAdjustDetailType.sql" />
     <Build Include="SingleIB\User Defined Types\StockTransferDetailType.sql" />
+    <None Include="DefaultScript\AllScript.sql" />
   </ItemGroup>
 </Project>

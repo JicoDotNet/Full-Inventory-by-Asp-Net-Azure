@@ -7,6 +7,7 @@ using JicoDotNet.Inventory.Core.Custom;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
 using JicoDotNet.Inventory.Core.Custom.Interface;
+using System;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
@@ -42,7 +43,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             if (stDetailTypes.Count > 0)
             {
                 return new SqlDBAccess(CommonObj.SqlConnectionString)
-                    .DataManipulation("[dbo].[spSetStockTransfer]", new NameValuePairs
+                    .DataManipulation(GenericLogic.SqlSchema + ".[spSetStockTransfer]", new NameValuePairs
                     {
                          
                          

@@ -33,3 +33,12 @@ VALUES ('Default Purchase Type', 1, GETDATE(), 'DefaultDataInsert');
 
 INSERT INTO [SingleIB].[mSalesType] (SalesTypeName, IsActive, TransactionDate, RequestId)
 VALUES ('Default Sales Type', 1, GETDATE(), 'DefaultDataInsert');
+
+INSERT [SingleIB].[mProduct] ([ProductTypeId], [ProductInOut], [ProductName], [IsGoods], [TaxPercentage], [UnitOfMeasureId], [UnitOfMeasureName], [IsActive], [TransactionDate], [RequestId]) 
+VALUES (1, 0, N'Default Product', 1, '18', 1, N'Pc', 1, GETDATE(), 'DefaultDataInsert');
+
+INSERT [SingleIB].[mVendor] ([VendorTypeId], [CompanyName], [CompanyType], [StateCode], [IsGSTRegistered], [GSTStateCode], [GSTNumber], [IsActive], [TransactionDate], [RequestId]) 
+VALUES (1, N'Default Vendor Company', N'Personal', N'06', 1, N'06', N'06AAAAA2222B1Z5', 1, GETDATE(), 'DefaultDataInsert');
+
+INSERT [SingleIB].[mCustomer] ([CustomerTypeId], [CompanyName], [CompanyType], [StateCode], [IsGSTRegistered], [GSTStateCode], [GSTNumber], [IsActive], [TransactionDate], [RequestId]) 
+VALUES (1, N'Default Customer Company', N'Personal', N'06', 1, N'06', N'06BBBBB2222A1Z5', 1, GETDATE(), 'DefaultDataInsert');

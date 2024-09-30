@@ -37,7 +37,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation("[dbo].[spSetUnitOfMeasure]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetUnitOfMeasure]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
 
@@ -55,13 +55,13 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation("[dbo].[spSetUnitOfMeasure]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetUnitOfMeasure]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
 
         public List<UnitOfMeasure> Get()
         {
-            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetUnitOfMeasure]",
+            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetUnitOfMeasure]",
                 new NameValuePairs
                 {
                      

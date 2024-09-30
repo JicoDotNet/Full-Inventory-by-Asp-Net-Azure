@@ -45,14 +45,14 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation("[dbo].[spSetBranch]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetBranch]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
 
         public string Deactive(string BranchId)
         {
             return new SqlDBAccess(CommonObj.SqlConnectionString)
-                .DataManipulation("[dbo].[spSetBranch]", new NameValuePairs
+                .DataManipulation(GenericLogic.SqlSchema + ".[spSetBranch]", new NameValuePairs
                 {
                     new NameValuePair("@BranchId", BranchId),                     
                     new NameValuePair("@RequestId", CommonObj.RequestId),
@@ -63,7 +63,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public List<Branch> Get(bool? IsActive = null)
         {
             List<Branch> branchs = new SqlDBAccess(CommonObj.SqlConnectionString)
-                .GetData("[dbo].[spGetBranch]",
+                .GetData(GenericLogic.SqlSchema + ".[spGetBranch]",
                 new NameValuePairs
                 {
                      

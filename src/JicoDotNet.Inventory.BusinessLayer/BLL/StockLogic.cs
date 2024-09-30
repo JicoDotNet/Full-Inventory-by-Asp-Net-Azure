@@ -33,7 +33,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                                                            (object)stock.GRNOrShipmentDate : DBNull.Value),
                 new NameValuePair("@QueryType", "CURRENT")
             };
-            return _sqlDBAccess.GetData("[dbo].[spGetStock]", nvp).ToList<Stock>();
+            return _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetStock]", nvp).ToList<Stock>();
         }
 
         public List<Stock> GetDetail(Stock stock)
@@ -50,7 +50,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 
                 new NameValuePair("@QueryType", "DETAIL")
             };
-            DataSet dataSet = _sqlDBAccess.GetDataSet("[dbo].[spGetStock]", nvp);
+            DataSet dataSet = _sqlDBAccess.GetDataSet(GenericLogic.SqlSchema + ".[spGetStock]", nvp);
             List<Stock> stocks = dataSet.Tables[0].ToList<Stock>();
             List<StockDetail> stockDetails = dataSet.Tables[1].ToList<StockDetail>();
 
@@ -77,7 +77,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             };
             try
             {
-                DataTable dt = _sqlDBAccess.GetData("[dbo].[spGetStock]", nvp);
+                DataTable dt = _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetStock]", nvp);
                 if (dt != null)
                     if (dt.Rows.Count > 0)
                         if (dt.Rows[0]["ProductQuantity"] != null)
@@ -116,7 +116,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             if (opnStkDetailTypes.Count > 0)
             {
                 return new SqlDBAccess(CommonObj.SqlConnectionString)
-                    .DataManipulation("[dbo].[spSetOpeningStock]", new NameValuePairs
+                    .DataManipulation(GenericLogic.SqlSchema + ".[spSetOpeningStock]", new NameValuePairs
                     {
                          
                          

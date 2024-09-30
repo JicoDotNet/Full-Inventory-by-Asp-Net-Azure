@@ -38,7 +38,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation("[dbo].[spSetCustomerType]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetCustomerType]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
 
@@ -55,13 +55,13 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation("[dbo].[spSetCustomerType]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetCustomerType]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
 
         public List<CustomerType> TypeGet(bool? IsActive = null)
         {
-            List<CustomerType> customerTypes = new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetCustomerType]",
+            List<CustomerType> customerTypes = new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetCustomerType]",
                 new NameValuePairs
                 {
                      
@@ -111,7 +111,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation("[dbo].[spSetCustomer]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetCustomer]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
 
@@ -128,13 +128,13 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@QueryType", "INACTIVE")
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation("[dbo].[spSetCustomer]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetCustomer]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
 
         public List<Customer> Get(bool? IsActive = null)
         {
-            List<Customer> customers = new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetCustomer]",
+            List<Customer> customers = new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetCustomer]",
                 new NameValuePairs
                 {
                      
@@ -152,7 +152,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         }
         public Customer Get(long CustomerId, bool? IsActive = null)
         {
-            Customer customer = new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetCustomer]",
+            Customer customer = new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetCustomer]",
                 new NameValuePairs
                 {
                      
@@ -168,7 +168,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         }
         public List<Customer> GetNonRetail(bool? IsActive = null)
         {
-            List<Customer> customers = new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetCustomer]",
+            List<Customer> customers = new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetCustomer]",
                 new NameValuePairs
                 {
                      
@@ -186,7 +186,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         }
         public List<Customer> GetRetail(bool? IsActive = null)
         {
-            List<Customer> customers = new SqlDBAccess(CommonObj.SqlConnectionString).GetData("[dbo].[spGetCustomer]",
+            List<Customer> customers = new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetCustomer]",
                 new NameValuePairs
                 {
                      

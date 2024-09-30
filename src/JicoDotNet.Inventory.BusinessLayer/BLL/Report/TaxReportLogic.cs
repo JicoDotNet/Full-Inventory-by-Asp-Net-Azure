@@ -29,7 +29,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
                 new NameValuePair("@PaymentStatus", tax.PaymentStatus),
                 new NameValuePair("@QueryType", "OUTPUTGST")
             };
-            return _sqlDBAccess.GetData("[dbo].[spRpGST]", nvp).ToList<ResponseGSTOutputResult>();
+            return _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spRpGST]", nvp).ToList<ResponseGSTOutputResult>();
         }
 
         public List<ResponseGSTInputResult> GSTInputs(IRequestTaxParam tax)
@@ -44,7 +44,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
                 new NameValuePair("@PaymentStatus", tax.PaymentStatus),
                 new NameValuePair("@QueryType", "INPUTGST")
             };
-            return _sqlDBAccess.GetData("[dbo].[spRpGST]", nvp).ToList<ResponseGSTInputResult>();
+            return _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spRpGST]", nvp).ToList<ResponseGSTInputResult>();
         }
     }
 }

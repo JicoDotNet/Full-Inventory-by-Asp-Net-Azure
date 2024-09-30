@@ -13,7 +13,7 @@ namespace DataAccess.Sql
         private SqlConnection SqlConnectionObject { get; set; }
         public ConnectionState SqlConnectionState { get; private set; }
 
-        public SqlDBAccess(object connectionString) 
+        public SqlDBAccess(string connectionString) 
             : base(connectionString)
         {
             CommandType = CommandType.StoredProcedure;
