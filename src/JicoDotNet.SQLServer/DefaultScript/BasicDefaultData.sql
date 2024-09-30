@@ -40,5 +40,5 @@ VALUES (1, 0, N'Default Product', 1, '18', 1, N'Pc', 1, GETDATE(), 'DefaultDataI
 INSERT [SingleIB].[mVendor] ([VendorTypeId], [CompanyName], [CompanyType], [StateCode], [IsGSTRegistered], [GSTStateCode], [GSTNumber], [IsActive], [TransactionDate], [RequestId]) 
 VALUES (1, N'Default Vendor Company', N'Personal', N'06', 1, N'06', N'06AAAAA2222B1Z5', 1, GETDATE(), 'DefaultDataInsert');
 
-INSERT [SingleIB].[mCustomer] ([CustomerTypeId], [CompanyName], [CompanyType], [StateCode], [IsGSTRegistered], [GSTStateCode], [GSTNumber], [IsActive], [TransactionDate], [RequestId]) 
-VALUES (1, N'Default Customer Company', N'Personal', N'06', 1, N'06', N'06BBBBB2222A1Z5', 1, GETDATE(), 'DefaultDataInsert');
+INSERT [SingleIB].[mCustomer] ([CustomerTypeId], [CompanyName], [CompanyType], [StateCode], [IsGSTRegistered], [GSTStateCode], [GSTNumber], [IsRetailCustomer], [IsActive], [TransactionDate], [RequestId]) 
+VALUES (1, N'Default Customer Company', N'Personal', N'06', 1, N'06', N'06BBBBB2222A1Z5', 0, 1, GETDATE(), 'DefaultDataInsert');

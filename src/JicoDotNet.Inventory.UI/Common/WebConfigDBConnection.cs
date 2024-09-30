@@ -14,7 +14,7 @@
                 if (sqlConnectionString != null
                     && !string.IsNullOrEmpty(sqlConnectionString.ToString())
                     && sqlConnectionString.ToString().Contains("Data Source"))
-                    {
+                {
                     return sqlConnectionString.ToString();
                 }
                 else

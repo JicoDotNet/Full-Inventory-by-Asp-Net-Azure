@@ -77,7 +77,7 @@ namespace DataAccess.Sql
         {
             try
             {
-                GetConnection();
+                OpenConnection();
 
                 SqlCommand cmd = WriteSqlCommand(spName, nameValuePairObject);
 
@@ -95,7 +95,6 @@ namespace DataAccess.Sql
                 CloseConnection();
             }
         }
-
         #endregion
 
         public object DataManipulation(string spName, 
@@ -129,7 +128,7 @@ namespace DataAccess.Sql
         {
             try
             {
-                GetConnection();
+                OpenConnection();
 
                 SqlCommand cmdObject = WriteSqlCommand(spName, inParameterName, outParameterName);
                 
@@ -206,7 +205,7 @@ namespace DataAccess.Sql
         }
 
         #region Connection
-        private void GetConnection()
+        private void OpenConnection()
         {
             try
             {
