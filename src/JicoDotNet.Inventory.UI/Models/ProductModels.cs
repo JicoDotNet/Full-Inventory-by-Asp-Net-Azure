@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using JicoDotNet.Inventory.Core.Entities;
+﻿using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
+using System.Collections.Generic;
 
 namespace JicoDotNet.Inventory.UI.Models
 {
@@ -9,7 +9,7 @@ namespace JicoDotNet.Inventory.UI.Models
         public IProductType _productType { get; set; }
         public IList<ProductType> _productTypes { get; set; }
 
-        
+
         public IList<Product> _products { get; set; }
         public IProduct _product { get; set; }
         public List<UnitOfMeasure> _unitOfMeasures { get; set; }

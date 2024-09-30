@@ -3,7 +3,7 @@ using JicoDotNet.Inventory.Core.Entities.Inner;
 
 namespace JicoDotNet.Inventory.Core.Models
 {
-    public class QuotationDetail :  Product, IQuotationDetail, IActivity, IStatus, IHRequest
+    public class QuotationDetail : Product, IQuotationDetail, IActivity, IStatus, IHRequest
     {
         public long QuotationDetailId { get; set; }
         public long QuotationId { get; set; }

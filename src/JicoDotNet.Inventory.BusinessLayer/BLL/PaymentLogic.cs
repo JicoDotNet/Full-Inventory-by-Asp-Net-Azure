@@ -1,13 +1,12 @@
 ﻿using DataAccess.Sql;
-using JicoDotNet.Inventory.BusinessLayer.Common;
+using JicoDotNet.Inventory.Core.Common;
+using JicoDotNet.Inventory.Core.Custom;
+using JicoDotNet.Inventory.Core.Custom.Interface;
+using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Inventory.Core.Custom;
-using JicoDotNet.Inventory.Core.Entities;
-using JicoDotNet.Inventory.Core.Models;
-using JicoDotNet.Inventory.Core.Custom.Interface;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
@@ -27,11 +26,11 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
             NameValuePairs nvp = new NameValuePairs
             {
-                 
+
                 new NameValuePair("@PaymentTypeId", paymentType.PaymentTypeId),
                 new NameValuePair("@PaymentTypeName", paymentType.PaymentTypeName),
                 new NameValuePair("@Description", paymentType.Description),
-                 
+
                 new NameValuePair("@RequestId", CommonObj.RequestId),
                 new NameValuePair("@QueryType", qt)
             };
@@ -48,8 +47,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             NameValuePairs nvp = new NameValuePairs
             {
                 new NameValuePair("@PaymentTypeId", paymentTypeId),
-                 
-                 
+
+
                 new NameValuePair("@RequestId", CommonObj.RequestId),
                 new NameValuePair("@QueryType", qt)
             };
@@ -63,8 +62,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             return new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetPaymentType]",
                 new NameValuePairs
                 {
-                     
-                     
+
+
                     new NameValuePair("@QueryType", "ALL")
                 }).ToList<PaymentType>();
         }
@@ -98,8 +97,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     return new SqlDBAccess(CommonObj.SqlConnectionString)
                         .DataManipulation(GenericLogic.SqlSchema + ".[spSetPaymentOut]", new NameValuePairs
                         {
-                         
-                         
+
+
                         new NameValuePair("@VendorId", paymentOut.VendorId),
                         new NameValuePair("@VendorBankId", paymentOut.VendorBankId),
 
@@ -143,8 +142,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             NameValuePairs nvp = new NameValuePairs()
                 {
-                     
-                     
+
+
                     new NameValuePair("@VendorId", vendorId),
                     new NameValuePair("@QueryType", "COMULTATIVE")
                 };
@@ -157,8 +156,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             return new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetPaymentOut]",
                 new NameValuePairs
                 {
-                     
-                     
+
+
                     new NameValuePair("@QueryType", "LIST")
                 }).ToList<PaymentOut>();
         }
@@ -190,8 +189,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 return new SqlDBAccess(CommonObj.SqlConnectionString)
                     .DataManipulation(GenericLogic.SqlSchema + ".[spSetPaymentIn]", new NameValuePairs
                     {
-                         
-                         
+
+
                         new NameValuePair("@CustomerId", paymentIn.CustomerId),
                         new NameValuePair("@CompanyBankId", paymentIn.CompanyBankId),
 
@@ -230,8 +229,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             NameValuePairs nvp = new NameValuePairs()
                 {
-                     
-                     
+
+
                     new NameValuePair("@CustomerId", customerId),
                     new NameValuePair("@QueryType", "COMULTATIVE")
                 };
@@ -244,8 +243,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             return new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetPaymentIn]",
                 new NameValuePairs
                 {
-                     
-                     
+
+
                     new NameValuePair("@QueryType", "LIST")
                 }).ToList<PaymentIn>();
         }

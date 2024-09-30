@@ -1,7 +1,7 @@
 ﻿namespace System
 {
-    using Linq;
     using ComponentModel;
+    using Linq;
     public static class EnumExtension
     {
         public static string GetEnumDescription(this Enum enumValue)

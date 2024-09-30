@@ -24,8 +24,8 @@ namespace JicoDotNet.Inventory.Core.Custom
         public string Description { get; set; }
         public DateTime TransactionDate { get; set; }
         public bool IsActive { get; set; }
-         
-         
+
+
         public string RequestId { get; set; }
     }
 }

@@ -1,16 +1,15 @@
 ﻿using DataAccess.AzureStorage;
 using DataAccess.Sql;
-using JicoDotNet.Inventory.BusinessLayer.Common;
+using JicoDotNet.Inventory.Core.Common;
+using JicoDotNet.Inventory.Core.Custom;
+using JicoDotNet.Inventory.Core.Custom.Interface;
+using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
-using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Inventory.Core.Custom;
-using JicoDotNet.Inventory.Core.Entities;
-using JicoDotNet.Inventory.Core.Models;
-using JicoDotNet.Inventory.Core.Custom.Interface;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
@@ -24,8 +23,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
             NameValuePairs nvp = new NameValuePairs()
             {
-                 
-                 
+
+
 
                 new NameValuePair("@WareHouseId", stock.WareHouseId),
                 new NameValuePair("@ProductId", stock.ProductId),
@@ -42,19 +41,19 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
             NameValuePairs nvp = new NameValuePairs()
             {
-                 
-                 
+
+
 
                 new NameValuePair("@WareHouseId", stock.WareHouseId),
                 new NameValuePair("@ProductId", stock.ProductId),
-                
+
                 new NameValuePair("@QueryType", "DETAIL")
             };
             DataSet dataSet = _sqlDBAccess.GetDataSet(GenericLogic.SqlSchema + ".[spGetStock]", nvp);
             List<Stock> stocks = dataSet.Tables[0].ToList<Stock>();
             List<StockDetail> stockDetails = dataSet.Tables[1].ToList<StockDetail>();
 
-            foreach(Stock loopstock in stocks)
+            foreach (Stock loopstock in stocks)
             {
                 loopstock.StockDetails = stockDetails
                                             .Where(a => a.WareHouseId == loopstock.WareHouseId
@@ -69,8 +68,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
             NameValuePairs nvp = new NameValuePairs()
             {
-                 
-                 
+
+
 
                 new NameValuePair("@ProductId", productId),
                 new NameValuePair("@QueryType", "NOTOPNINGSTOCK")
@@ -118,12 +117,12 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 return new SqlDBAccess(CommonObj.SqlConnectionString)
                     .DataManipulation(GenericLogic.SqlSchema + ".[spSetOpeningStock]", new NameValuePairs
                     {
-                         
-                         
+
+
                         new NameValuePair("@RequestId", CommonObj.RequestId),
                         new NameValuePair("@OpeningStockDetail", opnStkDetailTypes.ToDataTable()),
                         new NameValuePair("@QueryType", "INSERT")
-                    },"@OutParam"
+                    }, "@OutParam"
                 ).ToString();
             }
             else

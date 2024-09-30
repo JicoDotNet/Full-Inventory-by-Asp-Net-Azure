@@ -1,11 +1,11 @@
-﻿using System;
-using JicoDotNet.Inventory.Core.Entities;
+﻿using JicoDotNet.Inventory.Core.Entities;
+using System;
 
 namespace JicoDotNet.Inventory.Core.Models
 {
     public class WareHouse : IWareHouse, IBranch, IDtoHeader
     {
-         
+
         public long WareHouseId { get; set; }
         public long BranchId { get; set; }
         public string WareHouseName { get; set; }
@@ -24,8 +24,8 @@ namespace JicoDotNet.Inventory.Core.Models
 
         public DateTime TransactionDate { get; set; }
         public bool IsActive { get; set; }
-         
-         
+
+
         public string RequestId { get; set; }
     }
 }

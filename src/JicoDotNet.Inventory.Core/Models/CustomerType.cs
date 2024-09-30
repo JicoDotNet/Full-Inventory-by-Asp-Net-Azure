@@ -1,5 +1,5 @@
-﻿using System;
-using JicoDotNet.Inventory.Core.Entities;
+﻿using JicoDotNet.Inventory.Core.Entities;
+using System;
 
 namespace JicoDotNet.Inventory.Core.Models
 {

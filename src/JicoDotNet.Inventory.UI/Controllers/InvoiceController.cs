@@ -1,13 +1,11 @@
-﻿using Newtonsoft.Json;
-using JicoDotNet.Inventory.BusinessLayer.BLL;
+﻿using JicoDotNet.Inventory.BusinessLayer.BLL;
 using JicoDotNet.Inventory.BusinessLayer.Common;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+using JicoDotNet.Inventory.Core.Enumeration;
+using JicoDotNet.Inventory.Core.Models;
 using JicoDotNet.Inventory.UI.Models;
 using System;
 using System.Linq;
 using System.Web.Mvc;
-using JicoDotNet.Inventory.Core.Enumeration;
-using JicoDotNet.Inventory.Core.Models;
 
 namespace JicoDotNet.Inventory.UIControllers
 {
@@ -158,11 +156,11 @@ namespace JicoDotNet.Inventory.UIControllers
                     invoiceModels.GSTType = EGSTType.None;
                     if (invoiceModels._salesOrder.IsGstAllowed)
                     {
-                        invoiceModels.GSTType = GSTLogic.GetType(invoiceModels._salesOrder.IsGSTRegistered ? 
-                                invoiceModels._salesOrder.GSTStateCode : 
-                                invoiceModels._salesOrder.StateCode, 
-                            SessionCompany.IsGSTRegistered ? 
-                                SessionCompany.GSTStateCode : 
+                        invoiceModels.GSTType = GSTLogic.GetType(invoiceModels._salesOrder.IsGSTRegistered ?
+                                invoiceModels._salesOrder.GSTStateCode :
+                                invoiceModels._salesOrder.StateCode,
+                            SessionCompany.IsGSTRegistered ?
+                                SessionCompany.GSTStateCode :
                                 SessionCompany.StateCode);
                     }
 
@@ -279,7 +277,7 @@ namespace JicoDotNet.Inventory.UIControllers
                     invoiceModels._customer = new CustomerLogic(LogicHelper).Get(invoiceModels._invoice.CustomerId);
                     invoiceModels._salesOrder = new SalesOrderLogic(LogicHelper).GetForDetail(invoiceModels._invoice.SalesOrderId);
                     invoiceModels._companyBank = companyManagment.BankPrintable();
-                    invoiceModels._customPropertyValue = new CustomPropertyLogic(LogicHelper).GetValue(ECustomPropertyFor.SalesInvoice, invoiceModels._invoice.InvoiceId);                    
+                    invoiceModels._customPropertyValue = new CustomPropertyLogic(LogicHelper).GetValue(ECustomPropertyFor.SalesInvoice, invoiceModels._invoice.InvoiceId);
                     return View(invoiceModels);
                 }
                 return RedirectToAction("Index");

@@ -8,6 +8,6 @@
         long PurchaseOrderDetailId { get; set; }
         long ProductId { get; set; }
         decimal ReceivedQuantity { get; set; }
-        string Description { get; set; }        
+        string Description { get; set; }
     }
 }

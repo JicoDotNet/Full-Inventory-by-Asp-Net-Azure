@@ -1,15 +1,11 @@
 ﻿using DataAccess.Sql;
-using JicoDotNet.Inventory.BusinessLayer.Common;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using System;
-using System.Data;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
@@ -28,8 +24,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
             NameValuePairs nvp = new NameValuePairs
             {
-                 
-                 
+
+
                 new NameValuePair("@UnitOfMeasureId", unitOfMeasure.UnitOfMeasureId),
                 new NameValuePair("@UnitOfMeasureName", unitOfMeasure.UnitOfMeasureName),
                 new NameValuePair("@Description", unitOfMeasure.Description),
@@ -49,8 +45,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             NameValuePairs nvp = new NameValuePairs
             {
                 new NameValuePair("@UnitOfMeasureId", UnitOfMeasureId),
-                 
-                 
+
+
                 new NameValuePair("@RequestId", CommonObj.RequestId),
                 new NameValuePair("@QueryType", qt)
             };
@@ -64,8 +60,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             return new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetUnitOfMeasure]",
                 new NameValuePairs
                 {
-                     
-                     
+
+
                     new NameValuePair("@QueryType", "ALL")
                 }).ToList<UnitOfMeasure>();
         }

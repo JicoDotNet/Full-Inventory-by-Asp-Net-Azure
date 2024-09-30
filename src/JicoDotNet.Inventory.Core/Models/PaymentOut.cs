@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.Core.Entities;
+﻿using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Entities.Inner;
+using System;
+using System.Collections.Generic;
 
 namespace JicoDotNet.Inventory.Core.Models
 {
@@ -16,7 +15,7 @@ namespace JicoDotNet.Inventory.Core.Models
         public decimal? TDSPercentage { get; set; }
         public decimal? TDSAmount { get; set; }
         public decimal PayAmount { get; set; }
-        
+
         public decimal TotalAmount { get; set; }
         public DateTime PaymentDate { get; set; }
         public short PaymentMode { get; set; }
@@ -27,11 +26,11 @@ namespace JicoDotNet.Inventory.Core.Models
         public DateTime? ChequeDate { get; set; }
         public string ChequeIFSC { get; set; }
 
-         
+
         public DateTime TransactionDate { get; set; }
         public bool IsActive { get; set; }
-         
-         
+
+
         public string RequestId { get; set; }
 
         public long VendorTypeId { get; set; }

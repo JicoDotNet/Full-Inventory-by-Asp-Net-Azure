@@ -1,9 +1,9 @@
 ﻿using JicoDotNet.Inventory.BusinessLayer.BLL;
-using System.Web.Routing;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Common.Auth;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
+using System.Web.Routing;
 
 namespace System.Web.Mvc
 {
@@ -46,7 +46,7 @@ namespace System.Web.Mvc
                             {
                                 base.OnActionExecuting(filterContext);
                                 return;
-                            }                            
+                            }
                         }
                     }
                     #endregion

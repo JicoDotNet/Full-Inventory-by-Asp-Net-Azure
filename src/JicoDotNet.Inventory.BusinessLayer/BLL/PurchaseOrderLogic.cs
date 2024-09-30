@@ -1,14 +1,13 @@
 ﻿using DataAccess.Sql;
-using JicoDotNet.Inventory.BusinessLayer.Common;
+using JicoDotNet.Inventory.Core.Common;
+using JicoDotNet.Inventory.Core.Custom;
+using JicoDotNet.Inventory.Core.Custom.Interface;
+using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Inventory.Core.Custom;
-using JicoDotNet.Inventory.Core.Entities;
-using JicoDotNet.Inventory.Core.Models;
-using JicoDotNet.Inventory.Core.Custom.Interface;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
@@ -28,8 +27,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
             NameValuePairs nvp = new NameValuePairs
             {
-                 
-                 
+
+
                 new NameValuePair("@PurchaseTypeId", purchaseType.PurchaseTypeId),
                 new NameValuePair("@PurchaseTypeName", purchaseType.PurchaseTypeName),
                 new NameValuePair("@Description", purchaseType.Description),
@@ -47,8 +46,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 .DataManipulation(GenericLogic.SqlSchema + ".[spSetPurchaseType]", new NameValuePairs
                 {
                     new NameValuePair("@PurchaseTypeId", PurchaseTypeId),
-                     
-                     
+
+
                     new NameValuePair("@RequestId", CommonObj.RequestId),
                     new NameValuePair("@QueryType", "INACTIVE")
                 }, "@OutParam").ToString();
@@ -59,8 +58,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             List<PurchaseType> purchaseTypes = new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetPurchaseType]",
                 new NameValuePairs
                 {
-                     
-                     
+
+
                     new NameValuePair("@QueryType", "ALL")
                 }).ToList<PurchaseType>();
             if (IsActive != null)
@@ -71,7 +70,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     return purchaseTypes.Where(a => !a.IsActive).ToList();
             }
             return purchaseTypes;
-        } 
+        }
         #endregion
 
         public Dictionary<string, object> GetForEntry()
@@ -79,8 +78,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             NameValuePairs nvp = new NameValuePairs
             {
-                 
-                 
+
+
                 new NameValuePair("@QueryType", "ENTRY")
             };
             DataSet dataSet = _sqlDBAccess.GetDataSet(GenericLogic.SqlSchema + ".[spGetPurchaseOrder]", nvp);
@@ -134,8 +133,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 NameValuePairs nvp = new NameValuePairs
                 {
                     new NameValuePair("@PurchaseOrderId", purchaseOrder.PurchaseOrderId),
-                     
-                     
+
+
 
                     new NameValuePair("@PurchaseTypeId", purchaseOrder.PurchaseTypeId),
                     new NameValuePair("@BranchId", purchaseOrder.BranchId),
@@ -172,8 +171,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 NameValuePairs nvp = new NameValuePairs
                 {
                     new NameValuePair("@PurchaseOrderId", PurchaseOrderId),
-                     
-                     
+
+
                     new NameValuePair("@RequestId", CommonObj.RequestId),
                     new NameValuePair("@QueryType", "DELETE")
                 };
@@ -191,8 +190,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             NameValuePairs nvp = new NameValuePairs()
             {
-                 
-                 
+
+
                 new NameValuePair("@PurchaseOrderId", PurchaseOrderId),
                 new NameValuePair("@QueryType", "DETAIL")
             };
@@ -213,8 +212,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             NameValuePairs nvp = new NameValuePairs()
                 {
-                     
-                     
+
+
                     new NameValuePair("@QueryType", "LIST")
                 };
             return _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetPurchaseOrder]", nvp).ToList<PurchaseOrder>();
@@ -266,8 +265,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     NameValuePairs nvp = new NameValuePairs
                     {
                         new NameValuePair("@PurchaseOrderId", purchaseOrder.PurchaseOrderId),
-                         
-                         
+
+
                         new NameValuePair("@AmendmentNumber", ""),
                         new NameValuePair("@AmendmentDate", purchaseOrder.AmendmentDate),
                         new NameValuePair("@PurchaseOrderAmount", purchaseOrder.PurchaseOrderAmount),
@@ -288,11 +287,11 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 throw ex;
             }
         }
-        
+
         public string Return(PurchaseReturn purchaseReturn)
         {
             List<IPurchaseReturnDetailType> PReturnDetailTypes = new List<IPurchaseReturnDetailType>();
-            int count = 1; 
+            int count = 1;
             purchaseReturn.PurchaseReturnDetails.ForEach(porD =>
             {
                 if (porD.ReturnedQuantity > 0)
@@ -316,8 +315,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 return new SqlDBAccess(CommonObj.SqlConnectionString)
                     .DataManipulation(GenericLogic.SqlSchema + ".[spSetPurchaseReturn]", new NameValuePairs
                     {
-                         
-                         
+
+
                         new NameValuePair("@GRNId", purchaseReturn.GRNId),
                         new NameValuePair("@PurchaseOrderId", purchaseReturn.PurchaseOrderId),
                         new NameValuePair("@WareHouseId", purchaseReturn.WareHouseId),
@@ -327,7 +326,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                         new NameValuePair("@Remarks", purchaseReturn.Remarks),
                         new NameValuePair("@IsFullReturned", purchaseReturn.IsFullReturned),
                         new NameValuePair("@PurchaseReturnDetails", PReturnDetailTypes.ToDataTable()),
-                        new NameValuePair("@RequestId", CommonObj.RequestId),                        
+                        new NameValuePair("@RequestId", CommonObj.RequestId),
                         new NameValuePair("@QueryType", "INSERT")
                     },
                     "@OutParam"

@@ -1,19 +1,15 @@
 ﻿using DataAccess.Sql;
-using JicoDotNet.Inventory.BusinessLayer.Common;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+using JicoDotNet.Inventory.Core.Common;
+using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Inventory.Core.Entities;
-using JicoDotNet.Inventory.Core.Models;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
-    public class WareHouseLogic: ConnectionString
+    public class WareHouseLogic : ConnectionString
     {
         public WareHouseLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
 
@@ -22,8 +18,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             List<WareHouse> wareHouses = new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetWareHouse]",
                 new NameValuePairs
                 {
-                     
-                     
+
+
                     new NameValuePair("@QueryType", "ALL")
                 }).ToList<WareHouse>();
             if (IsActive != null)
@@ -48,8 +44,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             NameValuePairs nvp = new NameValuePairs
             {
                 new NameValuePair("@WareHouseId", wareHouse.WareHouseId),
-                 
-                 
+
+
                 new NameValuePair("@BranchId", wareHouse.BranchId),
                 new NameValuePair("@WareHouseName", wareHouse.WareHouseName),
                 new NameValuePair("@IsRetailCounter", wareHouse.IsRetailCounter),
@@ -68,7 +64,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 .DataManipulation(GenericLogic.SqlSchema + ".[spSetWareHouse]", new NameValuePairs
                 {
                     new NameValuePair("@WareHouseId", wareHouseId),
-                     
+
                     new NameValuePair("@RequestId", CommonObj.RequestId),
                     new NameValuePair("@QueryType", "INACTIVE")
                 }, "@OutParam").ToString();

@@ -1,14 +1,12 @@
-﻿using Newtonsoft.Json;
-using JicoDotNet.Inventory.BusinessLayer.BLL;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+﻿using JicoDotNet.Inventory.BusinessLayer.BLL;
+using JicoDotNet.Inventory.BusinessLayer.Common;
+using JicoDotNet.Inventory.Core.Models;
 using JicoDotNet.Inventory.UI.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using JicoDotNet.Inventory.BusinessLayer.Common;
-using JicoDotNet.Inventory.Core.Models;
 
 namespace JicoDotNet.Inventory.UIControllers
 {
@@ -132,7 +130,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 }
 
                 SalesOrderLogic salesOrderLogic = new SalesOrderLogic(LogicHelper);
-                if(salesOrderLogic.GetForShipment().FirstOrDefault(so => so.SalesOrderId == Convert.ToInt64(UrlParameterId)) != null)
+                if (salesOrderLogic.GetForShipment().FirstOrDefault(so => so.SalesOrderId == Convert.ToInt64(UrlParameterId)) != null)
                 {
                     shipmentModels._salesOrder = salesOrderLogic.GetForDetail(Convert.ToInt64(UrlParameterId));
                 }
@@ -154,7 +152,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 shipmentModels._wareHouses = new WareHouseLogic(LogicHelper).Get(true).Where(a => a.BranchId == shipmentModels._salesOrder.BranchId).ToList();
                 shipmentModels._shipmentTypes = shipmentLogic.TypeGet(true);
                 shipmentModels._config = new ConfigarationManager(LogicHelper).GetConfig();
-                
+
                 return View(shipmentModels);
             }
             catch (Exception ex)
@@ -180,7 +178,7 @@ namespace JicoDotNet.Inventory.UIControllers
                     shipmentModels._salesOrder = new SalesOrderLogic(LogicHelper).GetForDetail(Convert.ToInt64(UrlParameterId));
                     shipmentModels._salesOrder.SalesOrderDetails =
                         shipmentModels._salesOrder.SalesOrderDetails.Where(a => a.IsGoods).ToList();
-                    
+
                     if (shipmentModels._salesOrder != null)
                     {
                         shipmentModels._products = new ProductLogic(LogicHelper).GetOut();

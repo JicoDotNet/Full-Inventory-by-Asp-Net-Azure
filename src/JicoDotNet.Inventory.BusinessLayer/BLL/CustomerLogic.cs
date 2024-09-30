@@ -1,15 +1,11 @@
 ﻿using DataAccess.Sql;
-using JicoDotNet.Inventory.BusinessLayer.Common;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+using JicoDotNet.Inventory.Core.Common;
+using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Inventory.Core.Entities;
-using JicoDotNet.Inventory.Core.Models;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
@@ -29,8 +25,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
             NameValuePairs nvp = new NameValuePairs
             {
-                 
-                 
+
+
                 new NameValuePair("@CustomerTypeId", customerType.CustomerTypeId),
                 new NameValuePair("@CustomerTypeName", customerType.CustomerTypeName),
                 new NameValuePair("@Description", customerType.Description),
@@ -50,7 +46,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             NameValuePairs nvp = new NameValuePairs
             {
                 new NameValuePair("@CustomerTypeId", customerTypeId),
-                 
+
                 new NameValuePair("@RequestId", CommonObj.RequestId),
                 new NameValuePair("@QueryType", qt)
             };
@@ -64,8 +60,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             List<CustomerType> customerTypes = new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetCustomerType]",
                 new NameValuePairs
                 {
-                     
-                     
+
+
                     new NameValuePair("@QueryType", "ALL")
                 }).ToList<CustomerType>();
             if (IsActive != null)
@@ -91,8 +87,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
             NameValuePairs nvp = new NameValuePairs
             {
-                 
-                 
+
+
                 new NameValuePair("@CustomerId", customer.CustomerId),
                 new NameValuePair("@CustomerTypeId", customer.CustomerTypeId),
                 new NameValuePair("@CompanyName", customer.CompanyName),
@@ -122,8 +118,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             NameValuePairs nvp = new NameValuePairs
             {
                 new NameValuePair("@CustomerId", customerId),
-                 
-                 
+
+
                 new NameValuePair("@RequestId", CommonObj.RequestId),
                 new NameValuePair("@QueryType", "INACTIVE")
             };
@@ -137,8 +133,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             List<Customer> customers = new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetCustomer]",
                 new NameValuePairs
                 {
-                     
-                     
+
+
                     new NameValuePair("@QueryType", "ALL")
                 }).ToList<Customer>();
             if (IsActive != null)
@@ -155,8 +151,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             Customer customer = new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetCustomer]",
                 new NameValuePairs
                 {
-                     
-                     
+
+
                     new NameValuePair("@CustomerId", CustomerId),
                     new NameValuePair("@QueryType", "SINGLE")
                 }).FirstOrDefault<Customer>();
@@ -171,8 +167,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             List<Customer> customers = new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetCustomer]",
                 new NameValuePairs
                 {
-                     
-                     
+
+
                     new NameValuePair("@QueryType", "NONRETAILALL")
                 }).ToList<Customer>();
             if (IsActive != null)
@@ -189,8 +185,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             List<Customer> customers = new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetCustomer]",
                 new NameValuePairs
                 {
-                     
-                     
+
+
                     new NameValuePair("@QueryType", "RETAILALL")
                 }).ToList<Customer>();
             if (IsActive != null)

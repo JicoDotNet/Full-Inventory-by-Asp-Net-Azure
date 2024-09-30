@@ -1,10 +1,4 @@
-﻿using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace JicoDotNet.Inventory.UI.Models
+﻿namespace JicoDotNet.Inventory.UI.Models
 {
     //public class UserModels
     //{
@@ -13,7 +7,7 @@ namespace JicoDotNet.Inventory.UI.Models
 
     //    public List<User> _users { get; set; }
     //    public User _user { get; set; }
-        
+
 
     //    public List<MenuList> _menuLists { get; set; }
     //    public List<UserMenu> _userMenus { get; set; }

@@ -1,17 +1,16 @@
 ﻿using DataAccess.AzureStorage;
 using DataAccess.Sql;
+using JicoDotNet.Inventory.Core.Common;
+using JicoDotNet.Inventory.Core.Custom;
+using JicoDotNet.Inventory.Core.Custom.Interface;
+using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Inventory.Core.Enumeration;
+using JicoDotNet.Inventory.Core.Models;
 using Newtonsoft.Json;
-using JicoDotNet.Inventory.BusinessLayer.Common;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Inventory.Core.Custom;
-using JicoDotNet.Inventory.Core.Entities;
-using JicoDotNet.Inventory.Core.Enumeration;
-using JicoDotNet.Inventory.Core.Models;
-using JicoDotNet.Inventory.Core.Custom.Interface;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
@@ -31,11 +30,11 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
             NameValuePairs nvp = new NameValuePairs
             {
-                 
+
                 new NameValuePair("@InvoiceTypeId", invoiceType.InvoiceTypeId),
                 new NameValuePair("@InvoiceTypeName", invoiceType.InvoiceTypeName),
                 new NameValuePair("@Description", invoiceType.Description),
-                 
+
                 new NameValuePair("@RequestId", CommonObj.RequestId),
                 new NameValuePair("@QueryType", qt)
             };
@@ -52,8 +51,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             NameValuePairs nvp = new NameValuePairs
             {
                 new NameValuePair("@InvoiceTypeId", invoiceTypeId),
-                 
-                 
+
+
                 new NameValuePair("@RequestId", CommonObj.RequestId),
                 new NameValuePair("@QueryType", qt)
             };
@@ -67,8 +66,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             List<InvoiceType> invoiceTypes = new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetInvoiceType]",
                 new NameValuePairs
                 {
-                     
-                     
+
+
                     new NameValuePair("@QueryType", "ALL")
                 }).ToList<InvoiceType>();
 
@@ -89,8 +88,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             NameValuePairs nvp = new NameValuePairs()
             {
-                 
-                 
+
+
                 new NameValuePair("@QueryType", "LIST")
             };
             List<Invoice> invoices = _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetInvoice]", nvp).ToList<Invoice>();
@@ -101,8 +100,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             NameValuePairs nvp = new NameValuePairs()
             {
-                 
-                 
+
+
                 new NameValuePair("@QueryType", "RETAIL")
             };
             List<Invoice> invoices = _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetInvoice]", nvp).ToList<Invoice>();
@@ -114,8 +113,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             NameValuePairs nvp = new NameValuePairs()
                 {
-                     
-                     
+
+
                     new NameValuePair("@QueryType", "ENTRY")
                 };
             List<SalesOrder> salesOrders = _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetInvoice]", nvp).ToList<SalesOrder>();
@@ -127,8 +126,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             NameValuePairs nvp = new NameValuePairs()
                 {
-                     
-                     
+
+
                     new NameValuePair("@SalesOrderId", salesOrderId),
                     new NameValuePair("@QueryType", "COMULTATIVE")
                 };
@@ -143,8 +142,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
                 NameValuePairs nvp = new NameValuePairs()
                 {
-                     
-                     
+
+
                     new NameValuePair("@customerId", customerId),
                     new NameValuePair("@QueryType", "PAYMENT")
                 };
@@ -241,8 +240,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
                     NameValuePairs nvp = new NameValuePairs()
                     {
-                         
-                         
+
+
                         new NameValuePair("@InvoiceTypeId", invoice.InvoiceTypeId),
                         new NameValuePair("@InvoiceDate", invoice.InvoiceDate),
                         new NameValuePair("@InvoiceDueDate", invoice.InvoiceDueDate),
@@ -289,8 +288,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             NameValuePairs nvp = new NameValuePairs()
             {
-                 
-                 
+
+
                 new NameValuePair("@InvoiceId", InvoiceId),
                 new NameValuePair("@QueryType", "DETAIL")
             };
@@ -312,8 +311,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
             NameValuePairs nvp = new NameValuePairs
             {
-                 
-                 
+
+
                 new NameValuePair("@InvoiceNumber", CustomInvoiceNumber),
                 new NameValuePair("@QueryType", "AVAILABLE")
             };
@@ -336,7 +335,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public void SetHTMLDesign(string InvoiceHtmlPath)
         {
-            
+
         }
         #endregion
     }

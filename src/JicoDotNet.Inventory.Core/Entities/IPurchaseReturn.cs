@@ -7,7 +7,7 @@ namespace JicoDotNet.Inventory.Core.Entities
         long PurchaseReturnId { get; set; }
         string PurchaseReturnNumber { get; set; }
         DateTime PurchaseReturnDate { get; set; }
-        bool IsFullReturned { get; set; }    
+        bool IsFullReturned { get; set; }
         string Reason { get; set; }
     }
 }

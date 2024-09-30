@@ -1,15 +1,12 @@
 ﻿using DataAccess.Sql;
-using JicoDotNet.Inventory.BusinessLayer.Common;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Report;
 using JicoDotNet.Inventory.Core.Report.Interface;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
 {
@@ -22,8 +19,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             NameValuePairs nvp = new NameValuePairs
             {
-                 
-                 
+
+
                 new NameValuePair("@StartDate", tax.SearchDate.StartDate),
                 new NameValuePair("@EndDate", tax.SearchDate.EndDate),
                 new NameValuePair("@PaymentStatus", tax.PaymentStatus),
@@ -37,8 +34,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             NameValuePairs nvp = new NameValuePairs
             {
-                 
-                 
+
+
                 new NameValuePair("@StartDate", tax.SearchDate.StartDate),
                 new NameValuePair("@EndDate", tax.SearchDate.EndDate),
                 new NameValuePair("@PaymentStatus", tax.PaymentStatus),

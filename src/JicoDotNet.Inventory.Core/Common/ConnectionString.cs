@@ -1,8 +1,8 @@
-﻿using System;
-using DataAccess.AzureStorage;
+﻿using DataAccess.AzureStorage;
 using DataAccess.Sql;
 using DataAccess.Sql.Entity;
 using JicoDotNet.Inventory.Core.Entities;
+using System;
 
 namespace JicoDotNet.Inventory.Core.Common
 {

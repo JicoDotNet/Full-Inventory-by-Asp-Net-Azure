@@ -1,13 +1,13 @@
 ﻿using DataAccess.Sql;
 using JicoDotNet.Inventory.BusinessLayer.Common;
+using JicoDotNet.Inventory.Core.Common;
+using JicoDotNet.Inventory.Core.Custom;
+using JicoDotNet.Inventory.Core.Custom.Interface;
+using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Inventory.Core.Custom;
-using JicoDotNet.Inventory.Core.Entities;
-using JicoDotNet.Inventory.Core.Models;
-using JicoDotNet.Inventory.Core.Custom.Interface;
 
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
@@ -80,8 +80,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             NameValuePairs nvp = new NameValuePairs()
                 {
-                     
-                     
+
+
                     new NameValuePair("@QueryType", "LIST")
                 };
             return _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetQuotation]", nvp).ToList<Quotation>();
@@ -92,8 +92,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             NameValuePairs nvp = new NameValuePairs()
             {
-                 
-                 
+
+
                 new NameValuePair("@QuotationId", QuotationId),
                 new NameValuePair("@QueryType", "DETAIL")
             };

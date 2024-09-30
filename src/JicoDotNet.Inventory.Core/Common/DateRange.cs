@@ -1,7 +1,7 @@
-﻿using System;
+﻿using JicoDotNet.Inventory.Core.Entities.Inner;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using JicoDotNet.Inventory.Core.Entities.Inner;
 
 namespace JicoDotNet.Inventory.Core.Common
 {
@@ -87,7 +87,7 @@ namespace JicoDotNet.Inventory.Core.Common
                 }
                 return false;
             }
-            
+
         }
     }
 }

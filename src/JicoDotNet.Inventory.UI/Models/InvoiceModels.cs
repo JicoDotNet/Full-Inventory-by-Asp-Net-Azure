@@ -1,9 +1,9 @@
 ﻿using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using System;
-using System.Collections.Generic;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Enumeration;
 using JicoDotNet.Inventory.Core.Models;
+using System;
+using System.Collections.Generic;
 
 namespace JicoDotNet.Inventory.UI.Models
 {
@@ -26,7 +26,7 @@ namespace JicoDotNet.Inventory.UI.Models
         public string _invoiceHtml { get; set; }
         public Dictionary<string, string> _customPropertyValue { get; set; }
         public Customer _customer { get; set; }
-        
+
 
         public DateTime _dateLimit { get; set; }
     }

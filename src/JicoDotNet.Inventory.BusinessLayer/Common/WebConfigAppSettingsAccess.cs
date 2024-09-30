@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Configuration;
+﻿using System.Web.Configuration;
 
 namespace JicoDotNet.Inventory.BusinessLayer.Common
 {
@@ -14,7 +9,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.Common
         public static string Password { get { if (WebConfigurationManager.AppSettings["Password"] != null && !string.IsNullOrEmpty(WebConfigurationManager.AppSettings["Password"]?.ToString())) { return WebConfigurationManager.AppSettings["Password"]?.ToString(); } return null; } }
         public static string AllowedStartIP { get { if (WebConfigurationManager.AppSettings["AllowedStartIP"] != null && !string.IsNullOrEmpty(WebConfigurationManager.AppSettings["AllowedStartIP"]?.ToString())) { return WebConfigurationManager.AppSettings["AllowedStartIP"]?.ToString(); } return null; } }
         public static string AllowedEndIP { get { if (WebConfigurationManager.AppSettings["AllowedEndIP"] != null && !string.IsNullOrEmpty(WebConfigurationManager.AppSettings["AllowedEndIP"]?.ToString())) { return WebConfigurationManager.AppSettings["AllowedEndIP"]?.ToString(); } return null; } }
-                
+
         public static string CompanyName { get { if (WebConfigurationManager.AppSettings["CompanyName"] != null && !string.IsNullOrEmpty(WebConfigurationManager.AppSettings["CompanyName"]?.ToString())) { return WebConfigurationManager.AppSettings["CompanyName"]?.ToString(); } return null; } }
         public static string GSTNumber { get { if (WebConfigurationManager.AppSettings["GSTNumber"] != null && !string.IsNullOrEmpty(WebConfigurationManager.AppSettings["GSTNumber"]?.ToString())) { return WebConfigurationManager.AppSettings["GSTNumber"]?.ToString(); } return null; } }
 

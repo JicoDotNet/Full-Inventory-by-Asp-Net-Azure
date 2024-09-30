@@ -1,11 +1,11 @@
-﻿using System;
-using JicoDotNet.Inventory.Core.Entities;
+﻿using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Entities.Inner;
 using Microsoft.WindowsAzure.Storage.Table;
+using System;
 
 namespace JicoDotNet.Inventory.Core.Models
 {
-    public class CustomProperty : TableEntity, ICustomProperty, 
+    public class CustomProperty : TableEntity, ICustomProperty,
         IStatus, IHRequest, IActivity
     {
         // TODO - need to change

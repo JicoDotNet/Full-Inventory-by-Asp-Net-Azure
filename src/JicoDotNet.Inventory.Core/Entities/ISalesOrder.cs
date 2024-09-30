@@ -8,7 +8,7 @@ namespace JicoDotNet.Inventory.Core.Entities
 
         long? QuotationId { get; set; }
         long SalesTypeId { get; set; }
-         
+
         long BranchId { get; set; }
         long CustomerId { get; set; }
         bool IsGstAllowed { get; set; }

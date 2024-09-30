@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.Core.Entities;
+﻿using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Entities.Inner;
+using System;
+using System.Collections.Generic;
 
 namespace JicoDotNet.Inventory.Core.Models
 {
@@ -51,11 +50,11 @@ namespace JicoDotNet.Inventory.Core.Models
         public string PANNumber { get; set; }
         public string Mobile { get; set; }
 
-         
+
         public DateTime TransactionDate { get; set; }
         public bool IsActive { get; set; }
-         
-         
+
+
         public string RequestId { get; set; }
 
         public List<SalesOrderDetail> SalesOrderDetails { get; set; }

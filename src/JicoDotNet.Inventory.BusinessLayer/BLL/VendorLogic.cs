@@ -1,15 +1,11 @@
 ﻿using DataAccess.Sql;
-using JicoDotNet.Inventory.BusinessLayer.Common;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+using JicoDotNet.Inventory.Core.Common;
+using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Inventory.Core.Entities;
-using JicoDotNet.Inventory.Core.Models;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
@@ -29,8 +25,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
             NameValuePairs nvp = new NameValuePairs
             {
-                 
-                 
+
+
                 new NameValuePair("@VendorTypeId", vendorType.VendorTypeId),
                 new NameValuePair("@VendorTypeName", vendorType.VendorTypeName),
                 new NameValuePair("@Description", vendorType.Description),
@@ -50,7 +46,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             NameValuePairs nvp = new NameValuePairs
             {
                 new NameValuePair("@VendorTypeId", VendorTypeId),
-                 
+
                 new NameValuePair("@RequestId", CommonObj.RequestId),
                 new NameValuePair("@QueryType", qt)
             };
@@ -64,8 +60,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             return new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetVendorType]",
                 new NameValuePairs
                 {
-                     
-                     
+
+
                     new NameValuePair("@QueryType", "ALL")
                 }).ToList<VendorType>();
         }
@@ -83,10 +79,10 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
             NameValuePairs nvp = new NameValuePairs
             {
-                 
-                 
+
+
                 new NameValuePair("@VendorId", vendor.VendorId),
-                new NameValuePair("@VendorTypeId", vendor.VendorTypeId),                
+                new NameValuePair("@VendorTypeId", vendor.VendorTypeId),
                 new NameValuePair("@CompanyName", vendor.CompanyName),
                 new NameValuePair("@CompanyType", vendor.CompanyType),
                 new NameValuePair("@StateCode", vendor.StateCode),
@@ -114,7 +110,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             NameValuePairs nvp = new NameValuePairs
             {
                 new NameValuePair("@VendorId", VendorId),
-                 
+
                 new NameValuePair("@RequestId", CommonObj.RequestId),
                 new NameValuePair("@QueryType", qt)
             };
@@ -128,8 +124,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             List<Vendor> vendors = new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetVendor]",
                 new NameValuePairs
                 {
-                     
-                     
+
+
                     new NameValuePair("@QueryType", "ALL")
                 }).ToList<Vendor>();
             if (IsActive != null)
@@ -155,8 +151,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
             NameValuePairs nvp = new NameValuePairs
             {
-                 
-                 
+
+
                 new NameValuePair("@VendorId", vendorBank.VendorId),
                 new NameValuePair("@VendorBankId", vendorBank.VendorBankId),
 
@@ -185,8 +181,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             {
                 new NameValuePair("@VendorId", VendorId),
                 new NameValuePair("@VendorBankId", VendorBankId),
-                 
-                 
+
+
                 new NameValuePair("@RequestId", CommonObj.RequestId),
                 new NameValuePair("@QueryType", qt)
             };
@@ -200,8 +196,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             List<VendorBank> vendorBanks = new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetVendorBank]",
                 new NameValuePairs
                 {
-                     
-                     
+
+
                     new NameValuePair("@VendorId", VendorId),
                     new NameValuePair("@QueryType", "ALL")
                 }).ToList<VendorBank>();

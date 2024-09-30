@@ -1,10 +1,7 @@
-﻿using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+﻿using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using JicoDotNet.Inventory.Core.Entities;
-using JicoDotNet.Inventory.Core.Models;
 
 namespace JicoDotNet.Inventory.UI.Models
 {
@@ -17,7 +14,7 @@ namespace JicoDotNet.Inventory.UI.Models
         public IDictionary<bool, string> _YesNo { get; set; }
         public Config _config { get; set; }
         public List<WareHouse> _wareHouses { get; set; }
-        
+
         public DateTime _dateLimit { get; set; }
     }
 }

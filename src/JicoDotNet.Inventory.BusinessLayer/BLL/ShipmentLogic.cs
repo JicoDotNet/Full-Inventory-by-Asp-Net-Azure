@@ -1,17 +1,14 @@
 ﻿using DataAccess.Sql;
 using JicoDotNet.Inventory.BusinessLayer.Common;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+using JicoDotNet.Inventory.Core.Common;
+using JicoDotNet.Inventory.Core.Custom;
+using JicoDotNet.Inventory.Core.Custom.Interface;
+using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Inventory.Core.Custom;
-using JicoDotNet.Inventory.Core.Entities;
-using JicoDotNet.Inventory.Core.Models;
-using JicoDotNet.Inventory.Core.Custom.Interface;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
@@ -31,11 +28,11 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
             NameValuePairs nvp = new NameValuePairs
             {
-                 
+
                 new NameValuePair("@ShipmentTypeId", shipmentType.ShipmentTypeId),
                 new NameValuePair("@ShipmentTypeName", shipmentType.ShipmentTypeName),
                 new NameValuePair("@Description", shipmentType.Description),
-                 
+
                 new NameValuePair("@RequestId", CommonObj.RequestId),
                 new NameValuePair("@QueryType", qt)
             };
@@ -52,8 +49,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             NameValuePairs nvp = new NameValuePairs
             {
                 new NameValuePair("@ShipmentTypeId", ShipmentTypeId),
-                 
-                 
+
+
                 new NameValuePair("@RequestId", CommonObj.RequestId),
                 new NameValuePair("@QueryType", qt)
             };
@@ -67,8 +64,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             List<ShipmentType> shipmentTypes = new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetShipmentType]",
                 new NameValuePairs
                 {
-                     
-                     
+
+
                     new NameValuePair("@QueryType", "ALL")
                 }).ToList<ShipmentType>();
             if (IsActive != null)
@@ -87,8 +84,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             return new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetShipment]",
                 new NameValuePairs
                 {
-                     
-                     
+
+
                     new NameValuePair("@QueryType", "LIST")
                 }).ToList<Shipment>();
         }
@@ -98,8 +95,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             NameValuePairs nvp = new NameValuePairs()
                 {
-                     
-                     
+
+
                     new NameValuePair("@SalesOrderId", salesOrderId),
                     new NameValuePair("@QueryType", "COMULTATIVE")
                 };
@@ -113,7 +110,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             {
                 List<IShipmentDetailType> shpDetailTypes = new List<IShipmentDetailType>();
                 int count = 1;
-                if(shipment.ShipmentDetails != null)
+                if (shipment.ShipmentDetails != null)
                 {
                     shipment.ShipmentDetails.ForEach(shpD =>
                     {
@@ -134,14 +131,14 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                         }
                     });
                 }
-                
+
                 if (shpDetailTypes.Count > 0)
                 {
                     return new SqlDBAccess(CommonObj.SqlConnectionString)
                         .DataManipulation(GenericLogic.SqlSchema + ".[spSetShipment]", new NameValuePairs
                         {
-                         
-                         
+
+
                         new NameValuePair("@ShipmentTypeId", shipment.ShipmentTypeId),
                         new NameValuePair("@ShipmentDate", shipment.ShipmentDate),
                         new NameValuePair("@ShipmentNumber", "DO-"),
@@ -205,7 +202,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                         DiscountPercentage = spmD.DiscountPercentage,
                         HSNSAC = spmD.HSNSAC,
                         Price = spmD.Price,
-                        ProductId = spmD.ProductId,                        
+                        ProductId = spmD.ProductId,
                         Quantity = spmD.Quantity,
                         SubTotal = spmD.SubTotal,
                         TaxAmount = spmD.TaxAmount,
@@ -243,7 +240,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     new NameValuePair("@VehicleNumber", shipmentDirect.VehicleNumber),
                     new NameValuePair("@HandOverPerson", shipmentDirect.HandOverPerson),
                     new NameValuePair("@HandOverPersonMobile", shipmentDirect.HandOverPersonMobile),
-                    
+
                     new NameValuePair("@ShipmentDetails", spmDetailTypes.ToDataTable()),
 
                     // Common
@@ -263,8 +260,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             NameValuePairs nvp = new NameValuePairs()
             {
-                 
-                 
+
+
                 new NameValuePair("@ShipmentId", ShipmentId),
                 new NameValuePair("@QueryType", "DETAIL")
             };

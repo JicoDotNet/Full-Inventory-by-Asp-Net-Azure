@@ -17,7 +17,7 @@ namespace JicoDotNet.Inventory.Core.Entities
 
         string VendorDONumber { get; set; }
         string VendorInvoiceNumber { get; set; }
-        DateTime? VendorInvoiceDate { get; set; }        
+        DateTime? VendorInvoiceDate { get; set; }
         string Remarks { get; set; }
     }
 }

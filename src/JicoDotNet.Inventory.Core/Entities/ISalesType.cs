@@ -3,7 +3,7 @@
     public interface ISalesType
     {
         long SalesTypeId { get; set; }
-         
+
         string SalesTypeName { get; set; }
         string Description { get; set; }
     }

@@ -1,15 +1,11 @@
 ﻿using DataAccess.Sql;
-using JicoDotNet.Inventory.BusinessLayer.Common;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+using JicoDotNet.Inventory.Core.Common;
+using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Inventory.Core.Entities;
-using JicoDotNet.Inventory.Core.Models;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
@@ -28,9 +24,9 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
             NameValuePairs nvp = new NameValuePairs
             {
-                 
+
                 new NameValuePair("@BranchId", branch.BranchId),
-                 
+
                 new NameValuePair("@BranchName", branch.BranchName),
                 new NameValuePair("@BranchCode", branch.BranchCode),
                 new NameValuePair("@Address", branch.Address),
@@ -54,7 +50,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             return new SqlDBAccess(CommonObj.SqlConnectionString)
                 .DataManipulation(GenericLogic.SqlSchema + ".[spSetBranch]", new NameValuePairs
                 {
-                    new NameValuePair("@BranchId", BranchId),                     
+                    new NameValuePair("@BranchId", BranchId),
                     new NameValuePair("@RequestId", CommonObj.RequestId),
                     new NameValuePair("@QueryType", "INACTIVE")
                 }, "@OutParam").ToString();
@@ -66,8 +62,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 .GetData(GenericLogic.SqlSchema + ".[spGetBranch]",
                 new NameValuePairs
                 {
-                     
-                     
+
+
                     new NameValuePair("@QueryType", "ALL")
                 }).ToList<Branch>();
             if (IsActive != null)

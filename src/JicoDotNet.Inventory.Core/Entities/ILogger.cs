@@ -16,6 +16,6 @@
         string Controller { get; set; }
         string Action { get; set; }
         string Id { get; set; }
-        string Id2 { get; set; }        
+        string Id2 { get; set; }
     }
 }

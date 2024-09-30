@@ -1,11 +1,11 @@
 ﻿using JicoDotNet.Inventory.BusinessLayer.BLL;
+using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+using JicoDotNet.Inventory.Core.Models;
 using JicoDotNet.Inventory.UI.Models;
 using System;
 using System.Linq;
 using System.Web.Mvc;
-using JicoDotNet.Inventory.BusinessLayer.Common;
-using JicoDotNet.Inventory.Core.Models;
 
 namespace JicoDotNet.Inventory.UIControllers
 {

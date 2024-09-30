@@ -1,12 +1,12 @@
-﻿using System;
-using JicoDotNet.Inventory.Core.Entities;
+﻿using JicoDotNet.Inventory.Core.Entities;
+using System;
 
 namespace JicoDotNet.Inventory.Core.Models
 {
     public class Product : IProduct
     {
         public long ProductId { get; set; }
-         
+
         public long ProductTypeId { get; set; }
         public short ProductInOut { get; set; }
         public string Brand { get; set; }

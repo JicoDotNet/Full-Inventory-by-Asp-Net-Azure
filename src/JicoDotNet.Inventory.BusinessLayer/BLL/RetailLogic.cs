@@ -1,14 +1,14 @@
 ﻿using DataAccess.Sql;
 using JicoDotNet.Inventory.BusinessLayer.Common;
-using System;
-using System.Collections.Generic;
-using System.Data;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Custom;
+using JicoDotNet.Inventory.Core.Custom.Interface;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Enumeration;
 using JicoDotNet.Inventory.Core.Models;
-using JicoDotNet.Inventory.Core.Custom.Interface;
+using System;
+using System.Collections.Generic;
+using System.Data;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
@@ -16,7 +16,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
     {
         public RetailLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
 
-        public long Set(RetailSales retailSales, ICompanyBasic currentCompany, 
+        public long Set(RetailSales retailSales, ICompanyBasic currentCompany,
             Dictionary<string, object> dynamicFormValue, out short ReturnType)
         {
             long SalesOrderId = 0;
@@ -66,8 +66,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     }
                 });
             }
-            catch(Exception ex) { throw ex; }
-            
+            catch (Exception ex) { throw ex; }
+
 
             if (orderDetailTypes.Count > 0)
             {
@@ -141,12 +141,12 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                             GSTNumber = salesOrder.GSTNumber,
                             IsFullInvoiced = true,
                             GSTStateCode = salesOrder.GSTStateCode,
-                            GSTType = salesOrder.IsGstAllowed ? 
-                                (short)GSTLogic.GetType(salesOrder.IsGSTRegistered ? 
-                                        salesOrder.GSTStateCode : 
-                                        salesOrder.StateCode, 
-                                    currentCompany.IsGSTRegistered ? 
-                                        currentCompany.GSTStateCode : 
+                            GSTType = salesOrder.IsGstAllowed ?
+                                (short)GSTLogic.GetType(salesOrder.IsGSTRegistered ?
+                                        salesOrder.GSTStateCode :
+                                        salesOrder.StateCode,
+                                    currentCompany.IsGSTRegistered ?
+                                        currentCompany.GSTStateCode :
                                         currentCompany.StateCode) :
                                 (short)EGSTType.None,
                             InvoiceDetails = new List<InvoiceDetail>()
@@ -180,7 +180,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     }
                     else
                     {
-                        ReturnType = 1; 
+                        ReturnType = 1;
                         return SalesOrderId;
                     }
                 }

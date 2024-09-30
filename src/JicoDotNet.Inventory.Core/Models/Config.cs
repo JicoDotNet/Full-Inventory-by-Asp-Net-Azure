@@ -1,13 +1,13 @@
-﻿using Microsoft.WindowsAzure.Storage.Table;
+﻿using JicoDotNet.Inventory.Core.Entities;
+using Microsoft.WindowsAzure.Storage.Table;
 using System;
-using JicoDotNet.Inventory.Core.Entities;
 
 namespace JicoDotNet.Inventory.Core.Models
 {
     public class Config : TableEntity, IConfig, IDefaultSettings, IDtoHeader
     {
         public bool HasPerishableProduct { get; set; }
-        public bool HasExpirationDate { get; set; }         
+        public bool HasExpirationDate { get; set; }
         public bool HasBatchNo { get; set; }
 
         #region Currently Not Using

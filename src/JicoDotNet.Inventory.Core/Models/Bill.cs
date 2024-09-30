@@ -1,6 +1,6 @@
-﻿using System;
+﻿using JicoDotNet.Inventory.Core.Entities;
+using System;
 using System.Collections.Generic;
-using JicoDotNet.Inventory.Core.Entities;
 
 namespace JicoDotNet.Inventory.Core.Models
 {
@@ -13,27 +13,27 @@ namespace JicoDotNet.Inventory.Core.Models
         public DateTime? BillDueDate { get; set; }
         public string BillNumber { get; set; }
         public bool IsFullBilled { get; set; }
-         
+
         public long VendorId { get; set; }
         public bool IsGstApplicable { get; set; }
         public string GSTNumber { get; set; }
         public string GSTStateCode { get; set; }
         public short GSTType { get; set; }
-         
+
         public decimal BilledAmount { get; set; }
         public decimal TaxAmount { get; set; }
         public decimal TotalAmount { get; set; }
-         
+
         public string VendorDONumber { get; set; }
         public string VendorInvoiceNumber { get; set; }
         public DateTime? VendorInvoiceDate { get; set; }
         public string Remarks { get; set; }
 
-         
+
         public DateTime TransactionDate { get; set; }
         public bool IsActive { get; set; }
-         
-         
+
+
         public string RequestId { get; set; }
 
         public long VendorTypeId { get; set; }

@@ -1,8 +1,6 @@
-﻿using System;
+﻿using JicoDotNet.Inventory.Core.Entities;
+using System;
 using System.Collections.Generic;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.Core.Entities;
-using JicoDotNet.Inventory.Core.Entities.Inner;
 
 namespace JicoDotNet.Inventory.Core.Models
 {
@@ -16,28 +14,28 @@ namespace JicoDotNet.Inventory.Core.Models
         public string InvoiceNumber { get; set; }
         public bool IsCustomizedInvoiceNumber { get; set; }
         public bool IsFullInvoiced { get; set; }
-         
+
         public long CustomerId { get; set; }
         public bool IsGstApplicable { get; set; }
         public string GSTNumber { get; set; }
         public string GSTStateCode { get; set; }
         public short GSTType { get; set; }
-         
+
         public decimal InvoicedAmount { get; set; }
         public decimal TaxAmount { get; set; }
         public decimal TotalAmount { get; set; }
-         
+
         public string VehicleNumber { get; set; }
         public string HandOverPerson { get; set; }
         public string HandOverPersonMobile { get; set; }
-         
+
         public string Remarks { get; set; }
 
-         
+
         public DateTime TransactionDate { get; set; }
         public bool IsActive { get; set; }
-         
-         
+
+
         public string RequestId { get; set; }
 
         public long CustomerTypeId { get; set; }

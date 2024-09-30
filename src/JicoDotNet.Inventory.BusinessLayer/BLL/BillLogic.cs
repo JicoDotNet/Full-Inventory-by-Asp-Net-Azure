@@ -1,9 +1,4 @@
 ﻿using DataAccess.Sql;
-using JicoDotNet.Inventory.BusinessLayer.Common;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 using DataAccess.Sql.Entity;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Custom;
@@ -11,6 +6,10 @@ using JicoDotNet.Inventory.Core.Custom.Interface;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Enumeration;
 using JicoDotNet.Inventory.Core.Models;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
@@ -26,11 +25,11 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
             INameValuePairs nvp = new NameValuePairs
             {
-                 
+
                 new NameValuePair("@BillTypeId", billType.BillTypeId),
                 new NameValuePair("@BillTypeName", billType.BillTypeName),
                 new NameValuePair("@Description", billType.Description),
-                 
+
                 new NameValuePair("@RequestId", CommonObj.RequestId),
                 new NameValuePair("@QueryType", queryType)
             };
@@ -47,8 +46,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             INameValuePairs nvp = new NameValuePairs
             {
                 new NameValuePair("@BillTypeId", billTypeId),
-                 
-                 
+
+
                 new NameValuePair("@RequestId", CommonObj.RequestId),
                 new NameValuePair("@QueryType", queryType)
             };
@@ -101,8 +100,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
                 INameValuePairs nvp = new NameValuePairs()
                 {
-                     
-                     
+
+
                     new NameValuePair("@BillId", billId),
                     new NameValuePair("@QueryType", "SINGLE")
                 };
@@ -132,7 +131,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             {
                 _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
                 INameValuePairs nvp = new NameValuePairs
-                {    
+                {
                     new NameValuePair("@PurchaseOrderId", purchaseOrderId),
                     new NameValuePair("@QueryType", "ENTRYSINGLE")
                 };
@@ -167,7 +166,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     new NameValuePair("@VendorId", vendorId),
                     new NameValuePair("@QueryType", "PAYMENT")
                 };
-                IList<Bill> bills = _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetBill]", nvp).ToList<Bill>();                
+                IList<Bill> bills = _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetBill]", nvp).ToList<Bill>();
                 return bills;
             }
             catch (Exception ex)
@@ -188,7 +187,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
                 bill.BillDetails.ForEach(billItem =>
                 {
-                    if(billItem.BilledQuantity > 0)
+                    if (billItem.BilledQuantity > 0)
                     {
                         IBillDetailsType billDetailsType = new BillDetailsType
                         {
@@ -242,8 +241,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
                     NameValuePairs nvp = new NameValuePairs()
                     {
-                         
-                         
+
+
                         new NameValuePair("@BillTypeId", bill.BillTypeId),
                         new NameValuePair("@BillDate", bill.BillDate),
                         new NameValuePair("@BillDueDate", bill.BillDueDate),
@@ -285,8 +284,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             NameValuePairs nvp = new NameValuePairs()
             {
-                 
-                 
+
+
                 new NameValuePair("@BillId", BillId),
                 new NameValuePair("@QueryType", "DETAIL")
             };

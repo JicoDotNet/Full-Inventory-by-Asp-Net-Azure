@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using JicoDotNet.Inventory.Core.Entities;
-using JicoDotNet.Inventory.Core.Models;
+﻿using JicoDotNet.Inventory.Core.Models;
 using JicoDotNet.Inventory.Core.Report;
+using System.Collections.Generic;
 
 namespace JicoDotNet.Inventory.UI.Report.Models
 {

@@ -1,13 +1,11 @@
 ﻿using JicoDotNet.Inventory.BusinessLayer.BLL;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+using JicoDotNet.Inventory.Core.Enumeration;
+using JicoDotNet.Inventory.Core.Models;
 using JicoDotNet.Inventory.UI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using JicoDotNet.Inventory.Core.Enumeration;
-using JicoDotNet.Inventory.Core.Models;
 
 namespace JicoDotNet.Inventory.UIControllers
 {
@@ -105,7 +103,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 if (!string.IsNullOrEmpty(UrlParameterId))
                 {
                     Enum.TryParse(UrlParameterId, true, out ECustomPropertyFor customPropertyFor);
-                    
+
                     CustomPropertyLogic propertyLogic = new CustomPropertyLogic(LogicHelper);
                     if (!string.IsNullOrEmpty(UrlParameterId2))
                         customProperty.RowKey = UrlParameterId2;
@@ -137,7 +135,7 @@ namespace JicoDotNet.Inventory.UIControllers
                             _isSuccess = true,
                             _returnObject = deactivated ? UrlParameterId : "0"
                         }, JsonRequestBehavior.AllowGet);
-                    }                        
+                    }
                 }
                 return Json(new JsonReturnModels
                 {

@@ -1,11 +1,11 @@
 ﻿using JicoDotNet.Inventory.BusinessLayer.Common;
-using System;
-using System.Net;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Common.Auth;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Enumeration;
 using JicoDotNet.Inventory.Core.Models;
+using System;
+using System.Net;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
@@ -23,7 +23,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             #region Checking
             try
             {
-                if (WebConfigAppSettingsAccess.UserEmail != loginCredentials.UserEmail 
+                if (WebConfigAppSettingsAccess.UserEmail != loginCredentials.UserEmail
                     || WebConfigAppSettingsAccess.Password != loginCredentials.Password)
                 {
                     accountAuthenticate.eLoginStatus = ELoginStatus.UserNameOrPasswordInvalid;
@@ -60,7 +60,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 {
                     UserEmail = WebConfigAppSettingsAccess.UserEmail,
                     UserFullName = WebConfigAppSettingsAccess.UserFullName
-                };                
+                };
 
                 // Login Success Code
                 #region Token Genarate

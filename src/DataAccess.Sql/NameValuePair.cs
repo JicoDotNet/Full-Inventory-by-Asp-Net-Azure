@@ -1,8 +1,7 @@
 using DataAccess.Sql.Entity;
-using System.Collections.Generic;
 
 namespace DataAccess.Sql
-{    
+{
     public class NameValuePair : INameValuePair
     {
         public NameValuePair(string iParmName, object iObjectValue)

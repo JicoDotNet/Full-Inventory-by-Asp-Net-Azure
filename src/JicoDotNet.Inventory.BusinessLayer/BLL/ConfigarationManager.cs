@@ -1,9 +1,9 @@
 ﻿using DataAccess.AzureStorage;
-using System;
-using System.Linq;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
+using System;
+using System.Linq;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
@@ -37,7 +37,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     IsActive = true
                 };
             }
-            if(config.MaxDetailsCount == 0)
+            if (config.MaxDetailsCount == 0)
                 config.MaxDetailsCount = 10;
 
             return config;

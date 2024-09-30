@@ -1,7 +1,7 @@
-﻿using System;
-using JicoDotNet.Inventory.Core.Entities;
+﻿using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Entities.Inner;
 using Microsoft.WindowsAzure.Storage.Table;
+using System;
 
 namespace JicoDotNet.Inventory.Core.Models
 {
@@ -21,7 +21,7 @@ namespace JicoDotNet.Inventory.Core.Models
         public string Controller { get; set; }
         public string Action { get; set; }
         public string Id { get; set; }
-        public string Id2 { get; set; }        
+        public string Id2 { get; set; }
 
         public string RequestId { get; set; }
         public DateTime TransactionDate { get; set; }

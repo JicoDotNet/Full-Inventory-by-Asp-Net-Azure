@@ -1,7 +1,6 @@
 ﻿namespace System.Web.Mvc
 {
     using System.Text;
-    using System.Web.Configuration;
 
     public static class MvcExtension
     {

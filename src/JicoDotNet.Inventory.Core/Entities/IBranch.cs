@@ -1,5 +1,6 @@
 ﻿namespace JicoDotNet.Inventory.Core.Entities
-{    public interface IBranch
+{
+    public interface IBranch
     {
         long BranchId { get; set; }
         string BranchName { get; set; }

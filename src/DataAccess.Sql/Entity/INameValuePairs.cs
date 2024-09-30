@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace DataAccess.Sql.Entity
 {
-    public interface INameValuePairs : IList<INameValuePair> {}
+    public interface INameValuePairs : IList<INameValuePair> { }
 }
