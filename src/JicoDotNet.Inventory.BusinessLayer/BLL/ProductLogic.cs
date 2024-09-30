@@ -85,7 +85,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@HSNSAC", product.HSNSAC),
                 new NameValuePair("@TaxPercentage", product.TaxPercentage),
 
-                new NameValuePair("@Description", product.Description?.Trim()),
+                new NameValuePair("@Description", ((Product)product).Description?.Trim()),
                 new NameValuePair("@IsPerishableProduct", product.IsPerishableProduct),
                 new NameValuePair("@HasExpirationDate", product.HasExpirationDate),
                 new NameValuePair("@HasBatchNo", product.HasBatchNo),

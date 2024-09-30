@@ -29,7 +29,7 @@ namespace JicoDotNet.Inventory.UI.Controllers
 
         [AllowAnonymous]
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Login(string returnUrl, FormCollection formCollection)
+        public ActionResult Login(FormCollection formCollection)
         {
             try
             {
@@ -52,7 +52,7 @@ namespace JicoDotNet.Inventory.UI.Controllers
                     #endregion
 
                     #region Login Track
-                    _ = AuditLogLogic.LoginLog(LogicHelper);
+                    AuditLogLogic.LoginLog(LogicHelper);
                     #endregion
 
                     #region Set Session Cookie & redirect if Login Success

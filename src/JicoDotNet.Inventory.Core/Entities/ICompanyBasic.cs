@@ -6,8 +6,5 @@ namespace JicoDotNet.Inventory.Core.Entities
     {
         string CompanyName { get; set; }
         string StateCode { get; set; }
-        bool IsGSTRegistered { get; set; }
-        string GSTStateCode { get; set; }
-        string GSTNumber { get; set; }
     }
 }

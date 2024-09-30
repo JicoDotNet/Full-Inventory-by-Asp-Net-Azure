@@ -7,9 +7,7 @@ using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
 using JicoDotNet.Inventory.Logging;
 using JicoDotNet.Inventory.UI.Models;
-#pragma warning disable CS4014
 
-// ReSharper disable once CheckNamespace
 namespace System.Web.Mvc
 {
     public abstract class BaseController : Controller
@@ -290,9 +288,7 @@ namespace System.Web.Mvc
         }
 
         #region Cookie Details
-        // ReSharper disable once InvalidXmlDocComment
-        /**
-         * Cookie Variable Documentation
+        /** Cookie Variable Documentation
          * |----------------------|-------------------------|
          * |         Name         |         Purpose         |
          * |----------------------|-------------------------|

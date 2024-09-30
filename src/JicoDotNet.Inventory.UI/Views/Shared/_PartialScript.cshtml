@@ -100,8 +100,8 @@
     @using (Html.BeginForm("Download", "PDF", FormMethod.Post,
         new { autocomplete = "off", @class = "d-none", id = "formPrint" }))
     {
-        <input type="hidden" name="htmlBody" />
-        <input type="hidden" name="fileName" />
+        <input type="hidden" name="HtmlBody" />
+        <input type="hidden" name="FileName" />
     }
 </div>
 
@@ -445,8 +445,8 @@
     // PDF Function ---------------------------
     $('pdf').click(function () {
         // Select.Pdf Download API
-        $('[data-div="print"] #formPrint [name="htmlBody"]').val($('[data-print="true"]').html());
-        $('[data-div="print"] #formPrint [name="fileName"]').val(document.title);
+        $('[data-div="print"] #formPrint [name="HtmlBody"]').val($('[data-print="true"]').html());
+        $('[data-div="print"] #formPrint [name="FileName"]').val(document.title);
         $('[data-div="print"] #formPrint').submit();
         setTimeout(loading, 6000);
     });

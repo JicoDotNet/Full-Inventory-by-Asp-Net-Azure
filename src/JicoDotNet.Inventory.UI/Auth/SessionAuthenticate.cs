@@ -1,13 +1,10 @@
-﻿using Newtonsoft.Json;
-using JicoDotNet.Inventory.BusinessLayer.BLL;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+﻿using JicoDotNet.Inventory.BusinessLayer.BLL;
 using System.Web.Routing;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Common.Auth;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
 
-// ReSharper disable once CheckNamespace
 namespace System.Web.Mvc
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = false)]
