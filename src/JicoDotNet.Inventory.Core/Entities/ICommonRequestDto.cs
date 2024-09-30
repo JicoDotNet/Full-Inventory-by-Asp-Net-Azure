@@ -5,7 +5,7 @@ namespace JicoDotNet.Inventory.Core.Entities
     public interface ICommonRequestDto : IHRequest
     {
         string Token { get; set; }
-        object SqlConnectionString { get; set; }
+        string SqlConnectionString { get; set; }
         object NoSqlConnectionString { get; set; }
     }
 }
