@@ -145,6 +145,7 @@
     <Compile Include="Areas\Report\Models\TaxReportModels.cs" />
     <Compile Include="Areas\Report\ReportAreaRegistration.cs" />
     <Compile Include="Auth\BaseController.cs" />
+    <Compile Include="Auth\CookieHandelExtention.cs" />
     <Compile Include="Auth\SessionAuthenticate.cs" />
     <Compile Include="Common\WebConfigDbConnection.cs" />
     <Compile Include="Common\MvcExtension.cs" />

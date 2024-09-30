@@ -16,16 +16,6 @@ namespace JicoDotNet.Inventory.UI.Controllers
             return PartialView("_PartialNavbarCompany", sessionCredentialCompanyModels);
         }
 
-        public PartialViewResult NavBarSession()
-        {
-            SessionValidate();
-            SessionCredentialCompanyModels sessionCredentialCompanyModels = new SessionCredentialCompanyModels()
-            {
-                _sessionCredential = SessionPerson == null ? new SessionCredential() : SessionPerson
-            };
-            return PartialView("_PartialNavbarSession", sessionCredentialCompanyModels);
-        }
-
         public PartialViewResult AsideMain()
         {
             try
