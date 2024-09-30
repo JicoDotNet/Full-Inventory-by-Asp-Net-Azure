@@ -1,12 +1,12 @@
-﻿using System.IO;
-using System.Text;
-using Newtonsoft.Json;
-using JicoDotNet.Inventory.Core.Common;
+﻿using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Common.Auth;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
 using JicoDotNet.Inventory.Logging;
 using JicoDotNet.Inventory.UI.Models;
+using Newtonsoft.Json;
+using System.IO;
+using System.Text;
 
 namespace System.Web.Mvc
 {
@@ -24,7 +24,7 @@ namespace System.Web.Mvc
         protected IReturnObject ReturnMessage { get; set; }
         protected IInvalidModel InvalidModelObject { get; set; }
         protected ICommonRequestDto LogicHelper { get; }
-       
+
 
 
         private ActionExecutingContext _filteringContext;
@@ -71,7 +71,7 @@ namespace System.Web.Mvc
                 #region Set Token Global value into CommonDto
                 LogicHelper.Token = SessionPerson?.Token;
                 #endregion
-                
+
                 #region TempData Manage
                 ReturnMessage = (ReturnObject)TempData["ReturnMessage"];
                 InvalidModelObject = (InvalidModel)TempData["InvalidModel"];
@@ -269,7 +269,7 @@ namespace System.Web.Mvc
                 message += "===========================================================\n";
                 message += Environment.NewLine;
 
-                string path = Server.MapPath("~/ErrorLog");                
+                string path = Server.MapPath("~/ErrorLog");
                 if (!Directory.Exists(path))
                 {
                     Directory.CreateDirectory(path);

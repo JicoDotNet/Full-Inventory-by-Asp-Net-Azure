@@ -1,13 +1,9 @@
 ﻿using JicoDotNet.Inventory.BusinessLayer.BLL;
 using JicoDotNet.Inventory.BusinessLayer.Common;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+using JicoDotNet.Inventory.Core.Models;
 using JicoDotNet.Inventory.UI.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using JicoDotNet.Inventory.Core.Models;
 
 namespace JicoDotNet.Inventory.UIControllers
 {
@@ -25,20 +21,20 @@ namespace JicoDotNet.Inventory.UIControllers
                     _YesNo = GenericLogic.YesNo(),
                     _config = configarationManager.GetConfig(),
                     _company = new Company()
-                        {
-                            CompanyName = SessionCompany.CompanyName,
-                            GSTNumber = SessionCompany.GSTNumber,
-                            GSTStateCode = SessionCompany.GSTStateCode,
-                            IsGSTRegistered = SessionCompany.IsGSTRegistered,
-                            StateCode = SessionCompany.StateCode,
+                    {
+                        CompanyName = SessionCompany.CompanyName,
+                        GSTNumber = SessionCompany.GSTNumber,
+                        GSTStateCode = SessionCompany.GSTStateCode,
+                        IsGSTRegistered = SessionCompany.IsGSTRegistered,
+                        StateCode = SessionCompany.StateCode,
 
-                            Address = WebConfigAppSettingsAccess.CompanyAddress,
-                            City = WebConfigAppSettingsAccess.CompanyCity,
-                            Email = WebConfigAppSettingsAccess.CompanyEmail,
-                            PINCode = WebConfigAppSettingsAccess.CompanyPINCode,
-                            Mobile = WebConfigAppSettingsAccess.CompanyMobile,
-                            WebsiteUrl = WebConfigAppSettingsAccess.CompanyWebsite,
-                        }
+                        Address = WebConfigAppSettingsAccess.CompanyAddress,
+                        City = WebConfigAppSettingsAccess.CompanyCity,
+                        Email = WebConfigAppSettingsAccess.CompanyEmail,
+                        PINCode = WebConfigAppSettingsAccess.CompanyPINCode,
+                        Mobile = WebConfigAppSettingsAccess.CompanyMobile,
+                        WebsiteUrl = WebConfigAppSettingsAccess.CompanyWebsite,
+                    }
                 };
                 return View(configModels);
             }
@@ -57,7 +53,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 DataTrackingLogicSet(config);
                 #endregion
 
-                ConfigarationManager configarationManager = new ConfigarationManager(LogicHelper);                
+                ConfigarationManager configarationManager = new ConfigarationManager(LogicHelper);
                 configarationManager.SetConfig(config);
                 ReturnMessage = new ReturnObject()
                 {

@@ -1,14 +1,14 @@
 ﻿using DataAccess.Sql;
 using JicoDotNet.Inventory.BusinessLayer.Common;
+using JicoDotNet.Inventory.Core.Common;
+using JicoDotNet.Inventory.Core.Custom;
+using JicoDotNet.Inventory.Core.Custom.Interface;
+using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Inventory.Core.Custom;
-using JicoDotNet.Inventory.Core.Entities;
-using JicoDotNet.Inventory.Core.Models;
-using JicoDotNet.Inventory.Core.Custom.Interface;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
@@ -28,8 +28,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
             NameValuePairs nvp = new NameValuePairs
             {
-                 
-                 
+
+
                 new NameValuePair("@SalesTypeId", salesType.SalesTypeId),
                 new NameValuePair("@SalesTypeName", salesType.SalesTypeName),
                 new NameValuePair("@Description", salesType.Description),
@@ -47,8 +47,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 .DataManipulation(GenericLogic.SqlSchema + ".[spSetSalesType]", new NameValuePairs
                 {
                     new NameValuePair("@SalesTypeId", SalesTypeId),
-                     
-                     
+
+
                     new NameValuePair("@RequestId", CommonObj.RequestId),
                     new NameValuePair("@QueryType", "INACTIVE")
                 }, "@OutParam").ToString();
@@ -59,8 +59,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             List<SalesType> salesTypes = new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetSalesType]",
                 new NameValuePairs
                 {
-                     
-                     
+
+
                     new NameValuePair("@QueryType", "ALL")
                 }).ToList<SalesType>();
             if (IsActive != null)
@@ -71,7 +71,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     return salesTypes.Where(a => !a.IsActive).ToList();
             }
             return salesTypes;
-        } 
+        }
         #endregion
 
         public Dictionary<string, object> GetForEntry()
@@ -79,8 +79,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             NameValuePairs nvp = new NameValuePairs
             {
-                 
-                 
+
+
                     new NameValuePair("@QueryType", "ENTRY")
             };
             DataSet dataSet = _sqlDBAccess.GetDataSet(GenericLogic.SqlSchema + ".[spGetSalesOrder]", nvp);
@@ -168,8 +168,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 NameValuePairs nvp = new NameValuePairs
                 {
                     new NameValuePair("@SalesOrderId", SalesOrderId),
-                     
-                     
+
+
                     new NameValuePair("@RequestId", CommonObj.RequestId),
                     new NameValuePair("@QueryType", "DELETE")
                 };
@@ -187,32 +187,32 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             NameValuePairs nvp = new NameValuePairs
             {
-                 
-                 
+
+
                     new NameValuePair("@QueryType", "SHIPENTRY")
             };
             return _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetSalesOrder]", nvp).ToList<SalesOrder>();
         }
-        
+
         public List<SalesOrder> GetSOs()
         {
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             NameValuePairs nvp = new NameValuePairs()
                 {
-                     
-                     
+
+
                     new NameValuePair("@QueryType", "LIST")
                 };
             return _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetSalesOrder]", nvp).ToList<SalesOrder>();
         }
 
         public SalesOrder GetForDetail(long SalesOrderId)
-        {            
+        {
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             NameValuePairs nvp = new NameValuePairs()
             {
-                 
-                 
+
+
                 new NameValuePair("@SalesOrderId", SalesOrderId),
                 new NameValuePair("@QueryType", "DETAIL")
             };

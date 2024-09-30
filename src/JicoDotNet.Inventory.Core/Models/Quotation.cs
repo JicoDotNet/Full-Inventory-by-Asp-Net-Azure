@@ -1,24 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.Core.Entities;
+﻿using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Entities.Inner;
+using System;
+using System.Collections.Generic;
 
 namespace JicoDotNet.Inventory.Core.Models
 {
     public class Quotation : IQuotation, ICustomer, IActivity, IStatus, IHRequest
     {
         public long QuotationId { get; set; }
-         
+
         public long CustomerId { get; set; }
         public bool IsGstAllowed { get; set; }
         public DateTime QuotationDate { get; set; }
         public string QuotationNumber { get; set; }
-         
+
         public decimal QuotationAmount { get; set; }
         public decimal QuotationTaxAmount { get; set; }
         public decimal QuotationTotalAmount { get; set; }
-         
+
         public string TandC { get; set; }
         public string Remarks { get; set; }
 
@@ -37,11 +36,11 @@ namespace JicoDotNet.Inventory.Core.Models
         public string ContactPerson { get; set; }
         public string Email { get; set; }
 
-         
+
         public DateTime TransactionDate { get; set; }
         public bool IsActive { get; set; }
-         
-         
+
+
         public string RequestId { get; set; }
 
         public List<QuotationDetail> QuotationDetails { get; set; }

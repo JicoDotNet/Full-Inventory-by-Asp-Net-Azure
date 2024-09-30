@@ -398,10 +398,6 @@
       <Project>{6c964b6a-45a0-4402-abfe-8e4aff85800b}</Project>
       <Name>DataAccess.Sql</Name>
     </ProjectReference>
-    <ProjectReference Include="..\JicoDotNet.Authentication\JicoDotNet.Authentication.csproj">
-      <Project>{0266a8db-72f2-43e8-a5e9-40c76f1703c6}</Project>
-      <Name>JicoDotNet.Authentication</Name>
-    </ProjectReference>
     <ProjectReference Include="..\JicoDotNet.Inventory.BusinessLayer\JicoDotNet.Inventory.BusinessLayer.csproj">
       <Project>{922d9388-95ea-428e-a175-08bbb655d626}</Project>
       <Name>JicoDotNet.Inventory.BusinessLayer</Name>

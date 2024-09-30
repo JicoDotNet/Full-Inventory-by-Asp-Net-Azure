@@ -2,7 +2,7 @@
 
 namespace JicoDotNet.Inventory.Core.Entities
 {
-    public interface IDtoHeader: IActivity, IHRequest, IStatus
+    public interface IDtoHeader : IActivity, IHRequest, IStatus
     {
     }
 }

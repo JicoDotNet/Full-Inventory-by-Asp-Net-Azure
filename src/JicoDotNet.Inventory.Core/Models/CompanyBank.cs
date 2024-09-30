@@ -1,5 +1,5 @@
-﻿using System;
-using JicoDotNet.Inventory.Core.Entities;
+﻿using JicoDotNet.Inventory.Core.Entities;
+using System;
 
 namespace JicoDotNet.Inventory.BusinessLayer.DTO.Class
 {
@@ -8,7 +8,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.DTO.Class
         public long CompanyBankId { get; set; }
 
         public string AccountName { get; set; }
-        public string BankName { get; set; }        
+        public string BankName { get; set; }
         public string AccountNumber { get; set; }
         public string IFSC { get; set; }
         public string MICR { get; set; }
@@ -19,8 +19,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.DTO.Class
 
         public DateTime TransactionDate { get; set; }
         public bool IsActive { get; set; }
-         
-         
+
+
         public string RequestId { get; set; }
     }
 }

@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using JicoDotNet.Inventory.Core.Entities;
-using JicoDotNet.Inventory.Core.Models;
+﻿using JicoDotNet.Inventory.Core.Models;
 using JicoDotNet.Inventory.Core.Report;
+using System.Collections.Generic;
 
 namespace JicoDotNet.Inventory.UI.Report.Models
 {
@@ -13,6 +12,6 @@ namespace JicoDotNet.Inventory.UI.Report.Models
 
         public IList<Product> _products { get; set; }
         public IList<ProductType> _productTypes { get; set; }
-        public IList<ResponseProductPurchaseResult> _rProductPurchase{ get; set; }
+        public IList<ResponseProductPurchaseResult> _rProductPurchase { get; set; }
     }
 }

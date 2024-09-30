@@ -1,6 +1,4 @@
-﻿using JicoDotNet.Inventory.Core.Entities;
-
-namespace JicoDotNet.Inventory.Core.Models
+﻿namespace JicoDotNet.Inventory.Core.Models
 {
     public class ProductFiltered : Product
     {

@@ -7,7 +7,7 @@ namespace System.Web.Mvc
     {
         public static void SetCookie<T>(this HttpContextBase context, string key, T value)
         {
-            if(value != null)
+            if (value != null)
             {
                 HttpCookie cookie = new HttpCookie(key,
                 Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(value))))

@@ -1,8 +1,4 @@
 ﻿using JicoDotNet.Inventory.UI.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace JicoDotNet.Inventory.UIControllers
@@ -20,7 +16,7 @@ namespace JicoDotNet.Inventory.UIControllers
             {
                 errorModels = new ErrorModels
                 {
-                    ErrorStatus = string.IsNullOrEmpty(id)? 404 : 500,
+                    ErrorStatus = string.IsNullOrEmpty(id) ? 404 : 500,
                     ErrorCode = string.IsNullOrEmpty(id) ? Session.SessionID : id,
                     RequestId = id,
                     Message = string.IsNullOrEmpty(id) ? "Page Not Found!" : "internal server error!"

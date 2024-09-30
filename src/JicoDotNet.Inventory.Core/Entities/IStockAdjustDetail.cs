@@ -19,8 +19,8 @@ namespace JicoDotNet.Inventory.Core.Entities
         string BatchNo { get; set; }
         DateTime? GRNDate { get; set; }
 
-        long StockDetailId { get; set; }       
-        
+        long StockDetailId { get; set; }
+
         string Description { get; set; }
     }
 }

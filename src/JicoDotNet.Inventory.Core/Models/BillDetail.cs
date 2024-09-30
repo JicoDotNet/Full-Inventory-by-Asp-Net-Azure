@@ -1,12 +1,12 @@
-﻿using System;
-using JicoDotNet.Inventory.Core.Entities;
+﻿using JicoDotNet.Inventory.Core.Entities;
+using System;
 
 namespace JicoDotNet.Inventory.Core.Models
 {
     public class BillDetail : IBillDetail, IDtoHeader
     {
         public long BillDetailId { get; set; }
-        
+
         public long BillId { get; set; }
         public string BillNumber { get; set; }
         public long PurchaseOrderDetailId { get; set; }
@@ -23,7 +23,7 @@ namespace JicoDotNet.Inventory.Core.Models
         public decimal Total { get; set; }
 
         public string Description { get; set; }
-         
+
         public bool IsActive { get; set; }
         public DateTime TransactionDate { get; set; }
         public string RequestId { get; set; }

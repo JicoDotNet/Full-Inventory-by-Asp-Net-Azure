@@ -1,6 +1,4 @@
-﻿using System;
-using System.Web.Mvc;
-using JicoDotNet.Inventory.BusinessLayer.BLL;
+﻿using JicoDotNet.Inventory.BusinessLayer.BLL;
 using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.Core.Common.Auth;
 using JicoDotNet.Inventory.Core.Entities;
@@ -8,6 +6,8 @@ using JicoDotNet.Inventory.Core.Enumeration;
 using JicoDotNet.Inventory.Core.Models;
 using JicoDotNet.Inventory.Logging;
 using JicoDotNet.Inventory.UI.Models;
+using System;
+using System.Web.Mvc;
 
 namespace JicoDotNet.Inventory.UI.Controllers
 {
@@ -40,7 +40,7 @@ namespace JicoDotNet.Inventory.UI.Controllers
                 };
                 IAccountAuthentication accountAuthenticate = new LoginManagement(LogicHelper)
                                         .Authenticate(loginCredentials, GetRequestedIp());
-               
+
                 if (accountAuthenticate.credential != null)
                 {
                     #region Set Token Data & Duplicate finding
@@ -77,7 +77,7 @@ namespace JicoDotNet.Inventory.UI.Controllers
                         // Success Redirection
                         TempData["Url"] = Url.Action("Index", "Home");
                         return RedirectToAction("Auth", "Account");
-                    }                    
+                    }
                     #endregion
                 }
 

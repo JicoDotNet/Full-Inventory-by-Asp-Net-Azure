@@ -1,10 +1,5 @@
-﻿using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+﻿using JicoDotNet.Inventory.Core.Enumeration;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using JicoDotNet.Inventory.Core.Enumeration;
 
 namespace JicoDotNet.Inventory.BusinessLayer.Common
 {
@@ -42,7 +37,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.Common
             {
                 int GstF = Convert.ToInt32(GstPayerStateCode);
                 int GstT = Convert.ToInt32(GstReceiverStateCode);
-                
+
                 if (GstF == GstT)
                 {
                     eGSTType = EGSTType.CGSTSGST;

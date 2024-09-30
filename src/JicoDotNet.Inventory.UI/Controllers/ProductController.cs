@@ -1,13 +1,11 @@
 ﻿using JicoDotNet.Inventory.BusinessLayer.BLL;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Inventory.Core.Models;
 using JicoDotNet.Inventory.UI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using JicoDotNet.Inventory.Core.Entities;
-using JicoDotNet.Inventory.Core.Models;
 
 namespace JicoDotNet.Inventory.UIControllers
 {
@@ -15,7 +13,7 @@ namespace JicoDotNet.Inventory.UIControllers
     {
         [SessionAuthenticate]
         public ActionResult Index()
-        {            
+        {
             return View();
         }
 
@@ -549,7 +547,7 @@ namespace JicoDotNet.Inventory.UIControllers
             catch (Exception ex)
             {
                 return ErrorLoggingToJson(ex);
-            } 
+            }
         }
         [HttpGet]
         public JsonResult Out()
@@ -563,9 +561,9 @@ namespace JicoDotNet.Inventory.UIControllers
                         label = p.ProductName +
                             (string.IsNullOrEmpty(p.ProductCode) ? "" : " (" + p.ProductCode + ")" +
                             (string.IsNullOrEmpty(p.Brand) ? "" : " of " + p.Brand)),
-                        value = p.ProductName + 
+                        value = p.ProductName +
                             (string.IsNullOrEmpty(p.ProductCode) ? "" : " (" + p.ProductCode + ")" +
-                            (string.IsNullOrEmpty(p.Brand)? "":" of " + p.Brand)),
+                            (string.IsNullOrEmpty(p.Brand) ? "" : " of " + p.Brand)),
                         ProductId = p.ProductId,
                         HSNSAC = p.HSNSAC,
                         Description = p.Description,

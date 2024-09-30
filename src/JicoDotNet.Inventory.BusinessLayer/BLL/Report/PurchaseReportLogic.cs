@@ -1,15 +1,12 @@
 ﻿using DataAccess.Sql;
-using JicoDotNet.Inventory.BusinessLayer.Common;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Report;
 using JicoDotNet.Inventory.Core.Report.Interface;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
 {
@@ -24,8 +21,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
                 _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
                 NameValuePairs nvp = new NameValuePairs
                 {
-                     
-                     
+
+
                     new NameValuePair("@VendorTypeId", vendorPurchase.VendorTypeId),
                     new NameValuePair("@VendorId", vendorPurchase.VendorId),
                     new NameValuePair("@StartDate", vendorPurchase.SearchDate.StartDate),
@@ -47,8 +44,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
                 _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
                 NameValuePairs nvp = new NameValuePairs
                 {
-                     
-                     
+
+
                     new NameValuePair("@ProductTypeId", productPurchase.ProductTypeId),
                     new NameValuePair("@ProductId", productPurchase.ProductId),
                     new NameValuePair("@StartDate", productPurchase.SearchDate.StartDate),

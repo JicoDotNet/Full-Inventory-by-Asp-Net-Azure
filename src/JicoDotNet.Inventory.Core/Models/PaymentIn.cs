@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.Core.Entities;
+﻿using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Entities.Inner;
+using System;
+using System.Collections.Generic;
 
 namespace JicoDotNet.Inventory.Core.Models
 {
@@ -11,18 +10,18 @@ namespace JicoDotNet.Inventory.Core.Models
         public long PaymentInId { get; set; }
         public long CustomerId { get; set; }
         public long CompanyBankId { get; set; }
-         
+
         public bool IsTDSApplicable { get; set; }
         public decimal? TDSPercentage { get; set; }
         public decimal? TDSAmount { get; set; }
         public decimal ReceiveAmount { get; set; }
-         
+
         public decimal TotalAmount { get; set; }
         public DateTime PaymentDate { get; set; }
         public short PaymentMode { get; set; }
         public string ReferenceNo { get; set; }
         public string Remarks { get; set; }
-         
+
         public string ChequeNo { get; set; }
         public DateTime? ChequeDate { get; set; }
         public string ChequeIFSC { get; set; }
@@ -42,11 +41,11 @@ namespace JicoDotNet.Inventory.Core.Models
         public string Email { get; set; }
         public string Mobile { get; set; }
 
-         
+
         public DateTime TransactionDate { get; set; }
         public bool IsActive { get; set; }
-         
-         
+
+
         public string RequestId { get; set; }
 
         public List<PaymentInDetail> PaymentInDetails { get; set; }

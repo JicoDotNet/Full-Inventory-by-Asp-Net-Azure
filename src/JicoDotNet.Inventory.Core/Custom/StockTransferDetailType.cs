@@ -12,7 +12,7 @@ namespace JicoDotNet.Inventory.Core.Custom
         public string Description { get; set; }
 
         public long StockDetailId { get; set; }
-        public bool IsPerishable{ get; set; }
+        public bool IsPerishable { get; set; }
         public string BatchNo { get; set; }
         public DateTime? ExpiryDate { get; set; }
     }

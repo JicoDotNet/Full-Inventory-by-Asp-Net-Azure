@@ -9,7 +9,7 @@ namespace JicoDotNet.Inventory.Core.Custom
         public long WareHouseId { get; set; }
         public long ProductId { get; set; }
         public decimal Quantity { get; set; }
-        public DateTime? GRNDate { get; set; }        
+        public DateTime? GRNDate { get; set; }
         public bool IsPerishable { get; set; }
         public string BatchNo { get; set; }
         public DateTime? ExpiryDate { get; set; }

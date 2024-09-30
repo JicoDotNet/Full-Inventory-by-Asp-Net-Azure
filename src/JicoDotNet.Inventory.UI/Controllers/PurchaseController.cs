@@ -1,18 +1,13 @@
-﻿using Newtonsoft.Json;
-using JicoDotNet.Inventory.BusinessLayer.BLL;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+﻿using JicoDotNet.Inventory.BusinessLayer.BLL;
+using JicoDotNet.Inventory.BusinessLayer.Common;
+using JicoDotNet.Inventory.Core.Enumeration;
+using JicoDotNet.Inventory.Core.Models;
 using JicoDotNet.Inventory.UI.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
-using JicoDotNet.Inventory.BusinessLayer.Common;
-using JicoDotNet.Inventory.Core.Entities;
-using JicoDotNet.Inventory.Core.Enumeration;
-using JicoDotNet.Inventory.Core.Models;
 
 namespace JicoDotNet.Inventory.UIControllers
 {
@@ -370,7 +365,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 }
                 return RedirectToAction("Index");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return ErrorLoggingToView(ex);
             }
@@ -405,7 +400,7 @@ namespace JicoDotNet.Inventory.UIControllers
                         Message = "Something went wrong!!"
                     };
                 }
-                return RedirectToAction("OrderDetail", "Purchase", new { id = UrlIdEncrypt(UrlParameterId, false), id2 = string.Empty });                
+                return RedirectToAction("OrderDetail", "Purchase", new { id = UrlIdEncrypt(UrlParameterId, false), id2 = string.Empty });
             }
             catch (Exception ex)
             {

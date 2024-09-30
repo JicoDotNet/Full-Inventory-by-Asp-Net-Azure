@@ -1,8 +1,8 @@
 ﻿namespace System.Data
 {
-    using Reflection;
     using Collections.Generic;
     using Linq;
+    using Reflection;
     public static class DataExtension
     {
         public static DataTable ToDataTable<T>(this IList<T> items)

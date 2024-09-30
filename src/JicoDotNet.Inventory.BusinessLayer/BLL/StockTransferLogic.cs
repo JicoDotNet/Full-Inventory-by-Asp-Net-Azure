@@ -1,13 +1,12 @@
 ﻿using DataAccess.Sql;
-using JicoDotNet.Inventory.BusinessLayer.Common;
-using System.Collections.Generic;
-using System.Data;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Custom;
+using JicoDotNet.Inventory.Core.Custom.Interface;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
-using JicoDotNet.Inventory.Core.Custom.Interface;
 using System;
+using System.Collections.Generic;
+using System.Data;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
@@ -35,18 +34,18 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                             StockDetailId = std.StockDetailId,
                             IsPerishable = std.IsPerishable,
                             ExpiryDate = std.ExpiryDate?.AddDays(1).AddSeconds(-1),
-                            BatchNo = std.BatchNo?.Trim()                           
+                            BatchNo = std.BatchNo?.Trim()
                         });
                     }
                 });
-            }            
+            }
             if (stDetailTypes.Count > 0)
             {
                 return new SqlDBAccess(CommonObj.SqlConnectionString)
                     .DataManipulation(GenericLogic.SqlSchema + ".[spSetStockTransfer]", new NameValuePairs
                     {
-                         
-                         
+
+
                         new NameValuePair("@FromWareHouseId", stockTransfer.FromWareHouseId),
                         new NameValuePair("@ToWareHouseId", stockTransfer.ToWareHouseId),
                         new NameValuePair("@StockTransferNumber", "SKT-"),

@@ -1,10 +1,9 @@
 ﻿using JicoDotNet.Inventory.BusinessLayer.BLL;
 using JicoDotNet.Inventory.BusinessLayer.BLL.Report;
+using JicoDotNet.Inventory.Core.Report;
 using JicoDotNet.Inventory.UI.Report.Models;
 using System;
 using System.Web.Mvc;
-using JicoDotNet.Inventory.Core.Report;
-using JicoDotNet.Inventory.Core.Report.Interface;
 
 namespace JicoDotNet.Inventory.UI.Areas.Report.Controllers
 {
@@ -23,7 +22,7 @@ namespace JicoDotNet.Inventory.UI.Areas.Report.Controllers
                 };
                 return View(salesReportModels);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return ErrorLoggingToView(ex);
             }

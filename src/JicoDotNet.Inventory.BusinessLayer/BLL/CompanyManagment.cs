@@ -1,16 +1,11 @@
-﻿using DataAccess.AzureStorage;
-using DataAccess.Sql;
-using JicoDotNet.Inventory.BusinessLayer.Common;
+﻿using DataAccess.Sql;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+using JicoDotNet.Inventory.Core.Common;
+using JicoDotNet.Inventory.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Inventory.Core.Entities;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
@@ -46,7 +41,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             return ReturnDS;
         }
         public string BankDeactive(long CompanyBankId)
-        { 
+        {
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             string qt = "INACTIVE";
 

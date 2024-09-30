@@ -1,16 +1,11 @@
-﻿using Newtonsoft.Json;
-using JicoDotNet.Inventory.BusinessLayer.BLL;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.UI.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web;
-using System.Web.Mvc;
+﻿using JicoDotNet.Inventory.BusinessLayer.BLL;
 using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.Core.Enumeration;
 using JicoDotNet.Inventory.Core.Models;
+using JicoDotNet.Inventory.UI.Models;
+using System;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace JicoDotNet.Inventory.UIControllers
 {
@@ -72,12 +67,12 @@ namespace JicoDotNet.Inventory.UIControllers
                 retailSales.HandOverPerson = retailSales.ContactPerson;
                 retailSales.HandOverPersonMobile = retailSales.Mobile;
 
-                long Id = new RetailLogic(LogicHelper).Set(retailSales, 
-                    SessionCompany, 
-                    form.AllKeys.ToDictionary(key => key, value => (object)form[value]), 
+                long Id = new RetailLogic(LogicHelper).Set(retailSales,
+                    SessionCompany,
+                    form.AllKeys.ToDictionary(key => key, value => (object)form[value]),
                     out short Rtpe);
 
-                if(Rtpe == 2)
+                if (Rtpe == 2)
                 {
                     return RedirectToAction("Payment", "Retail", new { id = UrlIdEncrypt(Id, false) });
                 }
@@ -266,7 +261,7 @@ namespace JicoDotNet.Inventory.UIControllers
                     invoiceModels._salesOrder = new SalesOrderLogic(LogicHelper).GetForDetail(invoiceModels._invoice.SalesOrderId);
                     invoiceModels._companyBank = companyManagment.BankPrintable();
                     invoiceModels._invoiceHtml = invoiceLogic.GetHTMLDesign();
-                    invoiceModels._customPropertyValue = new CustomPropertyLogic(LogicHelper).GetValue(ECustomPropertyFor.RetailSalesInvoice, invoiceModels._invoice.InvoiceId);                    
+                    invoiceModels._customPropertyValue = new CustomPropertyLogic(LogicHelper).GetValue(ECustomPropertyFor.RetailSalesInvoice, invoiceModels._invoice.InvoiceId);
                     return View(invoiceModels);
                 }
                 return RedirectToAction("Index");
@@ -324,7 +319,7 @@ namespace JicoDotNet.Inventory.UIControllers
             {
             }
             return RedirectToAction("Index");
-        } 
+        }
         #endregion
     }
 }

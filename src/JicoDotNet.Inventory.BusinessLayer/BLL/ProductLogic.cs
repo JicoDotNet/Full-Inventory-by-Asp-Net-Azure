@@ -1,15 +1,14 @@
 ﻿using DataAccess.AzureStorage;
 using DataAccess.Sql;
-using JicoDotNet.Inventory.BusinessLayer.Common;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Web;
 using DataAccess.Sql.Entity;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
 using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
@@ -43,8 +42,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             INameValuePairs nvp = new NameValuePairs
             {
                 new NameValuePair("@ProductTypeId", productTypeId),
-                 
-                 
+
+
                 new NameValuePair("@RequestId", CommonObj.RequestId),
                 new NameValuePair("@QueryType", queryType)
             };
@@ -69,8 +68,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
             INameValuePairs nvp = new NameValuePairs
             {
-                new NameValuePair("@ProductId", product.ProductId),                 
-                 
+                new NameValuePair("@ProductId", product.ProductId),
+
                 new NameValuePair("@ProductTypeId", product.ProductTypeId),
                 new NameValuePair("@ProductInOut", product.ProductInOut),
                 new NameValuePair("@Brand", product.Brand),
@@ -107,7 +106,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             INameValuePairs nvp = new NameValuePairs
             {
                 new NameValuePair("@ProductId", productId),
-                 
+
                 new NameValuePair("@RequestId", CommonObj.RequestId),
                 new NameValuePair("@QueryType", queryType)
             };

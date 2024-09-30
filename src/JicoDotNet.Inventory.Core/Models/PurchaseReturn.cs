@@ -1,7 +1,6 @@
-﻿using System;
+﻿using JicoDotNet.Inventory.Core.Entities;
+using System;
 using System.Collections.Generic;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.Core.Entities;
 
 namespace JicoDotNet.Inventory.Core.Models
 {

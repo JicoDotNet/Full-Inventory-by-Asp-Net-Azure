@@ -28,7 +28,7 @@
         /// Sales Order Amendment
         /// </summary>
         SOA = 35,
-        
+
         /// <summary>
         /// Delivery/Shipment
         /// </summary>

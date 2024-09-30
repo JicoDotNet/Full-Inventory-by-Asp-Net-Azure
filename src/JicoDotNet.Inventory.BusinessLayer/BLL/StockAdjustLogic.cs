@@ -1,13 +1,12 @@
 ﻿using DataAccess.Sql;
-using JicoDotNet.Inventory.BusinessLayer.Common;
+using JicoDotNet.Inventory.Core.Common;
+using JicoDotNet.Inventory.Core.Custom;
+using JicoDotNet.Inventory.Core.Custom.Interface;
+using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Inventory.Core.Custom;
-using JicoDotNet.Inventory.Core.Entities;
-using JicoDotNet.Inventory.Core.Models;
-using JicoDotNet.Inventory.Core.Custom.Interface;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
@@ -20,8 +19,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             return new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetStockAdjustReason]",
                 new NameValuePairs
                 {
-                     
-                     
+
+
                     new NameValuePair("@QueryType", "ALL")
                 }).ToList<StockAdjustReason>();
         }
@@ -55,8 +54,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 string returnString = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetStockAdjust]", new NameValuePairs
                     {
                         new NameValuePair("@StockAdjustNumber", "SKA-"),
-                         
-                         
+
+
                         new NameValuePair("@IsStockIncrease", stockAdjust.IsStockIncrease),
                         new NameValuePair("@AdjustReasonId", stockAdjust.AdjustReasonId),
                         new NameValuePair("@AdjustReason", stockAdjust.AdjustReason),

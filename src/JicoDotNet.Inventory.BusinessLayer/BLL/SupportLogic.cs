@@ -1,15 +1,9 @@
 ﻿using DataAccess.AzureStorage;
-using JicoDotNet.Inventory.BusinessLayer.Common;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
+using System;
+using System.Web;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
@@ -19,7 +13,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public Support Set(Support support, MemoryFile memory)
         {
-            DateTime dt = GenericLogic.IstNow;            
+            DateTime dt = GenericLogic.IstNow;
             support.PartitionKey = "MyCompany";
             support.RowKey = GenericLogic.IstNow.TimeStamp().ToString();
             support.TicketNumber = "T" +

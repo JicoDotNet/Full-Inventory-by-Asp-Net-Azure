@@ -9,6 +9,6 @@ namespace JicoDotNet.Inventory.Core.Report
         public long ProductTypeId { get; set; }
         public DateRange SearchDate { get; set; }
         public bool? ForRetail { get; set; }
-       
+
     }
 }

@@ -1,12 +1,12 @@
-﻿using System;
-using JicoDotNet.Inventory.Core.Entities;
+﻿using JicoDotNet.Inventory.Core.Entities;
+using System;
 
 namespace JicoDotNet.Inventory.Core.Models
 {
     public class SalesType : ISalesType, IDtoHeader
     {
         public long SalesTypeId { get; set; }
-         
+
         public string SalesTypeName { get; set; }
         public string Description { get; set; }
 

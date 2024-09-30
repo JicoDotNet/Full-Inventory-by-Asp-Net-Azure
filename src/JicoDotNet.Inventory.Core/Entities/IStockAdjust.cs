@@ -10,9 +10,9 @@ namespace JicoDotNet.Inventory.Core.Entities
         string StockAdjustNumber { get; set; }
         DateTime StockAdjustDate { get; set; }
 
-        long AdjustReasonId { get; set; }        
-        string AdjustReason { get; set; }      
-        
+        long AdjustReasonId { get; set; }
+        string AdjustReason { get; set; }
+
         bool IsStockIncrease { get; set; }
         string Remarks { get; set; }
     }

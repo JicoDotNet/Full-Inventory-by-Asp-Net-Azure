@@ -1,12 +1,12 @@
-﻿using System;
-using JicoDotNet.Inventory.Core.Entities;
+﻿using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Entities.Inner;
+using System;
 
 namespace JicoDotNet.Inventory.Core.Models
 {
     public class StockTransferDetail : IStockTransferDetail, IProductAttribute, IActivity, IStatus, IHRequest
     {
-        public long StockTransferDetailId { get; set; }        
+        public long StockTransferDetailId { get; set; }
         public long StockTransferId { get; set; }
         public string StockTransferNumber { get; set; }
         public long ProductId { get; set; }
@@ -20,11 +20,11 @@ namespace JicoDotNet.Inventory.Core.Models
         public DateTime? ExpiryDate { get; set; }
         public string BatchNo { get; set; }
 
-         
+
         public DateTime TransactionDate { get; set; }
         public bool IsActive { get; set; }
-         
-         
+
+
         public string RequestId { get; set; }
     }
 }

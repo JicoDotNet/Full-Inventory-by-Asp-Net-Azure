@@ -1,13 +1,12 @@
-﻿using System;
+﻿using JicoDotNet.Inventory.Core.Entities;
+using System;
 using System.Collections.Generic;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.Core.Entities;
 
 namespace JicoDotNet.Inventory.Core.Models
 {
     public class Stock : IStock, IWareHouse, IProduct, IUnitOfMeasure, IDtoHeader
     {
-         
+
         public long ProductId { get; set; }
         public long WareHouseId { get; set; }
         public decimal CurrentStock { get; set; }
@@ -53,8 +52,8 @@ namespace JicoDotNet.Inventory.Core.Models
 
         public DateTime TransactionDate { get; set; }
         public bool IsActive { get; set; }
-         
-         
+
+
         public string RequestId { get; set; }
 
         public List<StockDetail> StockDetails { get; set; }

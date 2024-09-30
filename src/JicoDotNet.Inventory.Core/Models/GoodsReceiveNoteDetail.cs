@@ -1,6 +1,6 @@
-﻿using System;
-using JicoDotNet.Inventory.Core.Entities;
+﻿using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Entities.Inner;
+using System;
 
 namespace JicoDotNet.Inventory.Core.Models
 {
@@ -13,16 +13,16 @@ namespace JicoDotNet.Inventory.Core.Models
         public long ProductId { get; set; }
         public decimal ReceivedQuantity { get; set; }
         public string Description { get; set; }
-        
+
         public bool IsPerishable { get; set; }
         public string BatchNo { get; set; }
         public DateTime? ExpiryDate { get; set; }
 
-         
+
         public DateTime TransactionDate { get; set; }
         public bool IsActive { get; set; }
-         
-         
+
+
         public string RequestId { get; set; }
     }
 }

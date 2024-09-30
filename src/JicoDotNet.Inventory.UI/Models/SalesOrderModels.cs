@@ -1,10 +1,6 @@
-﻿using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using JicoDotNet.Inventory.Core.Entities;
+﻿using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
+using System.Collections.Generic;
 
 namespace JicoDotNet.Inventory.UI.Models
 {
@@ -19,7 +15,7 @@ namespace JicoDotNet.Inventory.UI.Models
         public List<Product> _products { get; set; }
 
         public bool _isGstEnabled { get; set; }
-        
+
         public Customer _customer { get; set; }
         public ICompanyBasic _company { get; set; }
         public SalesOrder _salesOrder { get; set; }

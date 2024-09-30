@@ -17,6 +17,6 @@
         double OrderValue { get; set; }
         double TaxPercentage { get; set; }
         double TaxValue { get; set; }
-        double Total { get; set; }        
+        double Total { get; set; }
     }
 }

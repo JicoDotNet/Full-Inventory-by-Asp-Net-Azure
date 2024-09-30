@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using DataAccess.AzureStorage;
+﻿using DataAccess.AzureStorage;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace JicoDotNet.Inventory.Logging
 {

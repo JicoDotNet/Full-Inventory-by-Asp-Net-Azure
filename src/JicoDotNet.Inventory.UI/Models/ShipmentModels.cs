@@ -1,10 +1,6 @@
-﻿using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using JicoDotNet.Inventory.Core.Entities;
+﻿using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
+using System.Collections.Generic;
 
 namespace JicoDotNet.Inventory.UI.Models
 {
@@ -24,7 +20,7 @@ namespace JicoDotNet.Inventory.UI.Models
         public Branch _branch { get; set; }
 
         public Shipment _shipment { get; set; }
-        public List<ShipmentDetail>  _shipmentDetails { get; set; }
+        public List<ShipmentDetail> _shipmentDetails { get; set; }
         public List<Stock> _stocks { get; set; }
         public IList<Product> _products { get; set; }
 

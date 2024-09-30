@@ -1,14 +1,13 @@
-﻿using Newtonsoft.Json;
-using JicoDotNet.Inventory.BusinessLayer.BLL;
+﻿using JicoDotNet.Inventory.BusinessLayer.BLL;
 using JicoDotNet.Inventory.BusinessLayer.Common;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.UI.Models;
-using System;
-using System.Linq;
-using System.Web.Mvc;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Enumeration;
 using JicoDotNet.Inventory.Core.Models;
+using JicoDotNet.Inventory.UI.Models;
+using Newtonsoft.Json;
+using System;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace JicoDotNet.Inventory.UIControllers
 {
@@ -132,7 +131,7 @@ namespace JicoDotNet.Inventory.UIControllers
                     billModels._purchaseOrders = billLogic.GetForEntry();
                 }
                 else
-                {                    
+                {
                     // Retrive PO
                     PurchaseOrderLogic orderLogic = new PurchaseOrderLogic(LogicHelper);
                     if (billLogic.GetForEntry(Convert.ToInt64(UrlParameterId)) != null)

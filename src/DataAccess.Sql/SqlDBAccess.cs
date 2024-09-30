@@ -1,9 +1,9 @@
-﻿using System;
+﻿using DataAccess.Sql.Entity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using DataAccess.Sql.Entity;
 
 namespace DataAccess.Sql
 {
@@ -13,7 +13,7 @@ namespace DataAccess.Sql
         private SqlConnection SqlConnectionObject { get; set; }
         public ConnectionState SqlConnectionState { get; private set; }
 
-        public SqlDBAccess(string connectionString) 
+        public SqlDBAccess(string connectionString)
             : base(connectionString)
         {
             CommandType = CommandType.StoredProcedure;
@@ -97,8 +97,8 @@ namespace DataAccess.Sql
         }
         #endregion
 
-        public object DataManipulation(string spName, 
-            INameValuePairs nameValuePairObject, 
+        public object DataManipulation(string spName,
+            INameValuePairs nameValuePairObject,
             string outParameterName)
         {
             try
@@ -131,7 +131,7 @@ namespace DataAccess.Sql
                 OpenConnection();
 
                 SqlCommand cmdObject = WriteSqlCommand(spName, inParameterName, outParameterName);
-                
+
                 cmdObject.ExecuteNonQuery();
 
                 return ReadSqlCommand(cmdObject, outParameterName);
@@ -146,7 +146,7 @@ namespace DataAccess.Sql
             }
         }
 
-        private SqlCommand WriteSqlCommand(string command, 
+        private SqlCommand WriteSqlCommand(string command,
             INameValuePairs inParameterName = null,
             IList<string> outParameterName = null)
         {
@@ -188,7 +188,7 @@ namespace DataAccess.Sql
             }
         }
 
-        private INameValuePairs ReadSqlCommand(SqlCommand command, 
+        private INameValuePairs ReadSqlCommand(SqlCommand command,
             IList<string> outParamDictionary = null)
         {
             if (outParamDictionary != null)

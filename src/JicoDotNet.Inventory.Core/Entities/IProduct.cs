@@ -1,6 +1,6 @@
 ﻿namespace JicoDotNet.Inventory.Core.Entities
 {
-    public interface IProduct: IProductType, IUnitOfMeasure, IDtoHeader
+    public interface IProduct : IProductType, IUnitOfMeasure, IDtoHeader
     {
         long ProductId { get; set; }
         short ProductInOut { get; set; }

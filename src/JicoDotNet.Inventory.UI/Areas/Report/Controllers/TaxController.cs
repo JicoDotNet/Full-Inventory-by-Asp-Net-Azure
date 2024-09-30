@@ -1,13 +1,8 @@
-﻿using JicoDotNet.Inventory.BusinessLayer.BLL;
-using JicoDotNet.Inventory.BusinessLayer.BLL.Report;
+﻿using JicoDotNet.Inventory.BusinessLayer.BLL.Report;
+using JicoDotNet.Inventory.Core.Report;
 using JicoDotNet.Inventory.UI.Report.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using JicoDotNet.Inventory.Core.Report;
-using JicoDotNet.Inventory.Core.Report.Interface;
 
 namespace JicoDotNet.Inventory.UI.Areas.Report.Controllers
 {
@@ -24,7 +19,7 @@ namespace JicoDotNet.Inventory.UI.Areas.Report.Controllers
                     _companyBasic = SessionCompany
                 };
                 if (SessionCompany.IsGSTRegistered)
-                {                    
+                {
                     return View();
                 }
                 else

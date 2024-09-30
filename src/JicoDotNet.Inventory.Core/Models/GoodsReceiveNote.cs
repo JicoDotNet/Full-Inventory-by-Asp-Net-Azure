@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
-using JicoDotNet.Inventory.Core.Entities;
+﻿using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Entities.Inner;
+using System;
+using System.Collections.Generic;
 
 namespace JicoDotNet.Inventory.Core.Models
 {
@@ -12,7 +11,7 @@ namespace JicoDotNet.Inventory.Core.Models
 
         public long WareHouseId { get; set; }
         public string GRNNumber { get; set; }
-        public DateTime GRNDate { get; set; }        
+        public DateTime GRNDate { get; set; }
 
         public bool IsDirect { get; set; }
         public bool IsFullReceived { get; set; }
@@ -22,7 +21,7 @@ namespace JicoDotNet.Inventory.Core.Models
 
         public string VendorDONumber { get; set; }
         public string VendorInvoiceNumber { get; set; }
-        public DateTime? VendorInvoiceDate { get; set; }        
+        public DateTime? VendorInvoiceDate { get; set; }
         public string Remarks { get; set; }
 
         // IWareHouse
@@ -31,11 +30,11 @@ namespace JicoDotNet.Inventory.Core.Models
         public bool IsRetailCounter { get; set; }
         public string Description { get; set; }
 
-         
+
         public DateTime TransactionDate { get; set; }
         public bool IsActive { get; set; }
-         
-         
+
+
         public string RequestId { get; set; }
 
         public List<GoodsReceiveNoteDetail> GoodsReceiveNoteDetails { get; set; }
