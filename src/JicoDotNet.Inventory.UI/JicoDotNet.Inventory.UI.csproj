@@ -150,10 +150,6 @@
     <Content Include="Content\images\NoUser.png" />
     <Content Include="Content\js\gridCalculation.js" />
     <Content Include="Content\js\html2canvas.js" />
-    <Content Include="Content\js\lang.js" />
-    <Content Include="Content\pwa\main.js" />
-    <Content Include="Content\pwa\pwa-index.html" />
-    <Content Include="Content\pwa\sw.js" />
     <Content Include="Content\tMail\Registration.html" />
     <Content Include="Content\tMail\Support.html" />
     <Content Include="Content\tPrint\invoice.html" />
@@ -257,10 +253,6 @@
     <Content Include="Areas\Report\Views\Tax\_PartialGstOutput.cshtml" />
     <Content Include="Areas\Report\Views\Tax\_ViewNotApplicable.cshtml" />
     <Content Include="Areas\Report\Views\web.config" />
-    <Content Include="Content\json\bn.json" />
-    <Content Include="Content\json\en.json" />
-    <Content Include="Content\pwa\manifest.json" />
-    <Content Include="Content\pwa\site.webmanifest" />
     <None Include="packages.config" />
     <Content Include="Views\Account\Auth.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
