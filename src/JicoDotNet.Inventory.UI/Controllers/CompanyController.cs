@@ -12,9 +12,9 @@ using JicoDotNet.Inventory.Core.Models;
 
 namespace JicoDotNet.Inventory.UIControllers
 {
+    [SessionAuthenticate]
     public class CompanyController : BaseController
     {
-        [SessionAuthenticate]
         public ActionResult Index()
         {
             try
@@ -27,7 +27,6 @@ namespace JicoDotNet.Inventory.UIControllers
             }
         }
 
-        [SessionAuthenticate]
         public ActionResult Detail()
         {
             try
@@ -67,7 +66,6 @@ namespace JicoDotNet.Inventory.UIControllers
             }
         }
 
-        [SessionAuthenticate]
         public ActionResult Bank()
         {
             try
@@ -106,7 +104,6 @@ namespace JicoDotNet.Inventory.UIControllers
         }
 
         [HttpPost]
-        [SessionAuthenticate]
         public ActionResult Bank(CompanyBank companyBank)
         {
             try
@@ -175,20 +172,18 @@ namespace JicoDotNet.Inventory.UIControllers
             }
         }
 
-        [SessionAuthenticate]
-        public ActionResult BankPrint(CompanyBank companyBank)
+        public ActionResult BankPrint()
         {
             if (string.IsNullOrEmpty(UrlParameterId))
             {
                 return RedirectToAction("Index", "Company", new { id = string.Empty });
             }
-            companyBank.CompanyBankId = Convert.ToInt64(UrlParameterId);
             #region Data Tracking...
-            DataTrackingLogicSet(companyBank);
+            DataTrackingLogicSet(new CompanyBank { CompanyBankId = Convert.ToInt64(UrlParameterId) });
             #endregion
 
             CompanyManagment companyManagment = new CompanyManagment(LogicHelper);
-            if (Convert.ToInt64(companyManagment.BankPrintability(companyBank, true)) > 0)
+            if (Convert.ToInt64(companyManagment.BankPrintability(Convert.ToInt64(UrlParameterId), true)) > 0)
             {
                 ReturnMessage = new ReturnObject()
                 {
@@ -207,20 +202,21 @@ namespace JicoDotNet.Inventory.UIControllers
             return RedirectToAction("Bank", new { id = string.Empty });
         }
 
-        [SessionAuthenticate]
-        public ActionResult BankUnPrint(CompanyBank companyBank)
+        public ActionResult BankUnPrint()
         {
             if (string.IsNullOrEmpty(UrlParameterId))
             {
                 return RedirectToAction("Index", "Company", new { id = string.Empty });
             }
-            companyBank.CompanyBankId = Convert.ToInt64(UrlParameterId);
             #region Data Tracking...
-            DataTrackingLogicSet(companyBank);
+            DataTrackingLogicSet(new CompanyBank
+            {
+                CompanyBankId = Convert.ToInt64(UrlParameterId),
+            });
             #endregion
 
             CompanyManagment companyManagment = new CompanyManagment(LogicHelper);
-            if (Convert.ToInt64(companyManagment.BankPrintability(companyBank, false)) > 0)
+            if (Convert.ToInt64(companyManagment.BankPrintability(Convert.ToInt64(UrlParameterId), false)) > 0)
             {
                 ReturnMessage = new ReturnObject()
                 {

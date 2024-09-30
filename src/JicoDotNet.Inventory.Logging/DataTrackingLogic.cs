@@ -6,16 +6,13 @@ using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
 using Newtonsoft.Json;
 
-#pragma warning disable CS4014
-#pragma warning disable CS1998
-
 namespace JicoDotNet.Inventory.Logging
 {
     public class DataTrackingLogic
     {
-        public static async Task Set(object objectValue, ICommonRequestDto commonObj)
+        public static void Set(object objectValue, ICommonRequestDto commonObj)
         {
-            _ = Task.Run(() =>
+            Task.Run(() =>
             {
                 try
                 {

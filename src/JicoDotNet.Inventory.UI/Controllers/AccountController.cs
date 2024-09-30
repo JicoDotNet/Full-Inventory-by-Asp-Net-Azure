@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Web;
 using System.Web.Mvc;
-using Newtonsoft.Json;
 using JicoDotNet.Inventory.BusinessLayer.BLL;
 using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.Core.Common.Auth;
@@ -10,32 +8,16 @@ using JicoDotNet.Inventory.Core.Enumeration;
 using JicoDotNet.Inventory.Core.Models;
 using JicoDotNet.Inventory.Logging;
 using JicoDotNet.Inventory.UI.Models;
-using JicoDotNet.Authentication;
-using JicoDotNet.Inventory.Core.Entities.Inner;
-using System.Text;
-using System.Web.WebPages;
 
 namespace JicoDotNet.Inventory.UI.Controllers
 {
     public class AccountController : BaseController
     {
-        //private readonly UserAuthenticationService authService;
-
-        //public AccountController()
-        //{
-        //    var secretKey = "JZwBz0kAnGz7xXqkR3Djq8VB7cXrvYbc1JuzW7Z98Fk=";
-        //    authService = new UserAuthenticationService(secretKey);
-        //}
-
         #region Login
         public ActionResult Index(string returnUrl)
         {
             try
             {
-                //var token = authService.Authenticate("test");
-                //Response.Headers.Add("Authorization", "Bearer " + token);
-
-
                 ViewBag.returnUrl = returnUrl;
                 return View();
             }
@@ -51,15 +33,6 @@ namespace JicoDotNet.Inventory.UI.Controllers
         {
             try
             {
-                //var token = HttpContext.Request.Headers["Authorization"];
-
-                //var principal = authService.ValidateToken(token);
-                //if (principal != null)
-                //{
-                //    Console.WriteLine("Token is valid. User: " + principal.Identity.Name);
-                //}
-
-
                 LoginCredentials loginCredentials = new LoginCredentials
                 {
                     UserEmail = formCollection["UserEmail"],

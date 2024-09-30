@@ -77,12 +77,12 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             }
             return companyBanks;
         }
-        public string BankPrintability(CompanyBank companyBank, bool IsPrintable)
+        public string BankPrintability(long CompanyBankId, bool IsPrintable)
         {
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
             NameValuePairs nvp = new NameValuePairs
             {
-                new NameValuePair("@CompanyBankId", companyBank.CompanyBankId),
+                new NameValuePair("@CompanyBankId", CompanyBankId),
 
                 new NameValuePair("@IsPrintable", IsPrintable),
 
