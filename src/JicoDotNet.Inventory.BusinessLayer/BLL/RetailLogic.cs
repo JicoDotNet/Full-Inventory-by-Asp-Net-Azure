@@ -77,9 +77,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
                     NameValuePairs nvp = new NameValuePairs()
                     {
-                         
-                         
-
                         // Customer
                         new NameValuePair("@ContactPerson", retailSales.ContactPerson),
                         new NameValuePair("@Email", retailSales.Email),
@@ -93,6 +90,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                         new NameValuePair("@PANNumber", retailSales.PANNumber),
 
                         //SO
+                        new NameValuePair("@IsGstAllowed", retailSales.IsGstAllowed),
                         new NameValuePair("@CustomerId", retailSales.CustomerId),
                         new NameValuePair("@SalesOrderDate", retailSales.ShipmentDate),
                         new NameValuePair("@SalesOrderAmount", retailSales.SalesOrderAmount),

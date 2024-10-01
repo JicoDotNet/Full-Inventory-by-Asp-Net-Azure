@@ -260,7 +260,6 @@ namespace JicoDotNet.Inventory.UIControllers
                     invoiceModels._customer = new CustomerLogic(LogicHelper).Get(invoiceModels._invoice.CustomerId);
                     invoiceModels._salesOrder = new SalesOrderLogic(LogicHelper).GetForDetail(invoiceModels._invoice.SalesOrderId);
                     invoiceModels._companyBank = companyManagment.BankPrintable();
-                    invoiceModels._invoiceHtml = invoiceLogic.GetHTMLDesign();
                     invoiceModels._customPropertyValue = new CustomPropertyLogic(LogicHelper).GetValue(ECustomPropertyFor.RetailSalesInvoice, invoiceModels._invoice.InvoiceId);
                     return View(invoiceModels);
                 }

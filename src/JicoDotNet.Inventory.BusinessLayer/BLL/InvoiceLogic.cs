@@ -240,13 +240,11 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
                     NameValuePairs nvp = new NameValuePairs()
                     {
-
-
                         new NameValuePair("@InvoiceTypeId", invoice.InvoiceTypeId),
                         new NameValuePair("@InvoiceDate", invoice.InvoiceDate),
                         new NameValuePair("@InvoiceDueDate", invoice.InvoiceDueDate),
 
-                        new NameValuePair("@IsCustomizedInvoiceNumber", invoice.IsCustomizedInvoiceNumber),
+                        //new NameValuePair("@IsCustomizedInvoiceNumber", invoice.IsCustomizedInvoiceNumber),
                         new NameValuePair("@InvoiceNumber", invoice.IsCustomizedInvoiceNumber? invoice.InvoiceNumber : "INV-"),
 
                         new NameValuePair("@CustomerId", invoice.CustomerId),
@@ -311,8 +309,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
             NameValuePairs nvp = new NameValuePairs
             {
-
-
                 new NameValuePair("@InvoiceNumber", CustomInvoiceNumber),
                 new NameValuePair("@QueryType", "AVAILABLE")
             };
@@ -324,18 +320,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                         return true;
 
             return false;
-        }
-
-        public string GetHTMLDesign()
-        {
-            TableManager = new ExecuteTableManager("Design", CommonObj.NoSqlConnectionString);
-            HtmlDesign htmlDesign = TableManager.RetrieveEntity<HtmlDesign>("").FirstOrDefault();
-            return htmlDesign.InvoiceHtml;
-        }
-
-        public void SetHTMLDesign(string InvoiceHtmlPath)
-        {
-
         }
         #endregion
     }

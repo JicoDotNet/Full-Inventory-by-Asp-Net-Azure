@@ -288,7 +288,7 @@ namespace JicoDotNet.Inventory.UIControllers
                         Status = true,
                         Message = "Purchase Order generated successfully!!"
                     };
-                    _ = draftManagement.DeleteDraft(UrlParameterId, EDraft.PO);
+                    draftManagement.DeleteDraft(UrlParameterId, EDraft.PO);
                     return RedirectToAction("OrderDetail", "Purchase", new { id = UrlIdEncrypt(POobj.PurchaseOrderId, false), id2 = string.Empty });
                 }
                 else

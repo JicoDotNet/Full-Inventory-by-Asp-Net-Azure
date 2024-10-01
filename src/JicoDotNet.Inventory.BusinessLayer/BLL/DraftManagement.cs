@@ -8,8 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-#pragma warning disable CS4014
-#pragma warning disable CS1998
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
@@ -51,9 +49,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             return JsonConvert.DeserializeObject<T>(draft.DraftData);
         }
 
-        public async Task DeleteDraft(string objectId, EDraft draftType)
+        public void DeleteDraft(string objectId, EDraft draftType)
         {
-
             Task.Run(() =>
             {
                 TableManager = new ExecuteTableManager("Draft", CommonObj.NoSqlConnectionString);
