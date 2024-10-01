@@ -32,8 +32,8 @@ jobs:
       - name: Set up NuGet
         uses: NuGet/setup-nuget@v1  # Use the latest stable version
 
-      - name: Restore NuGet packages
-        run: nuget restore src/JicoDotNet.Inventory.sln
+      - name: Restore NuGet packages, excluding SQLServer project
+        run: nuget restore src/JicoDotNet.Inventory.sln /p:ExcludeRestoreProjects='src\JicoDotNet.SQLServer\JicoDotNet.SQLServer.sqlproj'
 
-      - name: Build MVC solution
-        run: msbuild src/JicoDotNet.Inventory.sln /p:Configuration=Release
+      - name: Build MVC solution, excluding SQLServer project
+        run: msbuild src/JicoDotNet.Inventory.sln /p:Configuration=Release /p:ExcludeProjects='src\JicoDotNet.SQLServer\JicoDotNet.SQLServer.sqlproj'
