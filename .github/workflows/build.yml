@@ -38,11 +38,3 @@ jobs:
       - name: Build solution, excluding SQLServer project
         run: |
           msbuild src/JicoDotNet.Inventory.sln /p:Configuration=Release /p:ExcludeProjects="src\JicoDotNet.SQLServer\JicoDotNet.SQLServer.sqlproj"
-
-      - name: Upload Release Files
-        if: success()  # Only run this step if the previous steps were successful
-        uses: actions/upload-artifact@v3
-        with:
-          name: Release Files
-          path: |
-            src/JicoDotNet.Inventory.UI/bin/Release/  # Adjust this path based on your output location
