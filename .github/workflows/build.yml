@@ -34,13 +34,13 @@ jobs:
 
       - name: Restore NuGet packages for specific projects
         run: |
-          nuget restore src/JicoDotNet.Inventory.sln
-          nuget restore src/DataAccess.Sql/DataAccess.Sql.csproj
-          nuget restore src/JicoDotNet.Inventory.BusinessLayer/JicoDotNet.Inventory.BusinessLayer.csproj
-          nuget restore src/JicoDotNet.Inventory.Common/JicoDotNet.Inventory.Common.csproj
-          nuget restore src/JicoDotNet.Inventory.Core/JicoDotNet.Inventory.Core.csproj      
-          nuget restore src/JicoDotNet.Inventory.Logging/JicoDotNet.Inventory.Logging.csproj
-          nuget restore src/JicoDotNet.Inventory.UI/JicoDotNet.Inventory.UI.csproj
+          nuget restore src/JicoDotNet.Inventory.sln -SolutionDirectory src/
+          nuget restore src/DataAccess.Sql/DataAccess.Sql.csproj -SolutionDirectory src/
+          nuget restore src/JicoDotNet.Inventory.BusinessLayer/JicoDotNet.Inventory.BusinessLayer.csproj -SolutionDirectory src/
+          nuget restore src/JicoDotNet.Inventory.Common/JicoDotNet.Inventory.Common.csproj -SolutionDirectory src/
+          nuget restore src/JicoDotNet.Inventory.Core/JicoDotNet.Inventory.Core.csproj -SolutionDirectory src/
+          nuget restore src/JicoDotNet.Inventory.Logging/JicoDotNet.Inventory.Logging.csproj -SolutionDirectory src/
+          nuget restore src/JicoDotNet.Inventory.UI/JicoDotNet.Inventory.UI.csproj -SolutionDirectory src/
           
       - name: Build solution, excluding SQLServer project
         run: |
