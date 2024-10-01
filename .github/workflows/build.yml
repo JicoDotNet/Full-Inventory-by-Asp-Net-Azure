@@ -1,10 +1,9 @@
-# This workflow will build a .NET project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+# This workflow will build a .NET Framework 4.8.1 project
 
 name: .NET 4.8.1 CI
 
 on:
-  workflow_dispatch:  # This allows manual triggering
+  workflow_dispatch:  # Allows manual triggering
   push:
     branches:
       - master                      # Specific branch (master)
@@ -32,16 +31,10 @@ jobs:
       - name: Set up NuGet
         uses: NuGet/setup-nuget@v1  # Use the latest stable version
 
-      - name: Restore NuGet packages for specific projects
+      - name: Restore NuGet packages
         run: |
           nuget restore src/JicoDotNet.Inventory.sln -SolutionDirectory src/
-          nuget restore src/DataAccess.Sql/DataAccess.Sql.csproj -SolutionDirectory src/
-          nuget restore src/JicoDotNet.Inventory.BusinessLayer/JicoDotNet.Inventory.BusinessLayer.csproj -SolutionDirectory src/
-          nuget restore src/JicoDotNet.Inventory.Common/JicoDotNet.Inventory.Common.csproj -SolutionDirectory src/
-          nuget restore src/JicoDotNet.Inventory.Core/JicoDotNet.Inventory.Core.csproj -SolutionDirectory src/
-          nuget restore src/JicoDotNet.Inventory.Logging/JicoDotNet.Inventory.Logging.csproj -SolutionDirectory src/
-          nuget restore src/JicoDotNet.Inventory.UI/JicoDotNet.Inventory.UI.csproj -SolutionDirectory src/
-          
+
       - name: Build solution, excluding SQLServer project
         run: |
           msbuild src/JicoDotNet.Inventory.sln /p:Configuration=Release /p:ExcludeProjects="src\JicoDotNet.SQLServer\JicoDotNet.SQLServer.sqlproj"
