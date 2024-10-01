@@ -1,0 +1,39 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET 4.8.1 CI
+
+on:
+  workflow_dispatch:  # This allows manual triggering
+  push:
+    branches:
+      - master                      # Specific branch (master)
+      - develop                     # Specific branch (develop)
+      - 'feature/*'                 # Any branch that starts with 'feature/'
+      - 'release/*'                 # Any branch that starts with 'release/'
+  pull_request:
+    branches:
+      - master                      # Trigger on pull requests to the master branch
+      - develop                     # Trigger on pull requests to the develop branch
+      - 'feature/*'                 # PRs to feature branches
+      - 'release/*'                 # PRs to release branches
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - name: Set up MSBuild
+        uses: microsoft/setup-msbuild@v1.1
+
+      - name: Set up NuGet
+        uses: NuGet/setup-nuget@v1.1.2
+
+      - name: Restore NuGet packages
+        run: nuget restore src/JicoDotNet.Inventory.sln
+
+      - name: Build MVC solution
+        run: msbuild src/JicoDotNet.Inventory.sln /p:Configuration=Release
