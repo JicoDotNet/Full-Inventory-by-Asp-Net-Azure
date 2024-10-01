@@ -30,7 +30,7 @@ jobs:
         uses: microsoft/setup-msbuild@v1.1
 
       - name: Set up NuGet
-        uses: NuGet/setup-nuget@v1.1.2
+        uses: NuGet/setup-nuget@v1  # Use the latest stable version
 
       - name: Restore NuGet packages
         run: nuget restore src/JicoDotNet.Inventory.sln
