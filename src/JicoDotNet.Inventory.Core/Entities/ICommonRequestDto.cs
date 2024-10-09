@@ -3,7 +3,7 @@ using JicoDotNet.Authentication.Interfaces;
 
 namespace JicoDotNet.Inventory.Core.Entities
 {
-    public interface ICommonLogicHelper : ICommonRequestDto
+    public interface ICommonRequestDto : ICommonRequestDto
     {
     }
 }

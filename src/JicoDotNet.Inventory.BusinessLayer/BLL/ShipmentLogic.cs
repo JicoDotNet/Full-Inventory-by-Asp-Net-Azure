@@ -3,7 +3,7 @@ using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Custom;
 using JicoDotNet.Inventory.Core.Custom.Interface;
-using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Authentication.Interfaces;
 using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class ShipmentLogic : ConnectionString
     {
-        public ShipmentLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
+        public ShipmentLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
 
         #region Payment Type
         public string TypeSet(ShipmentType shipmentType)

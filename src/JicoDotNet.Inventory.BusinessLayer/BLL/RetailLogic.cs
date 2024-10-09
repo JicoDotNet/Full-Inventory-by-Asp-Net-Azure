@@ -3,18 +3,19 @@ using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Custom;
 using JicoDotNet.Inventory.Core.Custom.Interface;
-using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Authentication.Interfaces;
 using JicoDotNet.Inventory.Core.Enumeration;
 using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using JicoDotNet.Inventory.Core.Entities;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class RetailLogic : ConnectionString
     {
-        public RetailLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
+        public RetailLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
 
         public long Set(RetailSales retailSales, ICompanyBasic currentCompany,
             Dictionary<string, object> dynamicFormValue, out short ReturnType)

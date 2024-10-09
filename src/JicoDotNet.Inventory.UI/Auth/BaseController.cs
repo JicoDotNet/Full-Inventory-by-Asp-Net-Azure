@@ -1,10 +1,9 @@
-﻿using JicoDotNet.Inventory.Core.Common;
+﻿using JicoDotNet.Authentication.Entities;
 using JicoDotNet.Inventory.Core.Common.Auth;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
 using JicoDotNet.Inventory.Logging;
 using JicoDotNet.Inventory.UI.Models;
-using JicoDotNet.Authentication.Interfaces;
 using Newtonsoft.Json;
 using System.IO;
 using System.Text;
@@ -13,7 +12,7 @@ using System;
 
 namespace JicoDotNet.Inventory.Controllers
 {
-    public abstract class BaseController : Controller
+    public abstract class BaseController : LicenseController
     {
         #region Properties
         protected string ControllerName { get; private set; }
@@ -21,13 +20,9 @@ namespace JicoDotNet.Inventory.Controllers
         protected string UrlParameterId { get; set; }
         protected string UrlParameterId2 { get; set; }
 
-        protected ISessionCredential SessionPerson { get; private set; }
         protected ICompanyBasic SessionCompany { get; private set; }
-
         protected IReturnObject ReturnMessage { get; set; }
         protected IInvalidModel InvalidModelObject { get; set; }
-        protected ICommonLogicHelper LogicHelper { get; }
-
 
 
         private ActionExecutingContext _filteringContext;
@@ -37,14 +32,13 @@ namespace JicoDotNet.Inventory.Controllers
         /// <summary>
         /// Constructor
         /// </summary>
-        protected BaseController()
+        protected BaseController() : base(new CommonRequestDto
         {
-            LogicHelper = new CommonRequestDto
-            {
-                SqlConnectionString = WebConfigDbConnection.SqlServer,
-                NoSqlConnectionString = WebConfigDbConnection.AzureStorage,
-                RequestId = Guid.NewGuid().ToString().Replace("-", "").ToUpper()
-            };
+            SqlConnectionString = WebConfigDbConnection.SqlServer,
+            NoSqlConnectionString = WebConfigDbConnection.AzureStorage,
+            RequestId = Guid.NewGuid().ToString().Replace("-", "").ToUpper()
+        })
+        {
         }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -64,7 +58,7 @@ namespace JicoDotNet.Inventory.Controllers
                 #endregion
 
                 #region Cookie Manage for Session Person
-                SessionPerson = this.HttpContext.GetCookie<SessionCredential>(".AspNetCore.Session");
+                SetSessionPerson(this.HttpContext.GetCookie<SessionCredential>(".AspNetCore.Session"));
                 #endregion
 
                 #region Cookie Manage for Company

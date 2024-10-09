@@ -1,7 +1,7 @@
 ﻿using DataAccess.AzureStorage;
 using JicoDotNet.Authentication.Interfaces;
 using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Authentication.Interfaces;
 using JicoDotNet.Inventory.Core.Enumeration;
 using JicoDotNet.Inventory.Core.Models;
 using Microsoft.WindowsAzure.Storage.Table;

@@ -1,6 +1,7 @@
 ﻿using DataAccess.Sql;
+using JicoDotNet.Authentication.Interfaces;
 using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Authentication.Interfaces;
 using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class BranchLogic : ConnectionString
     {
-        public BranchLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
+        public BranchLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
 
         public string Set(Branch branch)
         {

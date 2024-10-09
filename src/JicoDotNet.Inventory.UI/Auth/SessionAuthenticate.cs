@@ -4,6 +4,7 @@ using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Common.Auth;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
+using JicoDotNet.Authentication.Entities;
 using System.Web.Routing;
 
 namespace System.Web.Mvc

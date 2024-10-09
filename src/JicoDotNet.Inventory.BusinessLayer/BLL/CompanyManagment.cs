@@ -1,7 +1,7 @@
 ﻿using DataAccess.Sql;
+using JicoDotNet.Authentication.Interfaces;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
 using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Inventory.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,7 +11,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class CompanyManagment : ConnectionString
     {
-        public CompanyManagment(ICommonLogicHelper CommonObj) : base(CommonObj) { }
+        public CompanyManagment(ICommonRequestDto CommonObj) : base(CommonObj) { }
         public string BankSet(CompanyBank companyBank)
         {
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);

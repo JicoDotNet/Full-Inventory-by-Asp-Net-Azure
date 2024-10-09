@@ -1,6 +1,6 @@
 ﻿using DataAccess.AzureStorage;
 using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Authentication.Interfaces;
 using JicoDotNet.Inventory.Core.Enumeration;
 using JicoDotNet.Inventory.Core.Models;
 using Newtonsoft.Json;
@@ -13,7 +13,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class DraftManagement : ConnectionString
     {
-        public DraftManagement(ICommonLogicHelper commonObj) : base(commonObj) { }
+        public DraftManagement(ICommonRequestDto commonObj) : base(commonObj) { }
 
         public string SetAsDraft(object draftObject, EDraft draftType)
         {

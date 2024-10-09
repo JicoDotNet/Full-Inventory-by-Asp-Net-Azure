@@ -11,7 +11,7 @@ namespace JicoDotNet.Inventory.Logging
 {
     public class DataTrackingLogic
     {
-        public static void Set(object objectValue, ICommonLogicHelper commonObj)
+        public static void Set(object objectValue, ICommonRequestDto commonObj)
         {
             Task.Run(() =>
             {

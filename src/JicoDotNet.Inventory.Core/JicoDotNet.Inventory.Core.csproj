@@ -67,7 +67,6 @@
   <ItemGroup>
     <Compile Include="Common\Auth\AccountAuthenticate.cs" />
     <Compile Include="Common\Auth\SessionToken.cs" />
-    <Compile Include="Common\CommonRequestDto.cs" />
     <Compile Include="Common\ConnectionString.cs" />
     <Compile Include="Common\DateRange.cs" />
     <Compile Include="Custom\BillDetailsType.cs" />
@@ -97,7 +96,6 @@
     <Compile Include="Custom\StockAdjustDetailType.cs" />
     <Compile Include="Custom\StockTransferDetailType.cs" />
     <Compile Include="Entities\IAccountAuthentication.cs" />
-    <Compile Include="Entities\ICommonRequestDto.cs" />
     <Compile Include="Entities\Inner\IBankCommon.cs" />
     <Compile Include="Entities\IBill.cs" />
     <Compile Include="Entities\IBillDetail.cs" />

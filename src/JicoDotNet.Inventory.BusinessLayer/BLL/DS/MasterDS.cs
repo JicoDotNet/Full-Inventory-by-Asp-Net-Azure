@@ -1,6 +1,7 @@
 ﻿using DataAccess.Sql;
+using JicoDotNet.Authentication.Interfaces;
 using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Authentication.Interfaces;
 using JicoDotNet.Inventory.Core.Models.DS;
 using System;
 using System.Data;
@@ -10,7 +11,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class MasterDS : ConnectionString
     {
-        public MasterDS(ICommonLogicHelper CommonObj) : base(CommonObj) { }
+        public MasterDS(ICommonRequestDto CommonObj) : base(CommonObj) { }
 
         public HomeMasterCount CountHome()
         {

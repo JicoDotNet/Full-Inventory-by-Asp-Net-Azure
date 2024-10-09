@@ -1,21 +1,23 @@
 ﻿using DataAccess.Sql;
 using DataAccess.Sql.Entity;
+using JicoDotNet.Authentication.Interfaces;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Custom;
 using JicoDotNet.Inventory.Core.Custom.Interface;
-using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Authentication.Interfaces;
 using JicoDotNet.Inventory.Core.Enumeration;
 using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using JicoDotNet.Inventory.Core.Entities;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class BillLogic : ConnectionString
     {
-        public BillLogic(ICommonLogicHelper commonObj) : base(commonObj) { }
+        public BillLogic(ICommonRequestDto commonObj) : base(commonObj) { }
 
         #region Bill Type
         public string TypeSet(IBillType billType)

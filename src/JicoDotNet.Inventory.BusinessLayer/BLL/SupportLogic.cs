@@ -1,6 +1,6 @@
 ﻿using DataAccess.AzureStorage;
 using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Authentication.Interfaces;
 using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Web;
@@ -9,7 +9,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class SupportLogic : ConnectionString
     {
-        public SupportLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
+        public SupportLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
 
         public Support Set(Support support, MemoryFile memory)
         {

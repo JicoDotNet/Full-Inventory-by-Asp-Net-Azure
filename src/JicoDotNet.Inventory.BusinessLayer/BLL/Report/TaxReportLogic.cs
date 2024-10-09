@@ -1,6 +1,6 @@
 ﻿using DataAccess.Sql;
 using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Authentication.Interfaces;
 using JicoDotNet.Inventory.Core.Report;
 using JicoDotNet.Inventory.Core.Report.Interface;
 using System;
@@ -12,7 +12,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
 {
     public class TaxReportLogic : ConnectionString
     {
-        public TaxReportLogic(ICommonLogicHelper commonObj) : base(commonObj) { }
+        public TaxReportLogic(ICommonRequestDto commonObj) : base(commonObj) { }
 
         public List<ResponseGSTOutputResult> GSTOutputs(IRequestTaxParam tax)
         {

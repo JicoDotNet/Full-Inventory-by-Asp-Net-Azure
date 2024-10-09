@@ -1,6 +1,6 @@
 ﻿using DataAccess.Sql;
 using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Authentication.Interfaces;
 using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class WareHouseLogic : ConnectionString
     {
-        public WareHouseLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
+        public WareHouseLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
 
         public List<WareHouse> Get(bool? IsActive = null)
         {

@@ -1,17 +1,18 @@
-﻿using JicoDotNet.Inventory.BusinessLayer.Common;
+﻿using JicoDotNet.Authentication.Interfaces;
+using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Common.Auth;
-using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Enumeration;
 using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Net;
+using JicoDotNet.Inventory.Core.Entities;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class LoginManagement : ConnectionString
     {
-        public LoginManagement(ICommonLogicHelper commonObj) : base(commonObj) { }
+        public LoginManagement(ICommonRequestDto commonObj) : base(commonObj) { }
 
         public IAccountAuthentication Authenticate(LoginCredentials loginCredentials, string requestedIP)
         {

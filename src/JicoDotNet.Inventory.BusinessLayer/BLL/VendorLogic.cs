@@ -1,6 +1,6 @@
 ﻿using DataAccess.Sql;
 using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Authentication.Interfaces;
 using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class VendorLogic : ConnectionString
     {
-        public VendorLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
+        public VendorLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
 
         #region Vendor Type
         public string TypeSet(VendorType vendorType)

@@ -2,19 +2,20 @@
 using DataAccess.Sql;
 using DataAccess.Sql.Entity;
 using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Authentication.Interfaces;
 using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
+using JicoDotNet.Inventory.Core.Entities;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class ProductLogic : ConnectionString
     {
-        public ProductLogic(ICommonLogicHelper commonObj) : base(commonObj) { }
+        public ProductLogic(ICommonRequestDto commonObj) : base(commonObj) { }
 
         public string TypeSet(IProductType productType)
         {

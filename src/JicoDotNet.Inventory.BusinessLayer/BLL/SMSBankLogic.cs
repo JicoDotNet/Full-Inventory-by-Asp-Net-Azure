@@ -1,6 +1,6 @@
 ﻿using DataAccess.AzureStorage;
 using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Authentication.Interfaces;
 using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Linq;
@@ -10,7 +10,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class SMSBankLogic : ConnectionString
     {
-        public SMSBankLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
+        public SMSBankLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
 
         public bool Deduction()
         {

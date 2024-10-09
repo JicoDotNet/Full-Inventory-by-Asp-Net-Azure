@@ -2,7 +2,7 @@
 using JicoDotNet.Authentication.Interfaces;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Common.Auth;
-using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Authentication.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

@@ -1,6 +1,7 @@
 ﻿using DataAccess.AzureStorage;
+using JicoDotNet.Authentication.Interfaces;
 using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Authentication.Interfaces;
 using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class ConfigarationManager : ConnectionString
     {
-        public ConfigarationManager(ICommonLogicHelper CommonObj) : base(CommonObj) { }
+        public ConfigarationManager(ICommonRequestDto CommonObj) : base(CommonObj) { }
 
         public void SetConfig(Config config)
         {
