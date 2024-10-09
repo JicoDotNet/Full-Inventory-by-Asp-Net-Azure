@@ -15,14 +15,14 @@ using System.Linq;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
-    public class InvoiceLogic : ConnectionString
+    public class InvoiceLogic : DBManager
     {
-        public InvoiceLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public InvoiceLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
 
         #region Payment Type
         public string TypeSet(InvoiceType invoiceType)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
             string qt = string.Empty;
             if (invoiceType.InvoiceTypeId > 0)
                 qt = "UPDATE";
@@ -36,17 +36,17 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@InvoiceTypeName", invoiceType.InvoiceTypeName),
                 new NameValuePair("@Description", invoiceType.Description),
 
-                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                 new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetInvoiceType]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(CommonLogicObj.SqlSchema + ".[spSetInvoiceType]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
 
         public string TypeDeactive(string invoiceTypeId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
             string qt = "INACTIVE";
 
             NameValuePairs nvp = new NameValuePairs
@@ -54,17 +54,17 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@InvoiceTypeId", invoiceTypeId),
 
 
-                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                 new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetInvoiceType]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(CommonLogicObj.SqlSchema + ".[spSetInvoiceType]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
 
         public List<InvoiceType> TypeGet(bool? IsActive = null)
         {
-            List<InvoiceType> invoiceTypes = new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetInvoiceType]",
+            List<InvoiceType> invoiceTypes = new SqlDBAccess(CommonLogicObj.SqlConnectionString).GetData(CommonLogicObj.SqlSchema + ".[spGetInvoiceType]",
                 new NameValuePairs
                 {
 
@@ -86,45 +86,45 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         #region Invoice
         public List<Invoice> GetInvoices()
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
             NameValuePairs nvp = new NameValuePairs()
             {
 
 
                 new NameValuePair("@QueryType", "LIST")
             };
-            List<Invoice> invoices = _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetInvoice]", nvp).ToList<Invoice>();
+            List<Invoice> invoices = _sqlDBAccess.GetData(CommonLogicObj.SqlSchema + ".[spGetInvoice]", nvp).ToList<Invoice>();
             return invoices;
         }
         public List<Invoice> GetRetailInvoices()
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
             NameValuePairs nvp = new NameValuePairs()
             {
 
 
                 new NameValuePair("@QueryType", "RETAIL")
             };
-            List<Invoice> invoices = _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetInvoice]", nvp).ToList<Invoice>();
+            List<Invoice> invoices = _sqlDBAccess.GetData(CommonLogicObj.SqlSchema + ".[spGetInvoice]", nvp).ToList<Invoice>();
             return invoices;
         }
 
         public List<SalesOrder> GetForEntry()
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
             NameValuePairs nvp = new NameValuePairs()
                 {
 
 
                     new NameValuePair("@QueryType", "ENTRY")
                 };
-            List<SalesOrder> salesOrders = _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetInvoice]", nvp).ToList<SalesOrder>();
+            List<SalesOrder> salesOrders = _sqlDBAccess.GetData(CommonLogicObj.SqlSchema + ".[spGetInvoice]", nvp).ToList<SalesOrder>();
             return salesOrders;
         }
 
         public List<InvoiceDetail> GetInvoiceDetails(long salesOrderId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
             NameValuePairs nvp = new NameValuePairs()
                 {
 
@@ -132,7 +132,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     new NameValuePair("@SalesOrderId", salesOrderId),
                     new NameValuePair("@QueryType", "COMULTATIVE")
                 };
-            List<InvoiceDetail> invDtl = _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetInvoice]", nvp).ToList<InvoiceDetail>();
+            List<InvoiceDetail> invDtl = _sqlDBAccess.GetData(CommonLogicObj.SqlSchema + ".[spGetInvoice]", nvp).ToList<InvoiceDetail>();
             return invDtl;
         }
 
@@ -140,7 +140,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             try
             {
-                _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+                _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
                 NameValuePairs nvp = new NameValuePairs()
                 {
 
@@ -148,7 +148,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     new NameValuePair("@customerId", customerId),
                     new NameValuePair("@QueryType", "PAYMENT")
                 };
-                List<Invoice> invs = _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetInvoice]", nvp).ToList<Invoice>();
+                List<Invoice> invs = _sqlDBAccess.GetData(CommonLogicObj.SqlSchema + ".[spGetInvoice]", nvp).ToList<Invoice>();
                 return invs;
             }
             catch (Exception ex)
@@ -164,7 +164,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 invoice = Set(invoice);
 
                 // Custom Property Set
-                CustomPropertyLogic propertyLogic = new CustomPropertyLogic(CommonObj);
+                CustomPropertyLogic propertyLogic = new CustomPropertyLogic(CommonLogicObj);
                 propertyLogic.SetValue(ECustomPropertyFor.SalesInvoice, dynamicFormValue, invoice.InvoiceId, invoice.InvoiceNumber);
                 //
 
@@ -238,7 +238,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
                 if (invoiceDetailsTypes.Count > 0)
                 {
-                    _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+                    _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
                     NameValuePairs nvp = new NameValuePairs()
                     {
                         new NameValuePair("@InvoiceTypeId", invoice.InvoiceTypeId),
@@ -264,10 +264,10 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                         new NameValuePair("@IsFullInvoiced", invoice.IsFullInvoiced),
                         new NameValuePair("@InvoiceDetail", invoiceDetailsTypes.ToDataTable()),
 
-                        new NameValuePair("@RequestId", CommonObj.RequestId),
+                        new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                         new NameValuePair("@QueryType", "INSERT")
                     };
-                    string invoiceReturn = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetInvoice]", nvp, "@OutParam").ToString();
+                    string invoiceReturn = _sqlDBAccess.DataManipulation(CommonLogicObj.SqlSchema + ".[spSetInvoice]", nvp, "@OutParam").ToString();
                     return JsonConvert.DeserializeObject<Invoice>(invoiceReturn);
                 }
                 else
@@ -284,7 +284,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public Invoice GetForDetail(long InvoiceId)
         {
             Invoice invoice = new Invoice();
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
             NameValuePairs nvp = new NameValuePairs()
             {
 
@@ -292,7 +292,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@InvoiceId", InvoiceId),
                 new NameValuePair("@QueryType", "DETAIL")
             };
-            DataSet ds = _sqlDBAccess.GetDataSet(GenericLogic.SqlSchema + ".[spGetInvoice]", nvp);
+            DataSet ds = _sqlDBAccess.GetDataSet(CommonLogicObj.SqlSchema + ".[spGetInvoice]", nvp);
             invoice = ds.Tables[0].FirstOrDefault<Invoice>();
             if (invoice != null)
             {
@@ -306,7 +306,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public bool Available(string CustomInvoiceNumber)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
 
             NameValuePairs nvp = new NameValuePairs
             {
@@ -314,7 +314,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@QueryType", "AVAILABLE")
             };
 
-            DataTable dt = _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetInvoice]", nvp);
+            DataTable dt = _sqlDBAccess.GetData(CommonLogicObj.SqlSchema + ".[spGetInvoice]", nvp);
             if (dt != null)
                 if (dt.Rows.Count == 1)
                     if ((int)dt.Rows[0]["InvoiceId"] == 1)

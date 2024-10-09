@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace JicoDotNet.Authentication.Interfaces
 {
-    public interface ISessionCredential : ITableEntity, IToken
+    public interface ISessionCredential : IToken
     {
     }
 }

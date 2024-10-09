@@ -67,7 +67,7 @@
   <ItemGroup>
     <Compile Include="Common\Auth\AccountAuthenticate.cs" />
     <Compile Include="Common\Auth\SessionToken.cs" />
-    <Compile Include="Common\ConnectionString.cs" />
+    <Compile Include="Common\DBManager.cs" />
     <Compile Include="Common\DateRange.cs" />
     <Compile Include="Custom\BillDetailsType.cs" />
     <Compile Include="Custom\GRNDetailType.cs" />
@@ -105,7 +105,7 @@
     <Compile Include="Entities\ICompanyBank.cs" />
     <Compile Include="Entities\ICompanyBasic.cs" />
     <Compile Include="Entities\IConfig.cs" />
-    <Compile Include="Entities\IConnectionString.cs" />
+    <Compile Include="Entities\IDBManager.cs" />
     <Compile Include="Entities\ICustomer.cs" />
     <Compile Include="Entities\ICustomerType.cs" />
     <Compile Include="Entities\ICustomProperty.cs" />

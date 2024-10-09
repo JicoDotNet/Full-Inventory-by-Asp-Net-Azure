@@ -13,13 +13,13 @@ using JicoDotNet.Inventory.Core.Entities;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
-    public class ProductLogic : ConnectionString
+    public class ProductLogic : DBManager
     {
-        public ProductLogic(ICommonRequestDto commonObj) : base(commonObj) { }
+        public ProductLogic(ICommonLogicHelper commonObj) : base(commonObj) { }
 
         public string TypeSet(IProductType productType)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
             var queryType = productType.ProductTypeId > 0 ? "UPDATE" : "INSERT";
 
             INameValuePairs nvp = new NameValuePairs
@@ -27,17 +27,17 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@ProductTypeId", productType.ProductTypeId),
                 new NameValuePair("@ProductTypeName", productType.ProductTypeName),
                 new NameValuePair("@Description", productType.Description),
-                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                 new NameValuePair("@QueryType", queryType)
             };
 
-            string returnDs = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetProductType]", nvp, "@OutParam").ToString();
+            string returnDs = _sqlDBAccess.DataManipulation(CommonLogicObj.SqlSchema + ".[spSetProductType]", nvp, "@OutParam").ToString();
             return returnDs;
         }
 
         public string TypeDeactivate(string productTypeId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
             string queryType = "DEACTIVE";
 
             INameValuePairs nvp = new NameValuePairs
@@ -45,17 +45,17 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@ProductTypeId", productTypeId),
 
 
-                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                 new NameValuePair("@QueryType", queryType)
             };
 
-            string returnDs = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetProductType]", nvp, "@OutParam").ToString();
+            string returnDs = _sqlDBAccess.DataManipulation(CommonLogicObj.SqlSchema + ".[spSetProductType]", nvp, "@OutParam").ToString();
             return returnDs;
         }
 
         public IList<ProductType> TypeGet()
         {
-            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetProductType]",
+            return new SqlDBAccess(CommonLogicObj.SqlConnectionString).GetData(CommonLogicObj.SqlSchema + ".[spGetProductType]",
                 new NameValuePairs
                 {
                     new NameValuePair("@QueryType", "ALL")
@@ -64,7 +64,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public string Set(IProduct product)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
             var queryType = product.ProductId > 0 ? "UPDATE" : "INSERT";
 
             INameValuePairs nvp = new NameValuePairs
@@ -91,24 +91,24 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@HasBatchNo", product.HasBatchNo),
                 new NameValuePair("@ProductImageUrl", product.ProductImageUrl),
                 new NameValuePair("@UnitOfMeasureId", product.UnitOfMeasureId),
-                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                 new NameValuePair("@QueryType", queryType)
             };
 
-            string returnDs = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetProduct]", nvp, "@OutParam").ToString();
+            string returnDs = _sqlDBAccess.DataManipulation(CommonLogicObj.SqlSchema + ".[spSetProduct]", nvp, "@OutParam").ToString();
             return returnDs;
         }
 
         public string Deactivate(string productId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
             string queryType = "DEACTIVE";
 
             INameValuePairs nvp = new NameValuePairs
             {
                 new NameValuePair("@ProductId", productId),
 
-                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                 new NameValuePair("@QueryType", queryType)
             };
             IList<string> nvpOut = new List<string>
@@ -116,13 +116,13 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 "@OutParam"
             };
 
-            var returnDs = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetProduct]", nvp, nvpOut);
+            var returnDs = _sqlDBAccess.DataManipulation(CommonLogicObj.SqlSchema + ".[spSetProduct]", nvp, nvpOut);
             return returnDs.FirstOrDefault()?.getValue?.ToString();
         }
 
         public IList<Product> Get(bool? isActive = null)
         {
-            IList<Product> products = new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetProduct]",
+            IList<Product> products = new SqlDBAccess(CommonLogicObj.SqlConnectionString).GetData(CommonLogicObj.SqlSchema + ".[spGetProduct]",
                 new NameValuePairs
                 {
                     new NameValuePair("@QueryType", "ALL")
@@ -139,7 +139,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public IList<Product> GetIn()
         {
-            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetProduct]",
+            return new SqlDBAccess(CommonLogicObj.SqlConnectionString).GetData(CommonLogicObj.SqlSchema + ".[spGetProduct]",
                 new NameValuePairs
                 {
                     new NameValuePair("@QueryType", "INTIME")
@@ -148,7 +148,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public IList<Product> GetOut()
         {
-            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetProduct]",
+            return new SqlDBAccess(CommonLogicObj.SqlConnectionString).GetData(CommonLogicObj.SqlSchema + ".[spGetProduct]",
                 new NameValuePairs
                 {
                     new NameValuePair("@QueryType", "OUTTIME")
@@ -159,9 +159,9 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             if (httpFileBase != null)
             {
-                BlobManager = new ExecuteBlobManager("MyCompany", CommonObj.NoSqlConnectionString);
+                BlobManager = new ExecuteBlobManager("MyCompany", CommonLogicObj.NoSqlConnectionString);
                 string[] dirs = { "Product" };
-                return BlobManager.UploadFile(httpFileBase, dirs, CommonObj.RequestId);
+                return BlobManager.UploadFile(httpFileBase, dirs, CommonLogicObj.RequestId);
             }
             return null;
         }

@@ -32,7 +32,7 @@ namespace JicoDotNet.Inventory.Controllers
         /// <summary>
         /// Constructor
         /// </summary>
-        protected BaseController() : base(new CommonRequestDto
+        protected BaseController() : base(new CommonLogicHelper()
         {
             SqlConnectionString = WebConfigDbConnection.SqlServer,
             NoSqlConnectionString = WebConfigDbConnection.AzureStorage,

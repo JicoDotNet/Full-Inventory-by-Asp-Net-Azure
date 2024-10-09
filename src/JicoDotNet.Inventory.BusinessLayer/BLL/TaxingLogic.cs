@@ -9,13 +9,13 @@ using System.Linq;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
-    public class TaxingLogic : ConnectionString
+    public class TaxingLogic : DBManager
     {
-        public TaxingLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public TaxingLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
 
         public List<TDSPay> GetTDSOuts()
         {
-            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetTDSPay]",
+            return new SqlDBAccess(CommonLogicObj.SqlConnectionString).GetData(CommonLogicObj.SqlSchema + ".[spGetTDSPay]",
                 new NameValuePairs
                 {
 
@@ -34,11 +34,11 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
                     new NameValuePair("@PayDate", tDSPay.PayDate),
                     new NameValuePair("@TDSPayId", tDSPay.TDSPayId),
-                    new NameValuePair("@RequestId", CommonObj.RequestId),
+                    new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                     new NameValuePair("@QueryType", "PAY")
                 };
-                _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-                return _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetTDSPay]", nvp, "@OutParam").ToString();
+                _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+                return _sqlDBAccess.DataManipulation(CommonLogicObj.SqlSchema + ".[spSetTDSPay]", nvp, "@OutParam").ToString();
             }
             catch (Exception ex)
             {
@@ -48,7 +48,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public List<TDSReceive> GetTDSIns()
         {
-            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetTDSReceive]",
+            return new SqlDBAccess(CommonLogicObj.SqlConnectionString).GetData(CommonLogicObj.SqlSchema + ".[spGetTDSReceive]",
                 new NameValuePairs
                 {
 
@@ -67,11 +67,11 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
                     new NameValuePair("@ReceivedDate", tDSReceive.ReceivedDate),
                     new NameValuePair("@TDSReceiveId", tDSReceive.TDSReceiveId),
-                    new NameValuePair("@RequestId", CommonObj.RequestId),
+                    new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                     new NameValuePair("@QueryType", "RECEIVE")
                 };
-                _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-                return _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetTDSReceive]", nvp, "@OutParam").ToString();
+                _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+                return _sqlDBAccess.DataManipulation(CommonLogicObj.SqlSchema + ".[spSetTDSReceive]", nvp, "@OutParam").ToString();
             }
             catch (Exception ex)
             {

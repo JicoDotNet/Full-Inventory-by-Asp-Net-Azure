@@ -9,13 +9,13 @@ using System.Linq;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
-    public class WareHouseLogic : ConnectionString
+    public class WareHouseLogic : DBManager
     {
-        public WareHouseLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public WareHouseLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
 
         public List<WareHouse> Get(bool? IsActive = null)
         {
-            List<WareHouse> wareHouses = new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetWareHouse]",
+            List<WareHouse> wareHouses = new SqlDBAccess(CommonLogicObj.SqlConnectionString).GetData(CommonLogicObj.SqlSchema + ".[spGetWareHouse]",
                 new NameValuePairs
                 {
 
@@ -34,7 +34,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public object Set(WareHouse wareHouse)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
             string qt = string.Empty;
             if (wareHouse.WareHouseId > 0)
                 qt = "UPDATE";
@@ -50,22 +50,22 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@WareHouseName", wareHouse.WareHouseName),
                 new NameValuePair("@IsRetailCounter", wareHouse.IsRetailCounter),
                 new NameValuePair("@Description", wareHouse.Description),
-                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                 new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetWareHouse]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(CommonLogicObj.SqlSchema + ".[spSetWareHouse]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
 
         public string Deactive(string wareHouseId)
         {
-            return new SqlDBAccess(CommonObj.SqlConnectionString)
-                .DataManipulation(GenericLogic.SqlSchema + ".[spSetWareHouse]", new NameValuePairs
+            return new SqlDBAccess(CommonLogicObj.SqlConnectionString)
+                .DataManipulation(CommonLogicObj.SqlSchema + ".[spSetWareHouse]", new NameValuePairs
                 {
                     new NameValuePair("@WareHouseId", wareHouseId),
 
-                    new NameValuePair("@RequestId", CommonObj.RequestId),
+                    new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                     new NameValuePair("@QueryType", "INACTIVE")
                 }, "@OutParam").ToString();
         }

@@ -10,14 +10,14 @@ using System.Data;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
-    public class PaymentLogic : ConnectionString
+    public class PaymentLogic : DBManager
     {
-        public PaymentLogic(ICommonRequestDto commonObj) : base(commonObj) { }
+        public PaymentLogic(ICommonLogicHelper commonObj) : base(commonObj) { }
 
         #region Payment Type
         public string TypeSet(PaymentType paymentType)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
             string qt = string.Empty;
             if (paymentType.PaymentTypeId > 0)
                 qt = "UPDATE";
@@ -31,17 +31,17 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@PaymentTypeName", paymentType.PaymentTypeName),
                 new NameValuePair("@Description", paymentType.Description),
 
-                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                 new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetPaymentType]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(CommonLogicObj.SqlSchema + ".[spSetPaymentType]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
 
         public string TypeDeactive(string paymentTypeId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
             string qt = "INACTIVE";
 
             NameValuePairs nvp = new NameValuePairs
@@ -49,17 +49,17 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@PaymentTypeId", paymentTypeId),
 
 
-                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                 new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetPaymentType]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(CommonLogicObj.SqlSchema + ".[spSetPaymentType]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
 
         public List<PaymentType> TypeGet()
         {
-            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetPaymentType]",
+            return new SqlDBAccess(CommonLogicObj.SqlConnectionString).GetData(CommonLogicObj.SqlSchema + ".[spGetPaymentType]",
                 new NameValuePairs
                 {
 
@@ -94,8 +94,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 });
                 if (payOutDtlTypes.Count > 0)
                 {
-                    return new SqlDBAccess(CommonObj.SqlConnectionString)
-                        .DataManipulation(GenericLogic.SqlSchema + ".[spSetPaymentOut]", new NameValuePairs
+                    return new SqlDBAccess(CommonLogicObj.SqlConnectionString)
+                        .DataManipulation(CommonLogicObj.SqlSchema + ".[spSetPaymentOut]", new NameValuePairs
                         {
 
 
@@ -120,7 +120,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                         new NameValuePair("@ChequeDate", paymentOut.ChequeDate),
                         new NameValuePair("@ChequeIFSC", paymentOut.ChequeIFSC),
                         new NameValuePair("@PaymentOutDetail", payOutDtlTypes.ToDataTable()),
-                        new NameValuePair("@RequestId", CommonObj.RequestId),
+                        new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                         new NameValuePair("@QueryType", "INSERT")
                         },
                         "@OutParam"
@@ -139,7 +139,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public List<PaymentOutDetail> GetPaymentOutDetails(long vendorId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
             NameValuePairs nvp = new NameValuePairs()
                 {
 
@@ -147,13 +147,13 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     new NameValuePair("@VendorId", vendorId),
                     new NameValuePair("@QueryType", "COMULTATIVE")
                 };
-            List<PaymentOutDetail> pntoutdtl = _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetPaymentOut]", nvp).ToList<PaymentOutDetail>();
+            List<PaymentOutDetail> pntoutdtl = _sqlDBAccess.GetData(CommonLogicObj.SqlSchema + ".[spGetPaymentOut]", nvp).ToList<PaymentOutDetail>();
             return pntoutdtl;
         }
 
         public List<PaymentOut> GetPaymentOuts()
         {
-            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetPaymentOut]",
+            return new SqlDBAccess(CommonLogicObj.SqlConnectionString).GetData(CommonLogicObj.SqlSchema + ".[spGetPaymentOut]",
                 new NameValuePairs
                 {
 
@@ -186,8 +186,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             });
             if (payInDtlTypes.Count > 0)
             {
-                return new SqlDBAccess(CommonObj.SqlConnectionString)
-                    .DataManipulation(GenericLogic.SqlSchema + ".[spSetPaymentIn]", new NameValuePairs
+                return new SqlDBAccess(CommonLogicObj.SqlConnectionString)
+                    .DataManipulation(CommonLogicObj.SqlSchema + ".[spSetPaymentIn]", new NameValuePairs
                     {
 
 
@@ -212,7 +212,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                         new NameValuePair("@ChequeDate", paymentIn.ChequeDate),
                         new NameValuePair("@ChequeIFSC", paymentIn.ChequeIFSC),
                         new NameValuePair("@PaymentInDetail", payInDtlTypes.ToDataTable()),
-                        new NameValuePair("@RequestId", CommonObj.RequestId),
+                        new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                         new NameValuePair("@QueryType", "INSERT")
                     },
                     "@OutParam"
@@ -226,7 +226,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public List<PaymentInDetail> GetPaymentInDetails(long customerId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
             NameValuePairs nvp = new NameValuePairs()
                 {
 
@@ -234,13 +234,13 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     new NameValuePair("@CustomerId", customerId),
                     new NameValuePair("@QueryType", "COMULTATIVE")
                 };
-            List<PaymentInDetail> pntIndtl = _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetPaymentIn]", nvp).ToList<PaymentInDetail>();
+            List<PaymentInDetail> pntIndtl = _sqlDBAccess.GetData(CommonLogicObj.SqlSchema + ".[spGetPaymentIn]", nvp).ToList<PaymentInDetail>();
             return pntIndtl;
         }
 
         public List<PaymentIn> GetPaymentIns()
         {
-            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetPaymentIn]",
+            return new SqlDBAccess(CommonLogicObj.SqlConnectionString).GetData(CommonLogicObj.SqlSchema + ".[spGetPaymentIn]",
                 new NameValuePairs
                 {
 

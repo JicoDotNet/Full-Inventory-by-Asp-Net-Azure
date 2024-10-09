@@ -10,7 +10,7 @@ namespace JicoDotNet.Inventory.Logging
 {
     public class AuditLogLogic
     {
-        public static void AuditLog(ILogger logData, ICommonRequestDto commonObj)
+        public static void AuditLog(ILogger logData, ICommonLogicHelper commonObj)
         {
             Task.Run(() =>
             {
@@ -33,7 +33,7 @@ namespace JicoDotNet.Inventory.Logging
             });
         }
 
-        public static void LoginLog(ICommonRequestDto commonObj)
+        public static void LoginLog(ICommonLogicHelper commonObj)
         {
             Task.Run(() =>
             {

@@ -15,8 +15,6 @@
 
         public static string DateMaskFormat => "dd/MM/yyyy";
 
-        public static string SqlSchema { get { return "[SingleIB]"; } }
-
         public static string StringGenerate(int lengths = 16)
         {
             NameGenerator();

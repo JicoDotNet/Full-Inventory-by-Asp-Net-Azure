@@ -10,9 +10,9 @@ using System.Data;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
-    public class StockTransferLogic : ConnectionString
+    public class StockTransferLogic : DBManager
     {
-        public StockTransferLogic(ICommonRequestDto commonObj) : base(commonObj) { }
+        public StockTransferLogic(ICommonLogicHelper commonObj) : base(commonObj) { }
 
         public string Set(StockTransfer stockTransfer)
         {
@@ -41,8 +41,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             }
             if (stDetailTypes.Count > 0)
             {
-                return new SqlDBAccess(CommonObj.SqlConnectionString)
-                    .DataManipulation(GenericLogic.SqlSchema + ".[spSetStockTransfer]", new NameValuePairs
+                return new SqlDBAccess(CommonLogicObj.SqlConnectionString)
+                    .DataManipulation(CommonLogicObj.SqlSchema + ".[spSetStockTransfer]", new NameValuePairs
                     {
 
 
@@ -51,7 +51,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                         new NameValuePair("@StockTransferNumber", "SKT-"),
                         new NameValuePair("@StockTransferDate", stockTransfer.StockTransferDate),
                         new NameValuePair("@Remarks", stockTransfer.Remarks),
-                        new NameValuePair("@RequestId", CommonObj.RequestId),
+                        new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                         new NameValuePair("@STDetail", stDetailTypes.ToDataTable()),
                         new NameValuePair("@QueryType", "INSERT")
                     }, "@OutParam"

@@ -7,9 +7,9 @@ using System.Web;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
-    public class SupportLogic : ConnectionString
+    public class SupportLogic : DBManager
     {
-        public SupportLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public SupportLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
 
         public Support Set(Support support, MemoryFile memory)
         {
@@ -21,10 +21,10 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 Convert.ToInt32(dt.TimeOfDay.TotalSeconds).ToString("X");
             support.TransactionDate = dt;
             support.IsActive = true;
-            support.RequestId = CommonObj.RequestId;
+            support.RequestId = CommonLogicObj.RequestId;
             if (memory != null)
-                support.ScreenshotImageUrl = new ExecuteBlobManager("MyCompany", CommonObj.NoSqlConnectionString).UploadFile(memory, new string[] { "Support", "Screenshot", support.UserId.ToString() }, CommonObj.RequestId);
-            TableManager = new ExecuteTableManager("Support", CommonObj.NoSqlConnectionString);
+                support.ScreenshotImageUrl = new ExecuteBlobManager("MyCompany", CommonLogicObj.NoSqlConnectionString).UploadFile(memory, new string[] { "Support", "Screenshot", support.UserId.ToString() }, CommonLogicObj.RequestId);
+            TableManager = new ExecuteTableManager("Support", CommonLogicObj.NoSqlConnectionString);
             TableManager.InsertEntity(support);
             return support;
         }

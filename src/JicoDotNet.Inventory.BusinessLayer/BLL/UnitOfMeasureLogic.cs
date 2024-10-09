@@ -9,13 +9,13 @@ using System.Linq;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
-    public class UnitOfMeasureLogic : ConnectionString
+    public class UnitOfMeasureLogic : DBManager
     {
-        public UnitOfMeasureLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public UnitOfMeasureLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
 
         public string Set(UnitOfMeasure unitOfMeasure)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
             string qt = string.Empty;
             if (unitOfMeasure.UnitOfMeasureId > 0)
                 qt = "UPDATE";
@@ -29,17 +29,17 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@UnitOfMeasureId", unitOfMeasure.UnitOfMeasureId),
                 new NameValuePair("@UnitOfMeasureName", unitOfMeasure.UnitOfMeasureName),
                 new NameValuePair("@Description", unitOfMeasure.Description),
-                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                 new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetUnitOfMeasure]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(CommonLogicObj.SqlSchema + ".[spSetUnitOfMeasure]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
 
         public string Deactive(string UnitOfMeasureId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
             string qt = "DEACTIVE";
 
             NameValuePairs nvp = new NameValuePairs
@@ -47,17 +47,17 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@UnitOfMeasureId", UnitOfMeasureId),
 
 
-                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                 new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetUnitOfMeasure]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(CommonLogicObj.SqlSchema + ".[spSetUnitOfMeasure]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
 
         public List<UnitOfMeasure> Get()
         {
-            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetUnitOfMeasure]",
+            return new SqlDBAccess(CommonLogicObj.SqlConnectionString).GetData(CommonLogicObj.SqlSchema + ".[spGetUnitOfMeasure]",
                 new NameValuePairs
                 {
 

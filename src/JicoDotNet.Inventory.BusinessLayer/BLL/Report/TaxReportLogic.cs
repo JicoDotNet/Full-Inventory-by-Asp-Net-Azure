@@ -10,13 +10,13 @@ using System.Linq;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
 {
-    public class TaxReportLogic : ConnectionString
+    public class TaxReportLogic : DBManager
     {
-        public TaxReportLogic(ICommonRequestDto commonObj) : base(commonObj) { }
+        public TaxReportLogic(ICommonLogicHelper commonObj) : base(commonObj) { }
 
         public List<ResponseGSTOutputResult> GSTOutputs(IRequestTaxParam tax)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
             NameValuePairs nvp = new NameValuePairs
             {
 
@@ -26,12 +26,12 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
                 new NameValuePair("@PaymentStatus", tax.PaymentStatus),
                 new NameValuePair("@QueryType", "OUTPUTGST")
             };
-            return _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spRpGST]", nvp).ToList<ResponseGSTOutputResult>();
+            return _sqlDBAccess.GetData(CommonLogicObj.SqlSchema + ".[spRpGST]", nvp).ToList<ResponseGSTOutputResult>();
         }
 
         public List<ResponseGSTInputResult> GSTInputs(IRequestTaxParam tax)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
             NameValuePairs nvp = new NameValuePairs
             {
 
@@ -41,7 +41,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
                 new NameValuePair("@PaymentStatus", tax.PaymentStatus),
                 new NameValuePair("@QueryType", "INPUTGST")
             };
-            return _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spRpGST]", nvp).ToList<ResponseGSTInputResult>();
+            return _sqlDBAccess.GetData(CommonLogicObj.SqlSchema + ".[spRpGST]", nvp).ToList<ResponseGSTInputResult>();
         }
     }
 }

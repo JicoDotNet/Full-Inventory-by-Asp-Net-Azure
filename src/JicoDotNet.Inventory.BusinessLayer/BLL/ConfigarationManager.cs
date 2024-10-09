@@ -8,9 +8,9 @@ using System.Linq;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
-    public class ConfigarationManager : ConnectionString
+    public class ConfigarationManager : DBManager
     {
-        public ConfigarationManager(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public ConfigarationManager(ICommonLogicHelper CommonObj) : base(CommonObj) { }
 
         public void SetConfig(Config config)
         {
@@ -19,13 +19,13 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             config.TransactionDate = GenericLogic.IstNow;
             config.IsActive = true;
 
-            TableManager = new ExecuteTableManager("Config", CommonObj.NoSqlConnectionString);
+            TableManager = new ExecuteTableManager("Config", CommonLogicObj.NoSqlConnectionString);
             TableManager.UpdateEntity(config);
         }
 
         public Config GetConfig()
         {
-            TableManager = new ExecuteTableManager("Config", CommonObj.NoSqlConnectionString);
+            TableManager = new ExecuteTableManager("Config", CommonLogicObj.NoSqlConnectionString);
             Config config = TableManager.RetrieveEntity<Config>("").FirstOrDefault();
             if (config == null)
             {

@@ -13,13 +13,13 @@ using System.Web;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
-    public class StockLogic : ConnectionString
+    public class StockLogic : DBManager
     {
-        public StockLogic(ICommonRequestDto commonObj) : base(commonObj) { }
+        public StockLogic(ICommonLogicHelper commonObj) : base(commonObj) { }
 
         public List<Stock> Get(Stock stock)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
 
             NameValuePairs nvp = new NameValuePairs()
             {
@@ -32,12 +32,12 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                                                            (object)stock.GRNOrShipmentDate : DBNull.Value),
                 new NameValuePair("@QueryType", "CURRENT")
             };
-            return _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetStock]", nvp).ToList<Stock>();
+            return _sqlDBAccess.GetData(CommonLogicObj.SqlSchema + ".[spGetStock]", nvp).ToList<Stock>();
         }
 
         public List<Stock> GetDetail(Stock stock)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
 
             NameValuePairs nvp = new NameValuePairs()
             {
@@ -49,7 +49,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
                 new NameValuePair("@QueryType", "DETAIL")
             };
-            DataSet dataSet = _sqlDBAccess.GetDataSet(GenericLogic.SqlSchema + ".[spGetStock]", nvp);
+            DataSet dataSet = _sqlDBAccess.GetDataSet(CommonLogicObj.SqlSchema + ".[spGetStock]", nvp);
             List<Stock> stocks = dataSet.Tables[0].ToList<Stock>();
             List<StockDetail> stockDetails = dataSet.Tables[1].ToList<StockDetail>();
 
@@ -64,7 +64,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public long TotalNonOpeningStockQuantity(long productId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
 
             NameValuePairs nvp = new NameValuePairs()
             {
@@ -76,7 +76,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             };
             try
             {
-                DataTable dt = _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetStock]", nvp);
+                DataTable dt = _sqlDBAccess.GetData(CommonLogicObj.SqlSchema + ".[spGetStock]", nvp);
                 if (dt != null)
                     if (dt.Rows.Count > 0)
                         if (dt.Rows[0]["ProductQuantity"] != null)
@@ -114,12 +114,12 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             });
             if (opnStkDetailTypes.Count > 0)
             {
-                return new SqlDBAccess(CommonObj.SqlConnectionString)
-                    .DataManipulation(GenericLogic.SqlSchema + ".[spSetOpeningStock]", new NameValuePairs
+                return new SqlDBAccess(CommonLogicObj.SqlConnectionString)
+                    .DataManipulation(CommonLogicObj.SqlSchema + ".[spSetOpeningStock]", new NameValuePairs
                     {
 
 
-                        new NameValuePair("@RequestId", CommonObj.RequestId),
+                        new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                         new NameValuePair("@OpeningStockDetail", opnStkDetailTypes.ToDataTable()),
                         new NameValuePair("@QueryType", "INSERT")
                     }, "@OutParam"
@@ -135,9 +135,9 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             if (httpFileBase != null)
             {
-                BlobManager = new ExecuteBlobManager("MyCompany", CommonObj.NoSqlConnectionString);
+                BlobManager = new ExecuteBlobManager("MyCompany", CommonLogicObj.NoSqlConnectionString);
                 string[] Dirs = { "BulkUpload", "ProductOpeningStock", ProductId };
-                return BlobManager.UploadFile(httpFileBase, Dirs, CommonObj.RequestId);
+                return BlobManager.UploadFile(httpFileBase, Dirs, CommonLogicObj.RequestId);
             }
             else
                 return null;

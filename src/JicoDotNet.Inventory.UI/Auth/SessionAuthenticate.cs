@@ -37,7 +37,7 @@ namespace System.Web.Mvc
                     #region Get Session Value & check exists or not
                     if (!string.IsNullOrEmpty(Token))
                     {
-                        sessionCredential = new TokenManagement(new CommonRequestDto
+                        sessionCredential = new TokenManagement(new CommonLogicHelper
                         {
                             NoSqlConnectionString = WebConfigDbConnection.AzureStorage,
                             SqlConnectionString = WebConfigDbConnection.SqlServer

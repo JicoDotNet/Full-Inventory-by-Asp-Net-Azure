@@ -68,8 +68,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseController.cs" />
-    <Compile Include="Entities\CommonRequestDto.cs" />
-    <Compile Include="Interfaces\ICommonRequestDto.cs" />
+    <Compile Include="Entities\CommonLogicHelper.cs" />
+    <Compile Include="Entities\DBManagerHelper.cs" />
+    <Compile Include="Interfaces\ICommonLogicHelper.cs" />
+    <Compile Include="Interfaces\IDBManagerHelper.cs" />
     <Compile Include="Interfaces\IHttpRequest.cs" />
     <Compile Include="Interfaces\ISessionCredential.cs" />
     <Compile Include="Interfaces\ISessionToken.cs" />
