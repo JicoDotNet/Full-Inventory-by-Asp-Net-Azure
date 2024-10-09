@@ -1,4 +1,4 @@
-﻿using JicoDotNet.Authentication.Entities;
+﻿using JicoDotNet.Validator.Entities;
 using JicoDotNet.Inventory.Core.Common.Auth;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
@@ -9,6 +9,7 @@ using System.IO;
 using System.Text;
 using System.Web.Mvc;
 using System;
+using JicoDotNet.Validator;
 
 namespace JicoDotNet.Inventory.Controllers
 {

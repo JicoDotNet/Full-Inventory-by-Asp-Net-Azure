@@ -1,5 +1,5 @@
 ﻿using DataAccess.AzureStorage;
-using JicoDotNet.Authentication.Interfaces;
+using JicoDotNet.Validator.Interfaces;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
 using Newtonsoft.Json;

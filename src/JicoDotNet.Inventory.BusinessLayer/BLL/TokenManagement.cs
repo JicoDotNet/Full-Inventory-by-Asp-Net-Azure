@@ -1,5 +1,5 @@
 ﻿using DataAccess.AzureStorage;
-using JicoDotNet.Authentication.Interfaces;
+using JicoDotNet.Validator.Interfaces;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Common.Auth;
 using System.Collections.Generic;

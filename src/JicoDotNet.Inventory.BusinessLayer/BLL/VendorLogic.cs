@@ -1,6 +1,6 @@
 ﻿using DataAccess.Sql;
 using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Authentication.Interfaces;
+using JicoDotNet.Validator.Interfaces;
 using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;

@@ -3,6 +3,8 @@ using JicoDotNet.Inventory.UI.Models;
 using System;
 using System.Web.Mvc;
 using JicoDotNet.Inventory.Controllers;
+using JicoDotNet.Validator;
+using Newtonsoft.Json;
 
 namespace JicoDotNet.Inventory.UI.Controllers
 {

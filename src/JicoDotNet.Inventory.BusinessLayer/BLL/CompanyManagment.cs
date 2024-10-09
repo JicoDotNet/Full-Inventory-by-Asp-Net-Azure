@@ -1,5 +1,5 @@
 ﻿using DataAccess.Sql;
-using JicoDotNet.Authentication.Interfaces;
+using JicoDotNet.Validator.Interfaces;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
 using JicoDotNet.Inventory.Core.Common;
 using System;

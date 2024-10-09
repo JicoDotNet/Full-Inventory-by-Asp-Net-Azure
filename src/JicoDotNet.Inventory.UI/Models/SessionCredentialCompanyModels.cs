@@ -1,4 +1,4 @@
-﻿using JicoDotNet.Authentication.Interfaces;
+﻿using JicoDotNet.Validator.Interfaces;
 using JicoDotNet.Inventory.Core.Entities;
 
 namespace JicoDotNet.Inventory.UI.Models

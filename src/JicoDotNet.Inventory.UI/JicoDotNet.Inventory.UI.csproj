@@ -45,6 +45,9 @@
     <Reference Include="DataAccess.AzureStorage, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DataAccess.AzureStorage.1.1.0\lib\net45\DataAccess.AzureStorage.dll</HintPath>
     </Reference>
+    <Reference Include="JicoDotNet.Validator, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\JicoDotNet.Inventory.Validator.1.0.0-beta7\lib\net48\JicoDotNet.Validator.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
     </Reference>
@@ -387,10 +390,6 @@
     <ProjectReference Include="..\DataAccess.Sql\DataAccess.Sql.csproj">
       <Project>{6c964b6a-45a0-4402-abfe-8e4aff85800b}</Project>
       <Name>DataAccess.Sql</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\JicoDotNet.Inventory.Authentication\JicoDotNet.Authentication.csproj">
-      <Project>{472decf0-7859-4a39-a226-170ce9d0e68a}</Project>
-      <Name>JicoDotNet.Authentication</Name>
     </ProjectReference>
     <ProjectReference Include="..\JicoDotNet.Inventory.BusinessLayer\JicoDotNet.Inventory.BusinessLayer.csproj">
       <Project>{922d9388-95ea-428e-a175-08bbb655d626}</Project>

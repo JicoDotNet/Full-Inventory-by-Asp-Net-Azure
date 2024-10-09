@@ -4,7 +4,7 @@ using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using JicoDotNet.Authentication.Interfaces;
+using JicoDotNet.Validator.Interfaces;
 
 namespace JicoDotNet.Inventory.Logging
 {

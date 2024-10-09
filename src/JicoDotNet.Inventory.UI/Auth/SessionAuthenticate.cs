@@ -1,10 +1,10 @@
-﻿using JicoDotNet.Authentication.Interfaces;
+﻿using JicoDotNet.Validator.Interfaces;
 using JicoDotNet.Inventory.BusinessLayer.BLL;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Common.Auth;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
-using JicoDotNet.Authentication.Entities;
+using JicoDotNet.Validator.Entities;
 using System.Web.Routing;
 
 namespace System.Web.Mvc

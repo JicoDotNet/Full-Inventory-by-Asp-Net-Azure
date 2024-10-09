@@ -1,5 +1,5 @@
 ﻿using JicoDotNet.Inventory.Core.Entities;
-using JicoDotNet.Authentication.Interfaces;
+using JicoDotNet.Validator.Interfaces;
 using System;
 
 namespace JicoDotNet.Inventory.Core.Common.Auth

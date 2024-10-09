@@ -1,6 +1,6 @@
 ﻿using JicoDotNet.Inventory.Core.Entities;
 using System;
-using JicoDotNet.Authentication.Interfaces;
+using JicoDotNet.Validator.Interfaces;
 
 namespace JicoDotNet.Inventory.Core.Models
 {
