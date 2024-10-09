@@ -67,7 +67,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseController.cs" />
+    <Compile Include="LicenseController.cs" />
     <Compile Include="Entities\CommonLogicHelper.cs" />
     <Compile Include="Entities\DBManagerHelper.cs" />
     <Compile Include="Interfaces\ICommonLogicHelper.cs" />
@@ -77,6 +77,7 @@
     <Compile Include="Interfaces\ISessionToken.cs" />
     <Compile Include="Interfaces\IToken.cs" />
     <Compile Include="Interfaces\IUser.cs" />
+    <Compile Include="License.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

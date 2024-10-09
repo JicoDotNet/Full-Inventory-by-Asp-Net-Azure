@@ -4,9 +4,10 @@
   "Domains": [
     "localhost"
   ],
+  "SqlSchema": "[SingleIB]",
   "licenseKey": "ABC123-XYZ789",
   "issueDate": "2024-10-09",
   "expiryDate": "2029-10-09",
   "appReleaseVersion": "4.2.0",
-  "licenseReleaseVersion": "1.0.0",
+  "licenseReleaseVersion": "1.0.0"
 }
