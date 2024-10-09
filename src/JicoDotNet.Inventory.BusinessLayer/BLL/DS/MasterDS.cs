@@ -10,7 +10,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class MasterDS : ConnectionString
     {
-        public MasterDS(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public MasterDS(ICommonLogicHelper CommonObj) : base(CommonObj) { }
 
         public HomeMasterCount CountHome()
         {

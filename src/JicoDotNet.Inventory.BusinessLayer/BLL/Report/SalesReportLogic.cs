@@ -12,7 +12,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
 {
     public class SalesReportLogic : ConnectionString
     {
-        public SalesReportLogic(ICommonRequestDto commonObj) : base(commonObj) { }
+        public SalesReportLogic(ICommonLogicHelper commonObj) : base(commonObj) { }
 
         public IList<ResponseCustomerSalesResult> CustomerWise(IRequestCustomerSalesParam customerSales)
         {

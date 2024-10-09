@@ -15,7 +15,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class StockLogic : ConnectionString
     {
-        public StockLogic(ICommonRequestDto commonObj) : base(commonObj) { }
+        public StockLogic(ICommonLogicHelper commonObj) : base(commonObj) { }
 
         public List<Stock> Get(Stock stock)
         {

@@ -14,7 +14,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class ProductLogic : ConnectionString
     {
-        public ProductLogic(ICommonRequestDto commonObj) : base(commonObj) { }
+        public ProductLogic(ICommonLogicHelper commonObj) : base(commonObj) { }
 
         public string TypeSet(IProductType productType)
         {

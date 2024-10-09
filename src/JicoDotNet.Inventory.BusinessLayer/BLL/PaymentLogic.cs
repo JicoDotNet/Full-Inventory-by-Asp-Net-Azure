@@ -12,7 +12,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class PaymentLogic : ConnectionString
     {
-        public PaymentLogic(ICommonRequestDto commonObj) : base(commonObj) { }
+        public PaymentLogic(ICommonLogicHelper commonObj) : base(commonObj) { }
 
         #region Payment Type
         public string TypeSet(PaymentType paymentType)

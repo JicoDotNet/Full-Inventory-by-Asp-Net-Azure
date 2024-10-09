@@ -9,7 +9,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class ConfigarationManager : ConnectionString
     {
-        public ConfigarationManager(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public ConfigarationManager(ICommonLogicHelper CommonObj) : base(CommonObj) { }
 
         public void SetConfig(Config config)
         {

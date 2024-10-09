@@ -11,7 +11,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class BranchLogic : ConnectionString
     {
-        public BranchLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public BranchLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
 
         public string Set(Branch branch)
         {

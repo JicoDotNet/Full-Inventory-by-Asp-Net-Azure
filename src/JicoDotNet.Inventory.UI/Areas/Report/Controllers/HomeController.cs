@@ -1,5 +1,6 @@
 ﻿using JicoDotNet.Inventory.BusinessLayer.BLL;
 using JicoDotNet.Inventory.UI.Report.Models;
+using JicoDotNet.Inventory.Controllers;
 using System;
 using System.Web.Mvc;
 

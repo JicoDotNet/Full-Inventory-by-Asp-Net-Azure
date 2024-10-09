@@ -10,7 +10,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class SMSBankLogic : ConnectionString
     {
-        public SMSBankLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public SMSBankLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
 
         public bool Deduction()
         {

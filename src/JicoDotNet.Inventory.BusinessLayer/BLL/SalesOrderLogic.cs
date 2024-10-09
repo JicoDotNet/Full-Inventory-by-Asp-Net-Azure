@@ -1,4 +1,5 @@
 ﻿using DataAccess.Sql;
+using JicoDotNet.Authentication.Interfaces;
 using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Custom;

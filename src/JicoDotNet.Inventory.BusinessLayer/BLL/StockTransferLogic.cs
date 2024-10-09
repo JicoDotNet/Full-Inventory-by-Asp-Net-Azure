@@ -12,7 +12,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class StockTransferLogic : ConnectionString
     {
-        public StockTransferLogic(ICommonRequestDto commonObj) : base(commonObj) { }
+        public StockTransferLogic(ICommonLogicHelper commonObj) : base(commonObj) { }
 
         public string Set(StockTransfer stockTransfer)
         {

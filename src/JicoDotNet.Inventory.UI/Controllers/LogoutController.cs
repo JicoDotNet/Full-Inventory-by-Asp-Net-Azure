@@ -1,7 +1,8 @@
 ﻿using JicoDotNet.Inventory.BusinessLayer.BLL;
 using System.Web.Mvc;
+using JicoDotNet.Inventory.Controllers;
 
-namespace JicoDotNet.Inventory.UIControllers
+namespace JicoDotNet.Inventory.UI.Controllers
 {
     public class LogoutController : BaseController
     {

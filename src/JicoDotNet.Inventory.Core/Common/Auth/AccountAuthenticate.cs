@@ -1,4 +1,5 @@
-﻿using JicoDotNet.Inventory.Core.Entities;
+﻿using JicoDotNet.Authentication.Interfaces;
+using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Enumeration;
 
 namespace JicoDotNet.Inventory.Core.Common.Auth

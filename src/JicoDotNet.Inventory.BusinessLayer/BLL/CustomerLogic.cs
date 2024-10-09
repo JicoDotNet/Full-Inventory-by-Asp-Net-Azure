@@ -11,7 +11,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class CustomerLogic : ConnectionString
     {
-        public CustomerLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public CustomerLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
 
         #region Customer Type
         public string TypeSet(CustomerType customerType)

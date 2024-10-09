@@ -1,4 +1,5 @@
 ﻿using DataAccess.AzureStorage;
+using JicoDotNet.Authentication.Interfaces;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
 using Newtonsoft.Json;
@@ -10,7 +11,7 @@ namespace JicoDotNet.Inventory.Logging
 {
     public class DataTrackingLogic
     {
-        public static void Set(object objectValue, ICommonRequestDto commonObj)
+        public static void Set(object objectValue, ICommonLogicHelper commonObj)
         {
             Task.Run(() =>
             {

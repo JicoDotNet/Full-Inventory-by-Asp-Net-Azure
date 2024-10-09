@@ -13,7 +13,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class PurchaseOrderLogic : ConnectionString
     {
-        public PurchaseOrderLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public PurchaseOrderLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
 
         #region PO Type
         public string TypeSet(PurchaseType purchaseType)

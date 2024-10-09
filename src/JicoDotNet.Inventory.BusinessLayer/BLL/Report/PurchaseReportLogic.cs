@@ -12,7 +12,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
 {
     public class PurchaseReportLogic : ConnectionString
     {
-        public PurchaseReportLogic(ICommonRequestDto commonObj) : base(commonObj) { }
+        public PurchaseReportLogic(ICommonLogicHelper commonObj) : base(commonObj) { }
 
         public List<ResponseVendorPurchaseResult> VendorWise(IRequestVendorPurchaseParam vendorPurchase)
         {

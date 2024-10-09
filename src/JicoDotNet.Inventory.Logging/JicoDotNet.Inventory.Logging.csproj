@@ -74,6 +74,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\JicoDotNet.Inventory.Authentication\JicoDotNet.Authentication.csproj">
+      <Project>{472decf0-7859-4a39-a226-170ce9d0e68a}</Project>
+      <Name>JicoDotNet.Authentication</Name>
+    </ProjectReference>
     <ProjectReference Include="..\JicoDotNet.Inventory.Common\JicoDotNet.Inventory.Common.csproj">
       <Project>{24E99C89-9B33-483D-8DF9-5A3C312FFF4A}</Project>
       <Name>JicoDotNet.Inventory.Common</Name>

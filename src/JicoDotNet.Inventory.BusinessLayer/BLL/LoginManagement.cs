@@ -11,7 +11,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class LoginManagement : ConnectionString
     {
-        public LoginManagement(ICommonRequestDto commonObj) : base(commonObj) { }
+        public LoginManagement(ICommonLogicHelper commonObj) : base(commonObj) { }
 
         public IAccountAuthentication Authenticate(LoginCredentials loginCredentials, string requestedIP)
         {

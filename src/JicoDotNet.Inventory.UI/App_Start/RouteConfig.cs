@@ -13,14 +13,14 @@ namespace JicoDotNet.Inventory.UI
                 name: "Error",
                 url: "Error/{id}",
                 defaults: new { controller = "Error", action = "Index", id = UrlParameter.Optional },
-                namespaces: new[] { "JicoDotNet.Inventory.UIControllers" }
+                namespaces: new[] { "JicoDotNet.Inventory.UI.Controllers" }
             );
 
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}/{id2}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional, id2 = UrlParameter.Optional },
-                namespaces: new[] { "JicoDotNet.Inventory.UIControllers" }
+                namespaces: new[] { "JicoDotNet.Inventory.UI.Controllers" }
             );
         }
     }

@@ -15,7 +15,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class BillLogic : ConnectionString
     {
-        public BillLogic(ICommonRequestDto commonObj) : base(commonObj) { }
+        public BillLogic(ICommonLogicHelper commonObj) : base(commonObj) { }
 
         #region Bill Type
         public string TypeSet(IBillType billType)

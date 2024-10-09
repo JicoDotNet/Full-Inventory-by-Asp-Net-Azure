@@ -1,6 +1,7 @@
 ﻿using DataAccess.AzureStorage;
 using DataAccess.Sql;
 using DataAccess.Sql.Entity;
+using JicoDotNet.Authentication.Interfaces;
 using JicoDotNet.Inventory.Core.Entities;
 using System;
 

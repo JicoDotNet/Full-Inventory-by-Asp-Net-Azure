@@ -11,7 +11,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class UnitOfMeasureLogic : ConnectionString
     {
-        public UnitOfMeasureLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public UnitOfMeasureLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
 
         public string Set(UnitOfMeasure unitOfMeasure)
         {

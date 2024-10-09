@@ -11,7 +11,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class VendorLogic : ConnectionString
     {
-        public VendorLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public VendorLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
 
         #region Vendor Type
         public string TypeSet(VendorType vendorType)

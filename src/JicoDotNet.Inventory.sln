@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JicoDotNet.Inventory.Loggin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JicoDotNet.Inventory.Common", "JicoDotNet.Inventory.Common\JicoDotNet.Inventory.Common.csproj", "{24E99C89-9B33-483D-8DF9-5A3C312FFF4A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JicoDotNet.Authentication", "JicoDotNet.Inventory.Authentication\JicoDotNet.Authentication.csproj", "{472DECF0-7859-4A39-A226-170CE9D0E68A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{24E99C89-9B33-483D-8DF9-5A3C312FFF4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24E99C89-9B33-483D-8DF9-5A3C312FFF4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24E99C89-9B33-483D-8DF9-5A3C312FFF4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{472DECF0-7859-4A39-A226-170CE9D0E68A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{472DECF0-7859-4A39-A226-170CE9D0E68A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{472DECF0-7859-4A39-A226-170CE9D0E68A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{472DECF0-7859-4A39-A226-170CE9D0E68A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

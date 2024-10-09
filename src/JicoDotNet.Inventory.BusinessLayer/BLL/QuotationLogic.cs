@@ -14,7 +14,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class QuotationLogic : ConnectionString
     {
-        public QuotationLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public QuotationLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
 
         public string SetForEntry(Quotation quotation)
         {

@@ -97,6 +97,7 @@
     <Compile Include="Custom\StockAdjustDetailType.cs" />
     <Compile Include="Custom\StockTransferDetailType.cs" />
     <Compile Include="Entities\IAccountAuthentication.cs" />
+    <Compile Include="Entities\ICommonRequestDto.cs" />
     <Compile Include="Entities\Inner\IBankCommon.cs" />
     <Compile Include="Entities\IBill.cs" />
     <Compile Include="Entities\IBillDetail.cs" />
@@ -123,7 +124,6 @@
     <Compile Include="Entities\ILogger.cs" />
     <Compile Include="Entities\ILoginLog.cs" />
     <Compile Include="Entities\Inner\IActivity.cs" />
-    <Compile Include="Entities\ICommonRequestDto.cs" />
     <Compile Include="Entities\IDtoHeader.cs" />
     <Compile Include="Entities\Inner\IDateRange.cs" />
     <Compile Include="Entities\Inner\IGstEntity.cs" />
@@ -150,10 +150,6 @@
     <Compile Include="Entities\ISalesOrder.cs" />
     <Compile Include="Entities\ISalesOrderDetail.cs" />
     <Compile Include="Entities\ISalesType.cs" />
-    <Compile Include="Entities\ISessionCredential.cs" />
-    <Compile Include="Entities\ISessionCredentials.cs" />
-    <Compile Include="Entities\ISessionToken.cs" />
-    <Compile Include="Entities\IToken.cs" />
     <Compile Include="Entities\IShipment.cs" />
     <Compile Include="Entities\IShipmentDetail.cs" />
     <Compile Include="Entities\IShipmentType.cs" />
@@ -170,7 +166,6 @@
     <Compile Include="Entities\ITDSPay.cs" />
     <Compile Include="Entities\ITDSReceive.cs" />
     <Compile Include="Entities\IUnitOfMeasure.cs" />
-    <Compile Include="Entities\IUser.cs" />
     <Compile Include="Entities\IVendor.cs" />
     <Compile Include="Entities\IVendorBank.cs" />
     <Compile Include="Entities\IVendorType.cs" />
@@ -277,14 +272,18 @@
     <Folder Include="Responses\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\DataAccess.Sql\DataAccess.Sql.csproj">
       <Project>{6c964b6a-45a0-4402-abfe-8e4aff85800b}</Project>
       <Name>DataAccess.Sql</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
+    <ProjectReference Include="..\JicoDotNet.Inventory.Authentication\JicoDotNet.Authentication.csproj">
+      <Project>{472decf0-7859-4a39-a226-170ce9d0e68a}</Project>
+      <Name>JicoDotNet.Authentication</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

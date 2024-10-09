@@ -1,4 +1,5 @@
 ﻿using DataAccess.Sql.Entity;
+using JicoDotNet.Authentication.Interfaces;
 
 namespace JicoDotNet.Inventory.Core.Entities
 {

@@ -13,7 +13,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class DraftManagement : ConnectionString
     {
-        public DraftManagement(ICommonRequestDto commonObj) : base(commonObj) { }
+        public DraftManagement(ICommonLogicHelper commonObj) : base(commonObj) { }
 
         public string SetAsDraft(object draftObject, EDraft draftType)
         {

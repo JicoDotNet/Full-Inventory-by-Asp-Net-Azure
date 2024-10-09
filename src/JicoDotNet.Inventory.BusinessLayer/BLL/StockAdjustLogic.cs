@@ -12,7 +12,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class StockAdjustLogic : ConnectionString
     {
-        public StockAdjustLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public StockAdjustLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
 
         public List<StockAdjustReason> GetReasons()
         {

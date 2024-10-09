@@ -14,7 +14,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class ShipmentLogic : ConnectionString
     {
-        public ShipmentLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public ShipmentLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
 
         #region Payment Type
         public string TypeSet(ShipmentType shipmentType)

@@ -8,6 +8,8 @@ using JicoDotNet.Inventory.Logging;
 using JicoDotNet.Inventory.UI.Models;
 using System;
 using System.Web.Mvc;
+using JicoDotNet.Inventory.Controllers;
+using JicoDotNet.Authentication.Interfaces;
 
 namespace JicoDotNet.Inventory.UI.Controllers
 {

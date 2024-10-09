@@ -1,7 +1,7 @@
 ﻿using JicoDotNet.Inventory.UI.Models;
 using System.Web.Mvc;
 
-namespace JicoDotNet.Inventory.UIControllers
+namespace JicoDotNet.Inventory.UI.Controllers
 {
     public class ErrorController : Controller
     {

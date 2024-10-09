@@ -1,4 +1,5 @@
 ﻿using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Authentication.Interfaces;
 using Microsoft.WindowsAzure.Storage.Table;
 using System;
 

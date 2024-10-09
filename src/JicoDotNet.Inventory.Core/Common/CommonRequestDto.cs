@@ -1,8 +1,9 @@
-﻿using JicoDotNet.Inventory.Core.Entities;
+﻿using JicoDotNet.Authentication.Interfaces;
+using JicoDotNet.Inventory.Core.Entities;
 
 namespace JicoDotNet.Inventory.Core.Common
 {
-    public class CommonRequestDto : ICommonRequestDto
+    public class CommonRequestDto : ICommonLogicHelper
     {
         public string RequestId { get; set; }
 

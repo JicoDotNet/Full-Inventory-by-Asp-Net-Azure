@@ -11,7 +11,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class TaxingLogic : ConnectionString
     {
-        public TaxingLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public TaxingLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
 
         public List<TDSPay> GetTDSOuts()
         {

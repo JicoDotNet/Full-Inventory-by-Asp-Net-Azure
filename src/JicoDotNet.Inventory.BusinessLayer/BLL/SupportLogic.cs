@@ -9,7 +9,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class SupportLogic : ConnectionString
     {
-        public SupportLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public SupportLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
 
         public Support Set(Support support, MemoryFile memory)
         {

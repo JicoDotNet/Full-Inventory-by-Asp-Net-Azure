@@ -1,5 +1,6 @@
 using System;
 using System.Globalization;
+using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -20,7 +21,7 @@ namespace JicoDotNet.Inventory.UI
         }
     }
 
-    public class CustomDateModelBinder : DefaultModelBinder
+    internal sealed class CustomDateModelBinder : DefaultModelBinder
     {
         public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
@@ -35,7 +36,6 @@ namespace JicoDotNet.Inventory.UI
                     && value != null
                     && !string.IsNullOrEmpty(value.AttemptedValue))
                 {
-                    //displayFormat = displayFormat.Replace("{0:", string.Empty).Replace("}", string.Empty);
                     if (DateTime.TryParseExact(value.AttemptedValue,
                         displayFormat,
                         CultureInfo.InvariantCulture,
@@ -56,4 +56,20 @@ namespace JicoDotNet.Inventory.UI
             return base.BindModel(controllerContext, bindingContext);
         }
     }
+
+    #region Cookie Details
+    /** Cookie Variable Documentation
+     * |----------------------|-------------------------|
+     * |         Name         |         Purpose         |
+     * |----------------------|-------------------------|
+     * |.AspNetCore.Session   |Session Person           |
+     * |----------------------|-------------------------|
+     * |.AspNetCore.Company   |Session Company          |
+     * |----------------------|-------------------------|
+     * |ASP.NET_SessionId     |Anti Forgery Token       |
+     * |----------------------|-------------------------|
+     * |JSESSIONID            |Session- default(asp.net)|
+     * |----------------------|-------------------------|
+     **/
+    #endregion
 }

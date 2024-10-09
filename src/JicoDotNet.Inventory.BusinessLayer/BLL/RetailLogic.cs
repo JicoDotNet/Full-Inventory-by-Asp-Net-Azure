@@ -14,7 +14,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class RetailLogic : ConnectionString
     {
-        public RetailLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public RetailLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
 
         public long Set(RetailSales retailSales, ICompanyBasic currentCompany,
             Dictionary<string, object> dynamicFormValue, out short ReturnType)

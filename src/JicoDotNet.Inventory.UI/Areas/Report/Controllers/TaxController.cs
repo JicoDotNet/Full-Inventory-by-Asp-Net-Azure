@@ -3,6 +3,7 @@ using JicoDotNet.Inventory.Core.Report;
 using JicoDotNet.Inventory.UI.Report.Models;
 using System;
 using System.Web.Mvc;
+using JicoDotNet.Inventory.Controllers;
 
 namespace JicoDotNet.Inventory.UI.Areas.Report.Controllers
 {

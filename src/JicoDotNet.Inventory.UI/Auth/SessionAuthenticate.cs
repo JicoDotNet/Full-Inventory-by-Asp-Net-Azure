@@ -1,4 +1,5 @@
-﻿using JicoDotNet.Inventory.BusinessLayer.BLL;
+﻿using JicoDotNet.Authentication.Interfaces;
+using JicoDotNet.Inventory.BusinessLayer.BLL;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Common.Auth;
 using JicoDotNet.Inventory.Core.Entities;

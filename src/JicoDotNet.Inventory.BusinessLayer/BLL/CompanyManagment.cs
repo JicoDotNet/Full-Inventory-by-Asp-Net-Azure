@@ -11,7 +11,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class CompanyManagment : ConnectionString
     {
-        public CompanyManagment(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public CompanyManagment(ICommonLogicHelper CommonObj) : base(CommonObj) { }
         public string BankSet(CompanyBank companyBank)
         {
             _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);

@@ -11,7 +11,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class WareHouseLogic : ConnectionString
     {
-        public WareHouseLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public WareHouseLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
 
         public List<WareHouse> Get(bool? IsActive = null)
         {

@@ -250,6 +250,7 @@
     <Content Include="Areas\Report\Views\Tax\_PartialGstOutput.cshtml" />
     <Content Include="Areas\Report\Views\Tax\_ViewNotApplicable.cshtml" />
     <Content Include="Areas\Report\Views\web.config" />
+    <Content Include="license.lic" />
     <None Include="packages.config" />
     <Content Include="Views\Account\Auth.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
@@ -386,6 +387,10 @@
     <ProjectReference Include="..\DataAccess.Sql\DataAccess.Sql.csproj">
       <Project>{6c964b6a-45a0-4402-abfe-8e4aff85800b}</Project>
       <Name>DataAccess.Sql</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JicoDotNet.Inventory.Authentication\JicoDotNet.Authentication.csproj">
+      <Project>{472decf0-7859-4a39-a226-170ce9d0e68a}</Project>
+      <Name>JicoDotNet.Authentication</Name>
     </ProjectReference>
     <ProjectReference Include="..\JicoDotNet.Inventory.BusinessLayer\JicoDotNet.Inventory.BusinessLayer.csproj">
       <Project>{922d9388-95ea-428e-a175-08bbb655d626}</Project>

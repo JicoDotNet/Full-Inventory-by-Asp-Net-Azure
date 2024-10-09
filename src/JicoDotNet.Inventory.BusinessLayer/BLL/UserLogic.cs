@@ -6,7 +6,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class UserLogic : ConnectionString
     {
-        public UserLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public UserLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
 
         public User Get()
         {

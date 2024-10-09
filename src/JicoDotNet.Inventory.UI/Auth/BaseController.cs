@@ -4,11 +4,14 @@ using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
 using JicoDotNet.Inventory.Logging;
 using JicoDotNet.Inventory.UI.Models;
+using JicoDotNet.Authentication.Interfaces;
 using Newtonsoft.Json;
 using System.IO;
 using System.Text;
+using System.Web.Mvc;
+using System;
 
-namespace System.Web.Mvc
+namespace JicoDotNet.Inventory.Controllers
 {
     public abstract class BaseController : Controller
     {
@@ -23,7 +26,7 @@ namespace System.Web.Mvc
 
         protected IReturnObject ReturnMessage { get; set; }
         protected IInvalidModel InvalidModelObject { get; set; }
-        protected ICommonRequestDto LogicHelper { get; }
+        protected ICommonLogicHelper LogicHelper { get; }
 
 
 
@@ -81,7 +84,7 @@ namespace System.Web.Mvc
                 AuditLogMaintain(new Logger
                 {
                     IPAddress = GetRequestedIp(),
-                    DNS = Net.Dns.GetHostName(),
+                    DNS = System.Net.Dns.GetHostName(),
                     HttpVerbs = _filteringContext.HttpContext.Request.HttpMethod,
                     Browser = _filteringContext.HttpContext.Request.Browser.Browser,
                     BrowserType = _filteringContext.HttpContext.Request.Browser.Type,
@@ -138,10 +141,10 @@ namespace System.Web.Mvc
 
         protected string GetRequestedIp()
         {
-            string ip = Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+            string ip = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
             if (string.IsNullOrEmpty(ip))
             {
-                ip = Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+                ip = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
                 if (string.IsNullOrEmpty(ip))
                     ip = null;
             }
@@ -286,21 +289,5 @@ namespace System.Web.Mvc
                 // ignored
             }
         }
-
-        #region Cookie Details
-        /** Cookie Variable Documentation
-         * |----------------------|-------------------------|
-         * |         Name         |         Purpose         |
-         * |----------------------|-------------------------|
-         * |.AspNetCore.Session   |Session Person           |
-         * |----------------------|-------------------------|
-         * |.AspNetCore.Company   |Session Company          |
-         * |----------------------|-------------------------|
-         * |ASP.NET_SessionId     |Anti Forgery Token       |
-         * |----------------------|-------------------------|
-         * |JSESSIONID            |Session- default(asp.net)|
-         * |----------------------|-------------------------|
-         **/
-        #endregion
     }
 }

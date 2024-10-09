@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System;
 using System.Linq;
 using System.Web.Mvc;
+using JicoDotNet.Inventory.Controllers;
 
 namespace JicoDotNet.Inventory.UI.Controllers
 {

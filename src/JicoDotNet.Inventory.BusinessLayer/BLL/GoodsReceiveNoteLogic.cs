@@ -12,7 +12,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
     public class GoodsReceiveNoteLogic : ConnectionString
     {
-        public GoodsReceiveNoteLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public GoodsReceiveNoteLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
 
         public List<GoodsReceiveNote> GetGRNs()
         {
