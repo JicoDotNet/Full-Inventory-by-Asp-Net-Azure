@@ -33,7 +33,7 @@
                     <div class="card-body">
                         <div class="float-md-right">
                             <print class="btn"><i class="fas fa-print"></i> Print</print>
-                            <pdf class="btn"><i class="far fa-file-pdf"></i> PDF Download</pdf>
+                            <pdf disabled class="btn"><i class="far fa-file-pdf"></i> PDF Download</pdf>
                             <a href="@Url.Action("Sales", "Retail", new { id = string.Empty })" class="btn btn-danger"> <i class="fas fa-times"></i> Close</a>
                         </div>
                     </div>
@@ -81,14 +81,6 @@
                                                                             {
                                                                                 @Model._companyAddress.Address<br />
                                                                             }
-                                                                            @if (!string.IsNullOrEmpty(Model._companyAddress.Address2))
-                                                                            {
-                                                                                @Model._companyAddress.Address2<br />
-                                                                            }
-                                                                            @if (!string.IsNullOrEmpty(Model._companyAddress.Address3))
-                                                                            {
-                                                                                @Model._companyAddress.Address3<br />
-                                                                            }
                                                                             @if (!string.IsNullOrEmpty(Model._companyAddress.City))
                                                                             {
                                                                                 @Model._companyAddress.City
@@ -116,12 +108,6 @@
                                                                             {
                                                                                 <span>
                                                                                     Mobile: @Model._companyAddress.Mobile <br />
-                                                                                </span>
-                                                                            }
-                                                                            @if (!string.IsNullOrEmpty(Model._companyAddress.AlternateMobile))
-                                                                            {
-                                                                                <span>
-                                                                                    Alternate Phone: @Model._companyAddress.AlternateMobile <br />
                                                                                 </span>
                                                                             }
                                                                             @if (!string.IsNullOrEmpty(Model._companyAddress.Email))
@@ -542,18 +528,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div style="width: 100%; display: flex; flex-wrap: wrap; font-family: Arial; color: #3c3c3c; font-size: 8pt; line-height: 1.2; ">
-                                    <div style="width: 100%; flex: 0 0 100%; text-align: center; margin: 3px 0;">
-                                        <div style="font-style: italic;">This is online software generated. ITEM Blob</div>
-                                        <div style="font-style: italic;">Online Inventory/Billing Software: <a style="color: #3c3c3c; text-decoration:none;" target="_blank" href="http://itemblob.in">https://itemblob.in</a></div>
-                                    </div>
-                                </div>
+
+                                @Html.Partial("_PartialPrintSignature")
+
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="d-none">
-                    @Html.Partial("_PartialPrintSignature")
                 </div>
                 <div class="card">
                     <div class="card-body">

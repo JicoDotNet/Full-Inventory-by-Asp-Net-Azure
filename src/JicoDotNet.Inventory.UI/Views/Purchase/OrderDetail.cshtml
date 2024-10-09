@@ -48,13 +48,13 @@
                                             @if (Model._purchaseOrder.GoodsReceivedStatus == null)
                                             {
                                                 <a href="@Url.Action("Amendment", "Purchase", new { id = Html.UrlIdEncrypt(Model._purchaseOrder.PurchaseOrderId, false), id2 = "Quantity" })" class="dropdown-item">
-                                                    <i class="fas fa-sort-numeric-up mr-1"></i> Quantity Wise
+                                                    <i class="fas fa-sort-numeric-up mr-1"></i> Quantity
                                                 </a>
                                             }
                                             @if (Model._purchaseOrder.BilledStatus == null)
                                             {
                                                 <a href="@Url.Action("Amendment", "Purchase", new { id = Html.UrlIdEncrypt(Model._purchaseOrder.PurchaseOrderId, false), id2 = "Price" })" class="dropdown-item">
-                                                    <i class="fas fa-rupee-sign mr-1"></i> Price Wise
+                                                    <i class="fas fa-rupee-sign mr-1"></i> Price
                                                 </a>
                                             }
                                         </div>
