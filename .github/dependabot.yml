@@ -3,4 +3,4 @@ updates:
   - package-ecosystem: "nuget"
     directory: "/" # Adjust the directory path if necessary
     schedule:
-      interval: "daily"
+      interval: "weekly"
