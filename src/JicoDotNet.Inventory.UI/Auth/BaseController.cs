@@ -262,49 +262,17 @@ namespace JicoDotNet.Inventory.Controllers
         {
             try
             {
-                string message = string.Empty;
-                message += Environment.NewLine;
-                message += "-------------------------------------------------\n";
-                message += $"Time: {GenericLogic.IstNow:dd/MMM/yyyy hh:mm:ss tt}";
-                message += Environment.NewLine;
-                message += $"RequestId: {LogicHelper?.RequestId}";
-                message += Environment.NewLine;
-                message += "-------------------------------------------------";
-                message += Environment.NewLine;
-                message += $"Message: {ex?.Message}";
-                message += Environment.NewLine;
-                message += $"StackTrace: {ex?.StackTrace}";
-                message += Environment.NewLine;
-                message += $"Source: {ex?.Source}";
-                message += Environment.NewLine;
-                message += $"TargetSite: {ex?.TargetSite}";
-                message += Environment.NewLine;
-                message += $"HResult: {ex?.HResult}";
-                message += Environment.NewLine;
-                message += $"HttpMethod: {Request?.HttpMethod}";
-                message += Environment.NewLine;
-                message +=
-                    $"Path: {Request?.HttpMethod + " :-> /" + ControllerName + "/" + ActionName + "/" + UrlParameterId + "/" + UrlParameterId2}";
-                message += Environment.NewLine;
-                message += $"Data: {JsonConvert.SerializeObject(ex?.Data)}";
-                message += Environment.NewLine;
-                message += $"InnerException: {JsonConvert.SerializeObject(ex?.InnerException)}";
-                message += Environment.NewLine;
-                message += "___________________________________________________________\n";
-                message += "===========================================================\n";
-                message += Environment.NewLine;
-
-                string path = Server.MapPath("~/ErrorLog");
-                if (!Directory.Exists(path))
+                ErrorLogLogic.Logging(new ErrorLog()
                 {
-                    Directory.CreateDirectory(path);
-                }
-                path += "/Error.log";
-                using (StreamWriter writer = new StreamWriter(path, true))
-                {
-                    writer.WriteLine(message);
-                    writer.Close();
-                }
+                    Exception = ex,
+                    ActionName = ActionName,
+                    ControllerName = ControllerName,
+                    FolderPath = Server.MapPath("~/ErrorLog"),
+                    HttpMethod = Request?.HttpMethod,
+                    RequestId = LogicHelper?.RequestId,
+                    UrlParameterId = UrlParameterId,
+                    UrlParameterId2 = UrlParameterId2
+                });
             }
             catch
             {

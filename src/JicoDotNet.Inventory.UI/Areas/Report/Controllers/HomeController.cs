@@ -17,8 +17,7 @@ namespace JicoDotNet.Inventory.UI.Areas.Report.Controllers
             }
             catch (Exception ex)
             {
-                ErrorLoggingToView(ex);
-                return RedirectToAction("Index", "Error", new { Area = string.Empty });
+                return ErrorLoggingToView(ex);
             }
         }
 

@@ -121,6 +121,7 @@
     <Compile Include="Entities\IAccountAuthentication.cs" />
     <Compile Include="Entities\ICommonLogicHelper.cs" />
     <Compile Include="Entities\IDBManagerHelper.cs" />
+    <Compile Include="Entities\IErrorLog.cs" />
     <Compile Include="Entities\Inner\IBankCommon.cs" />
     <Compile Include="Entities\IBill.cs" />
     <Compile Include="Entities\IBillDetail.cs" />
@@ -219,6 +220,7 @@
     <Compile Include="Models\Draft.cs" />
     <Compile Include="Models\DS\HomeMasterCount.cs" />
     <Compile Include="Models\DS\ReportMasterCount.cs" />
+    <Compile Include="Models\ErrorLog.cs" />
     <Compile Include="Models\GoodsReceiveNote.cs" />
     <Compile Include="Models\GoodsReceiveNoteDetail.cs" />
     <Compile Include="Models\GoodsReceiveNoteDirect.cs" />

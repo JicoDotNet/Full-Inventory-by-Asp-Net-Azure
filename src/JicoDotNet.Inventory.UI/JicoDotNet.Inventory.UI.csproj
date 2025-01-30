@@ -249,7 +249,6 @@
     <Content Include="Areas\Report\Views\Tax\_PartialGstOutput.cshtml" />
     <Content Include="Areas\Report\Views\Tax\_ViewNotApplicable.cshtml" />
     <Content Include="Areas\Report\Views\web.config" />
-    <Content Include="ErrorLog\Error.log" />
     <None Include="packages.config" />
     <Content Include="Views\Account\Auth.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
@@ -381,6 +380,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="ErrorLog\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccess.Sql\DataAccess.Sql.csproj">
