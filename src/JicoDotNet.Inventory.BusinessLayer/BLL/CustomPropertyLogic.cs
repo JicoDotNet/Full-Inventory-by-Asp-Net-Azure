@@ -1,4 +1,5 @@
 ﻿using DataAccess.AzureStorage;
+using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Enumeration;
@@ -12,9 +13,9 @@ using System.Text.RegularExpressions;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
-    public class CustomPropertyLogic : ConnectionString
+    public class CustomPropertyLogic : DBManager
     {
-        public CustomPropertyLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public CustomPropertyLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
 
         public string SetMaster(CustomProperty customProperty, ECustomPropertyFor propertyFor)
         {
@@ -24,7 +25,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 && !string.IsNullOrEmpty(customProperty.LabelName)
                 && propertyFor != ECustomPropertyFor.None)
                 {
-                    TableManager = new ExecuteTableManager("PropertyMaster", CommonObj.NoSqlConnectionString);
+                    TableManager = new ExecuteTableManager("PropertyMaster", CommonLogicObj.NoSqlConnectionString);
 
                     customProperty.PartitionKey = "MyCompany";
 
@@ -65,7 +66,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             try
             {
-                TableManager = new ExecuteTableManager("PropertyMaster", CommonObj.NoSqlConnectionString);
+                TableManager = new ExecuteTableManager("PropertyMaster", CommonLogicObj.NoSqlConnectionString);
                 string qry = "PropertyFor eq '" + propertyFor.ToString() + "'" +
                     " and IsActive eq true ";
                 if (IsPrintable)
@@ -84,7 +85,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             try
             {
-                TableManager = new ExecuteTableManager("PropertyMaster", CommonObj.NoSqlConnectionString);
+                TableManager = new ExecuteTableManager("PropertyMaster", CommonLogicObj.NoSqlConnectionString);
                 string qry = "IsActive eq true ";
                 return TableManager.RetrieveEntity<CustomProperty>(qry);
             }
@@ -98,7 +99,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             try
             {
-                TableManager = new ExecuteTableManager("PropertyMaster", CommonObj.NoSqlConnectionString);
+                TableManager = new ExecuteTableManager("PropertyMaster", CommonLogicObj.NoSqlConnectionString);
                 string q = "RowKey eq '" + RowKey + "' " +
                     " and PropertyFor eq '" + propertyFor.ToString() + "'" +
                     " and IsActive eq true";
@@ -118,7 +119,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 if (customProperty != null)
                 {
                     customProperty.IsActive = false;
-                    TableManager = new ExecuteTableManager("PropertyMaster", CommonObj.NoSqlConnectionString);
+                    TableManager = new ExecuteTableManager("PropertyMaster", CommonLogicObj.NoSqlConnectionString);
                     TableManager.UpdateEntity(customProperty);
                     return true;
                 }
@@ -206,7 +207,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 }
 
                 /* Other Fields */
-                Prop = new EntityProperty(CommonObj.RequestId);
+                Prop = new EntityProperty(CommonLogicObj.RequestId);
                 dynamicProperty.Properties["RequestId"] = Prop;
 
                 Prop = new EntityProperty(GenericLogic.IstNow);
@@ -229,7 +230,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     dynamicProperty.Properties["IdentityValue"] = Prop;
                 }
 
-                TableManager = new ExecuteTableManager("PropertyData", CommonObj.NoSqlConnectionString);
+                TableManager = new ExecuteTableManager("PropertyData", CommonLogicObj.NoSqlConnectionString);
                 TableManager.InsertEntity(dynamicProperty);
             }
             catch (Exception ex)
@@ -249,7 +250,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 List<CustomProperty> customProperties = GetMaster(propertyFor, true);
                 if (customProperties != null && customProperties.Count > 0)
                 {
-                    TableManager = new ExecuteTableManager("PropertyData", CommonObj.NoSqlConnectionString);
+                    TableManager = new ExecuteTableManager("PropertyData", CommonLogicObj.NoSqlConnectionString);
                     string qry = " PropertyFor eq '" + propertyFor.ToString() + "' " +
                         " and IsActive eq true ";
                     if (Identity.HasValue)

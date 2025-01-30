@@ -10,13 +10,13 @@ using System.Linq;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
 {
-    public class SalesReportLogic : ConnectionString
+    public class SalesReportLogic : DBManager
     {
-        public SalesReportLogic(ICommonRequestDto commonObj) : base(commonObj) { }
+        public SalesReportLogic(ICommonLogicHelper commonObj) : base(commonObj) { }
 
         public IList<ResponseCustomerSalesResult> CustomerWise(IRequestCustomerSalesParam customerSales)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            
             NameValuePairs nvp = new NameValuePairs
             {
 
@@ -28,12 +28,12 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
                 new NameValuePair("@ForRetail", customerSales.ForRetail),
                 new NameValuePair("@QueryType", "BYCUSTOMER")
             };
-            return _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spRpSales]", nvp).ToList<ResponseCustomerSalesResult>();
+            return _sqlDBAccess.GetData(CommonLogicObj.SqlSchema + ".[spRpSales]", nvp).ToList<ResponseCustomerSalesResult>();
         }
 
         public IList<ResponseProductSalesResult> ProductWise(IRequestProductSalesParam productSales)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            
             NameValuePairs nvp = new NameValuePairs
             {
 
@@ -45,7 +45,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
                 new NameValuePair("@ForRetail", productSales.ForRetail),
                 new NameValuePair("@QueryType", "BYPRODUCT")
             };
-            return _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spRpSales]", nvp).ToList<ResponseProductSalesResult>();
+            return _sqlDBAccess.GetData(CommonLogicObj.SqlSchema + ".[spRpSales]", nvp).ToList<ResponseProductSalesResult>();
         }
     }
 }

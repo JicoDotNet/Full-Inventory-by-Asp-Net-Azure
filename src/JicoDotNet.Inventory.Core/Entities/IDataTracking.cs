@@ -2,7 +2,7 @@
 
 namespace JicoDotNet.Inventory.Core.Entities
 {
-    public interface IDataTracking : IHRequest, IActivity
+    public interface IDataTracking : IHttpRequest, IActivity
     {
         string Data { get; set; }
     }

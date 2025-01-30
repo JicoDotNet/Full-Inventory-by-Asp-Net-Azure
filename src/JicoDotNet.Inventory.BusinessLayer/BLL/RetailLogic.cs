@@ -9,12 +9,13 @@ using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using JicoDotNet.Inventory.Core.Entities;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
-    public class RetailLogic : ConnectionString
+    public class RetailLogic : DBManager
     {
-        public RetailLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public RetailLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
 
         public long Set(RetailSales retailSales, ICompanyBasic currentCompany,
             Dictionary<string, object> dynamicFormValue, out short ReturnType)
@@ -74,7 +75,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 // SO & Shipment
                 try
                 {
-                    _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+                    
                     NameValuePairs nvp = new NameValuePairs()
                     {
                         // Customer
@@ -113,16 +114,16 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                         // Common
                         new NameValuePair("@Remarks", retailSales.Remarks),
 
-                        new NameValuePair("@RequestId", CommonObj.RequestId),
+                        new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                         new NameValuePair("@QueryType", "INSERT")
                     };
-                    SalesOrderId = Convert.ToInt64(_sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetRetailSales]", nvp, "@OutParam"));
+                    SalesOrderId = Convert.ToInt64(_sqlDBAccess.DataManipulation(CommonLogicObj.SqlSchema + ".[spSetRetailSales]", nvp, "@OutParam"));
                 }
                 catch (Exception ex) { throw ex; }
 
                 try
                 {
-                    SalesOrder salesOrder = new SalesOrderLogic(CommonObj).GetForDetail(SalesOrderId);
+                    SalesOrder salesOrder = new SalesOrderLogic(CommonLogicObj).GetForDetail(SalesOrderId);
                     if (salesOrder != null && salesOrder.SalesOrderId > 0)
                     {
                         Invoice invoice = new Invoice
@@ -165,12 +166,12 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                             );
                         }
 
-                        InvoiceLogic invoiceLogic = new InvoiceLogic(CommonObj);
+                        InvoiceLogic invoiceLogic = new InvoiceLogic(CommonLogicObj);
                         invoice = invoiceLogic.Set(invoice);
                         ReturnType = 2;
 
                         // Custom Property Set
-                        CustomPropertyLogic propertyLogic = new CustomPropertyLogic(CommonObj);
+                        CustomPropertyLogic propertyLogic = new CustomPropertyLogic(CommonLogicObj);
                         propertyLogic.SetValue(ECustomPropertyFor.RetailSalesInvoice, dynamicFormValue, invoice.InvoiceId, invoice.InvoiceNumber);
                         //
 

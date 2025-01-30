@@ -1,15 +1,16 @@
 ﻿using JicoDotNet.Inventory.BusinessLayer.BLL;
-using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Inventory.Core.Common.Auth;
-using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
 using System.Web.Routing;
+using JicoDotNet.Inventory.Core.Common;
+using JicoDotNet.Inventory.Core.Entities;
 
 namespace System.Web.Mvc
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = false)]
     public class SessionAuthenticate : ActionFilterAttribute
     {
+        private ISessionCredential sessionCredential { get; set; }
+
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             #region RouteValueDictionary for Logout
@@ -25,31 +26,30 @@ namespace System.Web.Mvc
 
             try
             {
-                #region Cookie Manage For Session
-                ISessionCredential sessionCredential = filterContext.RequestContext.HttpContext.GetCookie<SessionCredential>(".AspNetCore.Session");
-                string Token;
-                if (sessionCredential != null)
-                {
-                    Token = sessionCredential?.Token;
+                base.OnActionExecuting(filterContext);
 
-                    #region Get Session Value & check exists or not
-                    if (!string.IsNullOrEmpty(Token))
+                #region Cookie Manage For Session
+                sessionCredential = filterContext.RequestContext.HttpContext.GetCookie<SessionToken>(".AspNetCore.Session");
+                if (sessionCredential != null && string.IsNullOrEmpty(sessionCredential.Token))
+                {
+                    sessionCredential = null;
+                }
+                #endregion
+
+                #region Get Session Value & check exists or not
+                if (sessionCredential != null && !string.IsNullOrEmpty(sessionCredential.Token))
+                {
+                    if (new TokenManager(new CommonLogicHelper
                     {
-                        sessionCredential = new TokenManagement(new CommonRequestDto
-                        {
-                            NoSqlConnectionString = WebConfigDbConnection.AzureStorage,
-                            SqlConnectionString = WebConfigDbConnection.SqlServer
-                        }).GetCredential(Token);
-                        if (sessionCredential != null)
-                        {
-                            if (filterContext.RequestContext.HttpContext.GetCookie<CompanyBasic>(".AspNetCore.Company") != null)
-                            {
-                                base.OnActionExecuting(filterContext);
-                                return;
-                            }
+                        NoSqlConnectionString = WebConfigDbConnection.AzureStorage,
+                        SqlConnectionString = WebConfigDbConnection.SqlServer
+                    }).IsValid(sessionCredential.Token, sessionCredential.UserEmail))
+                    {
+                        if (filterContext.RequestContext.HttpContext.GetCookie<CompanyBasic>(".AspNetCore.Company") != null)
+                        {                            
+                            return;
                         }
                     }
-                    #endregion
                 }
                 #endregion
             }

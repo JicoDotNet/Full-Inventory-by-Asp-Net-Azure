@@ -2,9 +2,9 @@
 
 namespace JicoDotNet.Inventory.Core.Entities
 {
-    public interface IConnectionString
+    public interface IDBManagerHelper
     {
-        ICommonRequestDto CommonObj { get; }
+        ICommonLogicHelper CommonLogicObj { get; }
         ISqlDBAccess _sqlDBAccess { get; }
     }
 }

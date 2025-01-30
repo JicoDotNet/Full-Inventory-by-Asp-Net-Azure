@@ -5,8 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using JicoDotNet.Inventory.Controllers;
 
-namespace JicoDotNet.Inventory.UIControllers
+namespace JicoDotNet.Inventory.UI.Controllers
 {
     public class PaymentController : BaseController
     {
@@ -295,8 +296,7 @@ namespace JicoDotNet.Inventory.UIControllers
                 }
                 catch (Exception ex)
                 {
-                    ErrorLoggingToView(ex);
-                    return RedirectToAction("Index", "Error");
+                    return ErrorLoggingToView(ex);
                 }
             }
             catch (Exception ex)

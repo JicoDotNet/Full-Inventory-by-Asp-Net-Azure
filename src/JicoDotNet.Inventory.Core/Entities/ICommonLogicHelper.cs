@@ -2,9 +2,10 @@
 
 namespace JicoDotNet.Inventory.Core.Entities
 {
-    public interface ICommonRequestDto : IHRequest
+    public interface ICommonLogicHelper : IHttpRequest
     {
         string Token { get; set; }
+        string SqlSchema { get; }
         string SqlConnectionString { get; set; }
         object NoSqlConnectionString { get; set; }
     }

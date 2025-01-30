@@ -1,7 +1,8 @@
 ﻿using JicoDotNet.Inventory.BusinessLayer.BLL;
 using System.Web.Mvc;
+using JicoDotNet.Inventory.Controllers;
 
-namespace JicoDotNet.Inventory.UIControllers
+namespace JicoDotNet.Inventory.UI.Controllers
 {
     public class LogoutController : BaseController
     {
@@ -10,7 +11,7 @@ namespace JicoDotNet.Inventory.UIControllers
             if (SessionPerson != null)
                 if (!string.IsNullOrEmpty(SessionPerson.UserEmail))
                 {
-                    TokenManagement token = new TokenManagement(LogicHelper);
+                    TokenManager token = new TokenManager(LogicHelper);
                     token.Delete(SessionPerson.UserEmail);
                 }
             AbandonSession();

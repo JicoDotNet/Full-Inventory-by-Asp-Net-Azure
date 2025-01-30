@@ -1,8 +1,10 @@
-﻿using Microsoft.WindowsAzure.Storage.Table;
+﻿
+
+using JicoDotNet.Inventory.Core.Entities.Inner;
 
 namespace JicoDotNet.Inventory.Core.Entities
 {
-    public interface ISessionCredential : ITableEntity, IToken
+    public interface ISessionCredential : IToken, IUserCore
     {
     }
 }

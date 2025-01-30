@@ -1,4 +1,5 @@
 ﻿using DataAccess.Sql;
+using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models.DS;
@@ -8,13 +9,13 @@ using System.Linq;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
-    public class MasterDS : ConnectionString
+    public class MasterDS : DBManager
     {
-        public MasterDS(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public MasterDS(ICommonLogicHelper CommonObj) : base(CommonObj) { }
 
         public HomeMasterCount CountHome()
         {
-            return new SqlDBAccess(CommonObj.SqlConnectionString).GetFirstOrDefaultData(GenericLogic.SqlSchema + ".[spDsMaster]",
+            return new SqlDBAccess(CommonLogicObj.SqlConnectionString).GetFirstOrDefaultData(CommonLogicObj.SqlSchema + ".[spDsMaster]",
                 new NameValuePairs
                 {
                     new NameValuePair("@QueryType", "HOMECOUNT")
@@ -23,7 +24,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public ReportMasterCount CountReport()
         {
-            return new SqlDBAccess(CommonObj.SqlConnectionString).GetFirstOrDefaultData(GenericLogic.SqlSchema + ".[spDsMaster]",
+            return new SqlDBAccess(CommonLogicObj.SqlConnectionString).GetFirstOrDefaultData(CommonLogicObj.SqlSchema + ".[spDsMaster]",
                 new NameValuePairs
                 {
                     new NameValuePair("@QueryType", "REPORTCOUNT")

@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
-    public class SMSBankLogic : ConnectionString
+    public class SMSBankLogic : DBManager
     {
-        public SMSBankLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public SMSBankLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
 
         public bool Deduction()
         {
             string Query = " IsActive eq true";
-            TableManager = new ExecuteTableManager("SMSBank", CommonObj.NoSqlConnectionString);
+            TableManager = new ExecuteTableManager("SMSBank", CommonLogicObj.NoSqlConnectionString);
             SMSBank sMSBank = TableManager.RetrieveEntity<SMSBank>(Query).FirstOrDefault();
             if (sMSBank != null && sMSBank.Balance > 0)
             {
@@ -31,7 +31,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             Task.Run(() =>
             {
                 string Query = " IsActive eq true";
-                TableManager = new ExecuteTableManager("SMSBank", CommonObj.NoSqlConnectionString);
+                TableManager = new ExecuteTableManager("SMSBank", CommonLogicObj.NoSqlConnectionString);
                 SMSBank sMSBank = TableManager.RetrieveEntity<SMSBank>(Query).FirstOrDefault();
                 if (sMSBank != null)
                 {
@@ -47,7 +47,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                         RowKey = GenericLogic.IstNow.TimeStamp().ToString("X"),
                         Balance = Balance,
                         IsActive = true,
-                        RequestId = CommonObj.RequestId,
+                        RequestId = CommonLogicObj.RequestId,
                         TransactionDate = GenericLogic.IstNow
                     };
                     TableManager.InsertEntity(sMSBank);
@@ -59,7 +59,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public SMSBank Get()
         {
             string Query = " IsActive eq true";
-            TableManager = new ExecuteTableManager("SMSBank", CommonObj.NoSqlConnectionString);
+            TableManager = new ExecuteTableManager("SMSBank", CommonLogicObj.NoSqlConnectionString);
             return TableManager.RetrieveEntity<SMSBank>(Query).FirstOrDefault();
         }
     }

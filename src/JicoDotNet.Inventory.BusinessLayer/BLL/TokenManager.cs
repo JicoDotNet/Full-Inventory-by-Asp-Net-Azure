@@ -1,15 +1,17 @@
 ﻿using DataAccess.AzureStorage;
+using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Common.Auth;
-using JicoDotNet.Inventory.Core.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System;
+using JicoDotNet.Inventory.Core.Entities;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
-    public class TokenManagement : ConnectionString
+    public class TokenManager : DBManager
     {
-        public TokenManagement(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public TokenManager(ICommonLogicHelper CommonObj) : base(CommonObj) { }
 
         /// <summary>
         /// Token Creation
@@ -22,10 +24,11 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             try
             {
-                ExecuteTableManager tableManager = new ExecuteTableManager("SessionToken", CommonObj.NoSqlConnectionString);
-                credential.PartitionKey = "MyCompany";
-                credential.RowKey = credential.UserEmail;
-                tableManager.InsertEntity(credential as SessionCredential);
+                ExecuteTableManager tableManager = new ExecuteTableManager("SessionToken", CommonLogicObj.NoSqlConnectionString);
+                SessionCredential sessionCredential = credential as SessionCredential;
+                sessionCredential.PartitionKey = "MyCompany";
+                sessionCredential.RowKey = credential.UserEmail;
+                tableManager.InsertEntity(sessionCredential);
                 return true;
             }
             catch
@@ -34,13 +37,15 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             }
         }
 
-        public ISessionCredential GetCredential(string token)
+        public bool IsValid(string token, string email)
         {
-            TableManager = new ExecuteTableManager("SessionToken", CommonObj.NoSqlConnectionString);
-            List<SessionCredential> credentials = TableManager.RetrieveEntity<SessionCredential>("Token eq '" + token + "'");
+            TableManager = new ExecuteTableManager("SessionToken", CommonLogicObj.NoSqlConnectionString);
+            List<SessionCredential> credentials = TableManager.RetrieveEntity<SessionCredential>(
+                                        "Token eq '" + token + "' " +
+                                        "and UserEmail eq '" + email + "'");
             if (credentials.Count == 1)
-                return credentials[0];
-            return null;
+                return true;
+            return false;
         }
 
         /// <summary>
@@ -50,7 +55,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         /// <returns></returns>
         public IList<SessionCredential> GetUser(string userEmail)
         {
-            ExecuteTableManager tableManager = new ExecuteTableManager("SessionToken", CommonObj.NoSqlConnectionString);
+            ExecuteTableManager tableManager = new ExecuteTableManager("SessionToken", CommonLogicObj.NoSqlConnectionString);
             IList<SessionCredential> credentials = tableManager
                 .RetrieveEntity<SessionCredential>("UserEmail eq '" + userEmail + "'");
             foreach (ISessionCredential sessionCredential in credentials)
@@ -64,7 +69,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             Task.Run(() =>
             {
-                TableManager = new ExecuteTableManager("SessionToken", CommonObj.NoSqlConnectionString);
+                TableManager = new ExecuteTableManager("SessionToken", CommonLogicObj.NoSqlConnectionString);
                 List<SessionCredential> credentials = TableManager.RetrieveEntity<SessionCredential>("UserEmail eq '" + UserEmail + "'");
                 foreach (SessionCredential sc in credentials)
                 {

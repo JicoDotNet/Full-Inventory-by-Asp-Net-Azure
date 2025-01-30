@@ -4,9 +4,9 @@ using JicoDotNet.Inventory.Core.Models;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
-    public class UserLogic : ConnectionString
+    public class UserLogic : DBManager
     {
-        public UserLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public UserLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
 
         public User Get()
         {

@@ -4,7 +4,7 @@ using System;
 
 namespace JicoDotNet.Inventory.Core.Models
 {
-    public class StockAdjustDetail : IStockAdjustDetail, IActivity, IStatus, IHRequest
+    public class StockAdjustDetail : IStockAdjustDetail, IActivity, IStatus, IHttpRequest
     {
         public long StockAdjustDetailId { get; set; }
 

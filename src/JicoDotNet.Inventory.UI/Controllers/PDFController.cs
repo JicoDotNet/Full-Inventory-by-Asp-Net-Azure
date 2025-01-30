@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace JicoDotNet.Inventory.UIControllers
+namespace JicoDotNet.Inventory.UI.Controllers
 {
     public class PDFController : Controller
     {

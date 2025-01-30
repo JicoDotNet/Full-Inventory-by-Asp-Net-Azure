@@ -1,17 +1,18 @@
-﻿using JicoDotNet.Inventory.BusinessLayer.Common;
+﻿using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Common.Auth;
-using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Enumeration;
 using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Net;
+using JicoDotNet.Inventory.Core.Entities;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
-    public class LoginManagement : ConnectionString
+    public class LoginManagement : DBManager
     {
-        public LoginManagement(ICommonRequestDto commonObj) : base(commonObj) { }
+        public LoginManagement(ICommonLogicHelper commonObj) : base(commonObj) { }
 
         public IAccountAuthentication Authenticate(LoginCredentials loginCredentials, string requestedIP)
         {
@@ -67,7 +68,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 string _token = GenericLogic.IstNow.TimeStamp().ToString("X");
                 accountAuthenticate.credential.Token = _token;
                 accountAuthenticate.credential.TokenDate = GenericLogic.IstNow;
-                bool IsTokenCreated = new TokenManagement(CommonObj).SetToken(accountAuthenticate.credential);
+                bool IsTokenCreated = new TokenManager(CommonLogicObj).SetToken(accountAuthenticate.credential);
                 #endregion
 
                 // Duplicate Login check

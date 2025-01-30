@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace JicoDotNet.Inventory.Core.Models
 {
-    public class PurchaseOrder : IPurchaseOrder, IBranch, IVendor, IActivity, IStatus, IHRequest
+    public class PurchaseOrder : IPurchaseOrder, IBranch, IVendor, IActivity, IStatus, IHttpRequest
     {
         public long PurchaseOrderId { get; set; }
 

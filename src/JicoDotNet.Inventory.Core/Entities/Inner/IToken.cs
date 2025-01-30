@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace JicoDotNet.Inventory.Core.Entities
+namespace JicoDotNet.Inventory.Core.Entities.Inner
 {
-    public interface IToken : IUser
+    public interface IToken : IUserCore
     {
         string Token { get; set; }
         DateTime? TokenDate { get; set; }

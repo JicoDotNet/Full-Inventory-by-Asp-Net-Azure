@@ -12,9 +12,9 @@ using System.Data;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
-    public class QuotationLogic : ConnectionString
+    public class QuotationLogic : DBManager
     {
-        public QuotationLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public QuotationLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
 
         public string SetForEntry(Quotation quotation)
         {
@@ -47,7 +47,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 });
                 if (quotationDetailTypes.Count > 0)
                 {
-                    _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+                    
                     NameValuePairs nvp = new NameValuePairs
                     {
                         new NameValuePair("@ComapnyIsGSTRegistered", GenericLogic.IsValidGSTNumber(WebConfigAppSettingsAccess.GSTNumber)),
@@ -61,10 +61,10 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                         new NameValuePair("@TandC", quotation.TandC),
                         new NameValuePair("@Remarks", quotation.Remarks),
                         new NameValuePair("@QuotationDetails", quotationDetailTypes.ToDataTable()),
-                        new NameValuePair("@RequestId", CommonObj.RequestId),
+                        new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                         new NameValuePair("@QueryType", "ENTRY")
                     };
-                    ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetQuotation]",
+                    ReturnDS = _sqlDBAccess.DataManipulation(CommonLogicObj.SqlSchema + ".[spSetQuotation]",
                         nvp, "@OutParam").ToString();
                 }
                 return ReturnDS;
@@ -77,19 +77,19 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public List<Quotation> GetQuotations()
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            
             NameValuePairs nvp = new NameValuePairs()
                 {
 
 
                     new NameValuePair("@QueryType", "LIST")
                 };
-            return _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spGetQuotation]", nvp).ToList<Quotation>();
+            return _sqlDBAccess.GetData(CommonLogicObj.SqlSchema + ".[spGetQuotation]", nvp).ToList<Quotation>();
         }
 
         public Quotation GetForDetail(long QuotationId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            
             NameValuePairs nvp = new NameValuePairs()
             {
 
@@ -97,7 +97,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@QuotationId", QuotationId),
                 new NameValuePair("@QueryType", "DETAIL")
             };
-            DataSet ds = _sqlDBAccess.GetDataSet(GenericLogic.SqlSchema + ".[spGetQuotation]", nvp);
+            DataSet ds = _sqlDBAccess.GetDataSet(CommonLogicObj.SqlSchema + ".[spGetQuotation]", nvp);
             Quotation quotation;
             quotation = ds.Tables[0].FirstOrDefault<Quotation>();
             if (quotation != null)
@@ -117,14 +117,14 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             try
             {
-                _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+                
                 NameValuePairs nvp = new NameValuePairs
                 {
                     new NameValuePair("@QuotationId", QuotationId),
-                    new NameValuePair("@RequestId", CommonObj.RequestId),
+                    new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                     new NameValuePair("@QueryType", "DELETE")
                 };
-                string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetQuotation]", nvp, "@OutParam").ToString();
+                string ReturnDS = _sqlDBAccess.DataManipulation(CommonLogicObj.SqlSchema + ".[spSetQuotation]", nvp, "@OutParam").ToString();
                 return ReturnDS;
             }
             catch (Exception ex)

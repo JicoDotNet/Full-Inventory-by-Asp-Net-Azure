@@ -10,13 +10,13 @@ using System.Data;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
-    public class StockAdjustLogic : ConnectionString
+    public class StockAdjustLogic : DBManager
     {
-        public StockAdjustLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public StockAdjustLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
 
         public List<StockAdjustReason> GetReasons()
         {
-            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetStockAdjustReason]",
+            return new SqlDBAccess(CommonLogicObj.SqlConnectionString).GetData(CommonLogicObj.SqlSchema + ".[spGetStockAdjustReason]",
                 new NameValuePairs
                 {
 
@@ -50,8 +50,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             });
             if (stockAdjustDetailTypes.Count > 0)
             {
-                _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
-                string returnString = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetStockAdjust]", new NameValuePairs
+                
+                string returnString = _sqlDBAccess.DataManipulation(CommonLogicObj.SqlSchema + ".[spSetStockAdjust]", new NameValuePairs
                     {
                         new NameValuePair("@StockAdjustNumber", "SKA-"),
 
@@ -63,7 +63,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                                                                 (object)stockAdjust.StockAdjustDate : DBNull.Value),
                         new NameValuePair("@WareHouseId", stockAdjust.WareHouseId),
                         new NameValuePair("@Remarks", stockAdjust.Remarks),
-                        new NameValuePair("@RequestId", CommonObj.RequestId),
+                        new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                         new NameValuePair("@STDetail", stockAdjustDetailTypes.ToDataTable()),
                         new NameValuePair("@QueryType", "INSERT")
                     },

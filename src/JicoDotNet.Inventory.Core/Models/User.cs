@@ -1,5 +1,6 @@
 ﻿using JicoDotNet.Inventory.Core.Entities;
 
+
 namespace JicoDotNet.Inventory.Core.Models
 {
     public class User : IUser

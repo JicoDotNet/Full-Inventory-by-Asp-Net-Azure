@@ -1,14 +1,16 @@
-﻿using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Inventory.Core.Common.Auth;
-using JicoDotNet.Inventory.Core.Entities;
+﻿using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
 using JicoDotNet.Inventory.Logging;
 using JicoDotNet.Inventory.UI.Models;
 using Newtonsoft.Json;
 using System.IO;
 using System.Text;
+using System.Web.Mvc;
+using System;
+using System.Web;
+using JicoDotNet.Inventory.Core.Common;
 
-namespace System.Web.Mvc
+namespace JicoDotNet.Inventory.Controllers
 {
     public abstract class BaseController : Controller
     {
@@ -18,13 +20,11 @@ namespace System.Web.Mvc
         protected string UrlParameterId { get; set; }
         protected string UrlParameterId2 { get; set; }
 
-        protected ISessionCredential SessionPerson { get; private set; }
         protected ICompanyBasic SessionCompany { get; private set; }
-
         protected IReturnObject ReturnMessage { get; set; }
         protected IInvalidModel InvalidModelObject { get; set; }
-        protected ICommonRequestDto LogicHelper { get; }
-
+        public ISessionCredential SessionPerson { get; private set; }
+        protected ICommonLogicHelper LogicHelper { get; private set; }
 
 
         private ActionExecutingContext _filteringContext;
@@ -34,9 +34,9 @@ namespace System.Web.Mvc
         /// <summary>
         /// Constructor
         /// </summary>
-        protected BaseController()
+        protected BaseController() 
         {
-            LogicHelper = new CommonRequestDto
+            LogicHelper = new CommonLogicHelper()
             {
                 SqlConnectionString = WebConfigDbConnection.SqlServer,
                 NoSqlConnectionString = WebConfigDbConnection.AzureStorage,
@@ -61,7 +61,7 @@ namespace System.Web.Mvc
                 #endregion
 
                 #region Cookie Manage for Session Person
-                SessionPerson = this.HttpContext.GetCookie<SessionCredential>(".AspNetCore.Session");
+                SetSessionPerson(HttpContext);
                 #endregion
 
                 #region Cookie Manage for Company
@@ -81,7 +81,7 @@ namespace System.Web.Mvc
                 AuditLogMaintain(new Logger
                 {
                     IPAddress = GetRequestedIp(),
-                    DNS = Net.Dns.GetHostName(),
+                    DNS = System.Net.Dns.GetHostName(),
                     HttpVerbs = _filteringContext.HttpContext.Request.HttpMethod,
                     Browser = _filteringContext.HttpContext.Request.Browser.Browser,
                     BrowserType = _filteringContext.HttpContext.Request.Browser.Type,
@@ -108,7 +108,7 @@ namespace System.Web.Mvc
             }
             catch (Exception e)
             {
-                ErrorLoggingToView(e);
+                ErrorLogging(e);
                 _filteringContext.Result =
                                     RedirectToAction("Index", "Error", new { returnUrl = _filteringContext.HttpContext.Request.RawUrl, Ex = e });
             }
@@ -125,6 +125,31 @@ namespace System.Web.Mvc
             base.OnActionExecuted(_filteredContext);
         }
 
+        protected void SetSessionPerson(HttpContextBase httpContext)
+        {
+            #region Cookie Manage for Session Person
+            ISessionToken sessionToken = httpContext.GetCookie<SessionToken>(".AspNetCore.Session");
+            if (sessionToken != null && sessionToken.Key == "InventoryApp")
+            {
+                SessionPerson = sessionToken;
+            }
+
+            #endregion
+        }
+
+        protected void SetSessionCookie(ISessionCredential credential)
+        {
+            SessionToken sessionToken = new SessionToken
+            {
+                Key = "InventoryApp",
+                Token = credential.Token,
+                TokenDate = credential.TokenDate,
+                UserEmail = credential.UserEmail,
+                UserFullName = credential.UserFullName,
+            };
+            HttpContext.SetCookie(".AspNetCore.Session", sessionToken);
+        }   
+
         protected void AbandonSession()
         {
             Session.Clear();
@@ -138,10 +163,10 @@ namespace System.Web.Mvc
 
         protected string GetRequestedIp()
         {
-            string ip = Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+            string ip = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
             if (string.IsNullOrEmpty(ip))
             {
-                ip = Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+                ip = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
                 if (string.IsNullOrEmpty(ip))
                     ip = null;
             }
@@ -188,7 +213,7 @@ namespace System.Web.Mvc
 
         protected RedirectToRouteResult ErrorLoggingToView(Exception ex)
         {
-            TrackErrorLogging(ex);
+            ErrorLogging(ex);
             TempData["Error"] = new ErrorModels
             {
                 ErrorStatus = 500,
@@ -201,7 +226,7 @@ namespace System.Web.Mvc
 
         protected PartialViewResult ErrorLoggingToPartial(Exception ex)
         {
-            TrackErrorLogging(ex);
+            ErrorLogging(ex);
             return PartialView("_PartialErrorBlock", new ErrorModels
             {
                 ErrorStatus = 500,
@@ -213,7 +238,7 @@ namespace System.Web.Mvc
 
         protected JsonResult ErrorLoggingToJson(Exception ex)
         {
-            TrackErrorLogging(ex);
+            ErrorLogging(ex);
             JsonReturnModels model = new JsonReturnModels
             {
                 _isSuccess = false,
@@ -230,77 +255,24 @@ namespace System.Web.Mvc
 
         protected void ErrorLogging(Exception ex)
         {
-            TrackErrorLogging(ex);
-        }
-
-        private void TrackErrorLogging(Exception ex)
-        {
             try
             {
-                string message = string.Empty;
-                message += Environment.NewLine;
-                message += "-------------------------------------------------\n";
-                message += $"Time: {GenericLogic.IstNow:dd/MMM/yyyy hh:mm:ss tt}";
-                message += Environment.NewLine;
-                message += $"RequestId: {LogicHelper?.RequestId}";
-                message += Environment.NewLine;
-                message += "-------------------------------------------------";
-                message += Environment.NewLine;
-                message += $"Message: {ex?.Message}";
-                message += Environment.NewLine;
-                message += $"StackTrace: {ex?.StackTrace}";
-                message += Environment.NewLine;
-                message += $"Source: {ex?.Source}";
-                message += Environment.NewLine;
-                message += $"TargetSite: {ex?.TargetSite}";
-                message += Environment.NewLine;
-                message += $"HResult: {ex?.HResult}";
-                message += Environment.NewLine;
-                message += $"HttpMethod: {Request?.HttpMethod}";
-                message += Environment.NewLine;
-                message +=
-                    $"Path: {Request?.HttpMethod + " :-> /" + ControllerName + "/" + ActionName + "/" + UrlParameterId + "/" + UrlParameterId2}";
-                message += Environment.NewLine;
-                message += $"Data: {JsonConvert.SerializeObject(ex?.Data)}";
-                message += Environment.NewLine;
-                message += $"InnerException: {JsonConvert.SerializeObject(ex?.InnerException)}";
-                message += Environment.NewLine;
-                message += "___________________________________________________________\n";
-                message += "===========================================================\n";
-                message += Environment.NewLine;
-
-                string path = Server.MapPath("~/ErrorLog");
-                if (!Directory.Exists(path))
+                ErrorLogLogic.Logging(new ErrorLog()
                 {
-                    Directory.CreateDirectory(path);
-                }
-                path += "/Error.log";
-                using (StreamWriter writer = new StreamWriter(path, true))
-                {
-                    writer.WriteLine(message);
-                    writer.Close();
-                }
+                    Exception = ex,
+                    ActionName = ActionName,
+                    ControllerName = ControllerName,
+                    FolderPath = Server.MapPath("~/ErrorLog"),
+                    HttpMethod = Request?.HttpMethod,
+                    RequestId = LogicHelper?.RequestId,
+                    UrlParameterId = UrlParameterId,
+                    UrlParameterId2 = UrlParameterId2
+                });
             }
             catch
             {
                 // ignored
             }
         }
-
-        #region Cookie Details
-        /** Cookie Variable Documentation
-         * |----------------------|-------------------------|
-         * |         Name         |         Purpose         |
-         * |----------------------|-------------------------|
-         * |.AspNetCore.Session   |Session Person           |
-         * |----------------------|-------------------------|
-         * |.AspNetCore.Company   |Session Company          |
-         * |----------------------|-------------------------|
-         * |ASP.NET_SessionId     |Anti Forgery Token       |
-         * |----------------------|-------------------------|
-         * |JSESSIONID            |Session- default(asp.net)|
-         * |----------------------|-------------------------|
-         **/
-        #endregion
     }
 }

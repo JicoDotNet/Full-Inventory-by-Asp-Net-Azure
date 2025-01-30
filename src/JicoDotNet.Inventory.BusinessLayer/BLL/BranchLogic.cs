@@ -1,4 +1,5 @@
 ﻿using DataAccess.Sql;
+using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
@@ -9,13 +10,13 @@ using System.Linq;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
-    public class BranchLogic : ConnectionString
+    public class BranchLogic : DBManager
     {
-        public BranchLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public BranchLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
 
         public string Set(Branch branch)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            
             string qt = string.Empty;
             if (branch.BranchId > 0)
                 qt = "UPDATE";
@@ -37,29 +38,29 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@Email", branch.Email),
                 new NameValuePair("@Phone", branch.Phone),
                 new NameValuePair("@Description", branch.Description),
-                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                 new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetBranch]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(CommonLogicObj.SqlSchema + ".[spSetBranch]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
 
         public string Deactive(string BranchId)
         {
-            return new SqlDBAccess(CommonObj.SqlConnectionString)
-                .DataManipulation(GenericLogic.SqlSchema + ".[spSetBranch]", new NameValuePairs
+            return new SqlDBAccess(CommonLogicObj.SqlConnectionString)
+                .DataManipulation(CommonLogicObj.SqlSchema + ".[spSetBranch]", new NameValuePairs
                 {
                     new NameValuePair("@BranchId", BranchId),
-                    new NameValuePair("@RequestId", CommonObj.RequestId),
+                    new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                     new NameValuePair("@QueryType", "INACTIVE")
                 }, "@OutParam").ToString();
         }
 
         public List<Branch> Get(bool? IsActive = null)
         {
-            List<Branch> branchs = new SqlDBAccess(CommonObj.SqlConnectionString)
-                .GetData(GenericLogic.SqlSchema + ".[spGetBranch]",
+            List<Branch> branchs = new SqlDBAccess(CommonLogicObj.SqlConnectionString)
+                .GetData(CommonLogicObj.SqlSchema + ".[spGetBranch]",
                 new NameValuePairs
                 {
 

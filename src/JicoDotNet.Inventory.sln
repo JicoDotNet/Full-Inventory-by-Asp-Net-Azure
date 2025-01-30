@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JicoDotNet.Inventory.Core",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JicoDotNet.Inventory.Logging", "JicoDotNet.Inventory.Logging\JicoDotNet.Inventory.Logging.csproj", "{68D794C3-71B8-4E08-A1AD-CF3091082664}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JicoDotNet.Inventory.Common", "JicoDotNet.Inventory.Common\JicoDotNet.Inventory.Common.csproj", "{24E99C89-9B33-483D-8DF9-5A3C312FFF4A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JicoDotNet.Inventory.Helper", "JicoDotNet.Inventory.Helper\JicoDotNet.Inventory.Helper.csproj", "{1CE5099A-329B-42EC-843C-D679B5B64568}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,10 +49,10 @@ Global
 		{68D794C3-71B8-4E08-A1AD-CF3091082664}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68D794C3-71B8-4E08-A1AD-CF3091082664}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68D794C3-71B8-4E08-A1AD-CF3091082664}.Release|Any CPU.Build.0 = Release|Any CPU
-		{24E99C89-9B33-483D-8DF9-5A3C312FFF4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{24E99C89-9B33-483D-8DF9-5A3C312FFF4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{24E99C89-9B33-483D-8DF9-5A3C312FFF4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{24E99C89-9B33-483D-8DF9-5A3C312FFF4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CE5099A-329B-42EC-843C-D679B5B64568}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CE5099A-329B-42EC-843C-D679B5B64568}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CE5099A-329B-42EC-843C-D679B5B64568}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CE5099A-329B-42EC-843C-D679B5B64568}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

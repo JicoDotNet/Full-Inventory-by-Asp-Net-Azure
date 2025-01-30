@@ -10,15 +10,15 @@ using System.Linq;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
 {
-    public class PurchaseReportLogic : ConnectionString
+    public class PurchaseReportLogic : DBManager
     {
-        public PurchaseReportLogic(ICommonRequestDto commonObj) : base(commonObj) { }
+        public PurchaseReportLogic(ICommonLogicHelper commonObj) : base(commonObj) { }
 
         public List<ResponseVendorPurchaseResult> VendorWise(IRequestVendorPurchaseParam vendorPurchase)
         {
             try
             {
-                _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+                
                 NameValuePairs nvp = new NameValuePairs
                 {
 
@@ -29,7 +29,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
                     new NameValuePair("@EndDate", vendorPurchase.SearchDate.EndDate),
                     new NameValuePair("@QueryType", "BYVENDOR")
                 };
-                return _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spRpPurchase]", nvp).ToList<ResponseVendorPurchaseResult>();
+                return _sqlDBAccess.GetData(CommonLogicObj.SqlSchema + ".[spRpPurchase]", nvp).ToList<ResponseVendorPurchaseResult>();
             }
             catch (Exception ex)
             {
@@ -41,7 +41,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
         {
             try
             {
-                _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+                
                 NameValuePairs nvp = new NameValuePairs
                 {
 
@@ -52,7 +52,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
                     new NameValuePair("@EndDate", productPurchase.SearchDate.EndDate),
                     new NameValuePair("@QueryType", "BYPRODUCT")
                 };
-                return _sqlDBAccess.GetData(GenericLogic.SqlSchema + ".[spRpPurchase]", nvp).ToList<ResponseProductPurchaseResult>();
+                return _sqlDBAccess.GetData(CommonLogicObj.SqlSchema + ".[spRpPurchase]", nvp).ToList<ResponseProductPurchaseResult>();
             }
             catch (Exception ex)
             {

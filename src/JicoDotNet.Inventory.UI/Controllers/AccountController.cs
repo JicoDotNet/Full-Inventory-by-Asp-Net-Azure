@@ -8,6 +8,7 @@ using JicoDotNet.Inventory.Logging;
 using JicoDotNet.Inventory.UI.Models;
 using System;
 using System.Web.Mvc;
+using JicoDotNet.Inventory.Controllers;
 
 namespace JicoDotNet.Inventory.UI.Controllers
 {
@@ -123,7 +124,7 @@ namespace JicoDotNet.Inventory.UI.Controllers
             }
             else
                 return RedirectToAction("Index", "Logout");
-            TokenManagement token = new TokenManagement(LogicHelper);
+            TokenManager token = new TokenManager(LogicHelper);
             return View(token.GetUser(userEmail));
         }
 
@@ -132,7 +133,7 @@ namespace JicoDotNet.Inventory.UI.Controllers
         {
             if (sessionCredential.UserEmail == UrlParameterId)
             {
-                TokenManagement token = new TokenManagement(LogicHelper);
+                TokenManager token = new TokenManager(LogicHelper);
                 token.Delete(UrlParameterId);
             }
             return RedirectToAction("Index", "Logout");
@@ -148,12 +149,6 @@ namespace JicoDotNet.Inventory.UI.Controllers
             }
             else
                 return RedirectToAction("Index");
-        }
-
-        private void SetSessionCookie(ISessionCredential credential)
-        {
-            ISessionToken sessionToken = new SessionToken(credential);
-            HttpContext.SetCookie(".AspNetCore.Session", sessionToken);
         }
 
         private void SetCompanyCookie(ICompanyBasic company)

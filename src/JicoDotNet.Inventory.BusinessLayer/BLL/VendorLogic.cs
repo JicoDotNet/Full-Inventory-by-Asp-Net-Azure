@@ -9,14 +9,14 @@ using System.Linq;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
-    public class VendorLogic : ConnectionString
+    public class VendorLogic : DBManager
     {
-        public VendorLogic(ICommonRequestDto CommonObj) : base(CommonObj) { }
+        public VendorLogic(ICommonLogicHelper CommonObj) : base(CommonObj) { }
 
         #region Vendor Type
         public string TypeSet(VendorType vendorType)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            
             string qt = string.Empty;
             if (vendorType.VendorTypeId > 0)
                 qt = "UPDATE";
@@ -30,34 +30,34 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@VendorTypeId", vendorType.VendorTypeId),
                 new NameValuePair("@VendorTypeName", vendorType.VendorTypeName),
                 new NameValuePair("@Description", vendorType.Description),
-                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                 new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetVendorType]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(CommonLogicObj.SqlSchema + ".[spSetVendorType]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
 
         public string TypeDeactive(string VendorTypeId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            
             string qt = "INACTIVE";
 
             NameValuePairs nvp = new NameValuePairs
             {
                 new NameValuePair("@VendorTypeId", VendorTypeId),
 
-                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                 new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetVendorType]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(CommonLogicObj.SqlSchema + ".[spSetVendorType]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
 
         public List<VendorType> TypeGet()
         {
-            return new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetVendorType]",
+            return new SqlDBAccess(CommonLogicObj.SqlConnectionString).GetData(CommonLogicObj.SqlSchema + ".[spGetVendorType]",
                 new NameValuePairs
                 {
 
@@ -70,7 +70,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         #region Vendor
         public string Set(Vendor vendor)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            
             string qt;
             if (vendor.VendorId > 0)
                 qt = "UPDATE";
@@ -94,34 +94,34 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@Email", vendor.Email),
                 new NameValuePair("@Mobile", vendor.Mobile),
 
-                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                 new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetVendor]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(CommonLogicObj.SqlSchema + ".[spSetVendor]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
 
         public string Deactive(string VendorId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            
             string qt = "INACTIVE";
 
             NameValuePairs nvp = new NameValuePairs
             {
                 new NameValuePair("@VendorId", VendorId),
 
-                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                 new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetVendor]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(CommonLogicObj.SqlSchema + ".[spSetVendor]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
 
         public List<Vendor> Get(bool? IsActive = null)
         {
-            List<Vendor> vendors = new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetVendor]",
+            List<Vendor> vendors = new SqlDBAccess(CommonLogicObj.SqlConnectionString).GetData(CommonLogicObj.SqlSchema + ".[spGetVendor]",
                 new NameValuePairs
                 {
 
@@ -142,7 +142,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         #region Vendor Bank
         public string BankSet(VendorBank vendorBank)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            
             string qt = string.Empty;
             if (vendorBank.VendorBankId > 0)
                 qt = "UPDATE";
@@ -164,17 +164,17 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@BranchName ", vendorBank.BranchName),
                 new NameValuePair("@BranchAddress", vendorBank.BranchAddress),
 
-                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                 new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetVendorBank]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(CommonLogicObj.SqlSchema + ".[spSetVendorBank]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
 
         public string BankDeactive(string VendorId, string VendorBankId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString);
+            
             string qt = "INACTIVE";
 
             NameValuePairs nvp = new NameValuePairs
@@ -183,17 +183,17 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 new NameValuePair("@VendorBankId", VendorBankId),
 
 
-                new NameValuePair("@RequestId", CommonObj.RequestId),
+                new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                 new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.DataManipulation(GenericLogic.SqlSchema + ".[spSetVendorBank]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation(CommonLogicObj.SqlSchema + ".[spSetVendorBank]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
 
         public List<VendorBank> BankGet(long VendorId, bool? IsActive = null)
         {
-            List<VendorBank> vendorBanks = new SqlDBAccess(CommonObj.SqlConnectionString).GetData(GenericLogic.SqlSchema + ".[spGetVendorBank]",
+            List<VendorBank> vendorBanks = new SqlDBAccess(CommonLogicObj.SqlConnectionString).GetData(CommonLogicObj.SqlSchema + ".[spGetVendorBank]",
                 new NameValuePairs
                 {
 

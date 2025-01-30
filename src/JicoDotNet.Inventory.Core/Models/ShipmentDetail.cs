@@ -4,7 +4,7 @@ using System;
 
 namespace JicoDotNet.Inventory.Core.Models
 {
-    public class ShipmentDetail : IShipmentDetail, IActivity, IStatus, IHRequest
+    public class ShipmentDetail : IShipmentDetail, IActivity, IStatus, IHttpRequest
     {
         public long ShipmentDetailId { get; set; }
         public long ShipmentId { get; set; }

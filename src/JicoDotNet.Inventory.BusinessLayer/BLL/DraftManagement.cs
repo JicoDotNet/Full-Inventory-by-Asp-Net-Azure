@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
-    public class DraftManagement : ConnectionString
+    public class DraftManagement : DBManager
     {
-        public DraftManagement(ICommonRequestDto commonObj) : base(commonObj) { }
+        public DraftManagement(ICommonLogicHelper commonObj) : base(commonObj) { }
 
         public string SetAsDraft(object draftObject, EDraft draftType)
         {
@@ -24,18 +24,18 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 RowKey = objectId,
                 TransactionDate = GenericLogic.IstNow,
                 IsActive = true,
-                RequestId = CommonObj.RequestId,
+                RequestId = CommonLogicObj.RequestId,
                 DraftType = draftType.ToString(),
                 DraftData = JsonConvert.SerializeObject(draftObject)
             };
-            TableManager = new ExecuteTableManager("Draft", CommonObj.NoSqlConnectionString);
+            TableManager = new ExecuteTableManager("Draft", CommonLogicObj.NoSqlConnectionString);
             TableManager.InsertEntity(draft);
             return objectId;
         }
 
         public T GetFromDraft<T>(string objectId, EDraft draftType)
         {
-            TableManager = new ExecuteTableManager("Draft", CommonObj.NoSqlConnectionString);
+            TableManager = new ExecuteTableManager("Draft", CommonLogicObj.NoSqlConnectionString);
             string query = " RowKey eq '" + objectId + "' " +
                         " and IsActive eq true " +
                         " and DraftType eq '" + draftType + "' ";
@@ -53,7 +53,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             Task.Run(() =>
             {
-                TableManager = new ExecuteTableManager("Draft", CommonObj.NoSqlConnectionString);
+                TableManager = new ExecuteTableManager("Draft", CommonLogicObj.NoSqlConnectionString);
                 string query = " RowKey eq '" + objectId + "' " +
                             " and IsActive eq true " +
                             " and DraftType eq '" + draftType + "' ";

@@ -5,7 +5,7 @@ using System;
 
 namespace JicoDotNet.Inventory.Core.Models
 {
-    public class Logger : TableEntity, ILogger, IHRequest, IActivity
+    public class Logger : TableEntity, ILogger, IHttpRequest, IActivity
     {
         public string IPAddress { get; set; }
         public string DNS { get; set; }

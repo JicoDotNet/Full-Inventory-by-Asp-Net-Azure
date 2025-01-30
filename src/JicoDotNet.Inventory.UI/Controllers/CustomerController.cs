@@ -4,8 +4,9 @@ using JicoDotNet.Inventory.UI.Models;
 using System;
 using System.Linq;
 using System.Web.Mvc;
+using JicoDotNet.Inventory.Controllers;
 
-namespace JicoDotNet.Inventory.UIControllers
+namespace JicoDotNet.Inventory.UI.Controllers
 {
     [SessionAuthenticate]
     public class CustomerController : BaseController
@@ -115,8 +116,7 @@ namespace JicoDotNet.Inventory.UIControllers
             }
             catch (Exception ex)
             {
-                ErrorLoggingToView(ex);
-                return RedirectToAction("Index", "Error");
+                return ErrorLoggingToView(ex);
             }
         }
 
@@ -181,7 +181,7 @@ namespace JicoDotNet.Inventory.UIControllers
             }
             catch (Exception ex)
             {
-                ErrorLoggingToView(ex);
+                ErrorLogging(ex);
                 throw ex;
             }
         }
@@ -209,8 +209,7 @@ namespace JicoDotNet.Inventory.UIControllers
             }
             catch (Exception ex)
             {
-                ErrorLoggingToView(ex);
-                return RedirectToAction("Index", "Error");
+                return ErrorLoggingToView(ex);
             }
         }
 

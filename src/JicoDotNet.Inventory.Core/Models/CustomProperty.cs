@@ -6,7 +6,7 @@ using System;
 namespace JicoDotNet.Inventory.Core.Models
 {
     public class CustomProperty : TableEntity, ICustomProperty,
-        IStatus, IHRequest, IActivity
+        IStatus, IHttpRequest, IActivity
     {
         // TODO - need to change
         /*

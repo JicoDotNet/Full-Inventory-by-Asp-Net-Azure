@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace JicoDotNet.Inventory.Core.Models
 {
-    public class GoodsReceiveNote : IGoodsReceiveNote, IWareHouse, IActivity, IStatus, IHRequest
+    public class GoodsReceiveNote : IGoodsReceiveNote, IWareHouse, IActivity, IStatus, IHttpRequest
     {
         public long GRNId { get; set; }
 

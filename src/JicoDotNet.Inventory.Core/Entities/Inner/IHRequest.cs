@@ -1,6 +1,7 @@
-﻿namespace JicoDotNet.Inventory.Core.Entities.Inner
+﻿
+namespace JicoDotNet.Inventory.Core.Entities.Inner
 {
-    public interface IHRequest
+    public interface IHttpRequest
     {
         string RequestId { get; set; }
     }

@@ -5,7 +5,7 @@ using System;
 
 namespace JicoDotNet.Inventory.Core.Models
 {
-    public class Support : TableEntity, ISupport, IActivity, IStatus, IHRequest
+    public class Support : TableEntity, ISupport, IActivity, IStatus, IHttpRequest
     {
         public string ScreenshotImageUrl { get; set; }
         public string QueryStatement { get; set; }
