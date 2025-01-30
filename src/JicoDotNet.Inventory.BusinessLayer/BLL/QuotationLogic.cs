@@ -3,7 +3,7 @@ using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Custom;
 using JicoDotNet.Inventory.Core.Custom.Interface;
-using JicoDotNet.Validator.Interfaces;
+using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -47,7 +47,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 });
                 if (quotationDetailTypes.Count > 0)
                 {
-                    _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+                    
                     NameValuePairs nvp = new NameValuePairs
                     {
                         new NameValuePair("@ComapnyIsGSTRegistered", GenericLogic.IsValidGSTNumber(WebConfigAppSettingsAccess.GSTNumber)),
@@ -77,7 +77,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public List<Quotation> GetQuotations()
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             NameValuePairs nvp = new NameValuePairs()
                 {
 
@@ -89,7 +89,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public Quotation GetForDetail(long QuotationId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             NameValuePairs nvp = new NameValuePairs()
             {
 
@@ -117,7 +117,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             try
             {
-                _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+                
                 NameValuePairs nvp = new NameValuePairs
                 {
                     new NameValuePair("@QuotationId", QuotationId),

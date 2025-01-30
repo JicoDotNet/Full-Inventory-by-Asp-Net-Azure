@@ -35,7 +35,7 @@
       <HintPath>..\packages\DataAccess.AzureStorage.1.1.0\lib\net45\DataAccess.AzureStorage.dll</HintPath>
     </Reference>
     <Reference Include="JicoDotNet.Validator, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\JicoDotNet.Inventory.Validator.1.0.0-beta2\lib\net48\JicoDotNet.Validator.dll</HintPath>
+      <HintPath>..\packages\JicoDotNet.Inventory.Validator.1.0.0-beta7\lib\net48\JicoDotNet.Validator.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
@@ -98,13 +98,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\JicoDotNet.Inventory.Common\JicoDotNet.Inventory.Common.csproj">
-      <Project>{24E99C89-9B33-483D-8DF9-5A3C312FFF4A}</Project>
-      <Name>JicoDotNet.Inventory.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\JicoDotNet.Inventory.Core\JicoDotNet.Inventory.Core.csproj">
       <Project>{9f34c785-6745-4251-bf32-0d6503383385}</Project>
       <Name>JicoDotNet.Inventory.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JicoDotNet.Inventory.Helper\JicoDotNet.Inventory.Helper.csproj">
+      <Project>{1ce5099a-329b-42ec-843c-d679b5b64568}</Project>
+      <Name>JicoDotNet.Inventory.Helper</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

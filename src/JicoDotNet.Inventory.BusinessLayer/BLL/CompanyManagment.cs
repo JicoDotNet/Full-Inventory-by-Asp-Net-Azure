@@ -1,5 +1,5 @@
 ﻿using DataAccess.Sql;
-using JicoDotNet.Validator.Interfaces;
+using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
 using JicoDotNet.Inventory.Core.Common;
 using System;
@@ -14,7 +14,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public CompanyManagment(ICommonLogicHelper CommonObj) : base(CommonObj) { }
         public string BankSet(CompanyBank companyBank)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             string qt = string.Empty;
             if (companyBank.CompanyBankId > 0)
                 qt = "UPDATE";
@@ -42,7 +42,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         }
         public string BankDeactive(long CompanyBankId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             string qt = "INACTIVE";
 
             NameValuePairs nvp = new NameValuePairs
@@ -57,7 +57,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         }
         public List<CompanyBank> BankGet(bool? IsActive = null)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             List<CompanyBank> companyBanks = _sqlDBAccess.GetData(CommonLogicObj.SqlSchema + ".[spGetCompanyBank]",
                 new NameValuePairs
                 {
@@ -74,7 +74,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         }
         public string BankPrintability(long CompanyBankId, bool IsPrintable)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             NameValuePairs nvp = new NameValuePairs
             {
                 new NameValuePair("@CompanyBankId", CompanyBankId),
@@ -89,7 +89,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         }
         public CompanyBank BankPrintable()
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             CompanyBank companyBank = _sqlDBAccess.GetFirstOrDefaultData(CommonLogicObj.SqlSchema + ".[spGetCompanyBank]",
                 new NameValuePairs
                 {

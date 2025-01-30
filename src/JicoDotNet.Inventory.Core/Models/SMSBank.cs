@@ -5,7 +5,7 @@ using System;
 
 namespace JicoDotNet.Inventory.Core.Models
 {
-    public class SMSBank : TableEntity, ISMSBank, IActivity, IStatus, IHRequest
+    public class SMSBank : TableEntity, ISMSBank, IActivity, IStatus, IHttpRequest
     {
         public long Balance { get; set; }
 

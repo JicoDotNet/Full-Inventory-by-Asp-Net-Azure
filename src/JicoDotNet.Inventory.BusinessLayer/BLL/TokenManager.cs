@@ -1,15 +1,17 @@
 ﻿using DataAccess.AzureStorage;
-using JicoDotNet.Validator.Interfaces;
+using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Common.Auth;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System;
+using JicoDotNet.Inventory.Core.Entities;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
-    public class TokenManagement : DBManager
+    public class TokenManager : DBManager
     {
-        public TokenManagement(ICommonLogicHelper CommonObj) : base(CommonObj) { }
+        public TokenManager(ICommonLogicHelper CommonObj) : base(CommonObj) { }
 
         /// <summary>
         /// Token Creation
@@ -35,13 +37,15 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             }
         }
 
-        public ISessionCredential GetCredential(string token)
+        public bool IsValid(string token, string email)
         {
             TableManager = new ExecuteTableManager("SessionToken", CommonLogicObj.NoSqlConnectionString);
-            List<SessionCredential> credentials = TableManager.RetrieveEntity<SessionCredential>("Token eq '" + token + "'");
+            List<SessionCredential> credentials = TableManager.RetrieveEntity<SessionCredential>(
+                                        "Token eq '" + token + "' " +
+                                        "and UserEmail eq '" + email + "'");
             if (credentials.Count == 1)
-                return credentials[0];
-            return null;
+                return true;
+            return false;
         }
 
         /// <summary>

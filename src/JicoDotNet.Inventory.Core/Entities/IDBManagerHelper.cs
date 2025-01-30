@@ -1,8 +1,10 @@
 ﻿using DataAccess.Sql.Entity;
+
 namespace JicoDotNet.Inventory.Core.Entities
 {
-    public interface IDBManager
+    public interface IDBManagerHelper
     {
+        ICommonLogicHelper CommonLogicObj { get; }
         ISqlDBAccess _sqlDBAccess { get; }
     }
 }

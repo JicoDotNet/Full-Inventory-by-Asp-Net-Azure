@@ -2,7 +2,7 @@
 using DataAccess.Sql;
 using DataAccess.Sql.Entity;
 using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Validator.Interfaces;
+using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -19,7 +19,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public string TypeSet(IProductType productType)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             var queryType = productType.ProductTypeId > 0 ? "UPDATE" : "INSERT";
 
             INameValuePairs nvp = new NameValuePairs
@@ -37,7 +37,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public string TypeDeactivate(string productTypeId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             string queryType = "DEACTIVE";
 
             INameValuePairs nvp = new NameValuePairs
@@ -64,7 +64,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public string Set(IProduct product)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             var queryType = product.ProductId > 0 ? "UPDATE" : "INSERT";
 
             INameValuePairs nvp = new NameValuePairs
@@ -101,7 +101,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public string Deactivate(string productId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             string queryType = "DEACTIVE";
 
             INameValuePairs nvp = new NameValuePairs

@@ -12,7 +12,7 @@ namespace System.Web.Mvc
                 HttpCookie cookie = new HttpCookie(key,
                 Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(value))))
                 {
-                    Expires = GenericLogic.IstNow.AddDays(1).AddSeconds(-1),
+                    Expires = DateTime.UtcNow.AddHours(29.5).AddSeconds(-1),
                 };
                 context.Response.Cookies.Add(cookie);
             }
@@ -25,7 +25,7 @@ namespace System.Web.Mvc
             {
                 try
                 {
-                    cookie.Expires = GenericLogic.IstNow.AddDays(1).AddSeconds(-1);
+                    cookie.Expires = DateTime.UtcNow.AddHours(29.5).AddSeconds(-1);
                     context.Response.Cookies.Add(cookie);
 
                     T cookieValue = default;
@@ -44,7 +44,7 @@ namespace System.Web.Mvc
         public static void DeleteCookie(this HttpContextBase context, string key)
         {
             context.Response.Cookies[key].Value = string.Empty;
-            context.Response.Cookies[key].Expires = GenericLogic.IstNow.AddMonths(-20);
+            context.Response.Cookies[key].Expires = DateTime.UtcNow.AddMonths(-20);
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace JicoDotNet.Inventory.Core.Models
 {
-    public class PaymentOut : IPaymentOut, IVendor, IActivity, IStatus, IHRequest
+    public class PaymentOut : IPaymentOut, IVendor, IActivity, IStatus, IHttpRequest
     {
         public long PaymentOutId { get; set; }
         public long VendorId { get; set; }

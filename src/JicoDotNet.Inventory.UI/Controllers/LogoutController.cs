@@ -11,7 +11,7 @@ namespace JicoDotNet.Inventory.UI.Controllers
             if (SessionPerson != null)
                 if (!string.IsNullOrEmpty(SessionPerson.UserEmail))
                 {
-                    TokenManagement token = new TokenManagement(LogicHelper);
+                    TokenManager token = new TokenManager(LogicHelper);
                     token.Delete(SessionPerson.UserEmail);
                 }
             AbandonSession();

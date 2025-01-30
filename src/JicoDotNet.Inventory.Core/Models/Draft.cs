@@ -6,7 +6,7 @@ using System;
 
 namespace JicoDotNet.Inventory.Core.Models
 {
-    public class Draft : TableEntity, IDraft, IActivity, IStatus, IHRequest
+    public class Draft : TableEntity, IDraft, IActivity, IStatus, IHttpRequest
     {
         public long UserId { get; set; }
         public string DraftData { get; set; }

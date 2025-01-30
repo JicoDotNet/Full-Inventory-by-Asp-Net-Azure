@@ -1,10 +1,10 @@
 ﻿using DataAccess.AzureStorage;
 using DataAccess.Sql;
-using JicoDotNet.Validator.Interfaces;
+using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Custom;
 using JicoDotNet.Inventory.Core.Custom.Interface;
-using JicoDotNet.Validator.Interfaces;
+using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Enumeration;
 using JicoDotNet.Inventory.Core.Models;
 using Newtonsoft.Json;
@@ -22,7 +22,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         #region Payment Type
         public string TypeSet(InvoiceType invoiceType)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             string qt = string.Empty;
             if (invoiceType.InvoiceTypeId > 0)
                 qt = "UPDATE";
@@ -46,7 +46,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public string TypeDeactive(string invoiceTypeId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             string qt = "INACTIVE";
 
             NameValuePairs nvp = new NameValuePairs
@@ -86,7 +86,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         #region Invoice
         public List<Invoice> GetInvoices()
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             NameValuePairs nvp = new NameValuePairs()
             {
 
@@ -98,7 +98,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         }
         public List<Invoice> GetRetailInvoices()
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             NameValuePairs nvp = new NameValuePairs()
             {
 
@@ -111,7 +111,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public List<SalesOrder> GetForEntry()
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             NameValuePairs nvp = new NameValuePairs()
                 {
 
@@ -124,7 +124,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public List<InvoiceDetail> GetInvoiceDetails(long salesOrderId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             NameValuePairs nvp = new NameValuePairs()
                 {
 
@@ -140,7 +140,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             try
             {
-                _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+                
                 NameValuePairs nvp = new NameValuePairs()
                 {
 
@@ -238,7 +238,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
                 if (invoiceDetailsTypes.Count > 0)
                 {
-                    _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+                    
                     NameValuePairs nvp = new NameValuePairs()
                     {
                         new NameValuePair("@InvoiceTypeId", invoice.InvoiceTypeId),
@@ -284,7 +284,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public Invoice GetForDetail(long InvoiceId)
         {
             Invoice invoice = new Invoice();
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             NameValuePairs nvp = new NameValuePairs()
             {
 
@@ -306,7 +306,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public bool Available(string CustomInvoiceNumber)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
 
             NameValuePairs nvp = new NameValuePairs
             {

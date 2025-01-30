@@ -2,7 +2,7 @@
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Custom;
 using JicoDotNet.Inventory.Core.Custom.Interface;
-using JicoDotNet.Validator.Interfaces;
+using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -17,7 +17,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         #region Payment Type
         public string TypeSet(PaymentType paymentType)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             string qt = string.Empty;
             if (paymentType.PaymentTypeId > 0)
                 qt = "UPDATE";
@@ -41,7 +41,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public string TypeDeactive(string paymentTypeId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             string qt = "INACTIVE";
 
             NameValuePairs nvp = new NameValuePairs
@@ -139,7 +139,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public List<PaymentOutDetail> GetPaymentOutDetails(long vendorId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             NameValuePairs nvp = new NameValuePairs()
                 {
 
@@ -226,7 +226,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public List<PaymentInDetail> GetPaymentInDetails(long customerId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             NameValuePairs nvp = new NameValuePairs()
                 {
 

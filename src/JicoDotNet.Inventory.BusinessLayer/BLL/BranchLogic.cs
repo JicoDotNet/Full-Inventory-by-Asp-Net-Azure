@@ -1,7 +1,7 @@
 ﻿using DataAccess.Sql;
-using JicoDotNet.Validator.Interfaces;
+using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Validator.Interfaces;
+using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -16,7 +16,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public string Set(Branch branch)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             string qt = string.Empty;
             if (branch.BranchId > 0)
                 qt = "UPDATE";

@@ -1,6 +1,6 @@
 ﻿using DataAccess.Sql;
 using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Validator.Interfaces;
+using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -15,7 +15,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public string Set(UnitOfMeasure unitOfMeasure)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             string qt = string.Empty;
             if (unitOfMeasure.UnitOfMeasureId > 0)
                 qt = "UPDATE";
@@ -39,7 +39,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public string Deactive(string UnitOfMeasureId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             string qt = "DEACTIVE";
 
             NameValuePairs nvp = new NameValuePairs

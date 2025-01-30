@@ -4,7 +4,7 @@ using System;
 
 namespace JicoDotNet.Inventory.Core.Models
 {
-    public class PaymentOutDetail : IPaymentOutDetail, IActivity, IStatus, IHRequest
+    public class PaymentOutDetail : IPaymentOutDetail, IActivity, IStatus, IHttpRequest
     {
         public long PaymentOutDetailId { get; set; }
         public long PaymentOutId { get; set; }

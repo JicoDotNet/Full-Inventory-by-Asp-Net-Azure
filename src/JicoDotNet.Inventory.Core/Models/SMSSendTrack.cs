@@ -4,7 +4,7 @@ using System;
 
 namespace JicoDotNet.Inventory.Core.Models
 {
-    public class SMSSendTrack : ISMSSendTrack, IActivity, IStatus, IHRequest
+    public class SMSSendTrack : ISMSSendTrack, IActivity, IStatus, IHttpRequest
     {
         public long SmsSendId { get; set; }
         public DateTime SendTime { get; set; }

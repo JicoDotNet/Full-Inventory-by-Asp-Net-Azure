@@ -1,10 +1,10 @@
 ﻿using DataAccess.Sql;
-using JicoDotNet.Validator.Interfaces;
+using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Custom;
 using JicoDotNet.Inventory.Core.Custom.Interface;
-using JicoDotNet.Validator.Interfaces;
+using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -20,7 +20,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         #region Sales Type
         public string TypeSet(SalesType salesType)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             string qt;
             if (salesType.SalesTypeId > 0)
                 qt = "UPDATE";
@@ -77,7 +77,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public Dictionary<string, object> GetForEntry()
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             NameValuePairs nvp = new NameValuePairs
             {
 
@@ -129,7 +129,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             });
             if (orderDetailTypes.Count > 0)
             {
-                _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+                
                 NameValuePairs nvp = new NameValuePairs
                 {
                     new NameValuePair("@ComapnyIsGSTRegistered", GenericLogic.IsValidGSTNumber(WebConfigAppSettingsAccess.GSTNumber)),
@@ -165,7 +165,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             try
             {
-                _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+                
                 NameValuePairs nvp = new NameValuePairs
                 {
                     new NameValuePair("@SalesOrderId", SalesOrderId),
@@ -185,7 +185,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public List<SalesOrder> GetForShipment()
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             NameValuePairs nvp = new NameValuePairs
             {
 
@@ -197,7 +197,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public List<SalesOrder> GetSOs()
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             NameValuePairs nvp = new NameValuePairs()
                 {
 
@@ -209,7 +209,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public SalesOrder GetForDetail(long SalesOrderId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             NameValuePairs nvp = new NameValuePairs()
             {
 
@@ -269,7 +269,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 });
                 if (orderDetailTypes.Count > 0)
                 {
-                    _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+                    
                     NameValuePairs nvp = new NameValuePairs
                     {
                         new NameValuePair("@SalesOrderId", salesOrder.SalesOrderId),

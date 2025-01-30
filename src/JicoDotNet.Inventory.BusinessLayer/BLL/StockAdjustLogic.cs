@@ -2,7 +2,7 @@
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Custom;
 using JicoDotNet.Inventory.Core.Custom.Interface;
-using JicoDotNet.Validator.Interfaces;
+using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -50,7 +50,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             });
             if (stockAdjustDetailTypes.Count > 0)
             {
-                _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+                
                 string returnString = _sqlDBAccess.DataManipulation(CommonLogicObj.SqlSchema + ".[spSetStockAdjust]", new NameValuePairs
                     {
                         new NameValuePair("@StockAdjustNumber", "SKA-"),

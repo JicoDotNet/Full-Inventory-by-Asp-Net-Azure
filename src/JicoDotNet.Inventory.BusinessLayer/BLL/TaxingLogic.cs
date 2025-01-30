@@ -1,6 +1,6 @@
 ﻿using DataAccess.Sql;
 using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Validator.Interfaces;
+using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -37,7 +37,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                     new NameValuePair("@QueryType", "PAY")
                 };
-                _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+                
                 return _sqlDBAccess.DataManipulation(CommonLogicObj.SqlSchema + ".[spSetTDSPay]", nvp, "@OutParam").ToString();
             }
             catch (Exception ex)
@@ -70,7 +70,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                     new NameValuePair("@QueryType", "RECEIVE")
                 };
-                _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+                
                 return _sqlDBAccess.DataManipulation(CommonLogicObj.SqlSchema + ".[spSetTDSReceive]", nvp, "@OutParam").ToString();
             }
             catch (Exception ex)

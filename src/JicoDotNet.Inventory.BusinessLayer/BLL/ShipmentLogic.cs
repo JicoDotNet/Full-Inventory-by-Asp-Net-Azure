@@ -3,7 +3,7 @@ using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Custom;
 using JicoDotNet.Inventory.Core.Custom.Interface;
-using JicoDotNet.Validator.Interfaces;
+using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -19,7 +19,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         #region Payment Type
         public string TypeSet(ShipmentType shipmentType)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             string qt = string.Empty;
             if (shipmentType.ShipmentTypeId > 0)
                 qt = "UPDATE";
@@ -43,7 +43,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public string TypeDeactive(string ShipmentTypeId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             string qt = "INACTIVE";
 
             NameValuePairs nvp = new NameValuePairs
@@ -92,7 +92,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public List<ShipmentDetail> GetShipmentDetails(long salesOrderId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             NameValuePairs nvp = new NameValuePairs()
                 {
 
@@ -214,7 +214,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
             if (orderDetailTypes.Count > 0)
             {
-                _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+                
                 NameValuePairs nvp = new NameValuePairs()
                 {
                     new NameValuePair("@ComapnyIsGSTRegistered", GenericLogic.IsValidGSTNumber(WebConfigAppSettingsAccess.GSTNumber)),                     
@@ -257,7 +257,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public Shipment GetForDetail(long ShipmentId)
         {
             Shipment shipment = new Shipment();
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             NameValuePairs nvp = new NameValuePairs()
             {
 

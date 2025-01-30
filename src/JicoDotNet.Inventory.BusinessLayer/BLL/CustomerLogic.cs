@@ -1,5 +1,5 @@
 ﻿using DataAccess.Sql;
-using JicoDotNet.Validator.Interfaces;
+using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Models;
 using System;
@@ -16,7 +16,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         #region Customer Type
         public string TypeSet(CustomerType customerType)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             string qt = string.Empty;
             if (customerType.CustomerTypeId > 0)
                 qt = "UPDATE";
@@ -40,7 +40,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public string TypeDeactive(string customerTypeId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             string qt = "INACTIVE";
 
             NameValuePairs nvp = new NameValuePairs
@@ -78,7 +78,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         #region Customer
         public string Set(Customer customer)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             string qt = string.Empty;
             if (customer.CustomerId > 0)
                 qt = "UPDATE";
@@ -113,7 +113,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public string Deactive(string customerId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
 
             NameValuePairs nvp = new NameValuePairs
             {

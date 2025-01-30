@@ -1,4 +1,4 @@
-﻿using JicoDotNet.Validator.Interfaces;
+﻿using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Common.Auth;
@@ -68,7 +68,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 string _token = GenericLogic.IstNow.TimeStamp().ToString("X");
                 accountAuthenticate.credential.Token = _token;
                 accountAuthenticate.credential.TokenDate = GenericLogic.IstNow;
-                bool IsTokenCreated = new TokenManagement(CommonLogicObj).SetToken(accountAuthenticate.credential);
+                bool IsTokenCreated = new TokenManager(CommonLogicObj).SetToken(accountAuthenticate.credential);
                 #endregion
 
                 // Duplicate Login check

@@ -34,9 +34,6 @@
     <Reference Include="DataAccess.AzureStorage, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DataAccess.AzureStorage.1.1.0\lib\net45\DataAccess.AzureStorage.dll</HintPath>
     </Reference>
-    <Reference Include="JicoDotNet.Validator, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\JicoDotNet.Inventory.Validator.1.0.0-beta2\lib\net48\JicoDotNet.Validator.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
     </Reference>
@@ -63,6 +60,7 @@
     <Reference Include="System.Spatial, Version=5.8.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Spatial.5.8.4\lib\net40\System.Spatial.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.3.0\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
@@ -90,9 +88,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\Auth\AccountAuthenticate.cs" />
-    <Compile Include="Common\Auth\SessionToken.cs" />
+    <Compile Include="Common\CommonLogicHelper.cs" />
     <Compile Include="Common\DBManager.cs" />
     <Compile Include="Common\DateRange.cs" />
+    <Compile Include="Common\SessionToken.cs" />
     <Compile Include="Custom\BillDetailsType.cs" />
     <Compile Include="Custom\GRNDetailType.cs" />
     <Compile Include="Custom\Interface\IBillDetailsType.cs" />
@@ -120,6 +119,8 @@
     <Compile Include="Custom\StockAdjustDetailType.cs" />
     <Compile Include="Custom\StockTransferDetailType.cs" />
     <Compile Include="Entities\IAccountAuthentication.cs" />
+    <Compile Include="Entities\ICommonLogicHelper.cs" />
+    <Compile Include="Entities\IDBManagerHelper.cs" />
     <Compile Include="Entities\Inner\IBankCommon.cs" />
     <Compile Include="Entities\IBill.cs" />
     <Compile Include="Entities\IBillDetail.cs" />
@@ -129,7 +130,6 @@
     <Compile Include="Entities\ICompanyBank.cs" />
     <Compile Include="Entities\ICompanyBasic.cs" />
     <Compile Include="Entities\IConfig.cs" />
-    <Compile Include="Entities\IDBManager.cs" />
     <Compile Include="Entities\ICustomer.cs" />
     <Compile Include="Entities\ICustomerType.cs" />
     <Compile Include="Entities\ICustomProperty.cs" />
@@ -151,6 +151,8 @@
     <Compile Include="Entities\Inner\IGstEntity.cs" />
     <Compile Include="Entities\Inner\IHRequest.cs" />
     <Compile Include="Entities\Inner\IStatus.cs" />
+    <Compile Include="Entities\Inner\IToken.cs" />
+    <Compile Include="Entities\Inner\IUserCore.cs" />
     <Compile Include="Entities\IOrderDetails.cs" />
     <Compile Include="Entities\IPaymentIn.cs" />
     <Compile Include="Entities\IPaymentInDetail.cs" />
@@ -172,6 +174,8 @@
     <Compile Include="Entities\ISalesOrder.cs" />
     <Compile Include="Entities\ISalesOrderDetail.cs" />
     <Compile Include="Entities\ISalesType.cs" />
+    <Compile Include="Entities\ISessionCredential.cs" />
+    <Compile Include="Entities\ISessionToken.cs" />
     <Compile Include="Entities\IShipment.cs" />
     <Compile Include="Entities\IShipmentDetail.cs" />
     <Compile Include="Entities\IShipmentType.cs" />
@@ -188,6 +192,7 @@
     <Compile Include="Entities\ITDSPay.cs" />
     <Compile Include="Entities\ITDSReceive.cs" />
     <Compile Include="Entities\IUnitOfMeasure.cs" />
+    <Compile Include="Entities\IUser.cs" />
     <Compile Include="Entities\IVendor.cs" />
     <Compile Include="Entities\IVendorBank.cs" />
     <Compile Include="Entities\IVendorType.cs" />
@@ -277,7 +282,6 @@
     <Compile Include="Models\StockDetail.cs" />
     <Compile Include="Models\StockTransfer.cs" />
     <Compile Include="Models\StockTransferDetail.cs" />
-    <Compile Include="Models\StoreSessionCredential.cs" />
     <Compile Include="Models\Support.cs" />
     <Compile Include="Models\TDSPay.cs" />
     <Compile Include="Models\TDSReceive.cs" />

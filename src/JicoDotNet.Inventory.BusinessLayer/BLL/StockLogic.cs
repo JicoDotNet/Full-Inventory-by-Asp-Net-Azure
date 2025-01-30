@@ -3,7 +3,7 @@ using DataAccess.Sql;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Custom;
 using JicoDotNet.Inventory.Core.Custom.Interface;
-using JicoDotNet.Validator.Interfaces;
+using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -19,7 +19,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public List<Stock> Get(Stock stock)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
 
             NameValuePairs nvp = new NameValuePairs()
             {
@@ -37,7 +37,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public List<Stock> GetDetail(Stock stock)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
 
             NameValuePairs nvp = new NameValuePairs()
             {
@@ -64,7 +64,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public long TotalNonOpeningStockQuantity(long productId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
 
             NameValuePairs nvp = new NameValuePairs()
             {

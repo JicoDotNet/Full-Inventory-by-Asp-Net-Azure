@@ -1,6 +1,6 @@
 ﻿using DataAccess.Sql;
 using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Validator.Interfaces;
+using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Report;
 using JicoDotNet.Inventory.Core.Report.Interface;
 using System;
@@ -16,7 +16,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
 
         public IList<ResponseCustomerSalesResult> CustomerWise(IRequestCustomerSalesParam customerSales)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             NameValuePairs nvp = new NameValuePairs
             {
 
@@ -33,7 +33,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
 
         public IList<ResponseProductSalesResult> ProductWise(IRequestProductSalesParam productSales)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             NameValuePairs nvp = new NameValuePairs
             {
 

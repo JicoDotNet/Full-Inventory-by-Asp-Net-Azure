@@ -4,7 +4,7 @@ using System;
 
 namespace JicoDotNet.Inventory.Core.Models
 {
-    public class TDSReceive : PaymentIn, ITDSReceive, IActivity, IStatus, IHRequest
+    public class TDSReceive : PaymentIn, ITDSReceive, IActivity, IStatus, IHttpRequest
     {
         public long TDSReceiveId { get; set; }
         public new decimal TDSAmount { get; set; }

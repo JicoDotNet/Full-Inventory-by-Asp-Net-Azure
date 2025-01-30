@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace JicoDotNet.Inventory.Core.Models
 {
-    public class PaymentIn : IPaymentIn, ICustomer, IActivity, IStatus, IHRequest
+    public class PaymentIn : IPaymentIn, ICustomer, IActivity, IStatus, IHttpRequest
     {
         public long PaymentInId { get; set; }
         public long CustomerId { get; set; }

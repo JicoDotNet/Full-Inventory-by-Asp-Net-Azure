@@ -1,6 +1,6 @@
 ﻿using DataAccess.Sql;
 using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Validator.Interfaces;
+using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -34,7 +34,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public object Set(WareHouse wareHouse)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             string qt = string.Empty;
             if (wareHouse.WareHouseId > 0)
                 qt = "UPDATE";

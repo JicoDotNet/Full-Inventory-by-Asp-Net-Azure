@@ -1,5 +1,4 @@
-﻿using JicoDotNet.Validator.Interfaces;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+﻿using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
 using System.Collections.Generic;

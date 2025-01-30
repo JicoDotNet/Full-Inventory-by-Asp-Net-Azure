@@ -4,13 +4,12 @@ using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using JicoDotNet.Validator.Interfaces;
 
 namespace JicoDotNet.Inventory.Logging
 {
     public class AuditLogLogic
     {
-        public static void AuditLog(ILogger logData, ICommonLogicHelper commonObj)
+        public static void AuditLog(ILogger logData, Core.Entities.ICommonLogicHelper commonObj)
         {
             Task.Run(() =>
             {
@@ -33,7 +32,7 @@ namespace JicoDotNet.Inventory.Logging
             });
         }
 
-        public static void LoginLog(ICommonLogicHelper commonObj)
+        public static void LoginLog(Core.Entities.ICommonLogicHelper commonObj)
         {
             Task.Run(() =>
             {

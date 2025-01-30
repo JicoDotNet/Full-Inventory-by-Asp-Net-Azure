@@ -1,6 +1,6 @@
 ﻿using DataAccess.Sql;
 using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Validator.Interfaces;
+using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -16,7 +16,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         #region Vendor Type
         public string TypeSet(VendorType vendorType)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             string qt = string.Empty;
             if (vendorType.VendorTypeId > 0)
                 qt = "UPDATE";
@@ -40,7 +40,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public string TypeDeactive(string VendorTypeId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             string qt = "INACTIVE";
 
             NameValuePairs nvp = new NameValuePairs
@@ -70,7 +70,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         #region Vendor
         public string Set(Vendor vendor)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             string qt;
             if (vendor.VendorId > 0)
                 qt = "UPDATE";
@@ -104,7 +104,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public string Deactive(string VendorId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             string qt = "INACTIVE";
 
             NameValuePairs nvp = new NameValuePairs
@@ -142,7 +142,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         #region Vendor Bank
         public string BankSet(VendorBank vendorBank)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             string qt = string.Empty;
             if (vendorBank.VendorBankId > 0)
                 qt = "UPDATE";
@@ -174,7 +174,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public string BankDeactive(string VendorId, string VendorBankId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             string qt = "INACTIVE";
 
             NameValuePairs nvp = new NameValuePairs

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace JicoDotNet.Inventory.Core.Models
 {
-    public class StockTransfer : IStockTransfer, IActivity, IStatus, IHRequest
+    public class StockTransfer : IStockTransfer, IActivity, IStatus, IHttpRequest
     {
         public long StockTransferId { get; set; }
         public string StockTransferNumber { get; set; }

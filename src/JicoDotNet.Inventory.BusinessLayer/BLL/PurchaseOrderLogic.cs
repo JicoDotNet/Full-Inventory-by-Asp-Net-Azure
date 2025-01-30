@@ -2,7 +2,7 @@
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Custom;
 using JicoDotNet.Inventory.Core.Custom.Interface;
-using JicoDotNet.Validator.Interfaces;
+using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -18,7 +18,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         #region PO Type
         public string TypeSet(PurchaseType purchaseType)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             string qt = string.Empty;
             if (purchaseType.PurchaseTypeId > 0)
                 qt = "UPDATE";
@@ -75,7 +75,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public Dictionary<string, object> GetForEntry()
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             NameValuePairs nvp = new NameValuePairs
             {
 
@@ -129,7 +129,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             });
             if (orderDetailTypes.Count > 0)
             {
-                _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+                
                 NameValuePairs nvp = new NameValuePairs
                 {
                     new NameValuePair("@PurchaseOrderId", purchaseOrder.PurchaseOrderId),
@@ -167,7 +167,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             try
             {
-                _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+                
                 NameValuePairs nvp = new NameValuePairs
                 {
                     new NameValuePair("@PurchaseOrderId", PurchaseOrderId),
@@ -187,7 +187,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public PurchaseOrder GetForDetail(long PurchaseOrderId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             NameValuePairs nvp = new NameValuePairs()
             {
 
@@ -209,7 +209,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public List<PurchaseOrder> GetPOs()
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             NameValuePairs nvp = new NameValuePairs()
                 {
 
@@ -261,7 +261,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 });
                 if (orderDetailTypes.Count > 0)
                 {
-                    _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+                    
                     NameValuePairs nvp = new NameValuePairs
                     {
                         new NameValuePair("@PurchaseOrderId", purchaseOrder.PurchaseOrderId),

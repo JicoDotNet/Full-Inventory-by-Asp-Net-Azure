@@ -1,6 +1,4 @@
-﻿using JicoDotNet.Validator.Entities;
-using JicoDotNet.Inventory.Core.Common.Auth;
-using JicoDotNet.Inventory.Core.Entities;
+﻿using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
 using JicoDotNet.Inventory.Logging;
 using JicoDotNet.Inventory.UI.Models;
@@ -9,11 +7,12 @@ using System.IO;
 using System.Text;
 using System.Web.Mvc;
 using System;
-using JicoDotNet.Validator;
+using System.Web;
+using JicoDotNet.Inventory.Core.Common;
 
 namespace JicoDotNet.Inventory.Controllers
 {
-    public abstract class BaseController : LicenseController
+    public abstract class BaseController : Controller
     {
         #region Properties
         protected string ControllerName { get; private set; }
@@ -24,6 +23,8 @@ namespace JicoDotNet.Inventory.Controllers
         protected ICompanyBasic SessionCompany { get; private set; }
         protected IReturnObject ReturnMessage { get; set; }
         protected IInvalidModel InvalidModelObject { get; set; }
+        public ISessionCredential SessionPerson { get; private set; }
+        protected ICommonLogicHelper LogicHelper { get; private set; }
 
 
         private ActionExecutingContext _filteringContext;
@@ -33,13 +34,14 @@ namespace JicoDotNet.Inventory.Controllers
         /// <summary>
         /// Constructor
         /// </summary>
-        protected BaseController() : base(new CommonLogicHelper()
+        protected BaseController() 
         {
-            SqlConnectionString = WebConfigDbConnection.SqlServer,
-            NoSqlConnectionString = WebConfigDbConnection.AzureStorage,
-            RequestId = Guid.NewGuid().ToString().Replace("-", "").ToUpper()
-        })
-        {
+            LogicHelper = new CommonLogicHelper()
+            {
+                SqlConnectionString = WebConfigDbConnection.SqlServer,
+                NoSqlConnectionString = WebConfigDbConnection.AzureStorage,
+                RequestId = Guid.NewGuid().ToString().Replace("-", "").ToUpper()
+            };
         }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -59,7 +61,7 @@ namespace JicoDotNet.Inventory.Controllers
                 #endregion
 
                 #region Cookie Manage for Session Person
-                SetSessionPerson(this.HttpContext.GetCookie<SessionCredential>(".AspNetCore.Session"));
+                SetSessionPerson(HttpContext);
                 #endregion
 
                 #region Cookie Manage for Company
@@ -122,6 +124,31 @@ namespace JicoDotNet.Inventory.Controllers
             TempData["InvalidModel"] = InvalidModelObject;
             base.OnActionExecuted(_filteredContext);
         }
+
+        protected void SetSessionPerson(HttpContextBase httpContext)
+        {
+            #region Cookie Manage for Session Person
+            ISessionToken sessionToken = httpContext.GetCookie<SessionToken>(".AspNetCore.Session");
+            if (sessionToken != null && sessionToken.Key == "InventoryApp")
+            {
+                SessionPerson = sessionToken;
+            }
+
+            #endregion
+        }
+
+        protected void SetSessionCookie(ISessionCredential credential)
+        {
+            SessionToken sessionToken = new SessionToken
+            {
+                Key = "InventoryApp",
+                Token = credential.Token,
+                TokenDate = credential.TokenDate,
+                UserEmail = credential.UserEmail,
+                UserFullName = credential.UserFullName,
+            };
+            HttpContext.SetCookie(".AspNetCore.Session", sessionToken);
+        }   
 
         protected void AbandonSession()
         {

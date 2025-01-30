@@ -2,7 +2,7 @@
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Custom;
 using JicoDotNet.Inventory.Core.Custom.Interface;
-using JicoDotNet.Validator.Interfaces;
+using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -27,7 +27,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public List<PurchaseOrder> GetForGRN()
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             NameValuePairs nvp = new NameValuePairs()
             {
 
@@ -40,7 +40,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public PurchaseOrder GetForGRN(long purchaseOrderId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             NameValuePairs nvp = new NameValuePairs()
             {
 
@@ -55,7 +55,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public GoodsReceiveNote GetForDetail(long GRNId)
         {
             GoodsReceiveNote goodsReceiveNote = new GoodsReceiveNote();
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             NameValuePairs nvp = new NameValuePairs()
             {
 
@@ -77,7 +77,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public List<GoodsReceiveNoteDetail> GetGRNDetails(long purchaseOrderId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             NameValuePairs nvp = new NameValuePairs()
                 {
 
@@ -189,7 +189,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
             if (grnDetailTypes.Count > 0 && orderDetailTypes.Count > 0)
             {
-                _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+                
                 NameValuePairs nvp = new NameValuePairs()
                 {
                      
@@ -229,7 +229,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public List<GoodsReceiveNote> GetForReturn()
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             NameValuePairs nvp = new NameValuePairs()
             {
 

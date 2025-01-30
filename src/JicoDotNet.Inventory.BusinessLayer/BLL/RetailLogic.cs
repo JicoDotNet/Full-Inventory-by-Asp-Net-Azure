@@ -3,7 +3,7 @@ using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Custom;
 using JicoDotNet.Inventory.Core.Custom.Interface;
-using JicoDotNet.Validator.Interfaces;
+using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Enumeration;
 using JicoDotNet.Inventory.Core.Models;
 using System;
@@ -75,7 +75,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 // SO & Shipment
                 try
                 {
-                    _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+                    
                     NameValuePairs nvp = new NameValuePairs()
                     {
                         // Customer

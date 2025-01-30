@@ -1,19 +1,22 @@
 ﻿using DataAccess.Sql;
 using DataAccess.AzureStorage;
 using DataAccess.Sql.Entity;
-using JicoDotNet.Validator.Entities;
-using JicoDotNet.Validator.Interfaces;
 using JicoDotNet.Inventory.Core.Entities;
+using System;
 
 namespace JicoDotNet.Inventory.Core.Common
 {
-    public abstract class DBManager : DBManagerHelper, IDBManager
-    {
-        protected DBManager(ICommonLogicHelper commonDtoObj) : base(commonDtoObj)
+    public abstract class DBManager : IDBManagerHelper
+    {        
+        protected DBManager(ICommonLogicHelper commonDtoObj)
         {
+            CommonLogicObj = commonDtoObj ?? throw new ArgumentNullException(nameof(commonDtoObj), "Object can not be null");
+            
             _sqlDBAccess = new SqlDBAccess(commonDtoObj.SqlConnectionString);
         }
-        public ISqlDBAccess _sqlDBAccess { get; set; }
+
+        public ICommonLogicHelper CommonLogicObj { get; }
+        public ISqlDBAccess _sqlDBAccess { get; private set; }
 
         protected ExecuteTableManager TableManager;
         protected ExecuteBlobManager BlobManager;

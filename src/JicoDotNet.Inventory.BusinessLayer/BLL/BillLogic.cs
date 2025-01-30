@@ -1,17 +1,15 @@
 ﻿using DataAccess.Sql;
 using DataAccess.Sql.Entity;
-using JicoDotNet.Validator.Interfaces;
+using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Custom;
 using JicoDotNet.Inventory.Core.Custom.Interface;
-using JicoDotNet.Validator.Interfaces;
 using JicoDotNet.Inventory.Core.Enumeration;
 using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using JicoDotNet.Inventory.Core.Entities;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
@@ -22,12 +20,10 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         #region Bill Type
         public string TypeSet(IBillType billType)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
-            var queryType = billType.BillTypeId > 0 ? "UPDATE" : "INSERT";
+            string queryType = billType.BillTypeId > 0 ? "UPDATE" : "INSERT";
 
             INameValuePairs nvp = new NameValuePairs
             {
-
                 new NameValuePair("@BillTypeId", billType.BillTypeId),
                 new NameValuePair("@BillTypeName", billType.BillTypeName),
                 new NameValuePair("@Description", billType.Description),
@@ -42,7 +38,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public string TypeDeactivate(string billTypeId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
             string queryType = "INACTIVE";
 
             INameValuePairs nvp = new NameValuePairs
@@ -81,7 +76,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             try
             {
-                _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
                 INameValuePairs nvp = new NameValuePairs()
                 {
                     new NameValuePair("@QueryType", "LIST")
@@ -99,7 +93,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             try
             {
-                _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+                
                 INameValuePairs nvp = new NameValuePairs()
                 {
 
@@ -118,7 +112,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public IList<PurchaseOrder> GetForEntry()
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             INameValuePairs nvp = new NameValuePairs()
             {
                 new NameValuePair("@QueryType", "ENTRY")
@@ -131,7 +125,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             try
             {
-                _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+                
                 INameValuePairs nvp = new NameValuePairs
                 {
                     new NameValuePair("@PurchaseOrderId", purchaseOrderId),
@@ -148,7 +142,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public IList<BillDetail> GetBillDetails(long purchaseOrderId)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             INameValuePairs nvp = new NameValuePairs
             {
                 new NameValuePair("@PurchaseOrderId", purchaseOrderId),
@@ -162,7 +156,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             try
             {
-                _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+                
                 INameValuePairs nvp = new NameValuePairs
                 {
                     new NameValuePair("@VendorId", vendorId),
@@ -240,7 +234,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
                 if (billDetailsTypes.Count > 0)
                 {
-                    _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+                    
                     NameValuePairs nvp = new NameValuePairs()
                     {
 
@@ -283,7 +277,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public Bill GetForDetail(long BillId)
         {
             Bill bill = new Bill();
-            _sqlDBAccess = new SqlDBAccess(CommonLogicObj.SqlConnectionString);
+            
             NameValuePairs nvp = new NameValuePairs()
             {
 
