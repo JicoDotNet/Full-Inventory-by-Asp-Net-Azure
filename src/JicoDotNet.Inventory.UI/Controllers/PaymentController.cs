@@ -296,8 +296,7 @@ namespace JicoDotNet.Inventory.UI.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ErrorLoggingToView(ex);
-                    return RedirectToAction("Index", "Error");
+                    return ErrorLoggingToView(ex);
                 }
             }
             catch (Exception ex)

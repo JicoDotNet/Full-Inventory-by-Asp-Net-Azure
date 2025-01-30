@@ -116,8 +116,7 @@ namespace JicoDotNet.Inventory.UI.Controllers
             }
             catch (Exception ex)
             {
-                ErrorLoggingToView(ex);
-                return RedirectToAction("Index", "Error");
+                return ErrorLoggingToView(ex);
             }
         }
 
@@ -182,7 +181,7 @@ namespace JicoDotNet.Inventory.UI.Controllers
             }
             catch (Exception ex)
             {
-                ErrorLoggingToView(ex);
+                ErrorLogging(ex);
                 throw ex;
             }
         }
@@ -210,8 +209,7 @@ namespace JicoDotNet.Inventory.UI.Controllers
             }
             catch (Exception ex)
             {
-                ErrorLoggingToView(ex);
-                return RedirectToAction("Index", "Error");
+                return ErrorLoggingToView(ex);
             }
         }
 

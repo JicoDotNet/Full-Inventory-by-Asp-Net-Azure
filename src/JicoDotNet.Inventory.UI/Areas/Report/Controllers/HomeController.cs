@@ -34,7 +34,7 @@ namespace JicoDotNet.Inventory.UI.Areas.Report.Controllers
             }
             catch (Exception ex)
             {
-                ErrorLoggingToView(ex);
+                ErrorLogging(ex);
                 return PartialView("_PartialErrorBlock");
             }
         }

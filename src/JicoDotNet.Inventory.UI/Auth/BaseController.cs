@@ -108,7 +108,7 @@ namespace JicoDotNet.Inventory.Controllers
             }
             catch (Exception e)
             {
-                ErrorLoggingToView(e);
+                ErrorLogging(e);
                 _filteringContext.Result =
                                     RedirectToAction("Index", "Error", new { returnUrl = _filteringContext.HttpContext.Request.RawUrl, Ex = e });
             }
@@ -213,7 +213,7 @@ namespace JicoDotNet.Inventory.Controllers
 
         protected RedirectToRouteResult ErrorLoggingToView(Exception ex)
         {
-            TrackErrorLogging(ex);
+            ErrorLogging(ex);
             TempData["Error"] = new ErrorModels
             {
                 ErrorStatus = 500,
@@ -226,7 +226,7 @@ namespace JicoDotNet.Inventory.Controllers
 
         protected PartialViewResult ErrorLoggingToPartial(Exception ex)
         {
-            TrackErrorLogging(ex);
+            ErrorLogging(ex);
             return PartialView("_PartialErrorBlock", new ErrorModels
             {
                 ErrorStatus = 500,
@@ -238,7 +238,7 @@ namespace JicoDotNet.Inventory.Controllers
 
         protected JsonResult ErrorLoggingToJson(Exception ex)
         {
-            TrackErrorLogging(ex);
+            ErrorLogging(ex);
             JsonReturnModels model = new JsonReturnModels
             {
                 _isSuccess = false,
@@ -254,11 +254,6 @@ namespace JicoDotNet.Inventory.Controllers
         }
 
         protected void ErrorLogging(Exception ex)
-        {
-            TrackErrorLogging(ex);
-        }
-
-        private void TrackErrorLogging(Exception ex)
         {
             try
             {
