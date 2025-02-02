@@ -1,6 +1,6 @@
 version: 2
 updates:
   - package-ecosystem: "nuget"
-    directory: "/" # Adjust the directory path if necessary
+   directory: "/src/JicoDotNet.Inventory.UI"  # Point to the correct folder
     schedule:
       interval: "weekly"
