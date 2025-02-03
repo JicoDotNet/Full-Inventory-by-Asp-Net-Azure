@@ -37,36 +37,27 @@ This project is developed with **.NET Framework 4.8**, making it a **stable, rel
 ## 📖 Table of Contents
 - [Project Overview](#-project-overview)  
   - Brief introduction  
-  - Features & benefits  
-
+  - Features & benefits
 - [Screenshots](#-screenshots-optional)  
-  - UI previews (Login, Dashboard, Reports, etc.)  
-
+  - UI previews (Login, Dashboard, Reports, etc.)
 - [Getting Started](#-getting-started)  
   - Quick setup guide  
   - Prerequisites
   - Technology Stack
   - Running the project locally
   - Deployment Guide
-
 - [Usage Guide](#-usage-guide)  
-  - How to use different modules  
-   
+  - How to use different modules
 - [Technical Details & Know-How](#-technical-details--know-how)  
   - Project architecture overview  
   - Code structure explanation  
   - Key design patterns used  
-  - Authentication details     
-
+  - Authentication details
 - [Contributing](#-contributing)  
-  
 - [Versioning & Change log](#)  
-- [License](#-license) 
-
-- [Contact & Support](#-contact--support)    
-
+- [License](#-license)
+- [Contact & Support](#-contact--support)
 - [Roadmap & Future Enhancements](#-roadmap--future-enhancements)  
   - Project Status
   - Planned features  
-  - Upcoming improvements  
-
+  - Upcoming improvements
