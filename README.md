@@ -35,38 +35,38 @@ This project is developed with **.NET Framework 4.8**, making it a **stable, rel
 
 
 ## 📖 Table of Contents
-1. [Project Overview](#-project-overview)  
-   - Brief introduction  
-   - Features & benefits  
+- [Project Overview](#-project-overview)  
+  - Brief introduction  
+  - Features & benefits  
 
-2. [Screenshots (Optional)](#-screenshots-optional)  
-   - UI previews (Login, Dashboard, Reports, etc.)  
+- [Screenshots](#-screenshots-optional)  
+  - UI previews (Login, Dashboard, Reports, etc.)  
 
-3. [Getting Started](#-getting-started)  
-   - Quick setup guide  
-   - Prerequisites
-   - Technology Stack
-   - Running the project locally
-   - Deployment Guide
+- [Getting Started](#-getting-started)  
+  - Quick setup guide  
+  - Prerequisites
+  - Technology Stack
+  - Running the project locally
+  - Deployment Guide
 
-4. [Usage Guide](#-usage-guide)  
-   - How to use different modules  
+- [Usage Guide](#-usage-guide)  
+  - How to use different modules  
    
-5. [Technical Details & Know-How](#-technical-details--know-how)  
-   - Project architecture overview  
-   - Code structure explanation  
-   - Key design patterns used  
-   - Authentication details     
+- [Technical Details & Know-How](#-technical-details--know-how)  
+  - Project architecture overview  
+  - Code structure explanation  
+  - Key design patterns used  
+  - Authentication details     
 
-6. [Contributing](#-contributing)  
+- [Contributing](#-contributing)  
   
-7. [Versioning & Change log](#)  
-8. [License](#-license) 
+- [Versioning & Change log](#)  
+- [License](#-license) 
 
-9. [Contact & Support](#-contact--support)    
+- [Contact & Support](#-contact--support)    
 
-10. [Roadmap & Future Enhancements](#-roadmap--future-enhancements)  
-   - Project Status
-   - Planned features  
-   - Upcoming improvements  
+- [Roadmap & Future Enhancements](#-roadmap--future-enhancements)  
+  - Project Status
+  - Planned features  
+  - Upcoming improvements  
 
