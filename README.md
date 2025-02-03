@@ -1,8 +1,8 @@
 ﻿
-# 🏢 WebApp for Indian SMBs - Inventory & Billing Management System
+# 🏢 Inventory & Billing Management System for Indian SMBs
 
 ## 📌 Description  
-This is a powerful, open-source **business management software** designed specifically for **Indian Small and Medium Businesses (SMBs)**. This web-based application provides a **complete solution for inventory management, invoicing, GST compliance, stock tracking, billing, purchase-sale transactions, and business dues & outstanding calculations**.  
+This is a powerful and open-source **business management software** designed specifically for **Indian Small and Medium Businesses (SMBs)**. This web-based application provides a **complete solution for inventory management, invoicing, GST compliance, stock tracking, billing, purchase-sale transactions, and business dues & outstanding calculations**.  
 
 Built using **.NET Framework 4.8**, this software ensures a **scalable, secure, and efficient** way to manage day-to-day business operations. Whether you're a **retail shop, wholesale distributor, trader, or manufacturer**, this system helps **automate workflows, generate reports, and streamline financial transactions**.  
 
@@ -35,29 +35,29 @@ This project is developed with **.NET Framework 4.8**, making it a **stable, rel
 
 
 ## 📖 Table of Contents
-- [Project Overview](#-project-overview)  
+- [Project Overview](#project-overview)  
   - Brief introduction  
   - Features & benefits
-- [Screenshots](#-screenshots-optional)  
+- [Screenshots](#screenshots-optional)  
   - UI previews (Login, Dashboard, Reports, etc.)
-- [Getting Started](#-getting-started)  
+- [Getting Started](#getting-started)  
   - Quick setup guide  
   - Prerequisites
   - Technology Stack
   - Running the project locally
   - Deployment Guide
-- [Usage Guide](#-usage-guide)  
+- [Usage Guide](#usage-guide)  
   - How to use different modules
-- [Technical Details & Know-How](#-technical-details--know-how)  
+- [Technical Details & Know-How](#technical-details--know-how)  
   - Project architecture overview  
   - Code structure explanation  
   - Key design patterns used  
   - Authentication details
-- [Contributing](#-contributing)  
-- [Versioning & Change log](#)  
-- [License](#-license)
-- [Contact & Support](#-contact--support)
-- [Roadmap & Future Enhancements](#-roadmap--future-enhancements)  
+- [Contributing](#contributing)  
+- [Versioning & Change log](#versioning--Change-log)  
+- [License](#license)
+- [Contact & Support](#contact--support)
+- [Roadmap & Future Enhancements](#roadmap--future-enhancements)  
   - Project Status
   - Planned features  
   - Upcoming improvements
