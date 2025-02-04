@@ -94,16 +94,16 @@ This project is **fully open-source** and licensed under **GPL-3.0**, enabling b
 - ✅ Convert quotations to Sales Order **with a single click**, saving time.  
 
 #### 🔹 Purchase & Sales Tracking  
-✅ Maintains **detailed transaction history** for **vendors and customers**.  
-✅ Generates **purchase orders, payment due reports, and expense tracking**.  
+- ✅ Maintains **detailed transaction history** for **vendors and customers**.  
+- ✅ Generates **purchase orders, payment due reports, and expense tracking**.  
 
 #### 🔹 Business Financial Management  
-✅ Monitors **business dues & outstanding balances** in a structured way.  
-✅ Helps in tracking **dues payments and business credits**.  
+- ✅ Monitors **business dues & outstanding balances** in a structured way.  
+- ✅ Helps in tracking **dues payments and business credits**.  
 
 #### 🔹 Advanced Reporting & Analytics  
-✅ Provides **financial insights** with **sales reports, tax summaries, and profit-loss statements**.  
-✅ Supports **custom report generation & export options (PDF, Excel, CSV)**.  
+- ✅ Provides **financial insights** with **sales reports and tax summaries**.  
+- ✅ Supports **custom report generation & export options (PDF, Excel, CSV)**.  
 
 
 
