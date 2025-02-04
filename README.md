@@ -16,9 +16,9 @@ Built using **.NET Framework 4.8**, this software ensures a **scalable, secure, 
 ✔ **Self-Hosted & Open-Source** – Deploy on your own server with full control over data.  
 
 ## 🏆 Badges  
-![GitHub repo size](https://img.shields.io/github/repo-size/JicoDotNet/Full-Inventory-by-Asp-Net-Azure)  
-![GitHub stars](https://img.shields.io/github/stars/JicoDotNet/Full-Inventory-by-Asp-Net-Azure?style=social)  
-![GitHub license](https://img.shields.io/github/license/JicoDotNet/Full-Inventory-by-Asp-Net-Azure)  
+![GitHub repo size](https://img.shields.io/github/repo-size/JicoDotNet/Full-Inventory-by-Asp-Net-Azure)
+![GitHub stars](https://img.shields.io/github/stars/JicoDotNet/Full-Inventory-by-Asp-Net-Azure?style=social)
+![GitHub license](https://img.shields.io/github/license/JicoDotNet/Full-Inventory-by-Asp-Net-Azure)
 ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen)  
 
 ## 🌟 Introduction  
