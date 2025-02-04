@@ -3,7 +3,7 @@
 ![GitHub license](https://img.shields.io/github/license/JicoDotNet/Full-Inventory-by-Asp-Net-Azure)
 ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen)  
 
-# 🏢 Inventory & Billing Management System for Indian SMBs
+# 🏢 Inventory, Billing & GST System for Indian SMBs
 
 ## 📌 Description  
 This is a powerful and open-source **business management software** designed specifically for **Indian Small and Medium Businesses (SMBs)**. This web-based application provides a **complete solution for inventory management, invoicing, GST compliance, stock tracking, billing, purchase-sale transactions, and business dues & outstanding calculations**.  
