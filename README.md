@@ -1,4 +1,8 @@
-﻿
+﻿![GitHub repo size](https://img.shields.io/github/repo-size/JicoDotNet/Full-Inventory-by-Asp-Net-Azure)
+![GitHub stars](https://img.shields.io/github/stars/JicoDotNet/Full-Inventory-by-Asp-Net-Azure?style=social)
+![GitHub license](https://img.shields.io/github/license/JicoDotNet/Full-Inventory-by-Asp-Net-Azure)
+![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen)  
+
 # 🏢 Inventory & Billing Management System for Indian SMBs
 
 ## 📌 Description  
@@ -14,12 +18,6 @@ Built using **.NET Framework 4.8**, this software ensures a **scalable, secure, 
 ✔ **Business Dues Management** – Monitor loan payments, interest, and outstanding balances.   
 ✔ **Reports & Analytics** – Generate sales, expense, and tax reports for financial insights.  
 ✔ **Self-Hosted & Open-Source** – Deploy on your own server with full control over data.  
-
-## 🏆 Badges  
-![GitHub repo size](https://img.shields.io/github/repo-size/JicoDotNet/Full-Inventory-by-Asp-Net-Azure)
-![GitHub stars](https://img.shields.io/github/stars/JicoDotNet/Full-Inventory-by-Asp-Net-Azure?style=social)
-![GitHub license](https://img.shields.io/github/license/JicoDotNet/Full-Inventory-by-Asp-Net-Azure)
-![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen)  
 
 ## 🌟 Introduction  
 Managing business operations efficiently is a **major challenge for Indian SMBs**, especially with **GST compliance, inventory tracking, and financial transactions**. This **open-source, self-hosted business management solution** helps businesses streamline operations, **reduce manual work, and improve financial transparency**.  
