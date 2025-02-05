@@ -107,6 +107,9 @@ This project is **fully open-source** and licensed under **GPL-3.0**, enabling b
 - ✅ Provides **financial insights** with **sales reports and tax summaries**.  
 - ✅ Supports **custom report generation & export options (PDF, Excel, CSV)**.  
 
+## 🖼️ Screenshots  
+
+[Here](/docs/SCREENSHOTS.md) are some UI previews of the **Inventory, Billing & GST System** in details.
 
 ## 📌 Getting Started  
 
