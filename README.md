@@ -34,7 +34,7 @@ This project is developed with **.NET Framework 4.8**, making it a **stable, rel
 - **Active Community** – Open for contributions, bug fixes, and enhancements.  
 
 
-## 📖 Table of Contents
+## ☰ Table of Contents
 - [Project Overview](#project-overview)  
   - Brief introduction  
   - Features & benefits
@@ -46,7 +46,7 @@ This project is developed with **.NET Framework 4.8**, making it a **stable, rel
   - Technology Stack
   - Running the project locally
   - Deployment Guide
-- [Usage Guide](#usage-guide)  
+- [User Guide](#user-guide)  
   - How to use different modules
 - [Technical Details & Know-How](#technical-details--know-how)  
   - Project architecture overview  
@@ -191,3 +191,7 @@ You need to change **Configuration details** in in the [`Web.config`](/src/JicoD
 🔹 Deploy as an Azure Web App (Windows-based).   
 🔹 Use Azure Table Storage & Blob Storage configurations.   
 🔹 Ensure SQL Server is hosted on Azure or connected via Azure SQL.   
+
+## 📖 Usage Guide  
+
+For a detailed user manual, refer to [Here](/docs/USERMANUAL.md).  
