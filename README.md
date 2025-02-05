@@ -194,19 +194,19 @@ This section provides an overview of the project's architecture, code structure,
 ### 🔹 Project Architecture Overview  
 The application follows a **multi-layered architecture**:  
 - **Presentation Layer (UI)** – ASP.NET MVC views and controllers.  
-- **Business Logic Layer (BLL)** – Service classes for processing business logic. It contains of four diffrent projects.    
-- **Data Access Layer (DAL)** – Handles database interactions with MS SQL Server and Azure Storage. Azure Storage access layer is consuming from nuget.  
+- **Business Logic Layer (BLL)** – Service classes for processing business logic. It consists of four different projects.  
+- **Data Access Layer (DAL)** – Handles database interactions with MS SQL Server and Azure Storage. Azure Storage access layer is consumed via NuGet packages.  
 - **Storage & Persistence** – Uses **MS SQL Server** for structured data, **Azure Table Storage** for NoSQL data, and **Azure Blob Storage** for file storage.  
 
-> ![Project Dependency](/docs/screenshots/JicoDotNet.Inventory.Dependency.svg)
+> ![Project Dependency](/docs/screenshots/JicoDotNet.Inventory.Dependency.svg)  
 
 ### 🔹 Code Structure  
 - `/src/JicoDotNet.Inventory.UI/` – ASP.NET MVC frontend and controllers.  
 - `/src/JicoDotNet.Inventory.BusinessLayer/` – Business logic services.  
-- `/src/JicoDotNet.Inventory.Core/` – Business logic models for Entity & DTOs.  
-- `/src/JicoDotNet.Inventory.Helper/` – Business logic for helper classs.  
-- `/src/JicoDotNet.Inventory.Logging/` – Business logic for audit log, error log & activity log. 
-- `/src/DataAccess.Sql/` – Data access layer for SQL server.  
+- `/src/JicoDotNet.Inventory.Core/` – Business logic models for entities & DTOs.  
+- `/src/JicoDotNet.Inventory.Helper/` – Helper classes for business logic.  
+- `/src/JicoDotNet.Inventory.Logging/` – Handles audit logs, error logs & activity logs.  
+- `/src/DataAccess.Sql/` – Data access layer for SQL Server.  
 - `/src/JicoDotNet.SQLServer/` – SQL scripts.  
 - `/docs/` – Documentation files.  
 
