@@ -15,7 +15,7 @@ namespace JicoDotNet.Inventory.Core.Common
             _sqlDBAccess = new SqlDBAccess(commonDtoObj.SqlConnectionString);
         }
 
-        public ICommonLogicHelper CommonLogicObj { get; }
+        public ICommonLogicHelper CommonLogicObj { get; private set; }
         public ISqlDBAccess _sqlDBAccess { get; private set; }
 
         protected ExecuteTableManager TableManager;

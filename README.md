@@ -195,3 +195,34 @@ You need to change **Configuration details** in in the [`Web.config`](/src/JicoD
 ## 📖 User Guide  
 
 For a detailed user manual, refer to [Here](/docs/USERMANUAL.md).  
+
+## 🛠 Technical Details & Know-How  
+
+This section provides an overview of the project's architecture, code structure, key design patterns, and authentication details.  
+
+### 🔹 Project Architecture Overview  
+The application follows a **multi-layered architecture**:  
+- **Presentation Layer (UI)** – ASP.NET MVC views and controllers.  
+- **Business Logic Layer (BLL)** – Service classes for processing business logic.  
+- **Data Access Layer (DAL)** – Handles database interactions with MS SQL Server and Azure Storage.  
+- **Storage & Persistence** – Uses **MS SQL Server** for structured data, **Azure Table Storage** for NoSQL data, and **Azure Blob Storage** for file storage.  
+
+> ![Project Dependency](/docs/screenshots/JicoDotNet.Inventory.Dependency.svg)
+
+### 🔹 Code Structure  
+- `/src/JicoDotNet.Inventory.UI/` – ASP.NET MVC frontend and controllers.  
+- `/src/JicoDotNet.Inventory.BLL/` – Business logic services.  
+- `/src/JicoDotNet.Inventory.DAL/` – Data access layer for SQL & Azure Storage.  
+- `/src/JicoDotNet.SQLServer/DefaultScript/` – SQL setup scripts.  
+- `/docs/` – Documentation files.  
+
+### 🔹 Key Design Patterns Used  
+- **Repository Pattern** – Used in DAL for data abstraction.  
+- **Dependency Injection (DI)** – Implemented for service dependencies.  
+- **Factory Pattern** – Used for object creation in some modules.  
+
+### 🔹 Authentication & Security  
+- **User Authentication** – Uses **ASP.NET Identity** for secure login.  
+- **Role-Based Access Control (RBAC)** – Defines access levels for users.  
+- **Data Protection** – SQL Server & Azure Storage enforce security policies.  
+
