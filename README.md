@@ -243,14 +243,9 @@ This project is a collaborative effort that can involve various forms of partici
 - **Pull Request:** Submit a pull request to the original repository. Fill in the provided PR template with details of your changes.
 - **Code Review:** Be open to feedback and make requested changes during the code review process.
 
-### 🔹Key Improvements:  
-- ✅ Improved clarity and consistency.  
-- ✅ Made steps concise and actionable.  
-- ✅ Formatted sections for easy readability.  
-
-
 Remember to always read the project’s [CONTRIBUTING.md](/docs/CONTRIBUTING.md) file, as it will contain specific guidelines tailored to the project’s needs. You are open to contributing. 
 Happy contributing! 🚀
+
 
 ## 🔄Versioning & Change log
 This project follows **semantic versioning (SemVer)** to ensure clear and predictable version updates.  
