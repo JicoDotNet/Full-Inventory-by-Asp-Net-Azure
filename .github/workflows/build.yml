@@ -1,6 +1,6 @@
 # This workflow will build a .NET Framework 4.8.1 project
 
-name: .NET 4.8.1 CI
+name: .NET4.8 CI
 
 on:
   workflow_dispatch:  # Allows manual triggering
