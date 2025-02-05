@@ -65,7 +65,7 @@ This project is developed with **.NET Framework 4.8**, making it a **stable, rel
 
 ## 📌 Project Overview  
 
-### 🔹 Brief Introduction  
+### Brief Introduction  
 The **Inventory, Billing & GST Management System for Indian SMBs** is a comprehensive web application designed to **streamline business operations** by managing **inventory, billing, GST compliance, and financial transactions** efficiently.  
 
 This software is built using **.NET Framework 4.8 MVC**, providing a **robust, scalable, and user-friendly solution** for small and medium businesses. Whether you're managing **retail, wholesale, manufacturing, or trading**, this application ensures a **smooth workflow, accurate financial tracking, and compliance with Indian taxation laws**.  
@@ -108,5 +108,83 @@ This project is **fully open-source** and licensed under **GPL-3.0**, enabling b
 - ✅ Supports **custom report generation & export options (PDF, Excel, CSV)**.  
 
 
+## 📌 Getting Started  
 
+### 🔹 Quick Setup Guide    
+Follow these steps to set up and run the project on your local machine.  
 
+### 🔹 Prerequisites  
+Ensure your system has the following is installed:  
+- **Windows OS** (Windows 10/11 or Windows Server)  
+- [**.NET Framework 4.8**](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48)  
+- [**MS SQL Server (2016 or later)**](https://www.microsoft.com/en-in/sql-server/sql-server-downloads)  
+- **IIS Express or IIS Server**  
+- [**Visual Studio 2019/2022**](https://visualstudio.microsoft.com/) (with ASP.NET development workload) or another compatible IDE   
+
+### 🔹 Technology Stack  
+This project uses:  
+- **Backend:** ASP.NET MVC (.NET Framework 4.8.1)  
+- **Database:** MS SQL Server, Azure Table Storage  
+- **File/Blob Storage:** Azure Blob Storage  
+
+### 🔹 Running the Project Locally  
+
+#### 1️⃣ Set Up the Database  
+- Locate SQL scripts in [`/src/JicoDotNet.SQLServer/DefaultScript`](/src/JicoDotNet.SQLServer/DefaultScript) folder.  
+- Execute [`AllSchemaScript.sql`](/src/JicoDotNet.SQLServer/DefaultScript/AllSchemaScript.sql) to create database schema.  
+- Execute [`BasicDefaultData.sql`](/src/JicoDotNet.SQLServer/DefaultScript/BasicDefaultData.sql) to insert default required data.  
+
+#### 2️⃣ Build & Run the Project  
+- Open the [solution](/src/JicoDotNet.Inventory.sln) in **Visual Studio**.  
+- Set the startup project and build the solution.  
+- Run the project – it will be available at **`http://localhost:12345/`**.  
+- If port **12345** is occupied, modify the port `<IISUrl>` in the `.csproj` file.  
+
+#### 3️⃣ Configuration File Samples  
+The project uses **one connection string** for both **Azure Table Storage** and **Azure Blob Storage**.  
+
+To generate this connection string from the **Azure Portal**:  
+1. Go to **Azure Portal** → **Storage Account**.  
+2. Navigate to **Access Keys** under Security + Networking.  
+3. Copy the **Connection String** from Key1 or Key2.  
+4. Add this to the project's **Web.config** or `appsettings.json`.  
+
+#### 3️⃣ Configuration File Samples  
+
+You need to change **Configuration details** in in the [`Web.config`](/src/JicoDotNet.Inventory.UI/Web.config) file.
+
+- For **Sql Server Database**, the connection string is stored under the key:  
+
+```xml
+<appSettings>
+    <add key="SqlServerConnection" value="YOUR_CONNECTION_STRING_GOES_HERE" />
+</appSettings>
+```
+
+- For **Azure Table & Blob Storage**, the connection string is stored under the key:  
+
+_Generate the connection string of **Azure Table Storage** from [Azure Portal](https://portal.azure.com)._
+
+> To generate an Azure Table Storage connection string from the Azure Portal, follow these steps:
+ 1. Navigate to your **storage account** in the Azure Portal.
+ 2. In the **Security + networking** section, locate the Access keys setting.
+ 3. Click on the **Show keys** button at the top of the page to display the account keys and associated connection strings.
+ 4. Copy the **Connection String** from Key1 or Key2.
+ 5. Add this to the project's **Web.config**
+
+```xml
+<appSettings>
+    <add key="AzureStorageConnection" value="YOUR_CONNECTION_STRING_GOES_HERE" />
+</appSettings>
+```
+
+### 🔹 Deployment Guide (Windows & Azure)
+#### Windows Server Deployment
+🔹 Publish the project from Visual Studio.   
+🔹 Configure IIS to host the application.   
+🔹 Ensure MS SQL Server & storage configurations are set.   
+
+#### Azure Deployment
+🔹 Deploy as an Azure Web App (Windows-based).   
+🔹 Use Azure Table Storage & Blob Storage configurations.   
+🔹 Ensure SQL Server is hosted on Azure or connected via Azure SQL.   
