@@ -54,6 +54,9 @@ This project is developed with **.NET Framework 4.8**, making it a **stable, rel
   - Key design patterns used  
   - Authentication details
 - [Contributing](#contributing)  
+  - [Submitting Bug Reports](#)
+  - [Feature Requests](#)
+  - [Pull Requests](#)
 - [Versioning & Change log](#versioning--Change-log)  
 - [License](#license)
 - [Contact & Support](#contact--support)
@@ -218,4 +221,30 @@ The project follows a **monolithic architecture** and implements the following d
 - **User Authentication** – Implements cookie-based authentication for secure user sessions.  
 - **Data Protection** – Ensures security through SQL Server and Azure Storage access policies.  
 
+## Contributing
+This project is a collaborative effort that can involve various forms of participation. Here’s a guide on how you can contribute:
 
+### Submitting Bug Reports
+- **Identify the Bug:** Clearly describe the issue you’ve encountered. Include details such as the context in which the bug occurred, steps to reproduce it, and the expected vs. actual results.
+- **Check Existing Issues:** Before submitting a new bug report, search the project’s issues to ensure it hasn’t been reported already.
+- **Use the Template:** Follow any issue template provided by the project. This often includes specific details the maintainers need.
+- **Include Logs and Screenshots:** If applicable, add logs and screenshots to help maintainers understand the problem.
+
+### Feature Requests
+- **Suggesting Enhancements**: Propose new features or improvements to existing ones. Explain the benefits and potential impact on the project.
+- **Discuss in Issues:** Use the project’s issues section to discuss ideas with maintainers and other contributors.
+- **Be Patient:** Remember that maintainers are often volunteers. It may take time for them to respond to your request.
+
+### Pull Requests
+- **Fork the Repository:** Create your own copy of the project to work on.
+- **Create a Branch:** Make a new branch in your fork for your changes.
+- **Make Changes:** Implement your bug fix or feature, adhering to the project's coding standards.
+- **Write Tests:** If the project has tests, add tests for your changes to ensure they work as expected.
+- **Pull Request:** Submit a pull request to the original repository. Fill in the provided PR template with details of your changes.
+- **Code Review:** Be open to feedback and make requested changes during the code review process.
+
+Remember to always read the project’s [CONTRIBUTING.md](/docs/CONTRIBUTING.md) file, as it will contain specific guidelines tailored to the project’s needs. You are open to contributing. 
+Happy contributing! 🚀
+
+## Versioning & Change log
+Check the [CHANGELOG.md](/docs/CHANGELOG.md) for version history and updates.
