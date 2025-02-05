@@ -270,7 +270,7 @@ We appreciate your interest in this project! If you need assistance, have questi
 ### 🔹 Support the Project  
 If you appreciate the work on this project and would like to contribute in a different way, please consider donating. Your support helps us keep the project alive and improve its future features.  
 
-💳 Donate via [UPI](upi://pay?pa=soubhik11sbi@ibl&pn=****2723&mc=0000&mode=02&purpose=00)  
+💳 Donate via <a href="upi://pay?pa=soubhik11sbi@ibl&pn=****2723&mc=0000&mode=02&purpose=00">UPI</a>  
 ![UPI QR Code](/docs/screenshots/JicoDotNet_UPI.jpg)
 
 ## 🚀 Roadmap & Future Enhancements  
