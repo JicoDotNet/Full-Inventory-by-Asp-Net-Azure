@@ -163,14 +163,14 @@ You need to change **Configuration details** in in the [`Web.config`](/src/JicoD
 
 - For **Azure Table & Blob Storage**, the connection string is stored under the key:  
 
-_Generate the connection string of **Azure Table Storage** from [Azure Portal](https://portal.azure.com)._
+> _Generate the connection string of **Azure Table Storage** from [Azure Portal](https://portal.azure.com)._
 
-> To generate an Azure Table Storage connection string from the Azure Portal, follow these steps:
- 1. Navigate to your **storage account** in the Azure Portal.
- 2. In the **Security + networking** section, locate the Access keys setting.
- 3. Click on the **Show keys** button at the top of the page to display the account keys and associated connection strings.
- 4. Copy the **Connection String** from Key1 or Key2.
- 5. Add this to the project's **Web.config**
+> To generate an Azure Table Storage connection string from the Azure Portal, follow these steps:  
+> 1. Navigate to your **storage account** in the Azure Portal.  
+> 2. In the **Security + networking** section, locate the Access keys setting.  
+> 3. Click on the **Show keys** button at the top of the page to display the account keys and associated connection strings.  
+> 4. Copy the **Connection String** from Key1 or Key2.  
+> 5. Add this to the project's **Web.config**  
 
 ```xml
 <appSettings>
