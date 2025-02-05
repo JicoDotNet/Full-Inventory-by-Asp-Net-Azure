@@ -221,21 +221,21 @@ The project follows a **monolithic architecture** and implements the following d
 - **User Authentication** – Implements cookie-based authentication for secure user sessions.  
 - **Data Protection** – Ensures security through SQL Server and Azure Storage access policies.  
 
-## Contributing
+## 🤝 Contributing
 This project is a collaborative effort that can involve various forms of participation. Here’s a guide on how you can contribute:
 
-### Submitting Bug Reports
+### 🔹Submitting Bug Reports
 - **Identify the Bug:** Clearly describe the issue you’ve encountered. Include details such as the context in which the bug occurred, steps to reproduce it, and the expected vs. actual results.
 - **Check Existing Issues:** Before submitting a new bug report, search the project’s issues to ensure it hasn’t been reported already.
 - **Use the Template:** Follow any issue template provided by the project. This often includes specific details the maintainers need.
 - **Include Logs and Screenshots:** If applicable, add logs and screenshots to help maintainers understand the problem.
 
-### Feature Requests
+### 🔹Feature Requests
 - **Suggesting Enhancements**: Propose new features or improvements to existing ones. Explain the benefits and potential impact on the project.
 - **Discuss in Issues:** Use the project’s issues section to discuss ideas with maintainers and other contributors.
 - **Be Patient:** Remember that maintainers are often volunteers. It may take time for them to respond to your request.
 
-### Pull Requests
+### 🔹Pull Requests
 - **Fork the Repository:** Create your own copy of the project to work on.
 - **Create a Branch:** Make a new branch in your fork for your changes.
 - **Make Changes:** Implement your bug fix or feature, adhering to the project's coding standards.
@@ -243,8 +243,54 @@ This project is a collaborative effort that can involve various forms of partici
 - **Pull Request:** Submit a pull request to the original repository. Fill in the provided PR template with details of your changes.
 - **Code Review:** Be open to feedback and make requested changes during the code review process.
 
+### 🔹Key Improvements:  
+- ✅ Improved clarity and consistency.  
+- ✅ Made steps concise and actionable.  
+- ✅ Formatted sections for easy readability.  
+
+
 Remember to always read the project’s [CONTRIBUTING.md](/docs/CONTRIBUTING.md) file, as it will contain specific guidelines tailored to the project’s needs. You are open to contributing. 
 Happy contributing! 🚀
 
-## Versioning & Change log
-Check the [CHANGELOG.md](/docs/CHANGELOG.md) for version history and updates.
+## 🔄Versioning & Change log
+This project follows **semantic versioning (SemVer)** to ensure clear and predictable version updates.  
+
+### 🔹 Version Format  
+`MAJOR.MINOR.PATCH` (e.g., `1.0.0`)  
+- **MAJOR** – Breaking changes, incompatible API updates.  
+- **MINOR** – New features added in a backward-compatible manner.  
+- **PATCH** – Bug fixes and small improvements. 
+
+Check the [CHANGELOG.md](/docs/CHANGELOG.md) for version history and updates.   
+
+## 📞 Contact & Support
+We appreciate your interest in this project! If you need assistance, have questions, or want to contribute, here’s how you can reach us:  
+> Email: `github.connect@soubhiknandy.com`
+
+### 🔹 Support the Project  
+If you appreciate the work on this project and would like to contribute in a different way, please consider donating. Your support helps us keep the project alive and improve its future features.  
+
+💳 Donate via [UPI](upi://pay?pa=soubhik11sbi@ibl&pn=****2723&mc=0000&mode=02&purpose=00)  
+![UPI QR Code](/docs/screenshots/JicoDotNet_UPI.jpg)
+
+## 🚀 Roadmap & Future Enhancements  
+
+This section outlines the current **project status**, planned features, and upcoming improvements.  
+
+### 🔹 Project Status  
+The project is currently in the **alpha stage**, with active development in progress.  
+> Originally built in **2019**, this project was **migrated from Azure DevOps to GitHub in August 2024**.  
+
+### 🔹 Planned Features  
+The following features are planned for future releases:  
+- 📌 **API Development** – Expanding functionality for integrations and automation.  
+- 📌 **Migration to .NET 8.0** – Updating the project to leverage the latest .NET framework improvements.  
+- 📌 **Mobile App** – Developing a mobile-friendly version for better accessibility.  
+
+### 🔹 Upcoming Improvements  
+We are continuously improving the project with:  
+- 🔧 **Performance Optimizations** – Faster database queries and optimized API calls.  
+- 🔧 **Code Refactoring** – Enhancing maintainability and modularization.  
+- 🔧 **UI/UX Enhancements** – Creating a more intuitive and user-friendly interface.  
+
+💡 Have suggestions? Feel free to [open an issue](https://github.com/JicoDotNet/Full-Inventory-by-Asp-Net-Azure/issues) with your ideas!  
