@@ -144,15 +144,6 @@ This project uses:
 - If port **12345** is occupied, modify the port `<IISUrl>` in the `.csproj` file.  
 
 #### 3️⃣ Configuration File Samples  
-The project uses **one connection string** for both **Azure Table Storage** and **Azure Blob Storage**.  
-
-To generate this connection string from the **Azure Portal**:  
-1. Go to **Azure Portal** → **Storage Account**.  
-2. Navigate to **Access Keys** under Security + Networking.  
-3. Copy the **Connection String** from Key1 or Key2.  
-4. Add this to the project's **Web.config** or `appsettings.json`.  
-
-#### 3️⃣ Configuration File Samples  
 
 You need to change **Configuration details** in in the [`Web.config`](/src/JicoDotNet.Inventory.UI/Web.config) file.
 
@@ -203,17 +194,20 @@ This section provides an overview of the project's architecture, code structure,
 ### 🔹 Project Architecture Overview  
 The application follows a **multi-layered architecture**:  
 - **Presentation Layer (UI)** – ASP.NET MVC views and controllers.  
-- **Business Logic Layer (BLL)** – Service classes for processing business logic.  
-- **Data Access Layer (DAL)** – Handles database interactions with MS SQL Server and Azure Storage.  
+- **Business Logic Layer (BLL)** – Service classes for processing business logic. It contains of four diffrent projects.    
+- **Data Access Layer (DAL)** – Handles database interactions with MS SQL Server and Azure Storage. Azure Storage access layer is consuming from nuget.  
 - **Storage & Persistence** – Uses **MS SQL Server** for structured data, **Azure Table Storage** for NoSQL data, and **Azure Blob Storage** for file storage.  
 
 > ![Project Dependency](/docs/screenshots/JicoDotNet.Inventory.Dependency.svg)
 
 ### 🔹 Code Structure  
 - `/src/JicoDotNet.Inventory.UI/` – ASP.NET MVC frontend and controllers.  
-- `/src/JicoDotNet.Inventory.BLL/` – Business logic services.  
-- `/src/JicoDotNet.Inventory.DAL/` – Data access layer for SQL & Azure Storage.  
-- `/src/JicoDotNet.SQLServer/DefaultScript/` – SQL setup scripts.  
+- `/src/JicoDotNet.Inventory.BusinessLayer/` – Business logic services.  
+- `/src/JicoDotNet.Inventory.Core/` – Business logic models for Entity & DTOs.  
+- `/src/JicoDotNet.Inventory.Helper/` – Business logic for helper classs.  
+- `/src/JicoDotNet.Inventory.Logging/` – Business logic for audit log, error log & activity log. 
+- `/src/DataAccess.Sql/` – Data access layer for SQL server.  
+- `/src/JicoDotNet.SQLServer/` – SQL scripts.  
 - `/docs/` – Documentation files.  
 
 ### 🔹 Key Design Patterns Used  
