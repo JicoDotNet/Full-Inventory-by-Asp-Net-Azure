@@ -211,12 +211,11 @@ The application follows a **multi-layered architecture**:
 - `/docs/` – Documentation files.  
 
 ### 🔹 Key Design Patterns Used  
-- **Repository Pattern** – Used in DAL for data abstraction.  
-- **Dependency Injection (DI)** – Implemented for service dependencies.  
-- **Factory Pattern** – Used for object creation in some modules.  
+The project follows a **monolithic architecture** and implements the following design patterns:  
+- **Repository Pattern** – Used throughout the solution in all projects to encapsulate data access logic and maintain a consistent structure.  
 
 ### 🔹 Authentication & Security  
-- **User Authentication** – Uses **ASP.NET Identity** for secure login.  
-- **Role-Based Access Control (RBAC)** – Defines access levels for users.  
-- **Data Protection** – SQL Server & Azure Storage enforce security policies.  
+- **User Authentication** – Implements cookie-based authentication for secure user sessions.  
+- **Data Protection** – Ensures security through SQL Server and Azure Storage access policies.  
+
 
