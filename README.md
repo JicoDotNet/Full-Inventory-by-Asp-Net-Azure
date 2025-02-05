@@ -1,4 +1,6 @@
-﻿![GitHub repo size](https://img.shields.io/github/repo-size/JicoDotNet/Full-Inventory-by-Asp-Net-Azure)
+﻿﻿[![CI Pipeline](https://github.com/JicoDotNet/Full-Inventory-by-Asp-Net-Azure/actions/workflows/build.yml/badge.svg)](https://github.com/JicoDotNet/Full-Inventory-by-Asp-Net-Azure/actions/workflows/build.yml)
+
+![GitHub repo size](https://img.shields.io/github/repo-size/JicoDotNet/Full-Inventory-by-Asp-Net-Azure)
 ![GitHub stars](https://img.shields.io/github/stars/JicoDotNet/Full-Inventory-by-Asp-Net-Azure?style=social)
 ![GitHub license](https://img.shields.io/github/license/JicoDotNet/Full-Inventory-by-Asp-Net-Azure)
 ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen)  
