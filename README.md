@@ -192,6 +192,6 @@ You need to change **Configuration details** in in the [`Web.config`](/src/JicoD
 🔹 Use Azure Table Storage & Blob Storage configurations.   
 🔹 Ensure SQL Server is hosted on Azure or connected via Azure SQL.   
 
-## 📖 Usage Guide  
+## 📖 User Guide  
 
 For a detailed user manual, refer to [Here](/docs/USERMANUAL.md).  
