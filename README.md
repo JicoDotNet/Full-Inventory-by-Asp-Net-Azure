@@ -65,7 +65,7 @@ This project is developed with **.NET Framework 4.8**, making it a **stable, rel
 
 ## 📌 Project Overview  
 
-### Brief Introduction  
+### 🚀 Brief Introduction  
 The **Inventory, Billing & GST Management System for Indian SMBs** is a comprehensive web application designed to **streamline business operations** by managing **inventory, billing, GST compliance, and financial transactions** efficiently.  
 
 This software is built using **.NET Framework 4.8 MVC**, providing a **robust, scalable, and user-friendly solution** for small and medium businesses. Whether you're managing **retail, wholesale, manufacturing, or trading**, this application ensures a **smooth workflow, accurate financial tracking, and compliance with Indian taxation laws**.  
