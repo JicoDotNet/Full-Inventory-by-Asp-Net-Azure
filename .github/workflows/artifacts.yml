@@ -1,0 +1,40 @@
+name: .NET4.8 Artifacts
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: [".NET4.8 CI"]
+    types:
+      - completed
+
+jobs:
+  generate-artifacts:
+    if: github.event.workflow_run.conclusion == 'success' && startsWith(github.ref, 'refs/heads/feature/')
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - name: Set up MSBuild
+        uses: microsoft/setup-msbuild@v1.1
+
+      - name: Set up NuGet
+        uses: NuGet/setup-nuget@v1
+
+      - name: Restore NuGet packages
+        run: nuget restore src/JicoDotNet.Inventory.sln -SolutionDirectory src/
+
+      - name: Build solution
+        run: msbuild src/JicoDotNet.Inventory.sln /p:Configuration=Release
+
+      - name: Collect Artifacts
+        run: |
+          mkdir artifacts
+          copy src\JicoDotNet.Inventory.UI\bin\Release\* artifacts\ /Y
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: JicoDotNet-Feature-Build
+          path: artifacts/

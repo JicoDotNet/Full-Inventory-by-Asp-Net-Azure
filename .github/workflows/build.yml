@@ -38,3 +38,17 @@ jobs:
       - name: Build solution, excluding SQLServer project
         run: |
           msbuild src/JicoDotNet.Inventory.sln /p:Configuration=Release /p:ExcludeProjects="src\JicoDotNet.SQLServer\JicoDotNet.SQLServer.sqlproj"
+
+    outputs:
+      build-success: ${{ job.status }}
+
+  trigger-artifact:
+    needs: build
+    if: success() && startsWith(github.ref, 'refs/heads/feature/')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Artifact Workflow
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: .NET4.8 Artifacts
+          token: ${{ secrets.WORKFLOW_TOKEN }}
