@@ -1,24 +1,24 @@
-# This workflow will build a .NET Framework 4.8.1 project
+﻿# This workflow will build a .NET Framework 4.8.1 project
 
 name: .NET4.8 CI
 
 on:
-  workflow_dispatch:  # Allows manual triggering
+  workflow_dispatch:
   push:
     branches:
-      - master                      # Specific branch (master)
-      - develop                     # Specific branch (develop)
-      - 'feature/*'                 # Any branch that starts with 'feature/'
-      - 'release/*'                 # Any branch that starts with 'release/'
+      - master
+      - develop
+      - 'feature/*'
+      - 'release/*'
   pull_request:
     branches:
-      - master                      # Trigger on pull requests to the master branch
-      - develop                     # Trigger on pull requests to the develop branch
-      - 'feature/*'                 # PRs to feature branches
-      - 'release/*'                 # PRs to release branches
+      - master
+      - develop
+      - 'feature/*'
+      - 'release/*'
 
 jobs:
-  build:
+  Build-Solution:
     runs-on: windows-latest
 
     steps:
@@ -29,12 +29,24 @@ jobs:
         uses: microsoft/setup-msbuild@v1.1
 
       - name: Set up NuGet
-        uses: NuGet/setup-nuget@v1  # Use the latest stable version
+        uses: NuGet/setup-nuget@v1
 
       - name: Restore NuGet packages
-        run: |
-          nuget restore src/JicoDotNet.Inventory.sln -SolutionDirectory src/
+        run: nuget restore src/JicoDotNet.Inventory.sln -SolutionDirectory src/
 
       - name: Build solution, excluding SQLServer project
         run: |
           msbuild src/JicoDotNet.Inventory.sln /p:Configuration=Release /p:ExcludeProjects="src\JicoDotNet.SQLServer\JicoDotNet.SQLServer.sqlproj"
+
+  Artifacts-Upload:
+    needs: Build-Solution
+    if: success() && startsWith(github.ref, 'refs/heads/feature/')
+    runs-on: windows-latest
+
+    steps:
+      - name: Trigger Artifact Workflow
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: .NET4.8 Artifacts
+          token: ${{ secrets.WORKFLOW_TOKEN }}
+          ref: ${{ github.ref }}
