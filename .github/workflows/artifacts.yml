@@ -1,4 +1,4 @@
-name: .NET4.8 Artifacts
+﻿name: .NET4.8 Artifacts
 
 on:
   workflow_dispatch:
@@ -11,7 +11,7 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v3
         with:
-          ref: ${{ github.ref }}  # Ensures the correct branch is checked out
+          ref: ${{ github.ref }}
 
       - name: Set up MSBuild
         uses: microsoft/setup-msbuild@v1.1
@@ -31,7 +31,8 @@ jobs:
           copy src\JicoDotNet.Inventory.UI\bin\Release\* artifacts\ /Y
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4  # ✅ Updated to v4
         with:
           name: JicoDotNet-Feature-Build
           path: artifacts/
+          compression-level: 0  # Optional: Disable compression for faster uploads
