@@ -47,7 +47,6 @@ jobs:
       - name: Trigger Artifact Workflow
         uses: benc-uk/workflow-dispatch@v1
         with:
-          workflow_file_name: artifacts.yml
-          # workflow: .NET4.8 Artifacts
+          workflow: .NET4.8 Artifacts
           token: ${{ secrets.WORKFLOW_TOKEN }}
           ref: ${{ github.ref }}
