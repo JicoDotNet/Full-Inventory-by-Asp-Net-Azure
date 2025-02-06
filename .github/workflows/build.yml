@@ -18,7 +18,7 @@ on:
       - 'release/*'                 # PRs to release branches
 
 jobs:
-  build:
+  Build-Solution:
     runs-on: windows-latest
 
     steps:
@@ -42,7 +42,7 @@ jobs:
     outputs:
       build-success: ${{ job.status }}
 
-  trigger-artifact:
+  Artifact-Upload:
     needs: build
     if: success() && startsWith(github.ref, 'refs/heads/feature/')
     runs-on: ubuntu-latest
@@ -52,3 +52,4 @@ jobs:
         with:
           workflow: .NET4.8 Artifacts
           token: ${{ secrets.WORKFLOW_TOKEN }}
+          ref: ${{ github.ref }}  # Runs the artifact workflow in the same branch

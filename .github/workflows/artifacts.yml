@@ -2,19 +2,16 @@ name: .NET4.8 Artifacts
 
 on:
   workflow_dispatch:
-  workflow_run:
-    workflows: [".NET4.8 CI"]
-    types:
-      - completed
 
 jobs:
-  generate-artifacts:
-    if: github.event.workflow_run.conclusion == 'success' && startsWith(github.ref, 'refs/heads/feature/')
+  Generate-Artifacts:
     runs-on: windows-latest
 
     steps:
       - name: Checkout source code
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}  # Ensures the correct branch is checked out
 
       - name: Set up MSBuild
         uses: microsoft/setup-msbuild@v1.1
