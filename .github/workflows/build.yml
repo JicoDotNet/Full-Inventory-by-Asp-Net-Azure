@@ -3,7 +3,7 @@
 name: .NET4.8 CI
 
 on:
-  workflow_dispatch:  # Allows manual triggering
+  workflow_dispatch:
   push:
     branches:
       - master
@@ -38,15 +38,16 @@ jobs:
         run: |
           msbuild src/JicoDotNet.Inventory.sln /p:Configuration=Release /p:ExcludeProjects="src\JicoDotNet.SQLServer\JicoDotNet.SQLServer.sqlproj"
 
-  Artifact-Upload:
-    needs: Build-Solution  # ✅ FIXED: Correct job name
+  Artifacts-Upload:
+    needs: Build-Solution
     if: success() && startsWith(github.ref, 'refs/heads/feature/')
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - name: Trigger Artifact Workflow
         uses: benc-uk/workflow-dispatch@v1
         with:
-          workflow: .NET4.8 Artifacts
+          workflow_file_name: artifacts.yml
+          # workflow: .NET4.8 Artifacts
           token: ${{ secrets.WORKFLOW_TOKEN }}
-          ref: ${{ github.ref }}  # Runs the artifact workflow in the same branch
+          ref: ${{ github.ref }}
