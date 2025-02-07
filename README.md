@@ -35,35 +35,43 @@ This project is developed with **.NET Framework 4.8**, making it a **stable, rel
 
 
 ## ☰ Table of Contents
-- [Project Overview](#project-overview)  
-  - Brief introduction  
-  - Features & benefits
-- [Screenshots](#screenshots-optional)  
-  - UI previews (Login, Dashboard, Reports, etc.)
-- [Getting Started](#getting-started)  
-  - Quick setup guide  
-  - Prerequisites
-  - Technology Stack
-  - Running the project locally
-  - Deployment Guide
-- [User Guide](#user-guide)  
-  - How to use different modules
-- [Technical Details & Know-How](#technical-details--know-how)  
-  - Project architecture overview  
-  - Code structure explanation  
-  - Key design patterns used  
-  - Authentication details
-- [Contributing](#contributing)  
-  - [Submitting Bug Reports](#)
-  - [Feature Requests](#)
-  - [Pull Requests](#)
-- [Versioning & Change log](#versioning--Change-log)  
+- [Project Overview](#-project-overview)  
+  - [Brief introduction](#-brief-introduction)  
+  - [Features & benefits](#-features--benefits)  
+    - [Business Process Automation](#-business-process-automation)  
+    - [Inventory & Stock Management](#-inventory--stock-management)  
+    - [Invoicing & GST Compliance](#-invoicing--gst-compliance)  
+    - [Quotation Management](#-quotation-management-flexible--trackable)  
+    - [Purchase & Sales Tracking](#-purchase--sales-tracking)  
+    - [Business Financial Management](#-business-financial-management)  
+    - [Advanced Reporting & Analytics](#-advanced-reporting--analytics)  
+- [Screenshots](#%EF%B8%8F-screenshots)  
+- [Getting Started](#-getting-started)  
+  - [Quick setup guide](#-quick-setup-guide)  
+  - [Prerequisites](#-prerequisites)  
+  - [Technology Stack](#-technology-stack)  
+  - [Running the project locally](#-running-the-project-locally)  
+  - [Deployment Guide](#-deployment-guide-windows--azure)  
+- [User Guide](#-user-guide)  
+- [Technical Details & Know-How](#-technical-details--know-how)  
+  - [Project architecture overview](#-project-architecture-overview)  
+  - [Code structure explanation](#-code-structure)  
+  - [Key design patterns used](#-key-design-patterns-used)  
+  - [Authentication details](#-authentication--security)  
+- [Contributing](#-contributing)  
+  - [Submitting Bug Reports](#submitting-bug-reports)
+  - [Feature Requests](#feature-requests)
+  - [Pull Requests](#pull-requests)
+- [Versioning & Change log](#versioning--change-log)  
+  - [Version Format](#-version-format)
 - [License](#license)
-- [Contact & Support](#contact--support)
-- [Roadmap & Future Enhancements](#roadmap--future-enhancements)  
-  - Project Status
-  - Planned features  
-  - Upcoming improvements
+- [Contact & Support](#-contact--support)
+  - [Support the Project](#-support-the-project)  
+  - [Donate via UPI](#-donate-via-upi) 
+- [Roadmap & Future Enhancements](#-roadmap--future-enhancements)  
+  - [Project Status](#-project-status)  
+  - [Planned features](#-planned-features)  
+  - [Upcoming improvements](#-upcoming-improvements)  
 
 
 ## 📌 Project Overview  
@@ -85,7 +93,7 @@ This project is **fully open-source** and licensed under **GPL-3.0**, enabling b
 - ✅ Tracks **real-time stock levels**, preventing shortages or overstocking.  
 - ✅ Supports **product categorization**, warehouse management, and bulk stock updates.  
 
-#### 🔹 Billing & GST Compliance  
+#### 🔹 Invoicing & GST Compliance  
 - ✅ Generates **GST-compliant invoices** with auto-calculated CGST, SGST, and IGST.  
 - ✅ Supports **discounts, GST tax slabs, and custom invoice formats**.   
 - ✅ **Fully Customized GST Features** – Use the software **even if you are not GST-registered**.  
@@ -258,23 +266,29 @@ This project follows **semantic versioning (SemVer)** to ensure clear and predic
 
 Check the [CHANGELOG.md](/docs/CHANGELOG.md) for version history and updates.   
 
+## 📜 License
+This project is licensed under the **GPL-3.0** License. See the [`LICENSE`](LICENSE) file for details.  
+
 ## 📞 Contact & Support
 We appreciate your interest in this project! If you need assistance, have questions, or want to contribute, here’s how you can reach us:  
 > Email: `github.connect@soubhiknandy.com`
 
-### 🔹 Support the Project  
-If you appreciate the work on this project and would like to contribute in a different way, please consider donating. Your support helps us keep the project alive and improve its future features.  
+### 💖 Support the Project  
+If you value this project and want to support its growth, consider making a donation. Your contribution helps sustain development and enhance future features.  
 
-### 💳 Donate via <a href="upi://pay?pa=soubhik11sbi@ibl&pn=*****723&mc=0000&mode=02&purpose=00">UPI</a>  
+> If you find this project helpful, consider supporting it:  
+> - ⭐ **Star** this repository on GitHub
+> - 💳 **Donate:** Support ongoing development via UPI
+
+### 💰 Donate via UPI
 ![UPI QR Code](/docs/screenshots/JicoDotNet_UPI.jpg)
 
 ## 🚀 Roadmap & Future Enhancements  
-
 This section outlines the current **project status**, planned features, and upcoming improvements.  
 
 ### 🔹 Project Status  
-The project is currently in the **alpha stage**, with active development in progress.  
-> Originally built in **2019**, this project was **migrated from Azure DevOps to GitHub in August 2024**.  
+The project is currently in the **beta stage**, with active development in progress.  
+> Originally built in **2020**, this project was **migrated from Azure DevOps to GitHub in August 2024**.  
 
 ### 🔹 Planned Features  
 The following features are planned for future releases:  
