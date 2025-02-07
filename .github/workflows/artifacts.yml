@@ -25,6 +25,10 @@ jobs:
       - name: Build solution
         run: msbuild src/JicoDotNet.Inventory.sln /p:Configuration=Release
 
+      - name: List directory contents for debugging
+        run: |
+          Get-ChildItem -Recurse src\JicoDotNet.Inventory.UI\bin\Release
+
       - name: Collect Artifacts
         run: |
           mkdir artifacts
