@@ -260,9 +260,9 @@ This project follows **semantic versioning (SemVer)** to ensure clear and predic
 
 ### 🔹 Version Format  
 `MAJOR.MINOR.PATCH` (e.g., `1.0.0`)  
-- **MAJOR** – Breaking changes, incompatible API updates.  
-- **MINOR** – New features added in a backward-compatible manner.  
-- **PATCH** – Bug fixes and small improvements. 
+- **MAJOR** – New Features, Changed Features, Breaking changes.  
+- **MINOR** – Features removed in a backward-compatible manner. Bug fixes and mejor improvements  
+- **PATCH** – Maintenance and small improvements. 
 
 Check the [CHANGELOG.md](/docs/CHANGELOG.md) for version history and updates.   
 
