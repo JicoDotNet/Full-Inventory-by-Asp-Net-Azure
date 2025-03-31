@@ -158,7 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccess.Sql\DataAccess.Sql.csproj">
-      <Project>{6c964b6a-45a0-4402-abfe-8e4aff85800b}</Project>
+      <Project>{9ef0d283-2a30-411b-b866-b9847ec6db7e}</Project>
       <Name>DataAccess.Sql</Name>
     </ProjectReference>
     <ProjectReference Include="..\JicoDotNet.Inventory.Core\JicoDotNet.Inventory.Core.csproj">
