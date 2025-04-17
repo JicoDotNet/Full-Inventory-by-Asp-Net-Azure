@@ -7,6 +7,7 @@ namespace JicoDotNet.Inventory.Core.Entities
         string Token { get; set; }
         string SqlSchema { get; }
         string SqlConnectionString { get; set; }
-        object NoSqlConnectionString { get; set; }
+        string NoSqlConnectionString { get; set; }
+        IWebConfigAppSettings AppSettings { get; set; }
     }
 }

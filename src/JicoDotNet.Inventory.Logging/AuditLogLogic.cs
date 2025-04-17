@@ -1,4 +1,4 @@
-﻿using DataAccess.AzureStorage;
+﻿using DataAccess.AzureStorage.Table;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
 using System;
@@ -22,7 +22,7 @@ namespace JicoDotNet.Inventory.Logging
                     log.RequestId = commonObj?.RequestId;
                     log.TransactionDate = GenericLogic.IstNow;
 
-                    ExecuteTableManager tableManager = new ExecuteTableManager("Log", commonObj?.NoSqlConnectionString);
+                    IAzureTableAccess tableManager = new AzureTableAccess("Log", commonObj?.NoSqlConnectionString);
                     tableManager.InsertEntityAsync(log);
                 }
                 catch
@@ -38,9 +38,8 @@ namespace JicoDotNet.Inventory.Logging
             {
                 try
                 {
-                    ExecuteTableManager tableManager = new ExecuteTableManager("Log", commonObj.NoSqlConnectionString);
-                    LoginLog log = tableManager.RetrieveEntity<LoginLog>("RowKey eq '" + commonObj.RequestId + "'")
-                                       .FirstOrDefault() ??
+                    IAzureTableAccess tableManager = new AzureTableAccess("Log", commonObj.NoSqlConnectionString);
+                    LoginLog log = tableManager.RetrieveEntity<LoginLog>("RowKey eq '" + commonObj.RequestId + "'") ??
                                    new LoginLog
                                    {
                                        ActivityDate = GenericLogic.IstNow,

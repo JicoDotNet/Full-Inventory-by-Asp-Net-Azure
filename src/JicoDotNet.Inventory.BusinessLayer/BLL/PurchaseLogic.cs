@@ -1,65 +1,55 @@
 ﻿using DataAccess.Sql;
-using SelfRnd.MiddleLayer.Common;
-using SelfRnd.MiddleLayer.DTO.Class;
-using SelfRnd.MiddleLayer.DTO.SP;
-using System;
+using DataAccess.Sql.Entity;
+using JicoDotNet.Inventory.Core.Common;
+using JicoDotNet.Inventory.Core.Entities;
+using JicoDotNet.Inventory.Core.Models;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SelfRnd.MiddleLayer.BLL
+namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
-    public class PurchaseLogic : ConnectionString
+    public class PurchaseLogic : DBManager
     {
-        public PurchaseLogic(sCommonDto CommonObj) : base(CommonObj) { }
+        public PurchaseLogic(ICommonLogicHelper commonObj) : base(commonObj) { }
 
         public string TypeSet(PurchaseType purchaseType)
         {
-            _sqlDBAccess = new SqlDBAccess(CommonObj.SqlConnectionString, CommandType.StoredProcedure);
             string qt = string.Empty;
             if (purchaseType.PurchaseTypeId > 0)
                 qt = "UPDATE";
             else
                 qt = "INSERT";
 
-            nameValuePairs nvp = new nameValuePairs
+            INameValuePairs nvp = new NameValuePairs
             {
-                new nameValuePair("@TenantId", CommonObj.TenantId),
-                new nameValuePair("@CompanyId", CommonObj.CompanyId),
-                new nameValuePair("@PurchaseTypeId", purchaseType.PurchaseTypeId),
-                new nameValuePair("@PurchaseTypeName", purchaseType.PurchaseTypeName),
-                new nameValuePair("@Description", purchaseType.Description),
-                new nameValuePair("@RequestId", CommonObj.RequestId),
-                new nameValuePair("@QueryType", qt)
+                new NameValuePair("@PurchaseTypeId", purchaseType.PurchaseTypeId),
+                new NameValuePair("@PurchaseTypeName", purchaseType.PurchaseTypeName),
+                new NameValuePair("@Description", purchaseType.Description),
+                new NameValuePair("@RequestId", CommonLogicObj.RequestId),
+                new NameValuePair("@QueryType", qt)
             };
 
-            string ReturnDS = _sqlDBAccess.InsertUpdateDeleteReturnObject("[dbo].[spSetPurchaseType]", nvp, "@OutParam").ToString();
+            string ReturnDS = _sqlDBAccess.DataManipulation("[dbo].[spSetPurchaseType]", nvp, "@OutParam").ToString();
             return ReturnDS;
         }
 
         public string TypeDeactive(string PurchaseTypeId)
         {
-            return new SqlDBAccess(CommonObj.SqlConnectionString, CommandType.StoredProcedure)
-                .InsertUpdateDeleteReturnObject("[dbo].[spSetPurchaseType]", new nameValuePairs
+            return _sqlDBAccess.DataManipulation("[dbo].[spSetPurchaseType]", new NameValuePairs
                 {
-                    new nameValuePair("@PurchaseTypeId", PurchaseTypeId),
-                    new nameValuePair("@TenantId", CommonObj.TenantId),
-                    new nameValuePair("@CompanyId", CommonObj.CompanyId),
-                    new nameValuePair("@RequestId", CommonObj.RequestId),
-                    new nameValuePair("@QueryType", "INACTIVE")
+                    new NameValuePair("@PurchaseTypeId", PurchaseTypeId),
+                    new NameValuePair("@RequestId", CommonLogicObj.RequestId),
+                    new NameValuePair("@QueryType", "INACTIVE")
                 }, "@OutParam").ToString();
         }
 
         public List<PurchaseType> TypeGet(bool? IsActive = null)
         {
-            List<PurchaseType> purchaseTypes = new SqlDBAccess(CommonObj.SqlConnectionString, CommandType.StoredProcedure).GetData("[dbo].[spGetPurchaseType]",
-                new nameValuePairs
+            List<PurchaseType> purchaseTypes = _sqlDBAccess.GetData("[dbo].[spGetPurchaseType]",
+                new NameValuePairs
                 {
-                    new nameValuePair("@TenantId", CommonObj.TenantId),
-                    new nameValuePair("@CompanyId", CommonObj.CompanyId),
-                    new nameValuePair("@QueryType", "ALL")
+                    new NameValuePair("@QueryType", "ALL")
                 }).ToList<PurchaseType>();
             if (IsActive != null)
             {

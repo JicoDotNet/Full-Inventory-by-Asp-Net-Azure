@@ -1,7 +1,6 @@
-﻿using DataAccess.AzureStorage;
+﻿using DataAccess.AzureStorage.Table;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Linq;
@@ -19,14 +18,14 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             config.TransactionDate = GenericLogic.IstNow;
             config.IsActive = true;
 
-            TableManager = new ExecuteTableManager("Config", CommonLogicObj.NoSqlConnectionString);
+            TableManager = new AzureTableAccess("Config", CommonLogicObj.NoSqlConnectionString);
             TableManager.UpdateEntity(config);
         }
 
         public Config GetConfig()
         {
-            TableManager = new ExecuteTableManager("Config", CommonLogicObj.NoSqlConnectionString);
-            Config config = TableManager.RetrieveEntity<Config>("").FirstOrDefault();
+            TableManager = new AzureTableAccess("Config", CommonLogicObj.NoSqlConnectionString);
+            Config config = TableManager.RetrieveEntity<Config>("");
             if (config == null)
             {
                 config = new Config

@@ -29,12 +29,12 @@ namespace JicoDotNet.Inventory.UI.Controllers
                         IsGSTRegistered = SessionCompany.IsGSTRegistered,
                         StateCode = SessionCompany.StateCode,
 
-                        Address = WebConfigAppSettingsAccess.CompanyAddress,
-                        City = WebConfigAppSettingsAccess.CompanyCity,
-                        Email = WebConfigAppSettingsAccess.CompanyEmail,
-                        PINCode = WebConfigAppSettingsAccess.CompanyPINCode,
-                        Mobile = WebConfigAppSettingsAccess.CompanyMobile,
-                        WebsiteUrl = WebConfigAppSettingsAccess.CompanyWebsite,
+                        Address = LogicHelper.AppSettings.CompanyAddress,
+                        City = LogicHelper.AppSettings.CompanyCity,
+                        Email = LogicHelper.AppSettings.CompanyEmail,
+                        PINCode = LogicHelper.AppSettings.CompanyPINCode,
+                        Mobile = LogicHelper.AppSettings.CompanyMobile,
+                        WebsiteUrl = LogicHelper.AppSettings.CompanyWebsite,
                     }
                 };
                 return View(configModels);

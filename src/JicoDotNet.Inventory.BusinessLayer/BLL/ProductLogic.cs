@@ -10,6 +10,7 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using JicoDotNet.Inventory.Core.Entities;
+using DataAccess.AzureStorage.Blob;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
@@ -155,13 +156,15 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 }).ToList<Product>();
         }
 
-        public string UploadImage(HttpPostedFileBase httpFileBase)
+        public IBlobResponseClient UploadImage(IBlobRequestClient blobRequest)
         {
-            if (httpFileBase != null)
+            if (blobRequest != null && blobRequest.FileStream != null)
             {
-                BlobManager = new ExecuteBlobManager("MyCompany", CommonLogicObj.NoSqlConnectionString);
-                string[] dirs = { "Product" };
-                return BlobManager.UploadFile(httpFileBase, dirs, CommonLogicObj.RequestId);
+                BlobManager = new AzureBlobAccess("MyCompany", CommonLogicObj.NoSqlConnectionString);
+                string[] dirs =
+                blobRequest.Directories = new string[] { "Product" };
+
+                return BlobManager.Upload(blobRequest);
             }
             return null;
         }

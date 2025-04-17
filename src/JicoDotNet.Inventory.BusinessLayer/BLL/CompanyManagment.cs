@@ -2,7 +2,6 @@
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
 using JicoDotNet.Inventory.Core.Common;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;

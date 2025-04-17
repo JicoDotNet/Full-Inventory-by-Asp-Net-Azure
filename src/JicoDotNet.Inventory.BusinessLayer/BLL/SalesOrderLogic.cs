@@ -132,7 +132,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 
                 NameValuePairs nvp = new NameValuePairs
                 {
-                    new NameValuePair("@ComapnyIsGSTRegistered", GenericLogic.IsValidGSTNumber(WebConfigAppSettingsAccess.GSTNumber)),
+                    new NameValuePair("@ComapnyIsGSTRegistered", GenericLogic.IsValidGSTNumber(CommonLogicObj.AppSettings.GSTNumber)),
                     new NameValuePair("@QuotationId", salesOrder.QuotationId),
                     new NameValuePair("@SalesTypeId", salesOrder.SalesTypeId),
                     new NameValuePair("@BranchId", salesOrder.BranchId),
@@ -274,7 +274,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     {
                         new NameValuePair("@SalesOrderId", salesOrder.SalesOrderId),
 
-                        new NameValuePair("@ComapnyIsGSTRegistered", GenericLogic.IsValidGSTNumber(WebConfigAppSettingsAccess.GSTNumber)),
+                        new NameValuePair("@ComapnyIsGSTRegistered", GenericLogic.IsValidGSTNumber(CommonLogicObj.AppSettings.GSTNumber)),
                         new NameValuePair("@AmendmentNumber", ""),
                         new NameValuePair("@AmendmentDate", salesOrder.AmendmentDate),
                         new NameValuePair("@SalesOrderAmount", salesOrder.SalesOrderAmount),

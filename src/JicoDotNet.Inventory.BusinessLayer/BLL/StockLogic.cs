@@ -1,4 +1,4 @@
-﻿using DataAccess.AzureStorage;
+﻿using DataAccess.AzureStorage.Blob;
 using DataAccess.Sql;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Custom;
@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Web;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
@@ -131,13 +130,25 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             }
         }
 
-        public string UploadCsv(HttpPostedFileBase httpFileBase, string ProductId)
+        //public string UploadCsv(HttpPostedFileBase httpFileBase, string ProductId)
+        //{
+        //    if (httpFileBase != null)
+        //    {
+        //        BlobManager = new ExecuteBlobManager("MyCompany", CommonLogicObj.NoSqlConnectionString);
+        //        string[] Dirs = { "BulkUpload", "ProductOpeningStock", ProductId };
+        //        return BlobManager.UploadFile(httpFileBase, Dirs, CommonLogicObj.RequestId);
+        //    }
+        //    else
+        //        return null;
+        //}
+
+        public IBlobResponseClient UploadCsv(IBlobRequestClient blobRequest, string ProductId)
         {
-            if (httpFileBase != null)
+            if (blobRequest != null && blobRequest.FileStream != null)
             {
-                BlobManager = new ExecuteBlobManager("MyCompany", CommonLogicObj.NoSqlConnectionString);
-                string[] Dirs = { "BulkUpload", "ProductOpeningStock", ProductId };
-                return BlobManager.UploadFile(httpFileBase, Dirs, CommonLogicObj.RequestId);
+                BlobManager = new AzureBlobAccess("MyCompany", CommonLogicObj.NoSqlConnectionString);
+                blobRequest.Directories = new string[] { "BulkUpload", "ProductOpeningStock", ProductId };
+                return BlobManager.Upload(blobRequest);
             }
             else
                 return null;

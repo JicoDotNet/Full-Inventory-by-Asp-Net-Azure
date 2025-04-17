@@ -1,9 +1,7 @@
 ﻿using DataAccess.Sql;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;

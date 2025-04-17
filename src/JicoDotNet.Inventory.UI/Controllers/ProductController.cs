@@ -7,6 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using JicoDotNet.Inventory.Controllers;
+using DataAccess.AzureStorage.Blob;
+using System.IO;
+using System.Web;
 
 namespace JicoDotNet.Inventory.UI.Controllers
 {
@@ -102,8 +105,21 @@ namespace JicoDotNet.Inventory.UI.Controllers
 
                 #region Image Upload
                 if (Request.Files.Count > 0)
+                {
                     if (Request.Files["ProductImageUrl"] != null)
-                        product.ProductImageUrl = productLogic.UploadImage(Request.Files["ProductImageUrl"]);
+                    {
+                        HttpPostedFileBase file = Request.Files["ProductImageUrl"];
+
+                        if (file != null && file.ContentLength > 0)
+                        {
+                            Stream fileStream = file.InputStream;
+                        }
+                        IBlobRequestClient blobRequest = new BlobRequestClient(file.InputStream, LogicHelper.RequestId + file.FileName);
+                        product.ProductImageUrl = productLogic.UploadImage(blobRequest).AbsolutePath;
+                    }
+                }
+                    
+                        
                 #endregion
                 long PId = Convert.ToInt64(productLogic.Set(product));
                 if (PId > 0)

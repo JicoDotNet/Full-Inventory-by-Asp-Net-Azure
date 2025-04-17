@@ -23,8 +23,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             #region Checking
             try
             {
-                if (WebConfigAppSettingsAccess.UserEmail != loginCredentials.UserEmail
-                    || WebConfigAppSettingsAccess.Password != loginCredentials.Password)
+                if (CommonLogicObj.AppSettings.UserEmail != loginCredentials.UserEmail
+                    || CommonLogicObj.AppSettings.Password != loginCredentials.Password)
                 {
                     accountAuthenticate.eLoginStatus = ELoginStatus.UserNameOrPasswordInvalid;
                     accountAuthenticate.credential = null;
@@ -32,13 +32,13 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 }
 
                 #region IP Permission Check
-                if (!string.IsNullOrEmpty(WebConfigAppSettingsAccess.AllowedStartIP)
-                    && !string.IsNullOrEmpty(WebConfigAppSettingsAccess.AllowedEndIP))
+                if (!string.IsNullOrEmpty(CommonLogicObj.AppSettings.AllowedStartIP)
+                    && !string.IsNullOrEmpty(CommonLogicObj.AppSettings.AllowedEndIP))
                 {
                     bool IPFlag = false;
                     try
                     {
-                        IPAddressRange range = new IPAddressRange(IPAddress.Parse(WebConfigAppSettingsAccess.AllowedStartIP), IPAddress.Parse(WebConfigAppSettingsAccess.AllowedEndIP));
+                        IPAddressRange range = new IPAddressRange(IPAddress.Parse(CommonLogicObj.AppSettings.AllowedStartIP), IPAddress.Parse(CommonLogicObj.AppSettings.AllowedEndIP));
                         IPFlag = range.IsInRange(IPAddress.Parse(requestedIP));
                     }
                     catch
@@ -58,8 +58,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
                 accountAuthenticate.credential = new SessionCredential
                 {
-                    UserEmail = WebConfigAppSettingsAccess.UserEmail,
-                    UserFullName = WebConfigAppSettingsAccess.UserFullName
+                    UserEmail = CommonLogicObj.AppSettings.UserEmail,
+                    UserFullName = CommonLogicObj.AppSettings.UserFullName
                 };
 
                 // Login Success Code
@@ -92,7 +92,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public bool Authenticate(string UserEmail, string Password)
         {
-            if (WebConfigAppSettingsAccess.UserEmail != UserEmail || WebConfigAppSettingsAccess.Password != Password)
+            if (CommonLogicObj.AppSettings.UserEmail != UserEmail || CommonLogicObj.AppSettings.Password != Password)
                 return false;
             else
                 return true;

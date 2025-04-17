@@ -50,7 +50,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     
                     NameValuePairs nvp = new NameValuePairs
                     {
-                        new NameValuePair("@ComapnyIsGSTRegistered", GenericLogic.IsValidGSTNumber(WebConfigAppSettingsAccess.GSTNumber)),
+                        new NameValuePair("@ComapnyIsGSTRegistered", GenericLogic.IsValidGSTNumber(CommonLogicObj.AppSettings.GSTNumber)),
 
                         new NameValuePair("@CustomerId", quotation.CustomerId),
                         new NameValuePair("@QuotationDate", quotation.QuotationDate),
