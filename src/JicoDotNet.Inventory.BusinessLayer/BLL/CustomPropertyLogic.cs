@@ -5,8 +5,6 @@ using JicoDotNet.Inventory.Core.Enumeration;
 using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL

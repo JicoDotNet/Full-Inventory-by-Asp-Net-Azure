@@ -1,15 +1,11 @@
-﻿using DataAccess.AzureStorage;
-using DataAccess.Sql;
+﻿using DataAccess.Sql;
 using DataAccess.Sql.Entity;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Web;
-using JicoDotNet.Inventory.Core.Entities;
 using DataAccess.AzureStorage.Blob;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
@@ -20,7 +16,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public string TypeSet(IProductType productType)
         {
-            
             var queryType = productType.ProductTypeId > 0 ? "UPDATE" : "INSERT";
 
             INameValuePairs nvp = new NameValuePairs
@@ -38,7 +33,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public string TypeDeactivate(string productTypeId)
         {
-            
             string queryType = "DEACTIVE";
 
             INameValuePairs nvp = new NameValuePairs
@@ -65,7 +59,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public string Set(IProduct product)
         {
-            
             var queryType = product.ProductId > 0 ? "UPDATE" : "INSERT";
 
             INameValuePairs nvp = new NameValuePairs
@@ -102,7 +95,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public string Deactivate(string productId)
         {
-            
             string queryType = "DEACTIVE";
 
             INameValuePairs nvp = new NameValuePairs

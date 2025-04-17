@@ -1,6 +1,4 @@
-﻿
-
-using JicoDotNet.Inventory.Core.Entities.Inner;
+﻿using JicoDotNet.Inventory.Core.Entities.Inner;
 
 namespace JicoDotNet.Inventory.Core.Entities
 {

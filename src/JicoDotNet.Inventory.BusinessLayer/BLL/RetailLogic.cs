@@ -9,7 +9,6 @@ using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using JicoDotNet.Inventory.Core.Entities;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
@@ -74,8 +73,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             {
                 // SO & Shipment
                 try
-                {
-                    
+                {                    
                     NameValuePairs nvp = new NameValuePairs()
                     {
                         // Customer

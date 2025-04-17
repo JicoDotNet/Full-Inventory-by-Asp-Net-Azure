@@ -23,7 +23,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
             NameValuePairs nvp = new NameValuePairs
             {
-
                 new NameValuePair("@BranchId", branch.BranchId),
 
                 new NameValuePair("@BranchName", branch.BranchName),
@@ -61,8 +60,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 .GetData(CommonLogicObj.SqlSchema + ".[spGetBranch]",
                 new NameValuePairs
                 {
-
-
                     new NameValuePair("@QueryType", "ALL")
                 }).ToList<Branch>();
             if (IsActive != null)

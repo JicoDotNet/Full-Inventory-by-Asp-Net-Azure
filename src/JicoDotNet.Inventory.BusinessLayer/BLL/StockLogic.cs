@@ -18,13 +18,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public List<Stock> Get(Stock stock)
         {
-            
-
             NameValuePairs nvp = new NameValuePairs()
             {
-
-
-
                 new NameValuePair("@WareHouseId", stock.WareHouseId),
                 new NameValuePair("@ProductId", stock.ProductId),
                 new NameValuePair("@GRNOrShipmentDate", stock.GRNOrShipmentDate > new DateTime(2001, 1, 1)?
@@ -36,13 +31,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public List<Stock> GetDetail(Stock stock)
         {
-            
-
             NameValuePairs nvp = new NameValuePairs()
             {
-
-
-
                 new NameValuePair("@WareHouseId", stock.WareHouseId),
                 new NameValuePair("@ProductId", stock.ProductId),
 
@@ -63,13 +53,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public long TotalNonOpeningStockQuantity(long productId)
         {
-            
-
             NameValuePairs nvp = new NameValuePairs()
             {
-
-
-
                 new NameValuePair("@ProductId", productId),
                 new NameValuePair("@QueryType", "NOTOPNINGSTOCK")
             };
@@ -116,8 +101,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 return new SqlDBAccess(CommonLogicObj.SqlConnectionString)
                     .DataManipulation(CommonLogicObj.SqlSchema + ".[spSetOpeningStock]", new NameValuePairs
                     {
-
-
                         new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                         new NameValuePair("@OpeningStockDetail", opnStkDetailTypes.ToDataTable()),
                         new NameValuePair("@QueryType", "INSERT")
