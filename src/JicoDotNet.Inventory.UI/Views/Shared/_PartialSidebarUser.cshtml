@@ -1,0 +1,13 @@
+﻿@using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+@model JicoDotNet.Inventory.Core.Models.CompanyBasic
+
+<div class="user-panel mt-3 pb-3 mb-3 d-flex">
+    <div class="image">
+        <img src="~/Content/images/CompanyLogo.jpg"
+             style="border-radius: 0;"
+             class="img-circle elevation-2" alt="@Model.CompanyName">
+    </div>
+    <div class="info" style="/*white-space: normal;*/">
+        <a href="@Url.Action("Detail", "Company", new { Area = string.Empty })" class="d-block">@Model.CompanyName</a>
+    </div>
+</div>

@@ -1,0 +1,335 @@
+﻿@using JicoDotNet.Inventory.UI.Models;
+@using JicoDotNet.Inventory.BusinessLayer.DTO.Class
+@using JicoDotNet.Inventory.Core.Models
+@model CustomerModels
+
+@{
+    ViewBag.Title = "Customer";
+    ViewBag.Page = Model.IsRetail ? "/Retail/Index" : "/Customer/Index";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>
+                    @if (Model.IsRetail)
+                    {
+                        <span>Retail </span>
+                    }
+                    Customer
+                </h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    @if (Model.IsRetail)
+                    {
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Retail")">Retail</a></li>
+                    }
+                    <li class="breadcrumb-item active">Customer</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            @if (!Model.IsRetail || Model._customer != null)
+            {
+                <div class="col-md-12">
+                    <div class="card card-danger">
+                        <div class="card-header @if (Model.IsRetail)
+                        {
+                                    <text> bg-warning </text>
+                        } else { <text> bg-cyan </text> }">
+                            <h3 class="card-title">
+                                @if (Model._customer != null)
+                                {
+                                    <span> Update </span>
+                                }
+                                else
+                                {
+                                    <span> Add </span>
+                                }
+                                @if (Model.IsRetail)
+                                {
+                                    <span> Retail </span>
+                                }
+                                Customer
+                            </h3>
+                        </div>
+                        @using (Html.BeginForm(Model.IsRetail ? "Retail" : "Index", "Customer",
+                            new
+                            {
+                                id = ((Model._customer != null) ?
+                                Html.UrlIdEncrypt(Model._customer.CustomerId.ToString(), false) : string.Empty)
+                            },
+                            FormMethod.Post, new { autocomplete = "off" }))
+                        {
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Customer Type</label>
+                                            <select class="form-control form-control-sm" name="CustomerTypeId" required>
+                                                <option value="">-- Select --</option>
+                                                @foreach (CustomerType cendorType in Model._customerTypes)
+                                                {
+                                                    <option value="@cendorType.CustomerTypeId"
+                                                            @if (Model._customer != null) { if (cendorType.CustomerTypeId == Model._customer.CustomerTypeId) { <text> selected </text> } }>
+                                                        @cendorType.CustomerTypeName
+                                                    </option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Company Name</label>
+                                            <input type="text" name="CompanyName" class="form-control form-control-sm" maxlength="512"
+                                                   @if (Model._customer != null) { <text> value="@(Model._customer.CompanyName)" </text> }
+                                                   placeholder="Company Name" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Company Type</label>
+                                            <select class="form-control form-control-sm" name="CompanyType" required>
+                                                <option value="" selected>--Please Select--</option>
+                                                @for (int i = 0; i < Model._companyType.Count; i++)
+                                                {
+                                                    <option value="@Model._companyType.Keys.ElementAt(i)"
+                                                            @if (Model._customer != null) { if (Model._companyType.Keys.ElementAt(i) == Model._customer.CompanyType) { <text> selected </text> } }>
+                                                        @Model._companyType[Model._companyType.Keys.ElementAt(i)]
+                                                    </option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>GST Registered Customer</label>
+                                            <select class="form-control form-control-sm" name="IsGSTRegistered" onchange="gstRegistrationChange()" required>
+                                                <option value="">-- Select --</option>
+                                                @for (int i = 0; i < Model._YesNo.Count; i++)
+                                                {
+                                                    <option value="@Model._YesNo.Keys.ElementAt(i).ToString().ToLower()"
+                                                            @if (Model._customer != null) { if (Model._YesNo.Keys.ElementAt(i) == Model._customer.IsGSTRegistered) { <text> selected </text> } }>
+                                                        @Model._YesNo[Model._YesNo.Keys.ElementAt(i)]
+                                                    </option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>GST Number</label>
+                                            <input type="text" name="GSTNumber" maxlength="15" onblur="this.value =  this.value.toUpperCase();"
+                                                   pattern="[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}"
+                                                   @if (Model._customer != null) { <text> value="@Model._customer.GSTNumber" </text> }
+                                                   class="form-control form-control-sm" placeholder="Enter GST Number">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>PAN Number</label>
+                                            <input type="text" name="PANNumber" maxlength="15" onblur="this.value =  this.value.toUpperCase();"
+                                                   @if (Model._customer != null) { <text> value="@Model._customer.PANNumber" </text> }
+                                                   class="form-control form-control-sm" placeholder="Enter PAN Number">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>State</label>
+                                            <select class="form-control form-control-sm select2" required name="StateCode" style="width:100%;">
+                                                <option value="">--Please Select--</option>
+                                                @for (int i = 0; i < Model._state.Count; i++)
+                                                {
+                                                    <option value="@Model._state.Keys.ElementAt(i)"
+                                                            @if (Model._customer != null) { if (Model._state.Keys.ElementAt(i) == Model._customer.StateCode) { <text> selected </text> } }>
+                                                        @Model._state[Model._state.Keys.ElementAt(i)]
+                                                    </option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <input type="email" name="Email" maxlength="60"
+                                                   @if (Model._customer != null) { <text> value="@Model._customer.Email" </text> }
+                                                   class="form-control form-control-sm" placeholder="Email Address">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Mobile</label>
+                                            <input type="text" name="Mobile" maxlength="10" pattern=".{0}|.{10,10}"
+                                                   title="10 digits required"
+                                                   @if (Model._customer != null) { <text> value="@Model._customer.Mobile" </text> }
+                                                   class="form-control form-control-sm" placeholder="Mobile Number (10 digits)">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Contact Person</label>
+                                            <input type="text" name="ContactPerson" maxlength="60"
+                                                   @if (Model._customer != null) { <text> value="@Model._customer.ContactPerson" </text> }
+                                                   class="form-control form-control-sm" placeholder="Contact Person">
+                                        </div>
+                                    </div>
+                                    @if (Model._customer != null)
+                                    {
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Non-Retail / Retail Customer</label><br />
+                                                This is @if (Model._customer.IsRetailCustomer)
+                                                {<strong> Retail </strong> }
+                                                else
+                                                { <strong>Non-retail</strong>} Customer<br />
+                                                <em>You can not change this</em>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                @if (Model._customer != null)
+                                {
+                                    <button type="submit" class="btn btn-warning"> <i class="fas fa-edit"></i> Update </button>
+                                    <a href="@Url.Action(Model.IsRetail ? "Retail" : "Index", "Customer", new { id = string.Empty })" class="btn btn-danger"> <i class="fas fa-times"></i> Cancel</a>
+                                }
+                                else
+                                {
+                                    <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save</button>
+                                }
+                                <button type="reset" class="btn btn-info"><i class="fas fa-sync"></i> Reset</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+            <div class="col-md-12">
+                <div class="card card-danger">
+                    <div class="card-header
+                            @if (Model.IsRetail)
+                            { <text> bg-warning </text>
+                            } else { <text> bg-cyan </text> }">
+                        <h3 class="card-title">
+                            @if (Model.IsRetail)
+                            {
+                                <span> Retail </span>
+                            }
+                            Customers
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped table-bordered dt-responsive nowrap" data-table="normal">
+                            <thead>
+                                <tr>
+                                    <th>Action</th>
+                                    <th>Customer</th>
+                                    <th>Company Type & State</th>
+                                    <th>Contact Person</th>
+                                    <th>GST Number</th>
+                                    <th>PAN Number</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model._customers != null)
+                                {
+                                    foreach (Customer customer in Model._customers)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @if (customer.IsActive)
+                                                {
+                                                    <a class="btn btn-outline-success btn-flat" href="@Url.Action(Model.IsRetail ? "Retail" : "Index", "Customer", new { id = Html.UrlIdEncrypt(customer.CustomerId, false) })"
+                                                       data-toggle="tooltip" data-placement="top" title="Edit">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <button onclick="DeactivateRecord(this)"
+                                                            data-display="Customer Company Name" data-value="@customer.CompanyName"
+                                                            data-controller="Customer" data-action="Deactivate"
+                                                            data-id="@Html.UrlIdEncrypt(customer.CustomerId)"
+                                                            data-toggle="tooltip" data-placement="top"
+                                                            class="btn btn-outline-danger btn-flat" title="Deactivate">
+                                                        <i class="fas fa-trash-alt pull-right"></i>
+                                                    </button>
+                                                }
+                                            </td>
+                                            <td>
+                                                <strong>@customer.CompanyName</strong><br />
+                                                @if (customer.IsRetailCustomer)
+                                                {
+                                                    <span class="right badge badge-info">Retail Customer</span>
+                                                }
+                                                else
+                                                {
+                                                    @customer.CustomerTypeName
+                                                }
+                                            </td>
+                                            <td>
+                                                @customer.CompanyType<br />
+                                                @Model._state[customer.StateCode]
+                                            </td>
+                                            <td>
+                                                @customer.ContactPerson
+                                                <br />
+                                                @customer.Mobile - @customer.Email
+                                            </td>
+                                            <td>
+                                                @if (customer.IsGSTRegistered)
+                                                {
+                                                    @customer.GSTNumber<br />
+                                                    @Model._state[customer.GSTStateCode]
+                                                }
+                                                else
+                                                {
+                                                    <span class="right badge badge-danger">Unregistered</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @customer.PANNumber
+                                            </td>
+                                            <td>
+                                                @if (customer.IsActive)
+                                                {
+                                                    <span class="right badge badge-success">Active</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="right badge badge-danger">Inactive</span>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section BodyScript{
+    <script type="text/javascript">
+        function gstRegistrationChange() {
+            var selected = $('select[name="IsGSTRegistered"]').val();
+            if (selected == "true") {
+                $('input[name="GSTNumber"]').prop('required', true);
+                $('input[name="GSTNumber"]').removeAttr('disabled');
+            }
+            else {
+                $('input[name="GSTNumber"]').removeAttr('required');
+                $('input[name="GSTNumber"]').val('');
+                $('input[name="GSTNumber"]').attr('disabled', true);
+            }
+        };
+    </script>
+}

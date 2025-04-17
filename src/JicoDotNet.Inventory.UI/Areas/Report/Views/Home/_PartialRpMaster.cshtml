@@ -1,0 +1,221 @@
+﻿@using JicoDotNet.Inventory.UI.Report.Models;
+@model ReportModels
+
+@{
+    string LimitText = string.Empty;
+    DateTime IstNow = GenericLogic.IstNow;
+    int DisplayPercent = 0;
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-lg-6 col-6">
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>@Model._reportMasterCount.PurchaseOrderMonth</h3>
+                        <p>Purchase Order</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+
+                    <span class="small-box-footer">
+                        @IstNow.ToString("MMMM"), @IstNow.ToString("yyyy")
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-6">
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>@(Model._config.CurrencySymbol + Model._reportMasterCount.PurchaseOrderTotalAmountMonth.ToDisplayDecimal())</h3>
+                        <p>PO Amount</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-cart-arrow-down"></i>
+                    </div>
+                    <span class="small-box-footer">
+                        @IstNow.ToString("MMMM"), @IstNow.ToString("yyyy")
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-sm-6 col-12">
+                <div class="info-box bg-info">
+                    <span class="info-box-icon"><i class="fas fa-file-invoice-dollar"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Billed Amount</span>
+                        <span class="info-box-number">@(Model._config.CurrencySymbol + Model._reportMasterCount.BilledAmountMonth.ToDisplayDecimal())</span>
+                        @{
+                            DisplayPercent = Model._reportMasterCount.PurchaseOrderTotalAmountMonth == 0 ? 0 
+                                : (int)((Model._reportMasterCount.BilledAmountMonth * 100) / Model._reportMasterCount.PurchaseOrderTotalAmountMonth);
+                            DisplayPercent = DisplayPercent > 100 ? 100 : DisplayPercent;
+                        }
+                        <div class="progress">
+                            <div class="progress-bar" style="width: @DisplayPercent%"></div>
+                        </div>
+                        <span class="progress-description">
+                            @IstNow.ToString("MMMM"), @IstNow.ToString("yyyy")
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-sm-6 col-12">
+                <div class="info-box bg-gradient-indigo">
+                    <span class="info-box-icon"><i class="far fa-money-bill-alt"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Total Paid</span>
+                        <span class="info-box-number">@(Model._config.CurrencySymbol + Model._reportMasterCount.PayTotalAmountMonth.ToDisplayDecimal())</span>
+                        @{
+                            DisplayPercent = Model._reportMasterCount.BilledAmountMonth == 0 ? 0 
+                                : (int)((Model._reportMasterCount.PayTotalAmountMonth * 100) / Model._reportMasterCount.BilledAmountMonth);
+                            DisplayPercent = DisplayPercent > 100 ? 100 : DisplayPercent;
+                        }
+                        <div class="progress">
+                            <div class="progress-bar" style="width: @DisplayPercent%"></div>
+                        </div>
+                        <span class="progress-description">
+                            @IstNow.ToString("MMMM"), @IstNow.ToString("yyyy")
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-lg-6 col-6">
+                <div class="small-box bg-pink">
+                    <div class="inner">
+                        <h3>@Model._reportMasterCount.SalesOrderMonth </h3>
+                        <p>Sales Order</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <span class="small-box-footer">
+                        @IstNow.ToString("MMMM"), @IstNow.ToString("yyyy")
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-6">
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3>@(Model._config.CurrencySymbol + Model._reportMasterCount.SalesOrderTotalAmountMonth.ToDisplayDecimal())</h3>
+                        <p>SO Amount</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-balance-scale-right"></i>
+                    </div>
+                    <span class="small-box-footer">
+                        @IstNow.ToString("MMMM"), @IstNow.ToString("yyyy")
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-sm-6 col-12">
+                <div class="info-box bg-orange">
+                    <span class="info-box-icon"><i class="fas fa-file-invoice"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Invoiced Amount</span>
+                        <span class="info-box-number">@(Model._config.CurrencySymbol + Model._reportMasterCount.InvoicedAmountMonth.ToDisplayDecimal())</span>
+                        @{
+                            DisplayPercent = Model._reportMasterCount.SalesOrderTotalAmountMonth == 0 ? 0
+                                : (int)((Model._reportMasterCount.InvoicedAmountMonth * 100) / Model._reportMasterCount.SalesOrderTotalAmountMonth);
+                            DisplayPercent = DisplayPercent > 100 ? 100 : DisplayPercent;
+                        }
+                        <div class="progress">
+                            <div class="progress-bar" style="width: @DisplayPercent%"></div>
+                        </div>
+                        <span class="progress-description">
+                            @IstNow.ToString("MMMM"), @IstNow.ToString("yyyy")
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-sm-6 col-12">
+                <div class="info-box bg-teal">
+                    <span class="info-box-icon"><i class="fas fa-money-check-alt"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Total Received</span>
+                        <span class="info-box-number">@(Model._config.CurrencySymbol + Model._reportMasterCount.ReceiveTotalAmountMonth.ToDisplayDecimal())</span>
+                        @{
+                            DisplayPercent = Model._reportMasterCount.InvoicedAmountMonth == 0 ? 0 
+                                : (int)((Model._reportMasterCount.ReceiveTotalAmountMonth * 100) / Model._reportMasterCount.InvoicedAmountMonth);
+                            DisplayPercent = DisplayPercent > 100 ? 100 : DisplayPercent;
+                        }
+                        <div class="progress">
+                            <div class="progress-bar" style="width: @DisplayPercent%"></div>
+                        </div>
+                        <span class="progress-description">
+                            @IstNow.ToString("MMMM"), @IstNow.ToString("yyyy")
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<h6 class="mt-4 mb-2">
+    <span>Report for @IstNow.ToString("MMMM"), @IstNow.ToString("yyyy")</span>
+</h6>
+<div class="progress progress-xxs mb-3">
+    <div class="progress-bar bg-warning progress-bar-striped" style="width: 100%">
+        <span class="sr-only">for @IstNow.ToString("MMMM"), @IstNow.ToString("yyyy")</span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-6 col-md-3 col-6">
+        <div class="info-box">
+            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-user-tag"></i></span>
+            <div class="info-box-content">
+                <span class="info-box-text text-wrap">TDS of Vendor</span>
+                <span class="info-box-number text-wrap">
+                    @(Model._config.CurrencySymbol + Model._reportMasterCount.TDSPayAmountMonth.ToDisplayDecimal())
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-3 col-6">
+        <div class="info-box mb-3">
+            <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-align-left"></i></span>
+            <div class="info-box-content">
+                <span class="info-box-text text-wrap">TDS Paid Amount</span>
+                <span class="info-box-number text-wrap">
+                    @(Model._config.CurrencySymbol + Model._reportMasterCount.TDSPaidAmountMonth.ToDisplayDecimal())
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix hidden-md-up"></div>
+    <div class="col-sm-6 col-md-3 col-6">
+        <div class="info-box mb-3">
+            <span class="info-box-icon bg-green elevation-1"><i class="fas fa-user-shield"></i></span>
+            <div class="info-box-content">
+                <span class="info-box-text text-wrap">TDS of Customer</span>
+                <span class="info-box-number text-wrap">
+                    @(Model._config.CurrencySymbol + Model._reportMasterCount.TDSReceiveAmountMonth.ToDisplayDecimal())
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-3 col-6">
+        <div class="info-box mb-3">
+            <span class="info-box-icon bg-gradient-indigo elevation-1"><i class="fas fa-align-right"></i></span>
+            <div class="info-box-content">
+                <span class="info-box-text text-wrap">TDS Received Amount</span>
+                <span class="info-box-number text-wrap">
+                    @(Model._config.CurrencySymbol + Model._reportMasterCount.TDSReceivedAmountMonth.ToDisplayDecimal())
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix hidden-md-up"></div>
+</div>

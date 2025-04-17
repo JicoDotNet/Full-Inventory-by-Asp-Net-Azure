@@ -1,0 +1,83 @@
+﻿<nav class="mt-2">
+    <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
+        <li class="nav-item">
+            <a href="@Url.Action("Index", "Home", new { Area = "Report" })" class="nav-link">
+                <i class="nav-icon fas fa-chart-line"></i>
+                <p>
+                    Report
+                </p>
+            </a>
+        </li>
+        <li class="nav-item has-treeview">
+            <a href="javascript: void(0);" class="nav-link">
+                <i class="nav-icon fas fa-balance-scale"></i>
+                Sales
+                <i class="right fas fa-angle-left"></i>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="@Url.Action("Customer", "Sales", new { Area = "Report" })" class="nav-link">
+                        <i class="fas fa-user-shield nav-icon"></i>
+                        By Customer
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="@Url.Action("Product", "Sales", new { Area = "Report" })" class="nav-link">
+                        <i class="fas fa-apple-alt nav-icon"></i>
+                        By Product
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item has-treeview">
+            <a href="javascript: void(0);" class="nav-link">
+                <i class="nav-icon fas fa-shopping-cart"></i>
+                Purchase
+                <i class="right fas fa-angle-left"></i>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="@Url.Action("Vendor", "Purchase", new { Area = "Report" })" class="nav-link">
+                        <i class="fas fa-user-tag nav-icon"></i>
+                        By Vendor
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="@Url.Action("Product", "Purchase", new { Area = "Report" })" class="nav-link">
+                        <i class="fas fa-apple-alt nav-icon"></i>
+                        By Product
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item has-treeview">
+            <a href="javascript: void(0);" class="nav-link">
+                <i class="nav-icon fab fa-acquisitions-incorporated"></i>
+                Taxation
+                <i class="right fas fa-angle-left"></i>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="@Url.Action("Output", "Tax", new { Area = "Report" })" class="nav-link">
+                        <i class="fas fa-align-left nav-icon"></i>
+                        Output/Sales GST
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="@Url.Action("Input", "Tax", new { Area = "Report" })" class="nav-link">
+                        <i class="fas fa-align-right nav-icon"></i>
+                        Input/Purchase GST
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a href="@Url.Action("Index", "Home", new { Area = string.Empty })" class="nav-link">
+                <i class="nav-icon fas fa-home"></i>
+                <p>
+                    Home
+                </p>
+            </a>
+        </li>
+    </ul>
+</nav>

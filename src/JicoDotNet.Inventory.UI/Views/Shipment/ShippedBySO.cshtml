@@ -1,0 +1,298 @@
+﻿@using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+@using JicoDotNet.Inventory.Core.Models
+@using JicoDotNet.Inventory.UI.Models;
+@model ShipmentModels
+@{
+    ViewBag.Title = "Goods Delivery By SO";
+    ViewBag.Page = "/Shipment/Index";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Goods Delivery By SO</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Shipment")">Goods Delivery</a></li>
+                    <li class="breadcrumb-item active">Goods Delivery Note</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-danger">
+                    <div class="card-header bg-cyan">
+                        <h3 class="card-title">
+                            Goods Delivery @if (Model._salesOrder != null)
+                            {<text> for SO - <strong>@Model._salesOrder.SalesOrderNumber</strong> </text>}
+                        </h3>
+                    </div>
+                    @using (Html.BeginForm("ShippedBySO", "Shipment",
+                            FormMethod.Post, new { autocomplete = "off", id = "formShipment" }))
+                    {
+                        if (Model._salesOrder != null)
+                        {
+                            <div class="card-footer">
+                                <div class="float-md-right">
+                                    <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save</button>
+                                    <a href="@Url.Action("ShippedBySO", "Shipment", new { id = string.Empty })" class="btn btn-danger"> <i class="fas fa-times"></i> Cancel</a>
+                                    <button type="reset" class="btn btn-info"><i class="fas fa-sync"></i> Reset</button>
+                                </div>
+                            </div>
+                        }
+                        <div class="card-body">
+                            <div class="row">
+                                @if (Model._salesOrders != null)
+                                {
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Sales Order</label>
+                                            <select class="form-control form-control-sm select2"
+                                                    name="SalesOrderId"
+                                                    autoselect="false"
+                                                    onchange="location.href='@Url.Action("ShippedBySO", "Shipment", new { id = string.Empty })/' + escape(btoa(this.value))"
+                                                    required style="width:100%;">
+                                                <option value="">-- Select --</option>
+                                                @if (Model != null && Model._salesOrders != null)
+                                                {
+                                                    foreach (SalesOrder salesOrder in Model._salesOrders)
+                                                    {
+                                                        <option value="@salesOrder.SalesOrderId"
+                                                                @if (Model._salesOrder != null) { if (Model._salesOrder.SalesOrderId == salesOrder.SalesOrderId) { <text> selected </text> } }>
+                                                            @salesOrder.SalesOrderNumber
+                                                        </option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                }
+                                @if (Model._salesOrder != null)
+                                {
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>SO Number/Date</label><br />
+                                            @Model._salesOrder.SalesOrderNumber<br />
+                                            @Model._salesOrder.SalesOrderDate.ToDisplayShortDateString()
+                                        </div>
+                                    </div>
+                                }
+                                <div class="col-md-6"></div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Goods Delivery Date</label>
+                                        <small>Day/Month/Year</small>
+                                        <input type="text" name="ShipmentDate" class="form-control"
+                                               placeholder="Goods Delivery Date" required data-mask readonly
+                                               value="@GenericLogic.IstNow.ToDateMaskString()" />
+                                    </div>
+                                </div>
+                            </div>
+                            @if (Model._salesOrder != null)
+                            {
+                                <hr />
+                                <div class="d-none" style="display:none;">
+                                    <input type="hidden" name="IsFullShipped" value="true" />
+                                    <input type="hidden" value="@Model._salesOrder.SalesOrderId" name="SalesOrderId" />
+                                    <input type="hidden" value="@Model._salesOrder.SalesOrderNumber" name="SalesOrderNumber" />
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Shipment Type</label>
+                                            <select class="form-control form-control-sm" name="ShipmentTypeId" required>
+                                                <option value="">-- Select --</option>
+                                                @if (Model != null && Model._shipmentTypes != null)
+                                                {
+                                                    foreach (ShipmentType Shiptype in Model._shipmentTypes)
+                                                    {
+                                                        <option value="@Shiptype.ShipmentTypeId">
+                                                            @Shiptype.ShipmentTypeName
+                                                        </option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Warehouse</label>
+                                            <select class="form-control form-control-sm" onchange="javascript: WarehouseChange(this); return false;"
+                                                    name="WareHouseId" required>
+                                                <option value="">-- Select --</option>
+                                                @if (Model != null && Model._wareHouses != null)
+                                                {
+                                                    foreach (WareHouse wareHouse in Model._wareHouses)
+                                                    {
+                                                        <option value="@wareHouse.WareHouseId">
+                                                            @wareHouse.WareHouseName
+                                                        </option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Remarks</label>
+                                            <textarea name="Remarks" class="form-control form-control-sm" placeholder="Enter Remarks" style="height:38px;">@Model._config.DeliveryRemarks</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Vehicle Number</label>
+                                            <input type="text" name="VehicleNumber" placeholder="Vehicle Number"
+                                                   class="form-control form-control-sm" maxlength="12" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Hand Over Person</label>
+                                            <input type="text" name="HandOverPerson" class="form-control form-control-sm"
+                                                   maxlength="24" placeholder="Hand Over Person's Name" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Hand Over Person Mobile</label>
+                                            <input type="text" name="HandOverPersonMobile" class="form-control form-control-sm"
+                                                   maxlength="15" placeholder="Hand Over Person's Mobile" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card card-success">
+                                            <div class="card-header bg-teal">
+                                                <h3 class="card-title">Products Details</h3>
+                                            </div>
+                                            <div class="card-body p-0" data-table="SalesOrderDetails">
+                                                <p class="text-center m-4">Please select warehouse</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <div class="card-footer">
+                            @if (Model._salesOrder != null)
+                            {
+                                <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save</button>
+                                <a href="@Url.Action("ShippedBySO", "Shipment", new { id = string.Empty })" class="btn btn-danger"> <i class="fas fa-times"></i> Cancel</a>
+                                <button type="reset" class="btn btn-info"><i class="fas fa-sync"></i> Reset</button>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("Index", "Shipment", new { id = string.Empty })" class="btn btn-danger"> <i class="fas fa-times"></i> Cancel</a>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section BodyScript{
+    <script type="text/javascript">
+        $('[data-bootstrap-switch]').bootstrapSwitch();
+        function FullShippedChange(e) {
+            var Qtys = $('[data-tableSalesOrderDetails]').find('[data-ShippedQuantity]')
+            for (var i = 0; i < Qtys.length; i++) {
+                $(Qtys[i]).val(parseFloat($(Qtys[i]).attr('max')));
+                if ($(e).is(':checked')) {
+                    $(Qtys[i]).attr('readonly', true);
+                }
+                else {
+                    $(Qtys[i]).removeAttr('readonly');
+                }
+            }
+            return false;
+        }
+
+        function WarehouseChange(e) {
+            if ($(e).val() == '') {
+                $('[data-table="SalesOrderDetails"]').html('<p class="text-center m-4">Please select warehouse</p>');
+                return false;
+            }
+            $('[data-table="SalesOrderDetails"]').html('<div class="overlay text-center m-4"><i class="fas fa-sync-alt fa-spin fa-2x"></i></div>');
+            $.ajax({
+                url: "@Url.Action("PartialShippableStockDetail", "Shipment", new { id = Model._salesOrder != null? Html.UrlIdEncrypt(Model._salesOrder.SalesOrderId, false) : string.Empty })/" + $(e).val(),
+                type: "GET",
+                dataType: "html",
+                success: function (data) {
+                    $('[data-table="SalesOrderDetails"]').html(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $('[data-table="SalesOrderDetails"]').html('<p class="text-center text-danger mb-0 m-2">Error occurred- ' + textStatus + ' : ' + errorThrown + '</p>');
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            $('form#formShipment').submit(function () {
+                var eThis = this;
+                try {
+                    if (StockValueCheck()) {
+                        return true;
+                    }
+                    setDefaultButton(eThis);
+                    return false;
+                }
+                catch (e) {
+                    console.log(JSON.stringify(e));
+                    setDefaultButton(eThis);
+                    return false;
+                }
+            });
+        });
+
+        function StockValueCheck() {
+            var RVal = true;
+            var OuterTableRows = $('[data-table="SalesOrderDetailsRows"]');
+            for (var i = 0; i < OuterTableRows.length; i++) {
+                var MaxTotalShipableQty = parseFloat($(OuterTableRows[i]).find('[data-table="SalesOrderDetailsRows-MaxTotalShipableQty"]').val());
+                var InnerTableRows = $(OuterTableRows[i]).find('[data-table="StockDetailsRows"]');
+
+                var QtySummation = 0;
+                for (var j = 0; j < InnerTableRows.length; j++) {
+                    QtySummation += parseFloat($(InnerTableRows[j]).find('[data-shipped="Quantity"]').val());
+                }
+                if (QtySummation > MaxTotalShipableQty) {
+                    $(OuterTableRows[i]).find('[data-alert="stock"]').removeClass('d-none');
+                    $(InnerTableRows[0]).find('[data-shipped="Quantity"]').focus();
+                    RVal = false;
+                }
+                else {
+                    $(OuterTableRows[i]).find('[data-alert="stock"]').addClass('d-none');
+                }
+                
+                // isFullShipped checking
+                var DueQty = parseFloat($(OuterTableRows[i]).find('[data-table="SalesOrderDetailsRows-DueQty"]').val());
+                if (QtySummation < DueQty) {
+                    ShippedValueChange(false);
+                }
+
+                // NaN checking
+                if (isNaN(QtySummation) || isNaN(MaxTotalShipableQty) || isNaN(DueQty)) {
+                    RVal = false;
+                }
+            }            
+            return RVal;
+        }
+
+        function ShippedValueChange(isFullShipped) {
+            $('[name="IsFullShipped"]').val(isFullShipped.toString().toLowerCase());            
+        }
+    </script>
+}

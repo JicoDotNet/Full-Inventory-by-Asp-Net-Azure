@@ -1,0 +1,201 @@
+﻿@using JicoDotNet.Inventory.UI.Models;
+@using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+@using JicoDotNet.Inventory.Core.Enumeration
+@model InvoiceModels
+
+
+@{
+    ViewBag.Title = "Invoices";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Invoice</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    <li class="breadcrumb-item active"><a href="@Url.Action("Index", "Invoice")"> Invoice</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-4 p-1">
+                                <a href="@Url.Action("Generate", "Invoice")" class="btn btn-block btn-success"><i class="fas fa-plus"></i> Generate New Invoice</a>
+                            </div>
+                            <div class="col-sm-4 p-1">
+                            </div>
+                            <div class="col-sm-4 p-1">
+                                <a href="@Url.Action("Property", "Custom", new { id = Html.UrlIdEncrypt(ECustomPropertyFor.SalesInvoice, false) })"
+                                   class="btn btn-block btn-info">
+                                    <i class="fas fa-align-right"></i> Set Custom Data
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card card-danger">
+                    <div class="card-header bg-cyan">
+                        <h3 class="card-title"> Invoices</h3>
+                    </div>
+                    <div class="card-body table-responsive" style="overflow-x:scroll;">
+                        <table class="table table-striped table-bordered dt-responsive nowrap" data-table="normal">
+                            <thead>
+                                <tr>
+                                    <th>Action</th>
+                                    <th>Invoice No/Date</th>
+                                    <th>Customer Name<br>GST No</th>
+                                    <th>SO/Delivery No</th>
+                                    <th>
+                                        Invoice Amount
+                                        @if (Model._company.IsGSTRegistered)
+                                        {
+                                            <text>/ Total </text>
+                                        }
+                                    </th>
+                                    @if (Model._company.IsGSTRegistered)
+                                    {
+                                        <th>Tax</th>
+                                    }
+                                    <th>Vehicle/Person & Mobile</th>
+                                    <th>Payment</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model._invoices != null)
+                                {
+                                    for (int i = 0; i < Model._invoices.Count; i++)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @if (Model._invoices[i].PaymentStatus == null
+                                                    || !Model._invoices[i].PaymentStatus.Value)
+                                                {
+                                                    <a class="btn btn-outline-danger btn-flat"
+                                                       href="@Url.Action("Invoice", "Payment", new { id = Html.UrlIdEncrypt(Model._invoices[i].InvoiceId, false) })"
+                                                       data-toggle="tooltip" data-placement="top" title="Receive Payment">
+                                                        <i class="fas fa-money-check-alt"></i>
+                                                    </a>
+                                                }
+                                                <a class="btn btn-outline-primary btn-flat"
+                                                   href="@Url.Action("Detail", "Invoice", new { id = Html.UrlIdEncrypt(Model._invoices[i].InvoiceId, false) })"
+                                                   data-toggle="tooltip" data-placement="top" title="Detail View">
+                                                    <i class="fas fa-binoculars"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <strong>@Model._invoices[i].InvoiceNumber</strong>
+                                                @if (Model._invoices[i].IsFullInvoiced)
+                                                {
+                                                    <i class="fas fa-lg fa-check-square text-success" data-toggle="tooltip" title="Full Invoiced"></i>
+                                                }
+                                                <br />
+                                                @Model._invoices[i].InvoiceDate.ToDisplayShortDateString()
+                                            </td>
+                                            <td>
+                                                @Model._invoices[i].CompanyName
+                                                <br />
+                                                @if (Model._invoices[i].IsGSTRegistered)
+                                                {
+                                                    <em>@Model._invoices[i].GSTNumber</em>
+                                                }
+                                                else
+                                                {
+                                                    <span class="right badge badge-danger">Unregistered</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (string.IsNullOrEmpty(Model._invoices[i].SalesOrderNumber))
+                                                {
+                                                    @Model._invoices[i].ShipmentNumber
+                                                }
+                                                else
+                                                {
+                                                    @Model._invoices[i].SalesOrderNumber
+                                                }
+                                            </td>
+                                            <td>
+                                                @Model._config.CurrencySymbol@Model._invoices[i].InvoicedAmount.ToDisplayDecimal()
+                                                @if (Model._company.IsGSTRegistered)
+                                                {
+                                                    <br />
+                                                    @Model._config.CurrencySymbol@Model._invoices[i].TotalAmount.ToDisplayDecimal()
+                                                }
+                                            </td>
+                                            @if (Model._invoices[i].IsGstApplicable && Model._company.IsGSTRegistered)
+                                            {
+                                                <td>
+                                                    @Model._config.CurrencySymbol@Model._invoices[i].TaxAmount.ToDisplayDecimal()
+                                                    <br />
+                                                    @if (Model._invoices[i].GSTType == (short)EGSTType.IGST)
+                                                    {
+                                                        <i>IGST</i><br />
+                                                    }
+                                                    else if (Model._invoices[i].GSTType == (short)EGSTType.CGSTSGST)
+                                                    {
+                                                        <i>CGST-U/SGST </i><br />
+                                                    }
+                                                    else
+                                                    {
+                                                        <strong class="text-danger">Something wrong!! </strong><br />
+                                                    }
+                                                </td>
+                                            }
+                                            <td>
+                                                @Model._invoices[i].VehicleNumber - @Model._invoices[i].HandOverPerson
+                                                <br />
+                                                @Model._invoices[i].HandOverPersonMobile
+                                            </td>
+                                            <td>
+                                                @if (Model._invoices[i].PaymentStatus == null)
+                                                {
+                                                    <div class="progress-group">
+                                                        <span class="progress-text">Not Receive</span>
+                                                        <div class="progress progress-sm active" data-toggle="tooltip" title="Not received" style="border: 1px solid #28a745;">
+                                                            <div class="progress-bar bg-success progress-bar-striped" style="width: 1%"></div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else if (!Model._invoices[i].PaymentStatus.Value)
+                                                {
+                                                    <div class="progress-group">
+                                                        <span class="progress-text">Partially Receive</span>
+                                                        <div class="progress progress-sm active" data-toggle="tooltip" title="Partially received">
+                                                            <div class="progress-bar bg-success progress-bar-striped" style="width: 50%"></div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else if (Model._invoices[i].PaymentStatus.Value)
+                                                {
+                                                    <div class="progress-group">
+                                                        <span class="progress-text">Full Received</span>
+                                                        <div class="progress progress-sm active" data-toggle="tooltip" title="Full received">
+                                                            <div class="progress-bar bg-success progress-bar-striped" style="width: 100%"></div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

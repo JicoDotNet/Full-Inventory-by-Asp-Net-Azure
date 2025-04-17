@@ -1,0 +1,72 @@
+﻿@using JicoDotNet.Inventory.UI.Models;
+@using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+@using JicoDotNet.Inventory.Core.Models
+@model StockModels
+<table class="table table-striped table-bordered dt-responsive" data-table="normal">
+    <thead>
+        <tr>
+            <th>Warehouse Name</th>
+            <th>Product Name</th>
+            <th>Stock</th>
+            <th>Last Modification Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model._stocks.Count == 0)
+        {
+            <tr>
+                <td colspan="4" class="text-center">No data available</td>
+            </tr>
+        }
+        @foreach (Stock stock in Model._stocks)
+        {
+            if (stock.CurrentStock > 0)
+            {
+                <tr>
+                    <td>@stock.WareHouseName</td>
+                    <td>
+                        @stock.ProductName @if (!string.IsNullOrEmpty(stock.ProductCode))
+                        {<text> - @stock.ProductCode </text>}
+                        @if (stock.IsPerishableProduct ||
+                            stock.HasBatchNo ||
+                            stock.HasExpirationDate)
+                        {
+                            <span class="ml-2 float-right">
+
+                                <a href="javascript:void(0)" onclick="StockDetail(this, @stock.ProductId, @stock.WareHouseId);" class="card-link">
+                                    <i class="fas fa-binoculars"></i> Detail
+                                </a>
+                            </span>
+                        }
+                    </td>
+                    <td>@stock.CurrentStock.ToDisplayDecimal()@stock.UnitOfMeasureName</td>
+                    <td>@stock.GRNOrShipmentDate.ToDisplayShortDateString()</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+<script type="text/javascript">
+    function StockDetail(e, ProductId, WareHouseId) {
+        var objParams = {
+            "ProductId": ProductId,
+            "WareHouseId": WareHouseId
+        };
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("Detail", "Stock")",
+            data: JSON.stringify(objParams),
+            contentType: "application/json; charset=utf-8",
+            dataType: "text",
+            success: function (data) {
+                $(data).insertAfter($(e).parents('tr'));
+            },
+            failure: function (response) {
+                console.log(response.responseText);
+            },
+            error: function (response) {
+                console.log(response.responseText);
+            }
+        });
+    }
+</script>

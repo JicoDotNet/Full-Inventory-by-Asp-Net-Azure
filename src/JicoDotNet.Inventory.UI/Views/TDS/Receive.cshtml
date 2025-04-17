@@ -1,0 +1,115 @@
+﻿@using JicoDotNet.Inventory.UI.Models;
+@using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+@model TDSModels
+
+@{
+    ViewBag.Title = "Customer's TDS Receive";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>TDS from Customer</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    <li class="breadcrumb-item active"><a href="@Url.Action("Receive", "TDS")">TDS</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-danger">
+                    <div class="card-header bg-cyan">
+                        <h3 class="card-title">TDS List (unreceived)</h3>
+                    </div>
+                    <div class="card-body table-responsive" style="overflow-x:scroll">
+                        <table class="table table-striped table-bordered dt-responsive nowrap" data-table="normal">
+                            <thead style="border-top: 1px solid #dee2e6;">
+                                <tr>
+                                    <th>Action</th>
+                                    <th>Customer Name & Type</th>
+                                    <th>PAN Number</th>
+                                    <th>GST Number</th>
+                                    <th>TDS</th>
+                                    <th>Receive Amount</th>
+                                    <th>Payment <br />Receive Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model._tDSReceives != null)
+                                {
+                                    for (int i = 0; i < Model._tDSReceives.Count; i++)
+                                    {
+                                        <tr>
+                                            <td class="d-none">#@(i + 1)</td>
+                                            <td style="min-width: 200px;">
+                                                @using (Html.BeginForm("Receive", "TDS", new { id = Html.UrlIdEncrypt(Model._tDSReceives[i].TDSReceiveId, false) },
+                                                    FormMethod.Post, new { autocomplete = "off" }))
+                                                {
+                                                    <div class="row">
+                                                        <div class="col-8">
+                                                            <div class="form-group">
+                                                                <input type="text" name="ReceivedDate" class="form-control form-control-sm"
+                                                                       placeholder="TDS Pay Date" value="" data-mask />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <button type="submit" class="btn btn-warning"><i class="fas fa-save"></i> Receive</button>
+                                                        </div>
+                                                        <div class="d-none">
+                                                            <input type="hidden" name="TDSReceiveId" value="@Model._tDSReceives[i].TDSReceiveId" />
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </td>
+                                            <td>
+                                                <strong>@Model._tDSReceives[i].CompanyName</strong>
+                                                <br />
+                                                @Model._tDSReceives[i].CompanyType
+                                            </td>
+                                            <td>
+                                                @Model._tDSReceives[i].PANNumber
+                                            </td>
+                                            <td>
+                                                @if (Model._tDSReceives[i].IsGSTRegistered)
+                                                {
+                                                    @Model._tDSReceives[i].GSTNumber<br />
+                                                    @Model._state[Model._tDSReceives[i].GSTStateCode]
+                                                }
+                                                else
+                                                {
+                                                    <span class="right badge badge-danger">Unregistered</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @(Model._tDSReceives[i].TDSPercentage != null ? Model._tDSReceives[i].TDSPercentage.Value.ToDisplayDecimal() : string.Empty)%
+                                                <br />
+                                                @(Model._config.CurrencySymbol + Model._tDSReceives[i].TDSAmount.ToDisplayDecimal())
+                                            </td>
+                                            <td>
+                                                @(Model._config.CurrencySymbol + Model._tDSReceives[i].ReceiveAmount.ToDisplayDecimal())
+                                                <br />
+                                                @(Model._config.CurrencySymbol + Model._tDSReceives[i].TotalAmount.ToDisplayDecimal())
+                                            </td>
+                                            <td>
+                                                @(Model._tDSReceives[i].PaymentDate.ToShortDateString())
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

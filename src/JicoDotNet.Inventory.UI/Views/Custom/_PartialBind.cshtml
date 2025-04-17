@@ -1,0 +1,57 @@
+﻿@using JicoDotNet.Inventory.UI.Models;
+@using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+@using JicoDotNet.Inventory.Core.Models
+@using Microsoft.WindowsAzure.Storage.Table;
+@model CustomPropertyModels
+
+@if (Model != null && Model._customProperties != null && Model._customProperties.Count > 0)
+{
+
+    <div class="row">
+        @foreach (CustomProperty customProperty in Model._customProperties)
+        {
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="firstName" class="control-label">@customProperty.LabelName</label>
+                    @if (customProperty.DataType == EdmType.String.ToString())
+                    {
+                        <input type="text" placeholder="@customProperty.LabelName"
+                               @if (customProperty.IsRequired) { <text> required </text> }
+                               value="@customProperty.DefaultValue"
+                               name="@customProperty.ColumnName" class="form-control form-control-sm">
+                    }
+                    else if (customProperty.DataType == EdmType.Double.ToString())
+                    {
+                        <input type="number" placeholder="@customProperty.LabelName"
+                               @if (customProperty.IsRequired) { <text> required </text> }
+                               name="@customProperty.ColumnName" class="form-control form-control-sm">
+                    }
+                    else if (customProperty.DataType == EdmType.Boolean.ToString())
+                    {
+                        <select class="form-control form-control-sm"
+                                @if (customProperty.IsRequired) { <text> required </text> }
+                                name="@customProperty.ColumnName">
+                            <option value="">-- Select --</option>
+                            @for (int i = 0; i < Model._YesNo.Count; i++)
+                            {
+                                <option value="@Model._YesNo.Keys.ElementAt(i).ToString().ToLower()"
+                                        @if (Model._customProperty != null) { if (Model._YesNo.Keys.ElementAt(i) == Model._customProperty.IsRequired) { <text> selected </text> } }>
+                                    @Model._YesNo[Model._YesNo.Keys.ElementAt(i)]
+                                </option>
+                            }
+                        </select>
+                    }
+                    else if (customProperty.DataType == EdmType.DateTime.ToString())
+                    {
+                        <small>Day/Month/Year</small>
+                        <input type="text" placeholder="@customProperty.LabelName"
+                               data-mask readonly
+                               @if (customProperty.IsRequired) { <text> required </text> }
+                               name="@customProperty.ColumnName" class="form-control form-control-sm">
+                    }
+                </div>
+            </div>
+        }
+    </div>
+    <hr />
+}

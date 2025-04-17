@@ -1,0 +1,41 @@
+﻿@using JicoDotNet.Inventory.UI.Models;
+@using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+@model ErrorModels
+
+@{
+    ViewBag.Title = "Error";
+    Layout = "~/Views/Shared/_LayoutBasic.cshtml";
+}
+
+
+<section class="content pt-5">
+    <div class="error-page">
+        <h2 class="headline text-danger">@Model.ErrorStatus</h2>
+        <div class="error-content">
+            <h3><i class="fas fa-exclamation-triangle text-danger"></i> Oops! Something went wrong.</h3>
+            <h5 class="text-danger">
+                <span class="text-dark">Error Code: </span>
+                @if (!string.IsNullOrEmpty(Model.ErrorCode))
+                {
+                    @Model.ErrorCode
+                }
+            </h5>
+            <p class="text-wrap text-danger"><span class="text-dark">Message: </span>@Model.Message</p>
+            <p class="text-wrap">
+                We will work on fixing that right away.
+                Meanwhile, you may
+                <a href="@Url.Action("Index", "Home")">return to Portal</a>
+                or you can contact us with this Error Code.
+            </p>
+            <p class="text-wrap">
+                Contact Us: <a href="mailto:help@itemblob.in" class="text-primary">
+                    help@@itemblob.in
+                </a>
+            </p>
+            <a href="@Url.Action("Index", "Home")" class="btn btn-success">
+                <i class="fas fa-home"></i>
+                Portal
+            </a>
+        </div>
+    </div>
+</section>

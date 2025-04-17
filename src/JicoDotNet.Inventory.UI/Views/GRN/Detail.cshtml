@@ -1,0 +1,347 @@
+﻿@using JicoDotNet.Inventory.UI.Models;
+@using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+@using JicoDotNet.Inventory.Core.Models
+@model GoodsReceiveNoteModels
+@{
+    ViewBag.Title = "GRN Detail " + Model._goodsReceiveNote.GRNNumber;
+    ViewBag.Page = "/GRN/Index";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Good Receive Note</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "GRN" )"> GRN</a></li>
+                    <li class="breadcrumb-item active">Details</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="float-md-right">
+                            <print class="btn btn-warning"><i class="fas fa-print"></i> Print</print>
+                            <a href="@Url.Action("Index", "GRN", new { id = string.Empty })" class="btn btn-danger"> <i class="fas fa-times"></i> Close</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="invoice p-4 mb-3" data-print="true">
+                    <div class="row">
+                        <div class="col-12">
+                            @if (!string.IsNullOrEmpty(Model._companyAddress.LogoUrl))
+                            {
+                                <img class="img-fluid img-responsive" style="max-height:50px;" src="@Model._companyAddress.LogoUrl" />
+                            }
+                            <h4 class="float-right">
+                                <i class="fas fa-angle-double-down"></i> Goods Receive
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="row invoice-info">
+                        <div class="col-sm-5 invoice-col">
+                            <address>
+                                <strong>@Model._companyAddress.CompanyName</strong><br>
+                                @if (!string.IsNullOrEmpty(Model._companyAddress.Address))
+                                {
+                                    <span style="word-wrap: break-word;overflow-wrap: break-word;">
+                                        @Model._companyAddress.Address
+                                    </span><br>
+                                }
+                                @GenericLogic.State()[Model._companyAddress.StateCode]<br>
+                                @if (!string.IsNullOrEmpty(Model._companyAddress.Mobile))
+                                {
+                                    <text>Phone: @Model._companyAddress.Mobile</text><br>
+                                }
+                                @if (!string.IsNullOrEmpty(Model._companyAddress.Email))
+                                {
+                                    <text>Email: @Model._companyAddress.Email</text><br>
+                                }
+                                GST NO: <strong>
+                                    @if (Model._companyAddress.IsGSTRegistered)
+                                    {<text>@Model._companyAddress.GSTNumber</text> }
+                                else
+                                { <text>Unregistred</text>}
+                                </strong>
+                            </address>
+                        </div>
+                        <div class="col-sm-4 invoice-col">
+                            <span>Warehouse Details</span>
+                            <address>
+                                <strong>@Model._goodsReceiveNote.WareHouseName</strong><br />
+                                @Model._branch.BranchName
+                                @if (!string.IsNullOrEmpty(Model._branch.BranchCode))
+                                {
+                                    <span>- @Model._branch.BranchCode</span>
+                                }<br />
+                                @if (!string.IsNullOrEmpty(Model._branch.Address))
+                                {
+                                    <span style="word-wrap: break-word;overflow-wrap: break-word;">
+                                        @Model._branch.Address
+                                    </span><br>
+                                }
+                                @Model._branch.City @GenericLogic.State()[Model._branch.State]<br>
+                                @if (!string.IsNullOrEmpty(Model._branch.ContactPerson))
+                                {
+                                    <text>Contact Person: @Model._branch.ContactPerson</text><br>
+                                }
+                                @if (!string.IsNullOrEmpty(Model._branch.Phone))
+                                {
+                                    <text>Phone: @Model._branch.Phone</text><br>
+                                }
+                                @if (!string.IsNullOrEmpty(Model._branch.Email))
+                                {
+                                    <text>Email: @Model._branch.Email</text><br>
+                                }
+                            </address>
+                        </div>
+                        <div class="col-sm-3 invoice-col">
+                            @if (Model._goodsReceiveNote.IsDirect)
+                            {
+                                <h5 class="card-title float-none">#@Model._goodsReceiveNote.GRNNumber <span>(Direct)</span></h5>
+                                <span>PO: </span>
+                            }
+                            else
+                            {
+                                <h5 class="card-title float-none">#@Model._goodsReceiveNote.GRNNumber</h5>
+                                <span>PO: </span><b>#@Model._goodsReceiveNote.PurchaseOrderNumber</b>
+                            }
+                            <br />
+                            <b>Date: </b>@Model._goodsReceiveNote.GRNDate.ToDisplayShortDateString()
+                            <br />
+                            @if (Model._goodsReceiveNote.IsDirect)
+                            {
+                                <b>Amount: </b>@(Model._config.CurrencySymbol + Model._purchaseOrder.PurchaseOrderTotalAmount.ToDisplayDecimal())
+                            }
+                        </div>
+                    </div>
+                    <div class="row invoice-info">
+                        <div class="col-sm-5 invoice-col">
+                            @if (!string.IsNullOrEmpty(Model._goodsReceiveNote.VendorDONumber))
+                            {
+                                <b>Vendor DO/Chalan No</b>
+                                <p class="text-muted well well-sm shadow-none">
+                                    @Model._goodsReceiveNote.VendorDONumber
+                                </p>
+                            }
+                        </div>
+                        <div class="col-sm-4 invoice-col">
+                            @if (!string.IsNullOrEmpty(Model._goodsReceiveNote.VendorInvoiceNumber))
+                            {
+                                <b>Vendor Invoice No</b>
+                                <p class="text-muted well well-sm shadow-none">
+                                    @Model._goodsReceiveNote.VendorInvoiceNumber
+                                </p>
+                            }
+                        </div>
+                        <div class="col-sm-3 invoice-col">
+                            @if (Model._goodsReceiveNote.VendorInvoiceDate != null)
+                            {
+                                <b>Vendor Invoice Date</b>
+                                <p class="text-muted well well-sm shadow-none">
+                                    @(Model._goodsReceiveNote.VendorInvoiceDate != null? Model._goodsReceiveNote.VendorInvoiceDate.Value.ToDisplayShortDateString() : string.Empty)
+                                </p>
+                            }
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 table-responsive">
+                            <table class="table">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Product/Remarks</th>
+                                        <th>
+                                            Batch Number /
+                                            Expiery Date
+                                        </th>
+                                        <th>
+                                            <span class="float-right">
+                                                HSN/SAC
+                                            </span>
+                                        </th>
+                                        <th>
+                                            <span class="float-right">
+                                                Received Qty
+                                            </span>
+                                        </th>
+                                        @if (Model._goodsReceiveNote.IsDirect)
+                                        {
+                                            <th>
+                                                <span class="float-right">
+                                                    Rate
+                                                </span>
+                                            </th>
+                                            if (Model._purchaseOrder.IsGstAllowed)
+                                            {
+                                                <th>
+                                                    <span class="float-right">
+                                                        Tax
+                                                    </span>
+                                                </th>
+                                            }
+                                            <th>
+                                                <span class="float-right">
+                                                    Total
+                                                </span>
+                                            </th>
+                                        }
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (int i = 0; i < Model._goodsReceiveNote.GoodsReceiveNoteDetails.Count; i++)
+                                    {
+                                        PurchaseOrderDetail purchaseOrderDetail = Model._purchaseOrder.PurchaseOrderDetails.FirstOrDefault(a => a.PurchaseOrderDetailId == Model._goodsReceiveNote.GoodsReceiveNoteDetails[i].PurchaseOrderDetailId);
+                                        if (purchaseOrderDetail != null)
+                                        {
+                                            <tr style="border-bottom: 1px solid #dee2e6;">
+                                                <td>
+                                                    <strong>@(i + 1)</strong>
+                                                </td>
+                                                <td>
+                                                    @(purchaseOrderDetail.ProductName)
+                                                    @if (!string.IsNullOrEmpty(purchaseOrderDetail.ProductCode))
+                                                    {
+                                                        <text> (@(purchaseOrderDetail.ProductCode)) </text>
+                                                    }
+                                                    @if (Model._goodsReceiveNote.GoodsReceiveNoteDetails[i].IsPerishable)
+                                                    {
+                                                        <small>Perishable</small>
+                                                    }
+                                                    <br />
+                                                    @Model._goodsReceiveNote.GoodsReceiveNoteDetails[i].Description
+                                                </td>
+                                                <td>
+                                                    @if (!string.IsNullOrEmpty(Model._goodsReceiveNote.GoodsReceiveNoteDetails[i].BatchNo))
+                                                    {
+                                                        <span>Batch: @Model._goodsReceiveNote.GoodsReceiveNoteDetails[i].BatchNo</span><br />
+                                                    }
+                                                    @if (Model._goodsReceiveNote.GoodsReceiveNoteDetails[i].ExpiryDate != null)
+                                                    {
+                                                        <span>ExpiryDate: @(Model._goodsReceiveNote.GoodsReceiveNoteDetails[i].ExpiryDate.Value.ToDisplayShortDateString())</span><br />
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <span class="float-right">
+                                                        @(purchaseOrderDetail.HSNSAC)
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="float-right">
+                                                        @Model._goodsReceiveNote.GoodsReceiveNoteDetails[i].ReceivedQuantity.ToDisplayDecimal()
+                                                    </span>
+                                                    <br />
+                                                    <span class="float-right">
+                                                        @(purchaseOrderDetail.UnitOfMeasureName)
+                                                    </span>
+                                                </td>
+                                                @if (Model._goodsReceiveNote.IsDirect)
+                                                {
+                                                    <td>
+                                                        <span class="float-right">
+                                                            @(Model._config.CurrencySymbol + purchaseOrderDetail.Price.ToDisplayDecimal())
+                                                        </span>
+                                                    </td>
+                                                    if (Model._purchaseOrder.IsGstAllowed)
+                                                    {
+                                                        <td>
+                                                            <span class="float-right">
+                                                                @(purchaseOrderDetail.TaxPercentage.ToDisplayDecimal())%
+                                                            </span>
+                                                            <br />
+                                                            <span class="float-right">
+                                                                @(Model._config.CurrencySymbol + purchaseOrderDetail.TaxAmount.ToDisplayDecimal())
+                                                            </span>
+                                                        </td>
+                                                    }
+                                                    <td>
+                                                        <span class="float-right">
+                                                            @(Model._config.CurrencySymbol + purchaseOrderDetail.Total.ToDisplayDecimal())
+                                                        </span>
+                                                    </td>
+                                                }
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="row">
+                                @if (!string.IsNullOrEmpty(Model._goodsReceiveNote.Remarks))
+                                {
+                                    <div class="col-12">
+                                        <p class="lead">Remarks:</p>
+                                        <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
+                                            @Model._goodsReceiveNote.Remarks
+                                        </p>
+                                    </div>
+                                }
+                                <div class="col-12">
+                                    <p class="lead">Authorized Signature</p>
+                                    <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
+                                        ___________________________________
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        @if (Model._purchaseOrder != null && Model._goodsReceiveNote.IsDirect)
+                        {
+                            <div class="col-6">
+                                <p class="lead">Total Order Details</p>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <th style="width:40%">Subtotal:</th>
+                                                <td>
+                                                    @(Model._config.CurrencySymbol + Model._purchaseOrder.PurchaseOrderAmount.ToDisplayDecimal())
+                                                </td>
+                                            </tr>
+                                            @if (Model._purchaseOrder.IsGstAllowed)
+                                            {
+                                                <tr>
+                                                    <th>Total Tax:</th>
+                                                    <td>
+                                                        @(Model._config.CurrencySymbol + Model._purchaseOrder.PurchaseOrderTaxAmount.ToDisplayDecimal())
+                                                    </td>
+                                                </tr>
+                                            }
+                                            <tr>
+                                                <th>Total:</th>
+                                                <td>
+                                                    <strong>
+                                                        @(Model._config.CurrencySymbol + Model._purchaseOrder.PurchaseOrderTotalAmount.ToDisplayDecimal())
+                                                    </strong>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    @Html.Partial("_PartialPrintSignature")
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <print class="btn btn-warning"><i class="fas fa-print"></i> Print</print>
+                        <a href="@Url.Action("Index", "GRN", new { id = string.Empty })" class="btn btn-danger"> <i class="fas fa-times"></i> Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

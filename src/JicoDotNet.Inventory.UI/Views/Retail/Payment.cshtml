@@ -1,0 +1,328 @@
+﻿@using JicoDotNet.Inventory.UI.Models;
+@using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+@model PaymentModels
+
+@{
+    ViewBag.Title = "Retail Payment Receive";
+    ViewBag.Page = "/Retail/Index";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Invoice Payment</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Retail")">Retail</a></li>
+                    <li class="breadcrumb-item actve">Retail Payment</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-danger">
+                    <div class="card-header bg-cyan">
+                        <h3 class="card-title">
+                            Payment @if (Model._invoice != null)
+                            {<text> for - <strong>@Model._invoice.InvoiceNumber</strong> </text>}
+                        </h3>
+                    </div>
+                    @if (Model._invoice != null)
+                    {
+                        using (Html.BeginForm("Payment", "Retail", new { id = Html.UrlIdEncrypt(Model._invoice.InvoiceId, false) },
+                                FormMethod.Post, new { autocomplete = "off", id = "formPaymentIn" }))
+                        {
+                            <div class="card-footer">
+                                <div class="float-md-right">
+                                    <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save</button>
+                                    <a href="@Url.Action("Receive", "Payment", new { id = string.Empty })" class="btn btn-danger"> <i class="fas fa-times"></i> Cancel</a>
+                                    <button type="reset" class="btn btn-info"><i class="fas fa-sync"></i> Reset</button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Customer & GST Number</label><br />
+                                            @Model._customer.CompanyName<br />
+                                            @if (Model._customer.IsGSTRegistered)
+                                            {
+                                                <b>@Model._customer.GSTNumber</b>
+                                            }
+                                            else
+                                            {
+                                                <i>GST Unregistred</i>
+                                            }
+                                            <input type="hidden" name="CustomerId" value="@Model._customer.CustomerId" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>Invoice Amount</label>
+                                        <br />
+                                        <strong>@Model._config.CurrencySymbol@((Model._invoice.TotalAmount + Model._invoice.ReceivedAmount).ToDisplayDecimal())</strong>
+                                        @if (Model._invoice.ReceivedAmount > 0)
+                                        {
+                                            <hr style="margin: 2px;" />
+                                            <span>
+                                                Paid:
+                                                @Model._config.CurrencySymbol@Model._invoice.ReceivedAmount.ToDisplayDecimal()
+                                            </span>
+                                        }
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>Due Amount</label>
+                                        <br />
+                                        <strong>@Model._config.CurrencySymbol@Model._invoice.TotalAmount.ToDisplayDecimal()</strong>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Payment Date</label>
+                                            <small>Day/Month/Year</small>
+                                            <input type="text" name="PaymentDate" class="form-control form-control-sm"
+                                                   placeholder="Payment Date" required data-mask readonly
+                                                   value="@GenericLogic.IstNow.ToDateMaskString()" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Payment Amount</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend" style="height:31px;">
+                                                    <span class="input-group-text">@Model._config.CurrencySymbol</span>
+                                                </div>
+                                                <input type="number" min="0" name="TotalAmount"
+                                                       class="form-control form-control-sm" value="0.0" step="0.000001"
+                                                       onblur="javascript: TDSCalculation(); return false;"
+                                                       data-Amount max="@Model._invoice.TotalAmount"
+                                                       placeholder="Total Amount" required />
+                                            </div>
+                                            <a href="javascript:void(0);" class="card-link float-right" data-Pay="full"
+                                               onclick="$(this).closest('div').find('input[data-Amount]').val(parseFloat('@Model._invoice.TotalAmount').toFixed(5));TDSCalculation();">Pay Full</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Your Bank</label>
+                                            <select class="form-control form-control-sm" name="CompanyBankId">
+                                                <option value="">-- Select --</option>
+                                                @if (Model != null && Model._companyBanks != null)
+                                                {
+                                                    foreach (CompanyBank companyBank in Model._companyBanks)
+                                                    {
+                                                        <option value="@companyBank.CompanyBankId">
+                                                            @companyBank.AccountName (A/c No - @companyBank.AccountNumber) - @companyBank.IFSC
+                                                        </option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>TDS Applicable</label>
+                                            <select class="form-control form-control-sm" name="IsTDSApplicable"
+                                                    onchange="javascript: TDSModeChange(this); return false;" required>
+                                                <option value="true">Yes</option>
+                                                <option value="false" selected>No</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row d-none" data-tds>
+                                    <div class="col-md-4" data-tds="TDSPercentage">
+                                        <div class="form-group">
+                                            <label>TDS Percentage</label>
+                                            <div class="input-group">
+                                                <input type="number" min="0" name="TDSPercentage" class="form-control form-control-sm"
+                                                       value="0.0" step="1" max="50" onblur="javascript: TDSCalculation(); return false;"
+                                                       placeholder="TDS Percentage" />
+                                                <div class="input-group-append" style="height:31px;">
+                                                    <span class="input-group-text">%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" data-tds="TDSAmount">
+                                        <div class="form-group">
+                                            <label>TDS Deducted Amount</label>
+                                            <div class="input-group">
+                                                <input type="number" name="TDSAmount" class="form-control form-control-sm"
+                                                       value="0.0" readonly step="0.01"
+                                                       placeholder="TDS Percentage" />
+                                                <div class="input-group-append" style="height:31px;">
+                                                    <span class="input-group-text">@(Model._config.CurrencySymbol)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" data-tds="PayAmount">
+                                        <div class="form-group">
+                                            <label>Pay Amount</label>
+                                            <div class="input-group">
+                                                <input type="number" name="PayAmount" class="form-control form-control-sm"
+                                                       value="0.0" readonly step="0.01"
+                                                       placeholder="Pay Amount" />
+                                                <div class="input-group-append" style="height:31px;">
+                                                    <span class="input-group-text">@(Model._config.CurrencySymbol)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Reference No</label>
+                                            <input type="text" maxlength="60" class="form-control form-control-sm" name="ReferenceNo" placeholder="Reference No" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Remarks</label>
+                                            <input type="text" maxlength="125" class="form-control form-control-sm" name="Remarks" placeholder="Remarks" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Payment Mode</label>
+                                            <select class="form-control form-control-sm" name="PaymentMode"
+                                                    onchange="javascript: PaymentModeChange(this); return false;" required>
+                                                <option value="">-- Select --</option>
+                                                @for (int i = 0; i < Model._paymentMode.Count; i++)
+                                                {
+                                                    <option value="@Model._paymentMode.Keys.ElementAt(i)">
+                                                        @Model._paymentMode[Model._paymentMode.Keys.ElementAt(i)]
+                                                    </option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row d-none" data-PaymentMode="Cheque">
+                                    <div class="col-md-12">
+                                        <div class="callout callout-warning">
+                                            <p class="text-danger">It is considered that this Cheque is cleared by bank. This system don't track Bounced Cheque.</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Cheque No</label>
+                                            <input type="text" name="ChequeNo" class="form-control form-control-sm" maxlength="6"
+                                                   placeholder="Cheque No" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Cheque Date</label>
+                                            <small>Day/Month/Year</small>
+                                            <input type="text" name="ChequeDate" class="form-control form-control-sm"
+                                                   placeholder="Cheque Date" data-mask readonly
+                                                   value="" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Cheque IFSC</label>
+                                            <input type="text" maxlength="11" class="form-control form-control-sm" name="ChequeIFSC" placeholder="Cheque IFS Code" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row d-none">
+                                    <input type="hidden" name="Mobile"
+                                           value="@Model._customer.Mobile" class="d-none" style="display:none !important;" />
+                                    <input type="hidden" name="PaymentInDetails[0].InvoiceId"
+                                           value="@Model._invoice.InvoiceId" class="d-none" style="display:none !important;" />
+                                    <input type="hidden" name="PaymentInDetails[0].InvoiceNumber"
+                                           value="@Model._invoice.InvoiceNumber" class="d-none" style="display:none !important;" />
+                                    <input type="hidden" name="PaymentInDetails[0].IsFullReceived"
+                                           data-IsFullReceived
+                                           value="false" class="d-none" style="display:none !important;" />
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save</button>
+                                <a href="@Url.Action("Receive", "Payment", new { id = string.Empty })" class="btn btn-danger"> <i class="fas fa-times"></i> Cancel</a>
+                                <button type="reset" class="btn btn-info"><i class="fas fa-sync"></i> Reset</button>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="card-body">
+                            <div class="callout callout-info">
+                                <h5>Congratuallations!</h5>
+                                <p>This invoice payment already receive successful.</p>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a href="@Url.Action("Received", "Payment", new { id = string.Empty })" class="btn btn-danger"> <i class="fas fa-times"></i> Cancel</a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section BodyScript{
+    <script type="text/javascript">
+        $('[data-Pay="full"]').click();
+        function PaymentModeChange(e) {
+            var PaymentMode = $(e).val();
+            if (PaymentMode == '3') {
+                $('[data-PaymentMode="Cheque"]').find('input').val('');
+                $('[data-PaymentMode="Cheque"]').removeClass('d-none');
+            }
+            else {
+                $('[data-PaymentMode="Cheque"]').find('input').val('');
+                $('[data-PaymentMode="Cheque"]').addClass('d-none');
+            }
+        }
+
+        function TDSModeChange(e) {
+            $('[data-tds]').find('input').val('0.0');
+            if ($(e).val() == 'true') {
+                $('[data-tds]').removeClass('d-none');
+                TDSCalculation();
+            }
+            else {
+                $('[data-tds]').addClass('d-none');
+            }
+        }
+
+        function TDSCalculation() {
+            if ($('select[name="IsTDSApplicable"]').val() == 'true') {
+                var Percentage = $('input[name="TDSPercentage"]').val();
+                var Total = $('input[name="TotalAmount"]').val();
+                var tdsamount = (Total * Percentage) / 100;
+                var payamount = Total - tdsamount;
+                $('input[name="TDSAmount"]').val(tdsamount);
+                $('input[name="PayAmount"]').val(payamount);
+            }
+        }
+
+        $('form#formPaymentIn').submit(function () {
+            return checkForFullPayment(this);
+        });
+
+        function checkForFullPayment(e) {
+            if (parseFloat($('input[name="TotalAmount"]').val()) != parseFloat($('input[name="TotalAmount"]').attr('max'))) {
+                $('input[data-IsFullReceived]').val(false);
+            }
+            else {
+                $('input[data-IsFullReceived]').val(true);
+            }
+            return true;
+        }
+    </script>
+}

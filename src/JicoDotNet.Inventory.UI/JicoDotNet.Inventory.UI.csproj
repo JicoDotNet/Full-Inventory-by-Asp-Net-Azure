@@ -1,0 +1,524 @@
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E1A0C3BF-90B6-4B97-8778-70B97E73F61C}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JicoDotNet.Inventory.UI</RootNamespace>
+    <AssemblyName>JicoDotNet.Inventory.UI</AssemblyName>
+    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Azure.Core, Version=1.44.1.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Azure.Core.1.44.1\lib\net472\Azure.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Azure.Data.Tables, Version=12.10.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Azure.Data.Tables.12.10.0\lib\netstandard2.0\Azure.Data.Tables.dll</HintPath>
+    </Reference>
+    <Reference Include="Azure.Identity, Version=1.11.4.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Azure.Identity.1.11.4\lib\netstandard2.0\Azure.Identity.dll</HintPath>
+    </Reference>
+    <Reference Include="Azure.Storage.Blobs, Version=12.24.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Azure.Storage.Blobs.12.24.0\lib\netstandard2.0\Azure.Storage.Blobs.dll</HintPath>
+    </Reference>
+    <Reference Include="Azure.Storage.Common, Version=12.23.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Azure.Storage.Common.12.23.0\lib\netstandard2.0\Azure.Storage.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="DataAccess.AzureStorage, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DataAccess.AzureStorage.3.0.0\lib\netstandard2.0\DataAccess.AzureStorage.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.Cryptography, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Cryptography.8.0.0\lib\net462\Microsoft.Bcl.Cryptography.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Data.SqlClient, Version=6.0.0.0, Culture=neutral, PublicKeyToken=23ec7fc2d6eaa4a5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.SqlClient.6.0.1\lib\net462\Microsoft.Data.SqlClient.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Caching.Abstractions, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Caching.Abstractions.8.0.0\lib\net462\Microsoft.Extensions.Caching.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Caching.Memory, Version=8.0.0.1, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Caching.Memory.8.0.1\lib\net462\Microsoft.Extensions.Caching.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=8.0.0.2, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.8.0.2\lib\net462\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=8.0.0.2, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.8.0.2\lib\net462\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Options, Version=8.0.0.2, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Options.8.0.2\lib\net462\Microsoft.Extensions.Options.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Primitives.8.0.0\lib\net462\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Identity.Client, Version=4.61.3.0, Culture=neutral, PublicKeyToken=0a613f4dd989e8ae, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Identity.Client.4.61.3\lib\net462\Microsoft.Identity.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Identity.Client.Extensions.Msal, Version=4.61.3.0, Culture=neutral, PublicKeyToken=0a613f4dd989e8ae, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Identity.Client.Extensions.Msal.4.61.3\lib\netstandard2.0\Microsoft.Identity.Client.Extensions.Msal.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Abstractions, Version=7.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Abstractions.7.5.0\lib\net472\Microsoft.IdentityModel.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=7.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.7.5.0\lib\net472\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=7.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Logging.7.5.0\lib\net472\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Protocols, Version=7.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Protocols.7.5.0\lib\net472\Microsoft.IdentityModel.Protocols.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect, Version=7.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Protocols.OpenIdConnect.7.5.0\lib\net472\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=7.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.7.5.0\lib\net472\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ClientModel, Version=1.1.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ClientModel.1.1.0\lib\netstandard2.0\System.ClientModel.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=8.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.8.0.1\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=7.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.7.5.0\lib\net472\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.AccessControl, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.AccessControl.5.0.0\lib\net461\System.IO.FileSystem.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Hashing, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Hashing.6.0.0\lib\net461\System.IO.Hashing.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory.Data, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.Data.6.0.0\lib\net461\System.Memory.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security" />
+    <Reference Include="System.Security.AccessControl, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.AccessControl.5.0.0\lib\net461\System.Security.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Pkcs, Version=8.0.0.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Pkcs.8.0.1\lib\net462\System.Security.Cryptography.Pkcs.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.ProtectedData, Version=4.0.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.ProtectedData.4.7.0\lib\net461\System.Security.Cryptography.ProtectedData.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Principal.Windows.5.0.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encodings.Web, Version=6.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.6.0.1\lib\net461\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=6.0.0.11, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.6.0.11\lib\net461\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Web.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.9\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.9\lib\net45\System.Web.Webpages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Deployment">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.9\lib\net45\System.Web.Webpages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.9\lib\net45\System.Web.Webpages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.9\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.2.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.9\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\css\AdminLteCustom.css" />
+    <Content Include="Content\css\LoginStyle.css" />
+    <Content Include="Content\images\BrandLogo.png" />
+    <Content Include="Content\images\CompanyLogo.jpg" />
+    <Content Include="Content\images\favicon\favicon.ico" />
+    <Content Include="Content\images\icon.png" />
+    <Content Include="Content\images\IinvoiceIcon.png" />
+    <Content Include="Content\images\NoUser.png" />
+    <Content Include="Content\js\gridCalculation.js" />
+    <Content Include="Content\js\html2canvas.js" />
+    <Content Include="Content\tPrint\invoice.html" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Views\web.config" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Report\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Report\Controllers\PurchaseController.cs" />
+    <Compile Include="Areas\Report\Controllers\SalesController.cs" />
+    <Compile Include="Areas\Report\Controllers\TaxController.cs" />
+    <Compile Include="Areas\Report\Models\PurchaseReportModels.cs" />
+    <Compile Include="Areas\Report\Models\ReportModels.cs" />
+    <Compile Include="Areas\Report\Models\SalesReportModels.cs" />
+    <Compile Include="Areas\Report\Models\TaxReportModels.cs" />
+    <Compile Include="Areas\Report\ReportAreaRegistration.cs" />
+    <Compile Include="Auth\BaseController.cs" />
+    <Compile Include="Auth\SessionAuthenticate.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BillController.cs" />
+    <Compile Include="Controllers\BranchController.cs" />
+    <Compile Include="Controllers\CompanyController.cs" />
+    <Compile Include="Controllers\ConfigurationController.cs" />
+    <Compile Include="Controllers\CustomController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\GRNController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InvoiceController.cs" />
+    <Compile Include="Controllers\LogoutController.cs" />
+    <Compile Include="Controllers\MeasureController.cs" />
+    <Compile Include="Controllers\PartialController.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
+    <Compile Include="Controllers\PDFController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\PurchaseController.cs" />
+    <Compile Include="Controllers\QuotationController.cs" />
+    <Compile Include="Controllers\RetailController.cs" />
+    <Compile Include="Controllers\SalesController.cs" />
+    <Compile Include="Controllers\ShipmentController.cs" />
+    <Compile Include="Controllers\StockController.cs" />
+    <Compile Include="Controllers\TDSController.cs" />
+    <Compile Include="Controllers\VendorController.cs" />
+    <Compile Include="Controllers\WarehouseController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\CookieHandelExtention.cs" />
+    <Compile Include="Helper\MvcExtension.cs" />
+    <Compile Include="Helper\WebConfigAppSettingsAccess.cs" />
+    <Compile Include="Helper\WebConfigDBConnection.cs" />
+    <Compile Include="Models\BillModels.cs" />
+    <Compile Include="Models\BranchModels.cs" />
+    <Compile Include="Models\CompanyModels.cs" />
+    <Compile Include="Models\ConfigModels.cs" />
+    <Compile Include="Models\CustomerModels.cs" />
+    <Compile Include="Models\CustomPropertyModels.cs" />
+    <Compile Include="Models\ErrorModels.cs" />
+    <Compile Include="Models\GoodsReceiveNoteModels.cs" />
+    <Compile Include="Models\HomeModels.cs" />
+    <Compile Include="Models\InvoiceModels.cs" />
+    <Compile Include="Models\JsonReturnModels.cs" />
+    <Compile Include="Models\PaymentModels.cs" />
+    <Compile Include="Models\PlanOrderModels.cs" />
+    <Compile Include="Models\ProductModels.cs" />
+    <Compile Include="Models\PurchaseModels.cs" />
+    <Compile Include="Models\PurchaseOrderModels.cs" />
+    <Compile Include="Models\QuotationModels.cs" />
+    <Compile Include="Models\RedirectModels.cs" />
+    <Compile Include="Models\RetailModels.cs" />
+    <Compile Include="Models\SalesOrderModels.cs" />
+    <Compile Include="Models\SearchModels.cs" />
+    <Compile Include="Models\SessionCredentialCompanyModels.cs" />
+    <Compile Include="Models\ShipmentModels.cs" />
+    <Compile Include="Models\StockModels.cs" />
+    <Compile Include="Models\SubscriptionRechargeModels.cs" />
+    <Compile Include="Models\TDSModels.cs" />
+    <Compile Include="Models\UnitOfMeasureModels.cs" />
+    <Compile Include="Models\UserModels.cs" />
+    <Compile Include="Models\VendorModels.cs" />
+    <Compile Include="Models\WareHouseModels.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ErrorLog\Error.log" />
+    <Content Include="Areas\Report\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Report\Views\Home\_PartialRpMaster.cshtml" />
+    <Content Include="Areas\Report\Views\Purchase\Product.cshtml" />
+    <Content Include="Areas\Report\Views\Purchase\Vendor.cshtml" />
+    <Content Include="Areas\Report\Views\Purchase\_PartialProductPurchase.cshtml" />
+    <Content Include="Areas\Report\Views\Purchase\_PartialVendorPurchase.cshtml" />
+    <Content Include="Areas\Report\Views\Sales\Customer.cshtml" />
+    <Content Include="Areas\Report\Views\Sales\Product.cshtml" />
+    <Content Include="Areas\Report\Views\Sales\_PartialCustomerSales.cshtml" />
+    <Content Include="Areas\Report\Views\Sales\_PartialProductSales.cshtml" />
+    <Content Include="Areas\Report\Views\Shared\_PartialDateRangeMismatch.cshtml" />
+    <Content Include="Areas\Report\Views\Tax\Input.cshtml" />
+    <Content Include="Areas\Report\Views\Tax\Output.cshtml" />
+    <Content Include="Areas\Report\Views\Tax\_PartialGstInput.cshtml" />
+    <Content Include="Areas\Report\Views\Tax\_PartialGstOutput.cshtml" />
+    <Content Include="Areas\Report\Views\Tax\_ViewNotApplicable.cshtml" />
+    <Content Include="Areas\Report\Views\web.config" />
+    <None Include="packages.config" />
+    <Content Include="Views\Account\Auth.cshtml" />
+    <Content Include="Views\Account\Duplicate.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Bill\Detail.cshtml" />
+    <Content Include="Views\Bill\Generate.cshtml" />
+    <Content Include="Views\Bill\Index.cshtml" />
+    <Content Include="Views\Bill\Type.cshtml" />
+    <Content Include="Views\Branch\Index.cshtml" />
+    <Content Include="Views\Company\Bank.cshtml" />
+    <Content Include="Views\Company\Detail.cshtml" />
+    <Content Include="Views\Configuration\Default.cshtml" />
+    <Content Include="Views\Configuration\Details.cshtml" />
+    <Content Include="Views\Configuration\Setup.cshtml" />
+    <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\Customer\Type.cshtml" />
+    <Content Include="Views\Custom\Index.cshtml" />
+    <Content Include="Views\Custom\Property.cshtml" />
+    <Content Include="Views\Custom\_PartialBind.cshtml" />
+    <Content Include="Views\Custom\_PartialProperty.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\GRN\Detail.cshtml" />
+    <Content Include="Views\GRN\Index.cshtml" />
+    <Content Include="Views\GRN\ReceiveByPO.cshtml" />
+    <Content Include="Views\GRN\ReceiveDirect.cshtml" />
+    <Content Include="Views\GRN\Return.cshtml" />
+    <Content Include="Views\GRN\_PartialReceiveDirectBlock.cshtml" />
+    <Content Include="Views\GRN\_PartialReceiveDirectDetails.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\_PartialHmMaster.cshtml" />
+    <Content Include="Views\Invoice\Detail.cshtml" />
+    <Content Include="Views\Invoice\Generate.cshtml" />
+    <Content Include="Views\Invoice\Index.cshtml" />
+    <Content Include="Views\Invoice\Type.cshtml" />
+    <Content Include="Views\Measure\Unit.cshtml" />
+    <Content Include="Views\Partial\_PartialAsideMain.cshtml" />
+    <Content Include="Views\Partial\_PartialAsideReport.cshtml" />
+    <Content Include="Views\Partial\_PartialAsideStore.cshtml" />
+    <Content Include="Views\Partial\_PartialNavbarCompany.cshtml" />
+    <Content Include="Views\Partial\_PartialNavbarSession.cshtml" />
+    <Content Include="Views\Payment\Bill.cshtml" />
+    <Content Include="Views\Payment\Invoice.cshtml" />
+    <Content Include="Views\Payment\Made.cshtml" />
+    <Content Include="Views\Payment\Make.cshtml" />
+    <Content Include="Views\Payment\Receive.cshtml" />
+    <Content Include="Views\Payment\Received.cshtml" />
+    <Content Include="Views\Payment\Type.cshtml" />
+    <Content Include="Views\Product\Add.cshtml" />
+    <Content Include="Views\Product\BulkOpeningStock.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Product\OpeningStock.cshtml" />
+    <Content Include="Views\Product\Type.cshtml" />
+    <Content Include="Views\Product\_PartialIndex.cshtml" />
+    <Content Include="Views\Product\_PartialOpeningStock.cshtml" />
+    <Content Include="Views\Product\_PartialOpeningStockNotAllowed.cshtml" />
+    <Content Include="Views\Purchase\Index.cshtml" />
+    <Content Include="Views\Purchase\Order.cshtml" />
+    <Content Include="Views\Purchase\OrderDetail.cshtml" />
+    <Content Include="Views\Purchase\Type.cshtml" />
+    <Content Include="Views\Purchase\_PartialIndex.cshtml" />
+    <Content Include="Views\Purchase\_PartialPOItemDetailsNonTax.cshtml" />
+    <Content Include="Views\Purchase\_PartialPOItemDetailsWithTax.cshtml" />
+    <Content Include="Views\Purchase\_PriceAmendment.cshtml" />
+    <Content Include="Views\Purchase\_QuantityAmendment.cshtml" />
+    <Content Include="Views\Quotation\Confirm.cshtml" />
+    <Content Include="Views\Quotation\Detail.cshtml" />
+    <Content Include="Views\Quotation\Generate.cshtml" />
+    <Content Include="Views\Quotation\Index.cshtml" />
+    <Content Include="Views\Quotation\_PartialIndex.cshtml" />
+    <Content Include="Views\Quotation\_PartialQuotaItemDetails.cshtml" />
+    <Content Include="Views\Retail\Index.cshtml" />
+    <Content Include="Views\Retail\Invoice.cshtml" />
+    <Content Include="Views\Retail\Payment.cshtml" />
+    <Content Include="Views\Retail\Sales.cshtml" />
+    <Content Include="Views\Retail\SMS.cshtml" />
+    <Content Include="Views\Retail\SmsSent.cshtml" />
+    <Content Include="Views\Retail\_PartialRetailDetails.cshtml" />
+    <Content Include="Views\Retail\_PartialStockDetailRetail.cshtml" />
+    <Content Include="Views\Sales\Index.cshtml" />
+    <Content Include="Views\Sales\Order.cshtml" />
+    <Content Include="Views\Sales\OrderDetail.cshtml" />
+    <Content Include="Views\Sales\Type.cshtml" />
+    <Content Include="Views\Sales\_PartialIndex.cshtml" />
+    <Content Include="Views\Sales\_PartialSOItemDetails.cshtml" />
+    <Content Include="Views\Sales\_PriceAmendment.cshtml" />
+    <Content Include="Views\Sales\_QuantityAmendment.cshtml" />
+    <Content Include="Views\Shared\_LayoutBasic.cshtml" />
+    <Content Include="Views\Shared\_LayoutCompany.cshtml" />
+    <Content Include="Views\Shared\_LayoutLogin.cshtml" />
+    <Content Include="Views\Shared\_LayoutMaster.cshtml" />
+    <Content Include="Views\Shared\_PartialBrandLogo.cshtml" />
+    <Content Include="Views\Shared\_PartialErrorBlock.cshtml" />
+    <Content Include="Views\Shared\_PartialFooter.cshtml" />
+    <Content Include="Views\Shared\_PartialNavbarMain.cshtml" />
+    <Content Include="Views\Shared\_PartialPrintSignature.cshtml" />
+    <Content Include="Views\Shared\_PartialScript.cshtml" />
+    <Content Include="Views\Shared\_PartialSidebar.cshtml" />
+    <Content Include="Views\Shared\_PartialSidebarUser.cshtml" />
+    <Content Include="Views\Shared\_ViewDoNotHaveAccess.cshtml" />
+    <Content Include="Views\Shipment\Detail.cshtml" />
+    <Content Include="Views\Shipment\Direct.cshtml" />
+    <Content Include="Views\Shipment\Index.cshtml" />
+    <Content Include="Views\Shipment\ShippedBySO.cshtml" />
+    <Content Include="Views\Shipment\Type.cshtml" />
+    <Content Include="Views\Shipment\_PartialDeliveryDirectDetails.cshtml" />
+    <Content Include="Views\Shipment\_PartialShippableStockDetail.cshtml" />
+    <Content Include="Views\Shipment\_PartialStockDetailDirect.cshtml" />
+    <Content Include="Views\Stock\Adjust.cshtml" />
+    <Content Include="Views\Stock\AdjustDetail.cshtml" />
+    <Content Include="Views\Stock\Index.cshtml" />
+    <Content Include="Views\Stock\Transfer.cshtml" />
+    <Content Include="Views\Stock\TransferDetail.cshtml" />
+    <Content Include="Views\Stock\_PartialCurrentStock.cshtml" />
+    <Content Include="Views\Stock\_PartialCurrentStockDetail.cshtml" />
+    <Content Include="Views\Stock\_PartialStockDecrease.cshtml" />
+    <Content Include="Views\Stock\_PartialStockIncrease.cshtml" />
+    <Content Include="Views\TDS\Pay.cshtml" />
+    <Content Include="Views\TDS\Receive.cshtml" />
+    <Content Include="Views\Vendor\Bank.cshtml" />
+    <Content Include="Views\Vendor\Index.cshtml" />
+    <Content Include="Views\Vendor\Type.cshtml" />
+    <Content Include="Views\Warehouse\Index.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataAccess.Sql\DataAccess.Sql.csproj">
+      <Project>{9ef0d283-2a30-411b-b866-b9847ec6db7e}</Project>
+      <Name>DataAccess.Sql</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JicoDotNet.Inventory.BusinessLayer\JicoDotNet.Inventory.BusinessLayer.csproj">
+      <Project>{7dd24c42-75f0-4ccb-9a2f-69c39ef6a056}</Project>
+      <Name>JicoDotNet.Inventory.BusinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JicoDotNet.Inventory.Core\JicoDotNet.Inventory.Core.csproj">
+      <Project>{76b132b3-a669-41ab-bcbe-33656cb4e0fe}</Project>
+      <Name>JicoDotNet.Inventory.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JicoDotNet.Inventory.Helper\JicoDotNet.Inventory.Helper.csproj">
+      <Project>{1a90e8da-e26f-425f-bd78-ca097192f694}</Project>
+      <Name>JicoDotNet.Inventory.Helper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JicoDotNet.Inventory.Logging\JicoDotNet.Inventory.Logging.csproj">
+      <Project>{19cf19ad-c0d8-432e-8e78-6f5830e34a9f}</Project>
+      <Name>JicoDotNet.Inventory.Logging</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>55354</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:12345/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="..\packages\Microsoft.Data.SqlClient.SNI.6.0.2\build\net462\Microsoft.Data.SqlClient.SNI.targets" Condition="Exists('..\packages\Microsoft.Data.SqlClient.SNI.6.0.2\build\net462\Microsoft.Data.SqlClient.SNI.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Data.SqlClient.SNI.6.0.2\build\net462\Microsoft.Data.SqlClient.SNI.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Data.SqlClient.SNI.6.0.2\build\net462\Microsoft.Data.SqlClient.SNI.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

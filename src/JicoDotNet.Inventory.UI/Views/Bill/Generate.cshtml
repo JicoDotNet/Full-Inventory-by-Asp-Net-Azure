@@ -1,0 +1,462 @@
+﻿@using JicoDotNet.Inventory.UI.Models;
+@using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+@using JicoDotNet.Inventory.Core.Enumeration
+@using JicoDotNet.Inventory.Core.Models
+@model BillModels
+
+@{
+    ViewBag.Title = "Bill Generate";
+    ViewBag.Page = "/Bill/Index";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Purchase Bill Generate</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Bill", new { id = string.Empty })">Bill</a></li>
+                    <li class="breadcrumb-item active">Generate</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-danger">
+                    <div class="card-header bg-cyan">
+                        <h3 class="card-title">
+                            Bill Generate
+                            @if (Model._purchaseOrder != null)
+                            {
+                                <text> for -
+                                    <strong>
+                                        @if (string.IsNullOrEmpty(Model._purchaseOrder.PurchaseOrderNumber))
+                                        {
+                                            @Model._purchaseOrder.GRNNumber;
+                                        }
+                                        else
+                                        {
+                                            @Model._purchaseOrder.PurchaseOrderNumber;
+                                        }
+                                    </strong>
+                                </text>
+                            }
+                        </h3>
+                    </div>
+                    @using (Html.BeginForm("Generate", "Bill",
+                           FormMethod.Post, new { autocomplete = "off", id = "formBillGenerate" }))
+                    {
+                        if (Model._purchaseOrder != null)
+                        {
+                            <div class="card-footer">
+                                <div class="float-md-right">
+                                    <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save</button>
+                                    <a href="@Url.Action("Generate", "Bill", new { id = string.Empty })" class="btn btn-danger"> <i class="fas fa-times"></i> Cancel</a>
+                                    <button type="reset" class="btn btn-info"><i class="fas fa-sync"></i> Reset</button>
+                                </div>
+                            </div>
+                        }
+                        if (Model._purchaseOrder == null && Model._purchaseOrders != null)
+                        {
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>PO/GRN</label>
+                                            <select class="form-control form-control-sm select2"
+                                                    name="PurchaseOrderId"
+                                                    onchange="location.href='@Url.Action("Generate", "Bill", new { id = string.Empty })/' + escape(btoa(this.value))"
+                                                    required style="width:100%;">
+                                                <option value="">-- Select --</option>
+                                                @if (Model != null && Model._purchaseOrders != null)
+                                                {
+                                                    foreach (PurchaseOrder purchaseOrder in Model._purchaseOrders)
+                                                    {
+                                                        <option value="@purchaseOrder.PurchaseOrderId">
+                                                            @purchaseOrder.PurchaseOrderNumber
+                                                        </option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Bill Generate Date</label>
+                                            <small>Day/Month/Year</small>
+                                            <input type="text" name="BillDate" class="form-control form-control-sm"
+                                                   placeholder="Bill Date" data-mask readonly
+                                                   value="@GenericLogic.IstNow.ToDateMaskString()" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        if (Model._purchaseOrder != null)
+                        {
+                            <div class="card-body">
+                                <div class="d-none">
+                                    <!-- Bill Header Hidden -->
+                                    <input type="hidden" value="@Model._purchaseOrder.PurchaseOrderId" name="PurchaseOrderId" />
+                                    <input type="hidden" value="@Model._purchaseOrder.VendorId" name="VendorId" />
+                                    <input type="hidden" value="@Model._purchaseOrder.IsGstAllowed.ToString().ToLower()" name="IsGstApplicable" />
+                                    <input type="hidden" value="@Model._purchaseOrder.GSTNumber" name="GSTNumber" />
+                                    <input type="hidden" value="@GenericLogic.GstStateCode(Model._purchaseOrder.GSTNumber)" name="GSTStateCode" />
+                                    <input type="hidden" value="@((int)Model.GSTType)" name="GSTType" />
+                                    <input type="hidden" value="false" name="IsFullBilled" data-IsFullBilled />
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Order/Receive Number</label><br />
+                                            @if (string.IsNullOrEmpty(Model._purchaseOrder.PurchaseOrderNumber))
+                                            {
+                                                @Model._purchaseOrder.GRNNumber;
+                                            }
+                                            else
+                                            {
+                                                @Model._purchaseOrder.PurchaseOrderNumber;
+                                            }
+                                            <br/>
+                                            @if (Model._purchaseOrder.IsGstAllowed)
+                                            {
+                                                <b>GST Enabled Bill</b>
+                                            }
+                                            else
+                                            {
+                                                <i>Non GST Bill</i>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Vendor & GST Number</label><br />
+                                            @Model._purchaseOrder.CompanyName<br />
+                                            @if (Model._purchaseOrder.IsGstAllowed)
+                                            {                                                
+                                                <b>@Model._purchaseOrder.GSTNumber</b>
+                                            }
+                                            else
+                                            {
+                                                <i>GST Unregistred</i>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Bill Generate Date</label>
+                                            <small>Day/Month/Year</small>
+                                            <input type="text" name="BillDate" class="form-control form-control-sm"
+                                                   placeholder="Bill Date" required data-mask readonly
+                                                   value="@GenericLogic.IstNow.ToDateMaskString()" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Bill Type</label>
+                                            <select class="form-control form-control-sm" name="BillTypeId" required>
+                                                <option value="">-- Select --</option>
+                                                @foreach (BillType billType in Model._billTypes)
+                                                {
+                                                    <option value="@billType.BillTypeId">
+                                                        @billType.BillTypeName
+                                                    </option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Payment Due Date</label>
+                                            <input type="text" name="BillDueDate" class="form-control form-control-sm"
+                                                   placeholder="Due Date" data-mask readonly
+                                                   value="" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Remarks</label>
+                                            <textarea name="Remarks" class="form-control form-control-sm" placeholder="Enter Remarks" style="height:31px;">@Model._config.BillRemarks</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Vendor DO/Chalan No</label>
+                                            <input type="text" name="VendorDONumber" placeholder="Do/Chalan Number" class="form-control form-control-sm" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Vendor Invoice No</label>
+                                            <input type="text" name="VendorInvoiceNumber" class="form-control form-control-sm"
+                                                   placeholder="Invoice Number" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Vendor Invoice Date</label>
+                                            <small>Day/Month/Year</small>
+                                            <input type="text" name="VendorInvoiceDate" class="form-control form-control-sm"
+                                                   placeholder="Invoice Date" data-mask readonly />
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card card-success">
+                                            <div class="card-header bg-teal">
+                                                <h3 class="card-title">Product Details for Bill</h3>
+                                            </div>
+                                            <div class="card-body" style="overflow-x:scroll;">
+                                                <table class="table table-striped table-bordered dt-responsive nowrap">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Product Details</th>
+                                                            <th>Bill Quantity</th>
+                                                            <th>Remarks</th>
+                                                            <th>Price / Sub Total</th>
+                                                            @if (Model._purchaseOrder.IsGstAllowed)
+                                                            {
+                                                                <th>Tax (GST)</th>
+                                                            }
+                                                            <th>Total</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody data-tableBillDetails>
+                                                        @for (int i = 0; i < Model._purchaseOrder.PurchaseOrderDetails.Count; i++)
+                                                        {
+                                                            if (Model._purchaseOrder.PurchaseOrderDetails[i].Quantity > 0)
+                                                            {
+                                                                <tr>
+                                                                    <td class="d-none">
+                                                                        <!-- Bill Detail Hidden -->
+                                                                        <input type="hidden" name="BillDetails[@i].ProductId" value="@Model._purchaseOrder.PurchaseOrderDetails[i].ProductId" />
+                                                                        <input type="hidden" name="BillDetails[@i].PurchaseOrderDetailId" value="@Model._purchaseOrder.PurchaseOrderDetails[i].PurchaseOrderDetailId" />
+                                                                        <input type="hidden" name="BillDetails[@i].HSNSAC" value="@Model._purchaseOrder.PurchaseOrderDetails[i].HSNSAC" />
+                                                                        <input type="hidden" name="BillDetails[@i].Price" data-Price value="@Model._purchaseOrder.PurchaseOrderDetails[i].Price" />
+                                                                        <input type="hidden" name="BillDetails[@i].TaxPercentage" data-TaxPercentage value="@Model._purchaseOrder.PurchaseOrderDetails[i].TaxPercentage" />
+                                                                    </td>
+                                                                    <td>
+                                                                        @Model._purchaseOrder.PurchaseOrderDetails[i].ProductName/
+                                                                        @Model._purchaseOrder.PurchaseOrderDetails[i].ProductCode
+                                                                        @if (!string.IsNullOrEmpty(Model._purchaseOrder.PurchaseOrderDetails[i].HSNSAC))
+                                                                        {
+                                                                            <br /><span>HSN: </span>
+                                                                            @Model._purchaseOrder.PurchaseOrderDetails[i].HSNSAC
+                                                                        }
+                                                                    </td>
+                                                                    <td>
+                                                                        Order Qty: <strong>@((Model._purchaseOrder.PurchaseOrderDetails[i].ReceivedQuantity + Model._purchaseOrder.PurchaseOrderDetails[i].Quantity).ToDisplayDecimal())@Model._purchaseOrder.PurchaseOrderDetails[i].UnitOfMeasureName</strong>
+                                                                        @if (Model._purchaseOrder.PurchaseOrderDetails[i].ReceivedQuantity > 0)
+                                                                        {
+                                                                            <span>
+                                                                                <br />
+                                                                                Previous Billed: @Model._purchaseOrder.PurchaseOrderDetails[i].ReceivedQuantity.ToDisplayDecimal()
+                                                                            </span>
+                                                                        }
+                                                                        <div class="input-group" style="width:150px;">
+                                                                            <input type="number" name="BillDetails[@i].BilledQuantity"
+                                                                                   onblur="AmountCalculate(this)"
+                                                                                   class="form-control form-control-sm" data-BilledQuantity
+                                                                                   min="0" value="0"
+                                                                                   step="0.0000001" max="@Model._purchaseOrder.PurchaseOrderDetails[i].Quantity"
+                                                                                   placeholder="Qty" />
+                                                                            <div class="input-group-append" style="height: 31px;">
+                                                                                <span class="input-group-text">@Model._purchaseOrder.PurchaseOrderDetails[i].UnitOfMeasureName</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        @Model._purchaseOrder.PurchaseOrderDetails[i].Description
+                                                                        <input type="text" name="BillDetails[@i].Description" style="max-width:150px;"
+                                                                               class="form-control form-control-sm" placeholder="Bill Remarks" />
+                                                                    </td>
+                                                                    <td>
+                                                                        @Model._config.CurrencySymbol
+                                                                        <span>
+                                                                            @Model._purchaseOrder.PurchaseOrderDetails[i].Price.ToDisplayDecimal()
+                                                                        </span>
+                                                                        <br />
+                                                                        @Model._config.CurrencySymbol
+                                                                        <span data-SubTotal>
+                                                                            @Model._purchaseOrder.PurchaseOrderDetails[i].SubTotal.ToDisplayDecimal()
+                                                                        </span>
+                                                                    </td>
+                                                                    @if (Model._purchaseOrder.IsGstAllowed)
+                                                                    {
+                                                                    <td>
+                                                                        @if (Model.GSTType == EGSTType.IGST)
+                                                                        {
+                                                                            <strong>IGST (@Model._purchaseOrder.PurchaseOrderDetails[i].TaxPercentage.ToDisplayDecimal()%)</strong><br />
+                                                                        }
+                                                                        else if (Model.GSTType == EGSTType.CGSTSGST)
+                                                                        {
+                                                                            <strong>CGST-U/SGST  (@Model._purchaseOrder.PurchaseOrderDetails[i].TaxPercentage.ToDisplayDecimal()%)</strong><br />
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <strong class="text-danger">Something wrong!! </strong><br />
+                                                                        }
+                                                                        @Model._config.CurrencySymbol
+                                                                        <span data-TaxAmount>
+                                                                            @Model._purchaseOrder.PurchaseOrderDetails[i].TaxAmount.ToDisplayDecimal()
+                                                                        </span>
+                                                                    </td>
+                                                                    }
+                                                                    <td>
+                                                                        @Model._config.CurrencySymbol
+                                                                        <span data-Total>
+                                                                            @Model._purchaseOrder.PurchaseOrderDetails[i].Total.ToDisplayDecimal()
+                                                                        </span>                                                                        
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top:15px;">
+                                    <div class="col-md-7"></div>
+                                    <div class="col-md-5">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                
+
+                                                <div class="form-group">
+                                                    <label>Bill Amount</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend" style="height: 31px;">
+                                                            <span class="input-group-text">@Model._config.CurrencySymbol</span>
+                                                        </div>
+                                                        <input type="text" name="BilledAmount"
+                                                               class="form-control form-control-sm" value="0.0"
+                                                               placeholder="Bill Amount" readonly />
+                                                    </div>                                                    
+                                                </div>
+                                            </div>
+                                            @if (Model._purchaseOrder.IsGstAllowed)
+                                            {
+                                                <div class="col-md-12">
+                                                    <div class="form-group grn-status">
+                                                        <label>Bill Tax Amount</label>
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend" style="height: 31px;">
+                                                                <span class="input-group-text">@Model._config.CurrencySymbol</span>
+                                                            </div>
+                                                            <input type="text" name="TaxAmount"
+                                                                   class="form-control form-control-sm" value="0.0"
+                                                                   placeholder="Bill Tax Amount" readonly />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Bill Total Amount</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend" style="height: 31px;">
+                                                            <span class="input-group-text">@Model._config.CurrencySymbol</span>
+                                                        </div>
+                                                        <input type="text" name="TotalAmount"
+                                                               class="form-control form-control-sm" value="0.0"
+                                                               placeholder="Bill Total Amount" readonly />
+                                                    </div>                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save</button>
+                                <a href="@Url.Action("Generate", "Bill", new { id = string.Empty })" class="btn btn-danger"> <i class="fas fa-times"></i> Cancel</a>
+                                <button type="reset" class="btn btn-info"><i class="fas fa-sync"></i> Reset</button>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="card-footer">
+                                <a href="@Url.Action("Index", "Bill", new { id = string.Empty })" class="btn btn-danger"> <i class="fas fa-times"></i> Cancel</a>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section BodyScript{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var trs = $('[data-tableBillDetails]').children('tr');
+            for (var i = 0; i < trs.length; i++) {
+                $(trs[i]).find('[data-BilledQuantity]').trigger("blur");
+            }
+
+            $('form#formBillGenerate').submit(function () {
+                BilledValueChange();
+                return true;
+            });
+        });
+
+        function BilledValueChange() {
+            var Qtys = $('[data-tableBillDetails]').find('[data-BilledQuantity]');
+            var IsFullBilled = true;
+            for (var i = 0; i < Qtys.length; i++) {
+                if (parseFloat($(Qtys[i]).val()) != parseFloat($(Qtys[i]).attr('max')))
+                    IsFullBilled = false;
+            }
+            $('[data-IsFullBilled]').val(IsFullBilled.toString().toLowerCase());
+        }
+
+        function AmountCalculate(e) {
+            var Price = parseFloat($(e).parents('tr').find('input[data-Price]').val());
+            var TaxPercentage = parseFloat($(e).parents('tr').find('input[data-TaxPercentage]').val());
+            var BilledQuantity = $(e).val();
+            BilledQuantity = BilledQuantity == "" ? 0 : parseFloat(BilledQuantity);
+
+            var SubTotal = Price * BilledQuantity;
+            var TaxAmount = (TaxPercentage / 100) * SubTotal;
+            var Total = SubTotal + TaxAmount;
+
+            $(e).parents('tr').find('[data-SubTotal]').text(SubTotal.toFixed(5));
+            $(e).parents('tr').find('[data-TaxAmount]').text(TaxAmount.toFixed(5));
+            $(e).parents('tr').find('[data-Total]').text(Total.toFixed(5));
+
+            TotalCalculate();
+        }
+
+        function TotalCalculate() {
+            var trs = $('[data-tableBillDetails]').children('tr');
+            var BillAmount = 0.0;
+            var BillTaxAmount = 0.0;
+            var BillTotalAmount = 0.0;
+            for (var i = 0; i < trs.length; i++) {
+                BillAmount = BillAmount + parseFloat($(trs[i]).find('[data-SubTotal]').text());
+                BillTaxAmount = BillTaxAmount + parseFloat($(trs[i]).find('[data-TaxAmount]').text());
+                BillTotalAmount = BillTotalAmount + parseFloat($(trs[i]).find('[data-Total]').text());
+            }
+            $('[name="BilledAmount"]').val(BillAmount.toFixed(5));
+            $('[name="TaxAmount"]').val(BillTaxAmount.toFixed(5));
+            $('[name="TotalAmount"]').val(BillTotalAmount.toFixed(5));
+        }
+    </script>
+}

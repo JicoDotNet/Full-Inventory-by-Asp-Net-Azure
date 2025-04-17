@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "Report";
+    ViewBag.Page = "/Report/Home/Index";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Report</h1>
+            </div>
+            <div class="col-sm-6 d-none d-sm-block">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item active">Report</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid" data-partial="master">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card" style="height:400px;">
+                    <div class="overlay text-center">
+                        <i class="fas fa-sync-alt fa-spin fa-3x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section BodyScript{
+    <script type="text/javascript">
+        $(document).ready(() => {
+            // Call Partial
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("RpMaster", "Home", new { Area = "Report" })",
+                contentType: "application/json; charset=utf-8",
+                dataType: "text",
+                success: function (data) {
+                    $('[data-partial="master"]').html(data);
+                },
+                failure: function (response) {
+                    console.log(response.responseText);
+                },
+                error: function (response) {
+                    console.log(response.responseText);
+                }
+            });
+        });
+    </script>
+}

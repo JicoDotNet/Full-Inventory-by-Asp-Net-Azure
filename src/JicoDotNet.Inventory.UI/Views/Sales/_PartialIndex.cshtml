@@ -1,0 +1,211 @@
+﻿@using JicoDotNet.Inventory.UI.Models;
+@using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+@model SalesOrderModels
+
+<div class="card card-danger">
+    <div class="card-header bg-cyan">
+        <h3 class="card-title"> Sales Order</h3>
+    </div>
+    <div class="card-body table-responsive" style="overflow-x:scroll;">
+        <table class="table table-striped table-bordered dt-responsive nowrap" data-table="normal">
+            <thead>
+                <tr>
+                    <th>Action</th>
+                    <th>SO No/Date</th>
+                    <th>Branch</th>
+                    <th>Customer Name/GST No</th>
+                    @if (Model._company.IsGSTRegistered)
+                    {
+                        <th>Order & TAX</th>
+                        <th>Total Amount</th>
+                    }
+                    else
+                    {
+                        <th>Order Amount</th>
+                    }
+                    <th>Shipped Status</th>
+                    <th>Invoiced Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model._salesOrders != null)
+                {
+                    for (int i = 0; i < Model._salesOrders.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                <div class="input-group">
+                                    <div class="input-group-prepend" data-toggle="tooltip" data-placement="top" title="Action Point">
+                                        <button type="button" class="btn btn-outline-success btn-flat dropdown-toggle" data-toggle="dropdown">
+                                            <i class="fas fa-hand-pointer"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item text-primary"
+                                               href="@Url.Action("OrderDetail", "Sales", new { id = Html.UrlIdEncrypt(Model._salesOrders[i].SalesOrderId, false) })">
+                                                <i class="fas fa-binoculars mr-1"></i> Detail View
+                                            </a>
+                                            @if (Model._salesOrders[i].ShippedStatus == null
+                                               || !Model._salesOrders[i].ShippedStatus.Value
+                                               || Model._salesOrders[i].InvoicedStatus == null
+                                               || !Model._salesOrders[i].InvoicedStatus.Value)
+                                            {
+                                                <div class="dropdown-divider"></div>
+                                            }
+                                            @if (Model._salesOrders[i].ShippedStatus == null
+                                                || !Model._salesOrders[i].ShippedStatus.Value)
+                                            {
+                                                <a class="dropdown-item"
+                                                    href="@Url.Action("ShippedBySO", "Shipment", new { id = Html.UrlIdEncrypt(Model._salesOrders[i].SalesOrderId, false) })">
+                                                    <i class="fas fa-angle-double-up mr-1"></i>Goods Delivery
+                                                </a>
+                                            }
+                                            @if (Model._salesOrders[i].InvoicedStatus == null
+                                                || !Model._salesOrders[i].InvoicedStatus.Value)
+                                            {
+                                        <a class="dropdown-item"
+                                           href="@Url.Action("Generate", "Invoice", new { id = Html.UrlIdEncrypt(Model._salesOrders[i].SalesOrderId, false) })">
+                                            <i class="fas fa-file-invoice mr-1"></i> Invoice Generate
+                                        </a>
+                                            }
+                                            @if (Model._salesOrders[i].ShippedStatus == null
+                                                || Model._salesOrders[i].InvoicedStatus == null)
+                                            {
+                                                <div class="dropdown-divider"></div>
+                                            }
+                                            @if (Model._salesOrders[i].ShippedStatus == null)
+                                            {
+                                                <a class="dropdown-item"
+                                                   href="@Url.Action("Amendment", "Sales", new { id = Html.UrlIdEncrypt(Model._salesOrders[i].SalesOrderId, false), id2 = "Quantity" })">
+                                                    <i class="fas fa-sort-numeric-up mr-1"></i> Quantity Amendment
+                                                </a>
+                                            }
+                                            @if (Model._salesOrders[i].InvoicedStatus == null)
+                                            {
+                                                <a class="dropdown-item"
+                                                   href="@Url.Action("Amendment", "Sales", new { id = Html.UrlIdEncrypt(Model._salesOrders[i].SalesOrderId, false), id2 = "Price" })">
+                                                    <i class="fas fa-rupee-sign mr-1"></i> Price Amendment
+                                                </a>
+                                            }
+                                            @if (Model._salesOrders[i].ShippedStatus == null
+                                            && Model._salesOrders[i].InvoicedStatus == null)
+                                            {
+                                                <div class="dropdown-divider"></div>
+                                                <button onclick="DeactivateRecord(this)"
+                                                        data-display="SO Number/Date" data-value="@Model._salesOrders[i].SalesOrderNumber/@Model._salesOrders[i].SalesOrderDate.ToDisplayShortDateString()"
+                                                        data-controller="Sales" data-action="Deactivate"
+                                                        data-id="@Html.UrlIdEncrypt(Model._salesOrders[i].SalesOrderId)"
+                                                        data-toggle="tooltip" data-placement="top"
+                                                        class="dropdown-item text-danger" title="Deactivate">
+                                                    <i class="fas fa-times mr-1"></i> Delete Permanently
+                                                </button>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <strong>
+                                    <a href="@Url.Action("OrderDetail", "Sales", new { id = Html.UrlIdEncrypt(Model._salesOrders[i].SalesOrderId, false) })"
+                                       class="text-success">
+                                        @Model._salesOrders[i].SalesOrderNumber@if (!string.IsNullOrEmpty(Model._salesOrders[i].AmendmentNumber))
+                                        {<span>-@Model._salesOrders[i].AmendmentNumber</span>}
+                                    </a>
+                                </strong>
+                                <br />
+                                @Model._salesOrders[i].SalesOrderDate.ToDisplayShortDateString()
+                            </td>
+                            <td>
+                                @Model._salesOrders[i].BranchName
+                                <br />
+                                @Model._salesOrders[i].BranchCode
+                            </td>
+                            <td>
+                                @Model._salesOrders[i].CompanyName
+                                <br />
+                                @if (Model._salesOrders[i].IsGSTRegistered)
+                                {
+                                    <em>@Model._salesOrders[i].GSTNumber</em>
+                                }
+                                else
+                                {
+                                    <span class="right badge badge-danger">Unregistered</span>
+                                }
+                            </td>
+                            @if (Model._company.IsGSTRegistered)
+                            {
+                                <td>
+                                    @Model._config.CurrencySymbol@Model._salesOrders[i].SalesOrderAmount.ToDisplayDecimal()
+                                    @if (Model._salesOrders[i].IsGstAllowed)
+                                    {
+                                        <br />
+                                        @Model._config.CurrencySymbol@Model._salesOrders[i].SalesOrderTaxAmount.ToDisplayDecimal()
+                                    }
+                                    else
+                                    {
+                                        <br />
+                                        <span class="right badge badge-danger">Unregistered</span>
+                                    }
+                                </td>
+                                <td>
+                                    @Model._config.CurrencySymbol@Model._salesOrders[i].SalesOrderTotalAmount.ToDisplayDecimal()
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    @Model._config.CurrencySymbol@Model._salesOrders[i].SalesOrderTotalAmount.ToDisplayDecimal()
+                                </td>
+                            }
+                            <td>
+                                @if (Model._salesOrders[i].ShippedStatus == null)
+                                {
+                                    <div class="progress-group">
+                                        <span class="progress-text">Not Shipped</span>
+                                        <div class="progress progress-sm active" data-toggle="tooltip" title="Not Shipped" style="border: 1px solid #28a745;">
+                                            <div class="progress-bar bg-success progress-bar-striped" style="width: 1%"></div>
+                                        </div>
+                                    </div>
+                                }
+                                else if (!Model._salesOrders[i].ShippedStatus.Value)
+                                {
+                                    <div class="progress-group">
+                                        <span class="progress-text">Partially Shipped</span>
+                                        <div class="progress progress-sm active" data-toggle="tooltip" title="Partially Shipped">
+                                            <div class="progress-bar bg-success progress-bar-striped" style="width: 50%"></div>
+                                        </div>
+                                    </div>
+                                }
+                                else if (Model._salesOrders[i].ShippedStatus.Value)
+                                {
+                                    <div class="progress-group">
+                                        <span class="progress-text">Full Shipped</span>
+                                        <div class="progress progress-sm active" data-toggle="tooltip" title="Full Shipped">
+                                            <div class="progress-bar bg-success progress-bar-striped" style="width: 100%"></div>
+                                        </div>
+                                    </div>
+                                }
+                            </td>
+                            <td>
+                                @if (Model._salesOrders[i].InvoicedStatus == null)
+                                {
+                                    <i class="fas fa-lg fa-circle text-danger" data-toggle="tooltip" title="Not Invoiced"></i>
+                                    <div>Not Invoiced</div>
+                                }
+                                else if (!Model._salesOrders[i].InvoicedStatus.Value)
+                                {
+                                    <i class="fas fa-lg fa-adjust text-warning" data-toggle="tooltip" title="Partially Invoiced"></i>
+                                    <div>Partially Invoiced</div>
+                                }
+                                else if (Model._salesOrders[i].InvoicedStatus.Value)
+                                {
+                                    <i class="fas fa-lg fa-circle text-success" data-toggle="tooltip" title="Full Invoiced"></i>
+                                    <div>Full Invoiced</div>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+﻿@using JicoDotNet.Inventory.UI.Models;
+@using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
+ 
+@model SessionCredentialCompanyModels
+<aside class="control-sidebar control-sidebar-light" data-html2canvas-ignore="true" data-lang-sector="Document-SidebarSetings">
+    <div class="card card-widget widget-user-2" style="height: 100vh;">
+        <a href="@Url.Action("Index", "Profile", new { id = string.Empty })">
+            <div class="widget-user-header bg-success">
+                <div class="widget-user-image">
+                    <img class="img-circle elevation-2" src="~/Content/images/NoUser.png" 
+                         alt="@Model._sessionCredential.UserFullName">
+                </div>
+                <h4 class="widget-user-username" style="font-size: 14pt;">@Model._sessionCredential.UserFullName</h4>
+                <h5 class="widget-user-desc" style="font-size: 12pt;">@@@Model._sessionCredential.UserEmail</h5>
+            </div>
+        </a>
+        <div class="card-footer p-0" style="background-color: rgba(255, 255, 255, 0);">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a href="@Url.Action("Index", "Home", new { Area = string.Empty })" class="nav-link">
+                        Home <span class="float-right badge bg-primary"><i class="fas fa-home"></i></span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="@Url.Action("Index", "Home", new { Area = "Report" })" class="nav-link">
+                        Report <span class="float-right badge bg-success"><i class="fas fa-chart-line"></i></span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="nav flex-column mb-3">
+                <li class="nav-item" style="text-transform: uppercase; font-size: 0.8rem;color: #6c757d;font-weight: bold;padding: 0.5rem 1rem;">Settings</li>
+                <li class="nav-item">
+                    <a href="@Url.Action("Index", "Company", new { Area = string.Empty })" class="nav-link">
+                        <i class="fas fa-university"></i> Organization Detail
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="@Url.Action("Index", "Logout", new { Area = string.Empty })" class="nav-link text-danger">
+                        <i class="fas fa-power-off"></i> Sign out
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</aside>
