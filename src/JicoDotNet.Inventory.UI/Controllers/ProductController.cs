@@ -115,7 +115,7 @@ namespace JicoDotNet.Inventory.UI.Controllers
                             Stream fileStream = file.InputStream;
                         }
                         IBlobRequestClient blobRequest = new BlobRequestClient(file.InputStream, LogicHelper.RequestId + file.FileName);
-                        product.ProductImageUrl = productLogic.UploadImage(blobRequest).AbsolutePath;
+                        product.ProductImageUrl = productLogic.UploadImage(blobRequest).Path;
                     }
                 }
                     

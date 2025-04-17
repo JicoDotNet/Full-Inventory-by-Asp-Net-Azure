@@ -1,6 +1,8 @@
-﻿namespace JicoDotNet.Inventory.Core.Entities
+﻿using JicoDotNet.Inventory.Core.Entities.Inner;
+
+namespace JicoDotNet.Inventory.Core.Entities
 {
-    public interface IPurchaseOrderDetail
+    public interface IPurchaseOrderDetail : IGenericDescription
     {
         long PurchaseOrderDetailId { get; set; }
 
@@ -19,7 +21,5 @@
         decimal TaxPercentage { get; set; }
         decimal TaxAmount { get; set; }
         decimal Total { get; set; }
-
-        string Description { get; set; }
     }
 }

@@ -14,7 +14,7 @@
 - **`DataAccess.AzureStorage`** packages upgrade to **3.0.0**
 
 ### Fixed Bug
-- N/A
+- `IGenericDescription` interface is added in `JicoDotNet.Inventory.Core` project to remove ambiguity of the `Description` property.
 
 ### Maintenance
 - `DataAccess.Sql` project upgrade to multitarget frameworks to `netstandard2.0` & `netstandard2.1`

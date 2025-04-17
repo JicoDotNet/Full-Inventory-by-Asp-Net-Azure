@@ -1,10 +1,10 @@
-﻿namespace JicoDotNet.Inventory.Core.Entities
+﻿using JicoDotNet.Inventory.Core.Entities.Inner;
+
+namespace JicoDotNet.Inventory.Core.Entities
 {
-    public interface IInvoiceType
+    public interface IInvoiceType : IGenericDescription
     {
         long InvoiceTypeId { get; set; }
         string InvoiceTypeName { get; set; }
-        string Description { get; set; }
-
     }
 }

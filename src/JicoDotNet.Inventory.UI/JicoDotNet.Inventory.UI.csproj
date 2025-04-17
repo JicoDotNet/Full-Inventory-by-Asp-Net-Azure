@@ -225,9 +225,8 @@
     <Content Include="Content\images\NoUser.png" />
     <Content Include="Content\js\gridCalculation.js" />
     <Content Include="Content\js\html2canvas.js" />
-    <Content Include="Content\tMail\Registration.html" />
-    <Content Include="Content\tMail\Support.html" />
     <Content Include="Content\tPrint\invoice.html" />
+    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Views\web.config" />
     <Content Include="Web.config" />

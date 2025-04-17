@@ -1,8 +1,9 @@
-﻿using System;
+﻿using JicoDotNet.Inventory.Core.Entities.Inner;
+using System;
 
 namespace JicoDotNet.Inventory.Core.Entities
 {
-    public interface IPaymentOutDetail
+    public interface IPaymentOutDetail : IGenericDescription
     {
         long PaymentOutDetailId { get; set; }
         long PaymentOutId { get; set; }
@@ -11,6 +12,5 @@ namespace JicoDotNet.Inventory.Core.Entities
         decimal Amount { get; set; }
         bool IsFullPaid { get; set; }
         DateTime PaymentDate { get; set; }
-        string Description { get; set; }
     }
 }
