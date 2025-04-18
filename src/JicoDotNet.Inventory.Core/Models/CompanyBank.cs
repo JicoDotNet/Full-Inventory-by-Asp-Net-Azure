@@ -1,7 +1,7 @@
 ﻿using JicoDotNet.Inventory.Core.Entities;
 using System;
 
-namespace JicoDotNet.Inventory.BusinessLayer.DTO.Class
+namespace JicoDotNet.Inventory.Core.Models
 {
     public class CompanyBank : ICompanyBank, IDtoHeader
     {

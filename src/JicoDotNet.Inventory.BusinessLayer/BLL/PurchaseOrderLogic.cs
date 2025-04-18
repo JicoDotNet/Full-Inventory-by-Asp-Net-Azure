@@ -17,8 +17,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         #region PO Type
         public string TypeSet(PurchaseType purchaseType)
-        {
-            
+        {            
             string qt = string.Empty;
             if (purchaseType.PurchaseTypeId > 0)
                 qt = "UPDATE";
@@ -27,8 +26,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
             NameValuePairs nvp = new NameValuePairs
             {
-
-
                 new NameValuePair("@PurchaseTypeId", purchaseType.PurchaseTypeId),
                 new NameValuePair("@PurchaseTypeName", purchaseType.PurchaseTypeName),
                 new NameValuePair("@Description", purchaseType.Description),
@@ -47,7 +44,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 {
                     new NameValuePair("@PurchaseTypeId", PurchaseTypeId),
 
-
                     new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                     new NameValuePair("@QueryType", "INACTIVE")
                 }, "@OutParam").ToString();
@@ -58,8 +54,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             List<PurchaseType> purchaseTypes = new SqlDBAccess(CommonLogicObj.SqlConnectionString).GetData(CommonLogicObj.SqlSchema + ".[spGetPurchaseType]",
                 new NameValuePairs
                 {
-
-
                     new NameValuePair("@QueryType", "ALL")
                 }).ToList<PurchaseType>();
             if (IsActive != null)
@@ -74,12 +68,9 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         #endregion
 
         public Dictionary<string, object> GetForEntry()
-        {
-            
+        {            
             NameValuePairs nvp = new NameValuePairs
             {
-
-
                 new NameValuePair("@QueryType", "ENTRY")
             };
             DataSet dataSet = _sqlDBAccess.GetDataSet(CommonLogicObj.SqlSchema + ".[spGetPurchaseOrder]", nvp);
@@ -134,8 +125,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 {
                     new NameValuePair("@PurchaseOrderId", purchaseOrder.PurchaseOrderId),
 
-
-
                     new NameValuePair("@PurchaseTypeId", purchaseOrder.PurchaseTypeId),
                     new NameValuePair("@BranchId", purchaseOrder.BranchId),
                     new NameValuePair("@VendorId", purchaseOrder.VendorId),
@@ -172,7 +161,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 {
                     new NameValuePair("@PurchaseOrderId", PurchaseOrderId),
 
-
                     new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                     new NameValuePair("@QueryType", "DELETE")
                 };
@@ -190,8 +178,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             
             NameValuePairs nvp = new NameValuePairs()
             {
-
-
                 new NameValuePair("@PurchaseOrderId", PurchaseOrderId),
                 new NameValuePair("@QueryType", "DETAIL")
             };
@@ -212,8 +198,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             
             NameValuePairs nvp = new NameValuePairs()
                 {
-
-
                     new NameValuePair("@QueryType", "LIST")
                 };
             return _sqlDBAccess.GetData(CommonLogicObj.SqlSchema + ".[spGetPurchaseOrder]", nvp).ToList<PurchaseOrder>();
@@ -266,7 +250,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     {
                         new NameValuePair("@PurchaseOrderId", purchaseOrder.PurchaseOrderId),
 
-
                         new NameValuePair("@AmendmentNumber", ""),
                         new NameValuePair("@AmendmentDate", purchaseOrder.AmendmentDate),
                         new NameValuePair("@PurchaseOrderAmount", purchaseOrder.PurchaseOrderAmount),
@@ -315,8 +298,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 return new SqlDBAccess(CommonLogicObj.SqlConnectionString)
                     .DataManipulation(CommonLogicObj.SqlSchema + ".[spSetPurchaseReturn]", new NameValuePairs
                     {
-
-
                         new NameValuePair("@GRNId", purchaseReturn.GRNId),
                         new NameValuePair("@PurchaseOrderId", purchaseReturn.PurchaseOrderId),
                         new NameValuePair("@WareHouseId", purchaseReturn.WareHouseId),

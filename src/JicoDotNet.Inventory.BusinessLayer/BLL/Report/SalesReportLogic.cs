@@ -3,7 +3,6 @@ using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Report;
 using JicoDotNet.Inventory.Core.Report.Interface;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -15,12 +14,9 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
         public SalesReportLogic(ICommonLogicHelper commonObj) : base(commonObj) { }
 
         public IList<ResponseCustomerSalesResult> CustomerWise(IRequestCustomerSalesParam customerSales)
-        {
-            
+        {            
             NameValuePairs nvp = new NameValuePairs
             {
-
-
                 new NameValuePair("@CustomerTypeId", customerSales.CustomerTypeId),
                 new NameValuePair("@CustomerId", customerSales.CustomerId),
                 new NameValuePair("@StartDate", customerSales.SearchDate.StartDate),
@@ -32,12 +28,9 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
         }
 
         public IList<ResponseProductSalesResult> ProductWise(IRequestProductSalesParam productSales)
-        {
-            
+        {            
             NameValuePairs nvp = new NameValuePairs
             {
-
-
                 new NameValuePair("@ProductTypeId", productSales.ProductTypeId),
                 new NameValuePair("@ProductId", productSales.ProductId),
                 new NameValuePair("@StartDate", productSales.SearchDate.StartDate),

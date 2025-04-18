@@ -1,4 +1,4 @@
-﻿using DataAccess.AzureStorage;
+﻿using DataAccess.AzureStorage.Table;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Enumeration;
@@ -6,7 +6,6 @@ using JicoDotNet.Inventory.Core.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
@@ -28,18 +27,18 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 DraftType = draftType.ToString(),
                 DraftData = JsonConvert.SerializeObject(draftObject)
             };
-            TableManager = new ExecuteTableManager("Draft", CommonLogicObj.NoSqlConnectionString);
+            TableManager = new AzureTableAccess("Draft", CommonLogicObj.NoSqlConnectionString);
             TableManager.InsertEntity(draft);
             return objectId;
         }
 
         public T GetFromDraft<T>(string objectId, EDraft draftType)
         {
-            TableManager = new ExecuteTableManager("Draft", CommonLogicObj.NoSqlConnectionString);
+            TableManager = new AzureTableAccess("Draft", CommonLogicObj.NoSqlConnectionString);
             string query = " RowKey eq '" + objectId + "' " +
                         " and IsActive eq true " +
                         " and DraftType eq '" + draftType + "' ";
-            Draft draft = TableManager.RetrieveEntity<Draft>(query).FirstOrDefault();
+            Draft draft = TableManager.RetrieveEntity<Draft>(query);
             if (draft == null)
                 return default;
             if (string.IsNullOrEmpty(draft.DraftData))
@@ -53,11 +52,11 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             Task.Run(() =>
             {
-                TableManager = new ExecuteTableManager("Draft", CommonLogicObj.NoSqlConnectionString);
+                TableManager = new AzureTableAccess("Draft", CommonLogicObj.NoSqlConnectionString);
                 string query = " RowKey eq '" + objectId + "' " +
                             " and IsActive eq true " +
                             " and DraftType eq '" + draftType + "' ";
-                List<Draft> drafts = TableManager.RetrieveEntity<Draft>(query);
+                List<Draft> drafts = TableManager.RetrieveEntities<Draft>(query);
                 foreach (Draft draft in drafts)
                 {
                     draft.IsActive = false;

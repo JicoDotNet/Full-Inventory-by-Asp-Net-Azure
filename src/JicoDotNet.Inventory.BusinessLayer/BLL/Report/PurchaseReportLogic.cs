@@ -17,12 +17,9 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
         public List<ResponseVendorPurchaseResult> VendorWise(IRequestVendorPurchaseParam vendorPurchase)
         {
             try
-            {
-                
+            {                
                 NameValuePairs nvp = new NameValuePairs
                 {
-
-
                     new NameValuePair("@VendorTypeId", vendorPurchase.VendorTypeId),
                     new NameValuePair("@VendorId", vendorPurchase.VendorId),
                     new NameValuePair("@StartDate", vendorPurchase.SearchDate.StartDate),
@@ -40,12 +37,9 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL.Report
         public List<ResponseProductPurchaseResult> ProductWise(IRequestProductPurchaseParam productPurchase)
         {
             try
-            {
-                
+            {                
                 NameValuePairs nvp = new NameValuePairs
                 {
-
-
                     new NameValuePair("@ProductTypeId", productPurchase.ProductTypeId),
                     new NameValuePair("@ProductId", productPurchase.ProductId),
                     new NameValuePair("@StartDate", productPurchase.SearchDate.StartDate),

@@ -1,6 +1,4 @@
 ﻿using JicoDotNet.Inventory.BusinessLayer.BLL;
-using JicoDotNet.Inventory.BusinessLayer.Common;
-using JicoDotNet.Inventory.BusinessLayer.DTO.Class;
 using JicoDotNet.Inventory.Core.Models;
 using JicoDotNet.Inventory.UI.Models;
 using System;
@@ -40,12 +38,12 @@ namespace JicoDotNet.Inventory.UI.Controllers
                                 IsGSTRegistered = SessionCompany.IsGSTRegistered,
                                 StateCode = SessionCompany.StateCode,
 
-                                Address = WebConfigAppSettingsAccess.CompanyAddress,
-                                City = WebConfigAppSettingsAccess.CompanyCity,
-                                Email = WebConfigAppSettingsAccess.CompanyEmail,
-                                PINCode = WebConfigAppSettingsAccess.CompanyPINCode,
-                                Mobile = WebConfigAppSettingsAccess.CompanyMobile,
-                                WebsiteUrl = WebConfigAppSettingsAccess.CompanyWebsite,
+                                Address = LogicHelper.AppSettings.CompanyAddress,
+                                City = LogicHelper.AppSettings.CompanyCity,
+                                Email = LogicHelper.AppSettings.CompanyEmail,
+                                PINCode = LogicHelper.AppSettings.CompanyPINCode,
+                                Mobile = LogicHelper.AppSettings.CompanyMobile,
+                                WebsiteUrl = LogicHelper.AppSettings.CompanyWebsite,
                             },
 
                     _config = new ConfigarationManager(LogicHelper).GetConfig(),
@@ -79,12 +77,12 @@ namespace JicoDotNet.Inventory.UI.Controllers
                         IsGSTRegistered = SessionCompany.IsGSTRegistered,
                         StateCode = SessionCompany.StateCode,
 
-                        Address = WebConfigAppSettingsAccess.CompanyAddress,
-                        City = WebConfigAppSettingsAccess.CompanyCity,
-                        Email = WebConfigAppSettingsAccess.CompanyEmail,
-                        PINCode = WebConfigAppSettingsAccess.CompanyPINCode,
-                        Mobile = WebConfigAppSettingsAccess.CompanyMobile,
-                        WebsiteUrl = WebConfigAppSettingsAccess.CompanyWebsite,
+                        Address = LogicHelper.AppSettings.CompanyAddress,
+                        City = LogicHelper.AppSettings.CompanyCity,
+                        Email = LogicHelper.AppSettings.CompanyEmail,
+                        PINCode = LogicHelper.AppSettings.CompanyPINCode,
+                        Mobile = LogicHelper.AppSettings.CompanyMobile,
+                        WebsiteUrl = LogicHelper.AppSettings.CompanyWebsite,
                     },
                     _companyBanks = companyManagment.BankGet(),
                     _state = GenericLogic.State()

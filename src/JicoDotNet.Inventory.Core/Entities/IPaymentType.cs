@@ -1,9 +1,10 @@
-﻿namespace JicoDotNet.Inventory.Core.Entities
+﻿using JicoDotNet.Inventory.Core.Entities.Inner;
+
+namespace JicoDotNet.Inventory.Core.Entities
 {
-    public interface IPaymentType
+    public interface IPaymentType : IGenericDescription
     {
         long PaymentTypeId { get; set; }
         string PaymentTypeName { get; set; }
-        string Description { get; set; }
     }
 }

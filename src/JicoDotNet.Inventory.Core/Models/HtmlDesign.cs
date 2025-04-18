@@ -1,4 +1,4 @@
-﻿using Microsoft.WindowsAzure.Storage.Table;
+﻿using DataAccess.AzureStorage.Table;
 
 namespace JicoDotNet.Inventory.Core.Models
 {

@@ -92,12 +92,9 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public IBill GetBill(long billId)
         {
             try
-            {
-                
+            {                
                 INameValuePairs nvp = new NameValuePairs()
                 {
-
-
                     new NameValuePair("@BillId", billId),
                     new NameValuePair("@QueryType", "SINGLE")
                 };
@@ -111,8 +108,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         }
 
         public IList<PurchaseOrder> GetForEntry()
-        {
-            
+        {            
             INameValuePairs nvp = new NameValuePairs()
             {
                 new NameValuePair("@QueryType", "ENTRY")
@@ -124,8 +120,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public IPurchaseOrder GetForEntry(long purchaseOrderId)
         {
             try
-            {
-                
+            {                
                 INameValuePairs nvp = new NameValuePairs
                 {
                     new NameValuePair("@PurchaseOrderId", purchaseOrderId),
@@ -141,8 +136,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         }
 
         public IList<BillDetail> GetBillDetails(long purchaseOrderId)
-        {
-            
+        {            
             INameValuePairs nvp = new NameValuePairs
             {
                 new NameValuePair("@PurchaseOrderId", purchaseOrderId),
@@ -155,8 +149,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public IList<Bill> GetBillsForPayment(long vendorId)
         {
             try
-            {
-                
+            {                
                 INameValuePairs nvp = new NameValuePairs
                 {
                     new NameValuePair("@VendorId", vendorId),
@@ -233,12 +226,9 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 });
 
                 if (billDetailsTypes.Count > 0)
-                {
-                    
+                {                    
                     NameValuePairs nvp = new NameValuePairs()
                     {
-
-
                         new NameValuePair("@BillTypeId", bill.BillTypeId),
                         new NameValuePair("@BillDate", bill.BillDate),
                         new NameValuePair("@BillDueDate", bill.BillDueDate),
@@ -280,8 +270,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             
             NameValuePairs nvp = new NameValuePairs()
             {
-
-
                 new NameValuePair("@BillId", BillId),
                 new NameValuePair("@QueryType", "DETAIL")
             };

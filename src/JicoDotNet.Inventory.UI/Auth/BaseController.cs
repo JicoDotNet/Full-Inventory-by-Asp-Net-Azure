@@ -2,8 +2,6 @@
 using JicoDotNet.Inventory.Core.Models;
 using JicoDotNet.Inventory.Logging;
 using JicoDotNet.Inventory.UI.Models;
-using Newtonsoft.Json;
-using System.IO;
 using System.Text;
 using System.Web.Mvc;
 using System;
@@ -40,7 +38,8 @@ namespace JicoDotNet.Inventory.Controllers
             {
                 SqlConnectionString = WebConfigDbConnection.SqlServer,
                 NoSqlConnectionString = WebConfigDbConnection.AzureStorage,
-                RequestId = Guid.NewGuid().ToString().Replace("-", "").ToUpper()
+                RequestId = Guid.NewGuid().ToString().Replace("-", "").ToUpper(),
+                AppSettings = new WebConfigAppSettingsAccess(),
             };
         }
 

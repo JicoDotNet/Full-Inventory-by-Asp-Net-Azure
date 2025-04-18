@@ -15,8 +15,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         #region Vendor Type
         public string TypeSet(VendorType vendorType)
-        {
-            
+        {            
             string qt = string.Empty;
             if (vendorType.VendorTypeId > 0)
                 qt = "UPDATE";
@@ -25,8 +24,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
             NameValuePairs nvp = new NameValuePairs
             {
-
-
                 new NameValuePair("@VendorTypeId", vendorType.VendorTypeId),
                 new NameValuePair("@VendorTypeName", vendorType.VendorTypeName),
                 new NameValuePair("@Description", vendorType.Description),
@@ -39,8 +36,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         }
 
         public string TypeDeactive(string VendorTypeId)
-        {
-            
+        {            
             string qt = "INACTIVE";
 
             NameValuePairs nvp = new NameValuePairs
@@ -60,8 +56,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             return new SqlDBAccess(CommonLogicObj.SqlConnectionString).GetData(CommonLogicObj.SqlSchema + ".[spGetVendorType]",
                 new NameValuePairs
                 {
-
-
                     new NameValuePair("@QueryType", "ALL")
                 }).ToList<VendorType>();
         }
@@ -69,8 +63,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         #region Vendor
         public string Set(Vendor vendor)
-        {
-            
+        {            
             string qt;
             if (vendor.VendorId > 0)
                 qt = "UPDATE";
@@ -79,8 +72,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
             NameValuePairs nvp = new NameValuePairs
             {
-
-
                 new NameValuePair("@VendorId", vendor.VendorId),
                 new NameValuePair("@VendorTypeId", vendor.VendorTypeId),
                 new NameValuePair("@CompanyName", vendor.CompanyName),
@@ -124,8 +115,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             List<Vendor> vendors = new SqlDBAccess(CommonLogicObj.SqlConnectionString).GetData(CommonLogicObj.SqlSchema + ".[spGetVendor]",
                 new NameValuePairs
                 {
-
-
                     new NameValuePair("@QueryType", "ALL")
                 }).ToList<Vendor>();
             if (IsActive != null)
@@ -141,8 +130,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         #region Vendor Bank
         public string BankSet(VendorBank vendorBank)
-        {
-            
+        {            
             string qt = string.Empty;
             if (vendorBank.VendorBankId > 0)
                 qt = "UPDATE";
@@ -151,8 +139,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
             NameValuePairs nvp = new NameValuePairs
             {
-
-
                 new NameValuePair("@VendorId", vendorBank.VendorId),
                 new NameValuePair("@VendorBankId", vendorBank.VendorBankId),
 
@@ -174,14 +160,12 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public string BankDeactive(string VendorId, string VendorBankId)
         {
-            
             string qt = "INACTIVE";
 
             NameValuePairs nvp = new NameValuePairs
             {
                 new NameValuePair("@VendorId", VendorId),
                 new NameValuePair("@VendorBankId", VendorBankId),
-
 
                 new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                 new NameValuePair("@QueryType", qt)
@@ -196,8 +180,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             List<VendorBank> vendorBanks = new SqlDBAccess(CommonLogicObj.SqlConnectionString).GetData(CommonLogicObj.SqlSchema + ".[spGetVendorBank]",
                 new NameValuePairs
                 {
-
-
                     new NameValuePair("@VendorId", VendorId),
                     new NameValuePair("@QueryType", "ALL")
                 }).ToList<VendorBank>();

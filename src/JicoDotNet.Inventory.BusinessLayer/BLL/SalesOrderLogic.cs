@@ -1,10 +1,8 @@
 ﻿using DataAccess.Sql;
 using JicoDotNet.Inventory.Core.Entities;
-using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Custom;
 using JicoDotNet.Inventory.Core.Custom.Interface;
-using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -19,8 +17,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         #region Sales Type
         public string TypeSet(SalesType salesType)
-        {
-            
+        {            
             string qt;
             if (salesType.SalesTypeId > 0)
                 qt = "UPDATE";
@@ -29,8 +26,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
             NameValuePairs nvp = new NameValuePairs
             {
-
-
                 new NameValuePair("@SalesTypeId", salesType.SalesTypeId),
                 new NameValuePair("@SalesTypeName", salesType.SalesTypeName),
                 new NameValuePair("@Description", salesType.Description),
@@ -49,7 +44,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 {
                     new NameValuePair("@SalesTypeId", SalesTypeId),
 
-
                     new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                     new NameValuePair("@QueryType", "INACTIVE")
                 }, "@OutParam").ToString();
@@ -60,8 +54,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             List<SalesType> salesTypes = new SqlDBAccess(CommonLogicObj.SqlConnectionString).GetData(CommonLogicObj.SqlSchema + ".[spGetSalesType]",
                 new NameValuePairs
                 {
-
-
                     new NameValuePair("@QueryType", "ALL")
                 }).ToList<SalesType>();
             if (IsActive != null)
@@ -80,9 +72,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             
             NameValuePairs nvp = new NameValuePairs
             {
-
-
-                    new NameValuePair("@QueryType", "ENTRY")
+                new NameValuePair("@QueryType", "ENTRY")
             };
             DataSet dataSet = _sqlDBAccess.GetDataSet(CommonLogicObj.SqlSchema + ".[spGetSalesOrder]", nvp);
             Dictionary<string, object> Datas = new Dictionary<string, object>
@@ -132,7 +122,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 
                 NameValuePairs nvp = new NameValuePairs
                 {
-                    new NameValuePair("@ComapnyIsGSTRegistered", GenericLogic.IsValidGSTNumber(WebConfigAppSettingsAccess.GSTNumber)),
+                    new NameValuePair("@ComapnyIsGSTRegistered", GenericLogic.IsValidGSTNumber(CommonLogicObj.AppSettings.GSTNumber)),
                     new NameValuePair("@QuotationId", salesOrder.QuotationId),
                     new NameValuePair("@SalesTypeId", salesOrder.SalesTypeId),
                     new NameValuePair("@BranchId", salesOrder.BranchId),
@@ -170,7 +160,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 {
                     new NameValuePair("@SalesOrderId", SalesOrderId),
 
-
                     new NameValuePair("@RequestId", CommonLogicObj.RequestId),
                     new NameValuePair("@QueryType", "DELETE")
                 };
@@ -188,9 +177,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             
             NameValuePairs nvp = new NameValuePairs
             {
-
-
-                    new NameValuePair("@QueryType", "SHIPENTRY")
+                new NameValuePair("@QueryType", "SHIPENTRY")
             };
             return _sqlDBAccess.GetData(CommonLogicObj.SqlSchema + ".[spGetSalesOrder]", nvp).ToList<SalesOrder>();
         }
@@ -200,8 +187,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             
             NameValuePairs nvp = new NameValuePairs()
                 {
-
-
                     new NameValuePair("@QueryType", "LIST")
                 };
             return _sqlDBAccess.GetData(CommonLogicObj.SqlSchema + ".[spGetSalesOrder]", nvp).ToList<SalesOrder>();
@@ -212,8 +197,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             
             NameValuePairs nvp = new NameValuePairs()
             {
-
-
                 new NameValuePair("@SalesOrderId", SalesOrderId),
                 new NameValuePair("@QueryType", "DETAIL")
             };
@@ -268,13 +251,12 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     }
                 });
                 if (orderDetailTypes.Count > 0)
-                {
-                    
+                {                    
                     NameValuePairs nvp = new NameValuePairs
                     {
                         new NameValuePair("@SalesOrderId", salesOrder.SalesOrderId),
 
-                        new NameValuePair("@ComapnyIsGSTRegistered", GenericLogic.IsValidGSTNumber(WebConfigAppSettingsAccess.GSTNumber)),
+                        new NameValuePair("@ComapnyIsGSTRegistered", GenericLogic.IsValidGSTNumber(CommonLogicObj.AppSettings.GSTNumber)),
                         new NameValuePair("@AmendmentNumber", ""),
                         new NameValuePair("@AmendmentDate", salesOrder.AmendmentDate),
                         new NameValuePair("@SalesOrderAmount", salesOrder.SalesOrderAmount),

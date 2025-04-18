@@ -1,6 +1,6 @@
-﻿using JicoDotNet.Inventory.Core.Enumeration;
+﻿using DataAccess.AzureStorage.Table;
+using JicoDotNet.Inventory.Core.Enumeration;
 using JicoDotNet.Inventory.Core.Models;
-using Microsoft.WindowsAzure.Storage.Table;
 using System.Collections.Generic;
 
 namespace JicoDotNet.Inventory.UI.Models

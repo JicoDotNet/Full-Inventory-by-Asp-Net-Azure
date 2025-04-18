@@ -1,14 +1,10 @@
-﻿using DataAccess.AzureStorage;
+﻿using DataAccess.AzureStorage.Table;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Enumeration;
 using JicoDotNet.Inventory.Core.Models;
-using Microsoft.WindowsAzure.Storage.Table;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
@@ -25,7 +21,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 && !string.IsNullOrEmpty(customProperty.LabelName)
                 && propertyFor != ECustomPropertyFor.None)
                 {
-                    TableManager = new ExecuteTableManager("PropertyMaster", CommonLogicObj.NoSqlConnectionString);
+                    TableManager = new AzureTableAccess("PropertyMaster", CommonLogicObj.NoSqlConnectionString);
 
                     customProperty.PartitionKey = "MyCompany";
 
@@ -66,14 +62,14 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             try
             {
-                TableManager = new ExecuteTableManager("PropertyMaster", CommonLogicObj.NoSqlConnectionString);
+                TableManager = new AzureTableAccess("PropertyMaster", CommonLogicObj.NoSqlConnectionString);
                 string qry = "PropertyFor eq '" + propertyFor.ToString() + "'" +
                     " and IsActive eq true ";
                 if (IsPrintable)
                 {
                     qry += " and IsPrintable eq true ";
                 }
-                return TableManager.RetrieveEntity<CustomProperty>(qry);
+                return TableManager.RetrieveEntities<CustomProperty>(qry);
             }
             catch (Exception ex)
             {
@@ -85,9 +81,9 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             try
             {
-                TableManager = new ExecuteTableManager("PropertyMaster", CommonLogicObj.NoSqlConnectionString);
+                TableManager = new AzureTableAccess("PropertyMaster", CommonLogicObj.NoSqlConnectionString);
                 string qry = "IsActive eq true ";
-                return TableManager.RetrieveEntity<CustomProperty>(qry);
+                return TableManager.RetrieveEntities<CustomProperty>(qry);
             }
             catch (Exception ex)
             {
@@ -99,11 +95,11 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             try
             {
-                TableManager = new ExecuteTableManager("PropertyMaster", CommonLogicObj.NoSqlConnectionString);
+                TableManager = new AzureTableAccess("PropertyMaster", CommonLogicObj.NoSqlConnectionString);
                 string q = "RowKey eq '" + RowKey + "' " +
                     " and PropertyFor eq '" + propertyFor.ToString() + "'" +
                     " and IsActive eq true";
-                return TableManager.RetrieveEntity<CustomProperty>(q).FirstOrDefault();
+                return TableManager.RetrieveEntity<CustomProperty>(q);
             }
             catch (Exception ex)
             {
@@ -119,7 +115,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 if (customProperty != null)
                 {
                     customProperty.IsActive = false;
-                    TableManager = new ExecuteTableManager("PropertyMaster", CommonLogicObj.NoSqlConnectionString);
+                    TableManager = new AzureTableAccess("PropertyMaster", CommonLogicObj.NoSqlConnectionString);
                     TableManager.UpdateEntity(customProperty);
                     return true;
                 }
@@ -141,16 +137,12 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 if (formDictionary == null || formDictionary.Count == 0)
                     return;
 
-                DynamicTableEntity dynamicProperty = new DynamicTableEntity();
                 List<CustomProperty> customProperties = GetMaster(propertyFor);
-                EntityProperty Prop;
+
+                IDictionary<string, object> customPropertiesValue = new Dictionary<string, object>();
 
                 if (customProperties == null || customProperties.Count == 0)
-                    return;
-
-                /* PartitionKey & RowKey */
-                dynamicProperty.PartitionKey = "MyCompany";
-                dynamicProperty.RowKey = GenericLogic.IstNow.TimeStamp().ToString();
+                    return;                
 
                 /* Main Custom Property */
                 foreach (CustomProperty dm in customProperties)
@@ -162,8 +154,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                             if (formDictionary[dm.ColumnName] != null
                                 && !string.IsNullOrEmpty(formDictionary[dm.ColumnName]?.ToString()))
                             {
-                                Prop = new EntityProperty(formDictionary[dm.ColumnName]?.ToString());
-                                dynamicProperty.Properties[dm.ColumnName] = Prop;
+                                customPropertiesValue.Add(formDictionary[dm.ColumnName]?.ToString(),
+                                    formDictionary[dm.ColumnName].ToString());
                             }
                         }
                         catch { }
@@ -172,8 +164,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     {
                         try
                         {
-                            Prop = new EntityProperty(Convert.ToDouble(formDictionary[dm.ColumnName]));
-                            dynamicProperty.Properties[dm.ColumnName] = Prop;
+                            customPropertiesValue.Add(formDictionary[dm.ColumnName]?.ToString(),
+                                    Convert.ToDouble(formDictionary[dm.ColumnName]));
                         }
                         catch { }
                     }
@@ -181,8 +173,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     {
                         try
                         {
-                            Prop = new EntityProperty(Convert.ToBoolean(formDictionary[dm.ColumnName]));
-                            dynamicProperty.Properties[dm.ColumnName] = Prop;
+                            customPropertiesValue.Add(formDictionary[dm.ColumnName]?.ToString(),
+                                    Convert.ToBoolean(formDictionary[dm.ColumnName]));
                         }
                         catch { }
                     }
@@ -198,39 +190,28 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                                                         System.Globalization.CultureInfo.InvariantCulture,
                                                         System.Globalization.DateTimeStyles.None,
                                                         out DateTime PropDateValue);
-                                Prop = new EntityProperty(PropDateValue);
-                                dynamicProperty.Properties[dm.ColumnName] = Prop;
+
+                                customPropertiesValue.Add(formDictionary[dm.ColumnName]?.ToString(), PropDateValue);
                             }
                         }
                         catch { }
                     }
-                }
+                }                
 
                 /* Other Fields */
-                Prop = new EntityProperty(CommonLogicObj.RequestId);
-                dynamicProperty.Properties["RequestId"] = Prop;
+                customPropertiesValue.Add("RequestId", CommonLogicObj.RequestId);
+                customPropertiesValue.Add("TransactionDate", GenericLogic.IstNow);
+                customPropertiesValue.Add("IsActive", true);
+                customPropertiesValue.Add("PropertyFor", propertyFor.ToString());
 
-                Prop = new EntityProperty(GenericLogic.IstNow);
-                dynamicProperty.Properties["TransactionDate"] = Prop;
+                DynamicTableEntity dynamicProperty = new DynamicTableEntity();
 
-                Prop = new EntityProperty(true);
-                dynamicProperty.Properties["IsActive"] = Prop;
+                /* PartitionKey & RowKey */
+                dynamicProperty.PartitionKey = "MyCompany";
+                dynamicProperty.RowKey = GenericLogic.IstNow.TimeStamp().ToString();
+                dynamicProperty.Set(customPropertiesValue);
 
-                /* Scope Wise Fields */
-                Prop = new EntityProperty(propertyFor.ToString());
-                dynamicProperty.Properties["PropertyFor"] = Prop;
-                if (Identity.HasValue)
-                {
-                    Prop = new EntityProperty(Identity.Value);
-                    dynamicProperty.Properties["Identity"] = Prop;
-                }
-                if (!string.IsNullOrEmpty(IdentityValue))
-                {
-                    Prop = new EntityProperty(IdentityValue);
-                    dynamicProperty.Properties["IdentityValue"] = Prop;
-                }
-
-                TableManager = new ExecuteTableManager("PropertyData", CommonLogicObj.NoSqlConnectionString);
+                TableManager = new AzureTableAccess("PropertyData", CommonLogicObj.NoSqlConnectionString);
                 TableManager.InsertEntity(dynamicProperty);
             }
             catch (Exception ex)
@@ -250,7 +231,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 List<CustomProperty> customProperties = GetMaster(propertyFor, true);
                 if (customProperties != null && customProperties.Count > 0)
                 {
-                    TableManager = new ExecuteTableManager("PropertyData", CommonLogicObj.NoSqlConnectionString);
+                    TableManager = new AzureTableAccess("PropertyData", CommonLogicObj.NoSqlConnectionString);
                     string qry = " PropertyFor eq '" + propertyFor.ToString() + "' " +
                         " and IsActive eq true ";
                     if (Identity.HasValue)
@@ -262,34 +243,34 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                         qry += " and IdentityValue eq '" + IdentityValue + "' ";
                     }
 
-                    DynamicTableEntity dynamicProperty = TableManager.RetrieveEntity(qry).FirstOrDefault();
+                    DynamicTableEntity dynamicProperty = TableManager.RetrieveEntity(qry);
 
                     foreach (CustomProperty customProperty in customProperties)
                     {
                         if (dynamicProperty != null && dynamicProperty.Properties.Count > 0)
                         {
-                            foreach (KeyValuePair<string, EntityProperty> property in dynamicProperty.Properties)
+                            foreach (KeyValuePair<string, object> property in dynamicProperty.Properties)
                             {
                                 if (customProperty.ColumnName == property.Key)
                                 {
-                                    if (property.Value.PropertyType == EdmType.String)
+                                    if (property.Value?.GetType() == typeof(string))
                                     {
-                                        dictionary.Add(customProperty.LabelName, property.Value.PropertyAsObject.ToString());
+                                        dictionary.Add(customProperty.LabelName, property.Value.ToString());
                                     }
-                                    if (property.Value.PropertyType == EdmType.Double)
+                                    if (property.Value?.GetType() == typeof(double))
                                     {
-                                        dictionary.Add(customProperty.LabelName, ((double)property.Value.PropertyAsObject).ToDisplayDouble());
+                                        dictionary.Add(customProperty.LabelName, ((double)property.Value).ToDisplayDouble());
                                     }
-                                    if (property.Value.PropertyType == EdmType.Boolean)
+                                    if (property.Value?.GetType() == typeof(bool))
                                     {
-                                        if ((bool)property.Value.PropertyAsObject)
+                                        if ((bool)property.Value)
                                             dictionary.Add(customProperty.LabelName, "Yes");
                                         else
                                             dictionary.Add(customProperty.LabelName, "No");
                                     }
-                                    if (property.Value.PropertyType == EdmType.DateTime)
+                                    if (property.Value?.GetType() == typeof(DateTime))
                                     {
-                                        dictionary.Add(customProperty.LabelName, Convert.ToDateTime(property.Value.PropertyAsObject).ToDisplayShortDateString());
+                                        dictionary.Add(customProperty.LabelName, Convert.ToDateTime(property.Value).ToDisplayShortDateString());
                                     }
                                 }
                             }
