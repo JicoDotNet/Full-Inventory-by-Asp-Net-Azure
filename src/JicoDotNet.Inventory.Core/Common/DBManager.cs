@@ -1,8 +1,9 @@
 ﻿using DataAccess.Sql;
-using DataAccess.AzureStorage;
+using DataAccess.AzureStorage.Table;
 using DataAccess.Sql.Entity;
 using JicoDotNet.Inventory.Core.Entities;
 using System;
+using DataAccess.AzureStorage.Blob;
 
 namespace JicoDotNet.Inventory.Core.Common
 {
@@ -18,7 +19,7 @@ namespace JicoDotNet.Inventory.Core.Common
         public ICommonLogicHelper CommonLogicObj { get; private set; }
         public ISqlDBAccess _sqlDBAccess { get; private set; }
 
-        protected ExecuteTableManager TableManager;
-        protected ExecuteBlobManager BlobManager;
+        protected IAzureTableAccess TableManager;
+        protected IAzureBlobAccess BlobManager;
     }
 }

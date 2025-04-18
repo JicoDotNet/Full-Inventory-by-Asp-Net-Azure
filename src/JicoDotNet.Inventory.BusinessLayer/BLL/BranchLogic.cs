@@ -1,9 +1,7 @@
 ﻿using DataAccess.Sql;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Common;
-using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -25,7 +23,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
             NameValuePairs nvp = new NameValuePairs
             {
-
                 new NameValuePair("@BranchId", branch.BranchId),
 
                 new NameValuePair("@BranchName", branch.BranchName),
@@ -63,8 +60,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 .GetData(CommonLogicObj.SqlSchema + ".[spGetBranch]",
                 new NameValuePairs
                 {
-
-
                     new NameValuePair("@QueryType", "ALL")
                 }).ToList<Branch>();
             if (IsActive != null)

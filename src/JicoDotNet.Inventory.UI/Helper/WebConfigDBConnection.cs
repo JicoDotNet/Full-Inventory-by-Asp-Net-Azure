@@ -23,7 +23,7 @@
                 }
             }
         }
-        public static object AzureStorage
+        public static string AzureStorage
         {
             get
             {
@@ -33,7 +33,7 @@
                     && !string.IsNullOrEmpty(azureConnectionString.ToString())
                     && azureConnectionString.ToString().Contains("AccountName"))
                 {
-                    return azureConnectionString;
+                    return azureConnectionString.ToString();
                 }
                 else
                 {

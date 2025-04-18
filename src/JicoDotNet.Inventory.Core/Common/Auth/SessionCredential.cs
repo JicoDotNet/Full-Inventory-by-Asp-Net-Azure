@@ -1,5 +1,5 @@
-﻿using JicoDotNet.Inventory.Core.Entities;
-using Microsoft.WindowsAzure.Storage.Table;
+﻿using DataAccess.AzureStorage.Table;
+using JicoDotNet.Inventory.Core.Entities;
 using System;
 
 namespace JicoDotNet.Inventory.Core.Common.Auth

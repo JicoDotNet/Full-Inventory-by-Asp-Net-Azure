@@ -18,8 +18,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             return new SqlDBAccess(CommonLogicObj.SqlConnectionString).GetData(CommonLogicObj.SqlSchema + ".[spGetTDSPay]",
                 new NameValuePairs
                 {
-
-
                     new NameValuePair("@QueryType", "UNPAID")
                 }).ToList<TDSPay>();
         }
@@ -30,8 +28,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             {
                 NameValuePairs nvp = new NameValuePairs
                 {
-
-
                     new NameValuePair("@PayDate", tDSPay.PayDate),
                     new NameValuePair("@TDSPayId", tDSPay.TDSPayId),
                     new NameValuePair("@RequestId", CommonLogicObj.RequestId),
@@ -51,8 +47,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             return new SqlDBAccess(CommonLogicObj.SqlConnectionString).GetData(CommonLogicObj.SqlSchema + ".[spGetTDSReceive]",
                 new NameValuePairs
                 {
-
-
                     new NameValuePair("@QueryType", "UNRECEIVED")
                 }).ToList<TDSReceive>();
         }
@@ -63,8 +57,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             {
                 NameValuePairs nvp = new NameValuePairs
                 {
-
-
                     new NameValuePair("@ReceivedDate", tDSReceive.ReceivedDate),
                     new NameValuePair("@TDSReceiveId", tDSReceive.TDSReceiveId),
                     new NameValuePair("@RequestId", CommonLogicObj.RequestId),

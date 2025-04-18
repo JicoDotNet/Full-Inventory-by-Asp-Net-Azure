@@ -214,14 +214,14 @@
             };
         }
 
-        public static IDictionary<Microsoft.WindowsAzure.Storage.Table.EdmType, string> DataType()
+        public static IDictionary<DataAccess.AzureStorage.Table.EdmType, string> DataType()
         {
-            return new Dictionary<Microsoft.WindowsAzure.Storage.Table.EdmType, string>
+            return new Dictionary<DataAccess.AzureStorage.Table.EdmType, string>
             {
-                { Microsoft.WindowsAzure.Storage.Table.EdmType.String, "Text/Content" },
-                { Microsoft.WindowsAzure.Storage.Table.EdmType.Boolean, "Yes/No" },
-                { Microsoft.WindowsAzure.Storage.Table.EdmType.Double, "Number/Amount/Price" },
-                { Microsoft.WindowsAzure.Storage.Table.EdmType.DateTime, "Date" }
+                { DataAccess.AzureStorage.Table.EdmType.String, "Text/Content" },
+                { DataAccess.AzureStorage.Table.EdmType.Boolean, "Yes/No" },
+                { DataAccess.AzureStorage.Table.EdmType.Double, "Number/Amount/Price" },
+                { DataAccess.AzureStorage.Table.EdmType.DateTime, "Date" }
             };
         }
 

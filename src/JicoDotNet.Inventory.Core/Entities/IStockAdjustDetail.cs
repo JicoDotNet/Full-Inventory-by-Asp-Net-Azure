@@ -1,8 +1,9 @@
-﻿using System;
+﻿using JicoDotNet.Inventory.Core.Entities.Inner;
+using System;
 
 namespace JicoDotNet.Inventory.Core.Entities
 {
-    public interface IStockAdjustDetail
+    public interface IStockAdjustDetail : IGenericDescription
     {
         long StockAdjustDetailId { get; set; }
 
@@ -20,7 +21,5 @@ namespace JicoDotNet.Inventory.Core.Entities
         DateTime? GRNDate { get; set; }
 
         long StockDetailId { get; set; }
-
-        string Description { get; set; }
     }
 }

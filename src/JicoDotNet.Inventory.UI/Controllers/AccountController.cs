@@ -1,5 +1,4 @@
 ﻿using JicoDotNet.Inventory.BusinessLayer.BLL;
-using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.Core.Common.Auth;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Enumeration;
@@ -65,8 +64,8 @@ namespace JicoDotNet.Inventory.UI.Controllers
                         // Get Company Details
                         ICompanyBasic companyBasic = new CompanyBasic
                         {
-                            CompanyName = WebConfigAppSettingsAccess.CompanyName,
-                            GSTNumber = GenericLogic.IsValidGSTNumber(WebConfigAppSettingsAccess.GSTNumber) ? WebConfigAppSettingsAccess.GSTNumber : null
+                            CompanyName = LogicHelper.AppSettings.CompanyName,
+                            GSTNumber = GenericLogic.IsValidGSTNumber(LogicHelper.AppSettings.GSTNumber) ? LogicHelper.AppSettings.GSTNumber : null
                         };
                         companyBasic.IsGSTRegistered = !string.IsNullOrEmpty(companyBasic.GSTNumber);
                         companyBasic.GSTStateCode = companyBasic.IsGSTRegistered ? GenericLogic.GstStateCode(companyBasic.GSTNumber) : null;

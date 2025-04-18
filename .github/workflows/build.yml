@@ -32,9 +32,14 @@ jobs:
         uses: NuGet/setup-nuget@v1  # Use the latest stable version
 
       - name: Restore NuGet packages
-        run: |
-          nuget restore src/JicoDotNet.Inventory.sln -SolutionDirectory src/
+        run: nuget restore src/JicoDotNet.Inventory.sln
 
       - name: Build solution, excluding SQLServer project
         run: |
-          msbuild src/JicoDotNet.Inventory.sln /p:Configuration=Release /p:ExcludeProjects="src\JicoDotNet.SQLServer\JicoDotNet.SQLServer.sqlproj"
+          msbuild src/JicoDotNet.Inventory.sln `
+            /p:Configuration=Release `
+            /p:Platform="Any CPU" `
+            /p:RestorePackages=false `
+            /p:DeployOnBuild=false `
+            /p:BuildProjectReferences=true `
+            /p:ExcludeProjects="src\JicoDotNet.SQLServer\JicoDotNet.SQLServer.sqlproj"

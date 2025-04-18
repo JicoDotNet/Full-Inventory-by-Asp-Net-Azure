@@ -1,4 +1,4 @@
-﻿using DataAccess.AzureStorage;
+﻿using DataAccess.AzureStorage.Table;
 using JicoDotNet.Inventory.Core.Models;
 using Newtonsoft.Json;
 using System;
@@ -27,7 +27,7 @@ namespace JicoDotNet.Inventory.Logging
                     if ((Encoding.UTF8.GetBytes(dataTracking.Data).Length / 1024.0D) >= 63.99D)
                         dataTracking.Data = "Length is too high";
 
-                    ExecuteTableManager tableManager = new ExecuteTableManager("DataTracking", commonObj.NoSqlConnectionString);
+                    IAzureTableAccess tableManager = new AzureTableAccess("DataTracking", commonObj.NoSqlConnectionString);
                     tableManager.InsertEntityAsync(dataTracking);
                 }
                 catch

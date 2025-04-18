@@ -1,5 +1,4 @@
 ﻿using DataAccess.Sql;
-using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Custom;
 using JicoDotNet.Inventory.Core.Custom.Interface;
@@ -50,7 +49,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     
                     NameValuePairs nvp = new NameValuePairs
                     {
-                        new NameValuePair("@ComapnyIsGSTRegistered", GenericLogic.IsValidGSTNumber(WebConfigAppSettingsAccess.GSTNumber)),
+                        new NameValuePair("@ComapnyIsGSTRegistered", GenericLogic.IsValidGSTNumber(CommonLogicObj.AppSettings.GSTNumber)),
 
                         new NameValuePair("@CustomerId", quotation.CustomerId),
                         new NameValuePair("@QuotationDate", quotation.QuotationDate),
@@ -80,8 +79,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             
             NameValuePairs nvp = new NameValuePairs()
                 {
-
-
                     new NameValuePair("@QueryType", "LIST")
                 };
             return _sqlDBAccess.GetData(CommonLogicObj.SqlSchema + ".[spGetQuotation]", nvp).ToList<Quotation>();
@@ -92,8 +89,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             
             NameValuePairs nvp = new NameValuePairs()
             {
-
-
                 new NameValuePair("@QuotationId", QuotationId),
                 new NameValuePair("@QueryType", "DETAIL")
             };
@@ -116,8 +111,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         public string Deactive(long QuotationId)
         {
             try
-            {
-                
+            {                
                 NameValuePairs nvp = new NameValuePairs
                 {
                     new NameValuePair("@QuotationId", QuotationId),

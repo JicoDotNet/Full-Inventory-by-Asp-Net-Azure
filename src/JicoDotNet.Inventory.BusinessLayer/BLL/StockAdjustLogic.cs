@@ -19,8 +19,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             return new SqlDBAccess(CommonLogicObj.SqlConnectionString).GetData(CommonLogicObj.SqlSchema + ".[spGetStockAdjustReason]",
                 new NameValuePairs
                 {
-
-
                     new NameValuePair("@QueryType", "ALL")
                 }).ToList<StockAdjustReason>();
         }
@@ -49,12 +47,10 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 }
             });
             if (stockAdjustDetailTypes.Count > 0)
-            {
-                
+            {                
                 string returnString = _sqlDBAccess.DataManipulation(CommonLogicObj.SqlSchema + ".[spSetStockAdjust]", new NameValuePairs
                     {
                         new NameValuePair("@StockAdjustNumber", "SKA-"),
-
 
                         new NameValuePair("@IsStockIncrease", stockAdjust.IsStockIncrease),
                         new NameValuePair("@AdjustReasonId", stockAdjust.AdjustReasonId),

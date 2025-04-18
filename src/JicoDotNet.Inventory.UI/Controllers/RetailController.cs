@@ -1,5 +1,4 @@
 ﻿using JicoDotNet.Inventory.BusinessLayer.BLL;
-using JicoDotNet.Inventory.BusinessLayer.Common;
 using JicoDotNet.Inventory.Core.Enumeration;
 using JicoDotNet.Inventory.Core.Models;
 using JicoDotNet.Inventory.UI.Models;
@@ -196,13 +195,6 @@ namespace JicoDotNet.Inventory.UI.Controllers
                 PaymentLogic paymentLogic = new PaymentLogic(LogicHelper);
                 if (Convert.ToInt64(paymentLogic.SetIn(paymentIn)) > 0)
                 {
-                    SMSSendTrack sMSSend = new SMSSendTrack
-                    {
-                        MobileNo = paymentIn.Mobile,
-                        IsMobileNoChanged = false,
-                        IsResend = false,
-                    };
-
                     ReturnMessage = new ReturnObject()
                     {
                         Message = "Payment receive successfull",
@@ -251,12 +243,12 @@ namespace JicoDotNet.Inventory.UI.Controllers
                         IsGSTRegistered = SessionCompany.IsGSTRegistered,
                         StateCode = SessionCompany.StateCode,
 
-                        Address = WebConfigAppSettingsAccess.CompanyAddress,
-                        City = WebConfigAppSettingsAccess.CompanyCity,
-                        Email = WebConfigAppSettingsAccess.CompanyEmail,
-                        PINCode = WebConfigAppSettingsAccess.CompanyPINCode,
-                        Mobile = WebConfigAppSettingsAccess.CompanyMobile,
-                        WebsiteUrl = WebConfigAppSettingsAccess.CompanyWebsite,
+                        Address = LogicHelper.AppSettings.CompanyAddress,
+                        City = LogicHelper.AppSettings.CompanyCity,
+                        Email = LogicHelper.AppSettings.CompanyEmail,
+                        PINCode = LogicHelper.AppSettings.CompanyPINCode,
+                        Mobile = LogicHelper.AppSettings.CompanyMobile,
+                        WebsiteUrl = LogicHelper.AppSettings.CompanyWebsite,
                     };
                     invoiceModels._customer = new CustomerLogic(LogicHelper).Get(invoiceModels._invoice.CustomerId);
                     invoiceModels._salesOrder = new SalesOrderLogic(LogicHelper).GetForDetail(invoiceModels._invoice.SalesOrderId);
@@ -271,55 +263,5 @@ namespace JicoDotNet.Inventory.UI.Controllers
                 return ErrorLoggingToView(ex);
             }
         }
-
-        #region SMS Send for Retail
-        [SessionAuthenticate]
-        public ActionResult SMS()
-        {
-            if (!string.IsNullOrEmpty(UrlParameterId))
-            {
-                SMSBankLogic bankLogic = new SMSBankLogic(LogicHelper);
-                SMSBank sMSBank = bankLogic.Get();
-                if (sMSBank != null && sMSBank.Balance > 0)
-                {
-                    InvoiceModels invoiceModels = new InvoiceModels
-                    {
-                        _invoice = new InvoiceLogic(LogicHelper).GetForDetail(Convert.ToInt64(UrlParameterId))
-                    };
-                    if (invoiceModels._invoice != null)
-                    {
-                        invoiceModels._customer = new CustomerLogic(LogicHelper).Get(invoiceModels._invoice.CustomerId);
-                        return View(invoiceModels);
-                    }
-                }
-                else
-                {
-                    return View(new InvoiceModels());
-                }
-            }
-            return RedirectToAction("Index");
-        }
-
-        [HttpPost]
-        [SessionAuthenticate]
-        public ActionResult SMSSending(SMSSendTrack sMSSend)
-        {
-            if (string.IsNullOrEmpty(UrlParameterId))
-            {
-                return RedirectToAction("Index");
-            }
-            sMSSend.IsResend = true;
-            return RedirectToAction("SmsSent", new { id = UrlIdEncrypt(UrlParameterId, false) });
-        }
-
-        [SessionAuthenticate]
-        public ActionResult SmsSent()
-        {
-            if (!string.IsNullOrEmpty(UrlParameterId))
-            {
-            }
-            return RedirectToAction("Index");
-        }
-        #endregion
     }
 }

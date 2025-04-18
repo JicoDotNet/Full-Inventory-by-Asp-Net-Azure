@@ -19,8 +19,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             return new SqlDBAccess(CommonLogicObj.SqlConnectionString).GetData(CommonLogicObj.SqlSchema + ".[spGetGRN]",
                 new NameValuePairs
                 {
-
-
                     new NameValuePair("@QueryType", "LIST")
                 }).ToList<GoodsReceiveNote>();
         }
@@ -30,8 +28,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             
             NameValuePairs nvp = new NameValuePairs()
             {
-
-
                 new NameValuePair("@QueryType", "ENTRY")
             };
             List<PurchaseOrder> purchaseOrders = _sqlDBAccess.GetData(CommonLogicObj.SqlSchema + ".[spGetGRN]", nvp).ToList<PurchaseOrder>();
@@ -39,12 +35,9 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         }
 
         public PurchaseOrder GetForGRN(long purchaseOrderId)
-        {
-            
+        {            
             NameValuePairs nvp = new NameValuePairs()
             {
-
-
                 new NameValuePair("@PurchaseOrderId", purchaseOrderId),
                 new NameValuePair("@QueryType", "ENTRYSINGLE")
             };
@@ -58,8 +51,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             
             NameValuePairs nvp = new NameValuePairs()
             {
-
-
                 new NameValuePair("@GRNId", GRNId),
                 new NameValuePair("@QueryType", "DETAIL")
             };
@@ -77,11 +68,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public List<GoodsReceiveNoteDetail> GetGRNDetails(long purchaseOrderId)
         {
-            
             NameValuePairs nvp = new NameValuePairs()
                 {
-
-
                     new NameValuePair("@PurchaseOrderId", purchaseOrderId),
                     new NameValuePair("@QueryType", "COMULTATIVE")
                 };
@@ -116,7 +104,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                     .DataManipulation(CommonLogicObj.SqlSchema + ".[spSetGRN]", new NameValuePairs
                     {
                         new NameValuePair("@PurchaseOrderId", goodsReceiveNote.PurchaseOrderId),
-
 
                         new NameValuePair("@GRNNumber", "GRN-"),
                         new NameValuePair("@GRNDate", goodsReceiveNote.GRNDate),
@@ -188,13 +175,9 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             });
 
             if (grnDetailTypes.Count > 0 && orderDetailTypes.Count > 0)
-            {
-                
+            {                
                 NameValuePairs nvp = new NameValuePairs()
                 {
-                     
-                     
-
                     //PO
                     new NameValuePair("@PurchaseTypeId", goodsReceiveNoteDirect.PurchaseTypeId),
                     new NameValuePair("@VendorId", goodsReceiveNoteDirect.VendorId),
@@ -228,12 +211,9 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         }
 
         public List<GoodsReceiveNote> GetForReturn()
-        {
-            
+        {            
             NameValuePairs nvp = new NameValuePairs()
             {
-
-
                 new NameValuePair("@QueryType", "RETURN")
             };
             List<GoodsReceiveNote> purchaseOrders = _sqlDBAccess.GetData(CommonLogicObj.SqlSchema + ".[spGetGRN]", nvp).ToList<GoodsReceiveNote>();

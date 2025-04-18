@@ -4,7 +4,6 @@ using JicoDotNet.Inventory.Core.Custom;
 using JicoDotNet.Inventory.Core.Custom.Interface;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Models;
-using System;
 using System.Collections.Generic;
 using System.Data;
 
@@ -44,8 +43,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
                 return new SqlDBAccess(CommonLogicObj.SqlConnectionString)
                     .DataManipulation(CommonLogicObj.SqlSchema + ".[spSetStockTransfer]", new NameValuePairs
                     {
-
-
                         new NameValuePair("@FromWareHouseId", stockTransfer.FromWareHouseId),
                         new NameValuePair("@ToWareHouseId", stockTransfer.ToWareHouseId),
                         new NameValuePair("@StockTransferNumber", "SKT-"),

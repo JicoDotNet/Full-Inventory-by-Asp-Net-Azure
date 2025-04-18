@@ -1,6 +1,8 @@
-﻿namespace JicoDotNet.Inventory.Core.Entities
+﻿using JicoDotNet.Inventory.Core.Entities.Inner;
+
+namespace JicoDotNet.Inventory.Core.Entities
 {
-    public interface IProduct : IProductType, IUnitOfMeasure, IDtoHeader
+    public interface IProduct : IProductType, IUnitOfMeasure, IGenericDescription, IDtoHeader
     {
         long ProductId { get; set; }
         short ProductInOut { get; set; }
@@ -9,7 +11,6 @@
         string ProductCode { get; set; }
         string HSNSAC { get; set; }
         decimal TaxPercentage { get; set; }
-        //string Description { get; set; }
         bool IsPerishableProduct { get; set; }
         bool HasExpirationDate { get; set; }
         bool HasBatchNo { get; set; }

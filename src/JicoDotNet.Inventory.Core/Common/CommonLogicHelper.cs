@@ -9,6 +9,7 @@ namespace JicoDotNet.Inventory.Core.Common
         public string Token { get; set; }
         public string SqlSchema { get { return "[SingleIB]"; } }
         public string SqlConnectionString { get; set; }
-        public object NoSqlConnectionString { get; set; }
+        public string NoSqlConnectionString { get; set; }
+        public IWebConfigAppSettings AppSettings { get; set; }
     }
 }

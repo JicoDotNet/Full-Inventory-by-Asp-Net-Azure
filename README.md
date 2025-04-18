@@ -10,6 +10,8 @@
 ## 📌 Description  
 This is a powerful and open-source **business management software** designed specifically for **Indian Small and Medium Businesses (SMBs)**. This web-based application provides a **complete solution for inventory management, invoicing, GST compliance, stock tracking, billing, purchase-sale transactions, and business dues & outstanding calculations**.  
 
+> Current Version: [2.0.0](/docs/CHANGELOG.md#version-200)
+
 Built using **.NET Framework 4.8**, this software ensures a **scalable, secure, and efficient** way to manage day-to-day business operations. Whether you're a **retail shop, wholesale distributor, trader, or manufacturer**, this system helps **automate workflows, generate reports, and streamline financial transactions**.  
 
 ### ✨ Key Features  
@@ -24,7 +26,7 @@ Built using **.NET Framework 4.8**, this software ensures a **scalable, secure, 
 ## 🌟 Introduction  
 Managing business operations efficiently is a **major challenge for Indian SMBs**, especially with **GST compliance, inventory tracking, and financial transactions**. This **open-source, self-hosted business management solution** helps businesses streamline operations, **reduce manual work, and improve financial transparency**.  
 
-This project is developed with **.NET Framework 4.8**, making it a **stable, reliable, and high-performance** web application. The software is designed for **scalability**, allowing businesses to adapt as they grow.  
+This project are developed with multiple target framework like **.NET Framework 4.8, netstandard2.0, netstandard2.1**, making it a **stable, reliable, and high-performance** web application. The software is designed for **scalability**, allowing businesses to adapt as they grow.  
 
 ✅ **Why Choose This WebApp?**  
 - **100% Open-Source** – Free to use, modify, and distribute under **GPL-3.0 Lisence**.  
@@ -79,7 +81,7 @@ This project is developed with **.NET Framework 4.8**, making it a **stable, rel
 ### 🚀 Brief Introduction  
 The **Inventory, Billing & GST Management System for Indian SMBs** is a comprehensive web application designed to **streamline business operations** by managing **inventory, billing, GST compliance, and financial transactions** efficiently.  
 
-This software is built using **.NET Framework 4.8 MVC**, providing a **robust, scalable, and user-friendly solution** for small and medium businesses. Whether you're managing **retail, wholesale, manufacturing, or trading**, this application ensures a **smooth workflow, accurate financial tracking, and compliance with Indian taxation laws**.  
+This software is built using **.NET Framework 4.8 MVC, netstandard2.0, netstandard2.1**, providing a **robust, scalable, and user-friendly solution** for small and medium businesses. Whether you're managing **retail, wholesale, manufacturing, or trading**, this application ensures a **smooth workflow, accurate financial tracking, and compliance with Indian taxation laws**.  
 
 This project is **fully open-source** and licensed under **GPL-3.0**, enabling businesses to self-host and customize it according to their needs **without third-party dependencies**.  
 
@@ -260,9 +262,9 @@ This project follows **semantic versioning (SemVer)** to ensure clear and predic
 
 ### 🔹 Version Format  
 `MAJOR.MINOR.PATCH` (e.g., `1.0.0`)  
-- **MAJOR** – Breaking changes, incompatible API updates.  
-- **MINOR** – New features added in a backward-compatible manner.  
-- **PATCH** – Bug fixes and small improvements. 
+- **MAJOR** – New Features, Changed Features, Breaking changes.  
+- **MINOR** – Features removed in a backward-compatible manner. Bug fixes and mejor improvements  
+- **PATCH** – Maintenance and small improvements. 
 
 Check the [CHANGELOG.md](/docs/CHANGELOG.md) for version history and updates.   
 

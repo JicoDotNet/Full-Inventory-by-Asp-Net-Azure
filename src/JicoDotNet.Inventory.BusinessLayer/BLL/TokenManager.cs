@@ -1,11 +1,9 @@
-﻿using DataAccess.AzureStorage;
+﻿using DataAccess.AzureStorage.Table;
 using JicoDotNet.Inventory.Core.Entities;
 using JicoDotNet.Inventory.Core.Common;
 using JicoDotNet.Inventory.Core.Common.Auth;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System;
-using JicoDotNet.Inventory.Core.Entities;
 
 namespace JicoDotNet.Inventory.BusinessLayer.BLL
 {
@@ -24,7 +22,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             try
             {
-                ExecuteTableManager tableManager = new ExecuteTableManager("SessionToken", CommonLogicObj.NoSqlConnectionString);
+                IAzureTableAccess tableManager = new AzureTableAccess("SessionToken", CommonLogicObj.NoSqlConnectionString);
                 SessionCredential sessionCredential = credential as SessionCredential;
                 sessionCredential.PartitionKey = "MyCompany";
                 sessionCredential.RowKey = credential.UserEmail;
@@ -39,8 +37,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
 
         public bool IsValid(string token, string email)
         {
-            TableManager = new ExecuteTableManager("SessionToken", CommonLogicObj.NoSqlConnectionString);
-            List<SessionCredential> credentials = TableManager.RetrieveEntity<SessionCredential>(
+            TableManager = new AzureTableAccess("SessionToken", CommonLogicObj.NoSqlConnectionString);
+            List<SessionCredential> credentials = TableManager.RetrieveEntities<SessionCredential>(
                                         "Token eq '" + token + "' " +
                                         "and UserEmail eq '" + email + "'");
             if (credentials.Count == 1)
@@ -55,9 +53,9 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         /// <returns></returns>
         public IList<SessionCredential> GetUser(string userEmail)
         {
-            ExecuteTableManager tableManager = new ExecuteTableManager("SessionToken", CommonLogicObj.NoSqlConnectionString);
+            IAzureTableAccess tableManager = new AzureTableAccess("SessionToken", CommonLogicObj.NoSqlConnectionString);
             IList<SessionCredential> credentials = tableManager
-                .RetrieveEntity<SessionCredential>("UserEmail eq '" + userEmail + "'");
+                .RetrieveEntities<SessionCredential>("UserEmail eq '" + userEmail + "'");
             foreach (ISessionCredential sessionCredential in credentials)
             {
                 sessionCredential.Token = null;
@@ -69,8 +67,8 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         {
             Task.Run(() =>
             {
-                TableManager = new ExecuteTableManager("SessionToken", CommonLogicObj.NoSqlConnectionString);
-                List<SessionCredential> credentials = TableManager.RetrieveEntity<SessionCredential>("UserEmail eq '" + UserEmail + "'");
+                TableManager = new AzureTableAccess("SessionToken", CommonLogicObj.NoSqlConnectionString);
+                List<SessionCredential> credentials = TableManager.RetrieveEntities<SessionCredential>("UserEmail eq '" + UserEmail + "'");
                 foreach (SessionCredential sc in credentials)
                 {
                     TableManager.DeleteEntity(sc);

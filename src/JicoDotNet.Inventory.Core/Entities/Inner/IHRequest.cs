@@ -1,5 +1,4 @@
-﻿
-namespace JicoDotNet.Inventory.Core.Entities.Inner
+﻿namespace JicoDotNet.Inventory.Core.Entities.Inner
 {
     public interface IHttpRequest
     {

@@ -1,6 +1,8 @@
-﻿namespace JicoDotNet.Inventory.Core.Entities
+﻿using JicoDotNet.Inventory.Core.Entities.Inner;
+
+namespace JicoDotNet.Inventory.Core.Entities
 {
-    public interface IInvoiceDetail
+    public interface IInvoiceDetail : IGenericDescription
     {
         long InvoiceDetailId { get; set; }
         long InvoiceId { get; set; }
@@ -18,7 +20,5 @@
         decimal SGSTAmount { get; set; }
         decimal IGSTAmount { get; set; }
         decimal Total { get; set; }
-
-        string Description { get; set; }
     }
 }

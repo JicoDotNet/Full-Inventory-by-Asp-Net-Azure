@@ -1,6 +1,8 @@
-﻿namespace JicoDotNet.Inventory.Core.Entities
+﻿using JicoDotNet.Inventory.Core.Entities.Inner;
+
+namespace JicoDotNet.Inventory.Core.Entities
 {
-    public interface IBranch
+    public interface IBranch : IGenericDescription
     {
         long BranchId { get; set; }
         string BranchName { get; set; }
@@ -12,6 +14,5 @@
         string ContactPerson { get; set; }
         string Email { get; set; }
         string Phone { get; set; }
-        string Description { get; set; }
     }
 }

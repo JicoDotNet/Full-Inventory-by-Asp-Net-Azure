@@ -18,8 +18,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             List<WareHouse> wareHouses = new SqlDBAccess(CommonLogicObj.SqlConnectionString).GetData(CommonLogicObj.SqlSchema + ".[spGetWareHouse]",
                 new NameValuePairs
                 {
-
-
                     new NameValuePair("@QueryType", "ALL")
                 }).ToList<WareHouse>();
             if (IsActive != null)
@@ -33,8 +31,7 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
         }
 
         public object Set(WareHouse wareHouse)
-        {
-            
+        {            
             string qt = string.Empty;
             if (wareHouse.WareHouseId > 0)
                 qt = "UPDATE";
@@ -44,7 +41,6 @@ namespace JicoDotNet.Inventory.BusinessLayer.BLL
             NameValuePairs nvp = new NameValuePairs
             {
                 new NameValuePair("@WareHouseId", wareHouse.WareHouseId),
-
 
                 new NameValuePair("@BranchId", wareHouse.BranchId),
                 new NameValuePair("@WareHouseName", wareHouse.WareHouseName),
