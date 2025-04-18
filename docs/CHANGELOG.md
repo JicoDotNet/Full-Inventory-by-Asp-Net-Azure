@@ -10,7 +10,7 @@
 
 ### Changed/Breaking/Removed Features
 - Remove `System.Data.SqlClient` packages from `DataAccess.Sql`.
-- Add `Microsoft.Data.SqlClient` packages from `DataAccess.Sql`.
+- Add `Microsoft.Data.SqlClient` packages at `DataAccess.Sql`.
 - **`DataAccess.AzureStorage`** packages upgrade to **3.0.0**
 
 ### Fixed Bug
