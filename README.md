@@ -10,7 +10,7 @@
 ## 📌 Description  
 This is a powerful and open-source **business management software** designed specifically for **Indian Small and Medium Businesses (SMBs)**. This web-based application provides a **complete solution for inventory management, invoicing, GST compliance, stock tracking, billing, purchase-sale transactions, and business dues & outstanding calculations**.  
 
-> Current Version: [2.0.0](/docs/CHANGELOG.md#version-200)
+> Current Version: [2.1.0](/docs/CHANGELOG.md#version-210)
 
 Built using **.NET Framework 4.8**, this software ensures a **scalable, secure, and efficient** way to manage day-to-day business operations. Whether you're a **retail shop, wholesale distributor, trader, or manufacturer**, this system helps **automate workflows, generate reports, and streamline financial transactions**.  
 

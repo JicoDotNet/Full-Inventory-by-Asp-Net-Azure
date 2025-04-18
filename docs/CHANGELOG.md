@@ -1,8 +1,22 @@
 # Inventory, Billing & GST System
 
 ## Table of Contents of Change Log
+- [Version 2.1.0](#version-210)  
 - [Version 2.0.0](#version-200)
 - [Version 1.0.0](#version-100)  
+
+## Version 2.1.0
+### New Features
+- N/A
+
+### Changed/Breaking/Removed Features
+- N/A
+
+### Fixed Bug
+- N/A
+
+### Maintenance
+- N/A
 
 ## Version 2.0.0
 ### New Features
@@ -22,7 +36,6 @@
 - **`JicoDotNet.Inventory.Helper`** upgrade to `.netstandard2.0` 
 - **`JicoDotNet.Inventory.Logging`** upgrade to `.netstandard2.0`
 - **`JicoDotNet.Inventory.BusinessLayer`** upgrade to `.netstandard2.0`
-
 
 
 ## Version 1.0.0
